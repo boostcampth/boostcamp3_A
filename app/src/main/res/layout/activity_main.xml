@@ -12,7 +12,7 @@
         android:background="#ffffff">
 
         <TextView
-            android:id="@+id/tv_2"
+            android:id="@+id/tv_store_number"
             android:layout_width="wrap_content"
             android:layout_height="33dp"
             android:layout_alignParentTop="true"
@@ -23,17 +23,17 @@
             android:textSize="13dp" />
 
         <TextView
-            android:id="@+id/tv_"
+            android:id="@+id/tv_customer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_2"
+            android:layout_below="@+id/tv_store_number"
             android:layout_centerHorizontal="true"
             android:text="@string/activity_main_customer"
             android:textColor="@color/colorDark"
             android:textSize="80dp" />
 
         <Button
-            android:id="@+id/push_button2"
+            android:id="@+id/btn_start"
             android:layout_width="150dp"
             android:layout_height="25dp"
             android:layout_alignParentBottom="true"
@@ -53,7 +53,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_owner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -64,7 +64,7 @@
             android:textSize="80dp" />
 
         <Button
-            android:id="@+id/push_button3"
+            android:id="@+id/btn_upload"
             android:layout_width="136dp"
             android:layout_height="25dp"
             android:layout_alignParentBottom="true"
