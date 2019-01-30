@@ -1,8 +1,8 @@
 package com.aone.menurandomchoice.views.adapter;
 
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>
-        implements BaseRecyclerViewModel<L> {
+        implements BaseRecyclerViewAdapterModel<L> {
 
     private List<L> items = new ArrayList<>();
 

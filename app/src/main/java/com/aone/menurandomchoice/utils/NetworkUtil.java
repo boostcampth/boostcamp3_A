@@ -3,7 +3,7 @@ package com.aone.menurandomchoice.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public class NetworkUtil {
 
@@ -12,7 +12,7 @@ public class NetworkUtil {
 
         if (connectivityManager != null) {
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-            
+
             return networkInfo != null && networkInfo.isConnected();
         }
 

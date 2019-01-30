@@ -1,10 +1,10 @@
 package com.aone.menurandomchoice.views.adapter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.List;
 
-public interface BaseRecyclerViewModel<L> {
+public interface BaseRecyclerViewAdapterModel<L> {
 
     void setItem(int position, @NonNull L item);
 
