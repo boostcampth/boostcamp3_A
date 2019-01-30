@@ -33,6 +33,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         detachViewFromPresenter();
+        onSaveInstanceStateToBundle(outState);
 
         super.onSaveInstanceState(outState);
     }
@@ -86,5 +87,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
 
     @NonNull
     abstract protected V getView();
+
+    abstract protected void onSaveInstanceStateToBundle(@NonNull Bundle outState);
 
 }
