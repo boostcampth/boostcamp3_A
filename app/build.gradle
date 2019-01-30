@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.aone.boostcamp.connect.menurandomchoice"
+        applicationId "com.aone.menurandomchoice"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1

@@ -1,4 +1,4 @@
-package com.aone.boostcamp.connect.menurandomchoice;
+package com.aone.menurandomchoice;
 
 import org.junit.Test;
 

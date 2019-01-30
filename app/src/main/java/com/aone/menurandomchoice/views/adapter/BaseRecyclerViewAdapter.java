@@ -1,4 +1,4 @@
-package com.aone.boostcamp.connect.menurandomchoice.views.adapter;
+package com.aone.menurandomchoice.views.adapter;
 
 
 import android.support.annotation.NonNull;
