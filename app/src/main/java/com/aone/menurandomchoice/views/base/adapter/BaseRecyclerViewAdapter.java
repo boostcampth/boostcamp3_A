@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.views.adapter;
+package com.aone.menurandomchoice.views.base.adapter;
 
 
 import androidx.annotation.NonNull;
