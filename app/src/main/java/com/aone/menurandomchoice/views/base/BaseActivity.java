@@ -14,7 +14,6 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     protected B dataBinding;
     protected P presenter;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,19 +51,16 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
         super.onDestroy();
     }
 
-
     private void setUp() {
         dataBinding = setUpDataBinding();
         presenter = setUpPresenter();
     }
-
 
     @NonNull
     @Override
     public Context getAppContext() {
         return getApplicationContext();
     }
-
 
     private void attachViewToPresenter() {
         if(presenter != null && !presenter.isAttachView()) {
@@ -77,7 +73,6 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
             presenter.detachView();
         }
     }
-
 
     @NonNull
     abstract protected B setUpDataBinding();
