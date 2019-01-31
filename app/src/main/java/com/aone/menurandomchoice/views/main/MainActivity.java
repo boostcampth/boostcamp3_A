@@ -1,11 +1,14 @@
 package com.aone.menurandomchoice.views.main;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -31,11 +34,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_upload:
-                //Move to Upload Store Information Activity
+                moveToOwnerLoginActivity();
                 break;
 
             default:
                 return;
         }
+    }
+
+    private void moveToOwnerLoginActivity() {
+        Intent ownerLoginIntent = new Intent(MainActivity.this, OwnerLoginActivity.class);
+        startActivity(ownerLoginIntent);
     }
 }
