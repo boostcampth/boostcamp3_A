@@ -5,11 +5,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.data.DataRepository;
 import com.aone.menurandomchoice.databinding.ActivityOwnerLoginBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 
@@ -23,6 +26,13 @@ public class OwnerLoginActivity
 
         setUpBackArrow();
         requestLoginCheckToPresenter();
+
+        dataBinding.activityOwnerTvPhonenumberGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DataRepository.getInstance().executeKakaoAccountLogout();
+            }
+        });
     }
 
     private void setUpBackArrow() {
@@ -30,6 +40,24 @@ public class OwnerLoginActivity
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
     }
 
     @NonNull
@@ -54,20 +82,30 @@ public class OwnerLoginActivity
     }
 
     @Override
-    protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
+    public Activity getActivity() {
+        return this;
+    }
 
+    @Override
+    protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
     }
 
     private void requestLoginCheckToPresenter() {
-        presenter.requestLoginCheck();
+        presenter.handlingLoggedInAccount();
     }
 
     public void kakaoTalkAccountLoginClick(View view) {
-        presenter.requestKaKaoAccountLogin();
+        presenter.handlingDeviceKaKaoAccountLogin();
     }
 
     public void kakaoTalkOtherAccountLoginClick(View view) {
-        presenter.requestOtherKaKaoAccountLogin();
+        presenter.handlingOtherKaKaoAccountLogin();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(!presenter.isNeedKakaoSDKLoginScreen(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }

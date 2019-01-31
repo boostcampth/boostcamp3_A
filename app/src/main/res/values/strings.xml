@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MenuRandomChoice</string>
+    <string name="native_key">698e7519cb8c33283ceae6eef56f11d5</string>
+    <string name="client_secret_key">RowO1RSHdeM9dobv3UcVFHBCycjE6i2b</string>
 
     <!-- activity_main -->
     <string name="activity_main_button_upload">음식 올리기 ></string>
@@ -15,7 +17,7 @@
     <string name="activity_owner_image_kakao_talk_login_tts">카카오계정으로 로그인 이미지</string>
     <string name="activity_owner_button_kakao_talk_login_tts">카카오계정으로 로그인, 버튼</string>
     <string name="activity_owner_textview_login_guide">아직 머먹노 업주님이 아니세요?\n최초 로그인 시 인증번호가 필요합니다</string>
-    <string name="activity_owner_textview_phonenumber_guide">고객센터\n0000-0000</string>
+    <string name="activity_owner_textview_phonenumber_guide">고객센터\n0000 - 0000</string>
 
 
 </resources>
