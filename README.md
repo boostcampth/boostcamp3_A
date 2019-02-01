@@ -23,6 +23,6 @@
 ## 프로젝트 문서
 - [디자인](https://xd.adobe.com/view/835826a9-8dc7-4de5-67a7-056c77cad0ab-f569/?fullscreen&hints=off)
 - [기능 명세 문서](https://docs.google.com/spreadsheets/d/1gO3unq7qZ-FccYGy5GK9pq1_KbzYy0tBdkdrn0i3Fq4/edit#gid=0)
-- [프로젝트 일정](https://docs.google.com/spreadsheets/d/1gO3unq7qZ-FccYGy5GK9pq1_KbzYy0tBdkdrn0i3Fq4/edit#gid=176366717)
+- [프로젝트 일정](https://docs.google.com/spreadsheets/d/1gO3unq7qZ-FccYGy5GK9pq1_KbzYy0tBdkdrn0i3Fq4/edit#gid=973287441)
 - [서버 DB 설계](https://docs.google.com/spreadsheets/d/1gO3unq7qZ-FccYGy5GK9pq1_KbzYy0tBdkdrn0i3Fq4/edit#gid=240237984)
 
