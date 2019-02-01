@@ -1,21 +1,18 @@
 package com.aone.menurandomchoice.views.ownerlogin;
 
+import android.content.Context;
 import android.content.Intent;
-import android.opengl.Visibility;
 
+import com.aone.menurandomchoice.GlobalApplication;
+import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginError;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginType;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
 import com.aone.menurandomchoice.repository.server.OnSignedUpCheckListener;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.ObservableBoolean;
-import androidx.databinding.ObservableByte;
-import androidx.databinding.ObservableField;
-import androidx.databinding.ObservableInt;
 
 public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
         implements OwnerLoginContract.Presenter {
@@ -44,25 +41,58 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
         getRepository().requestSignedUpCheck(userId, new OnSignedUpCheckListener() {
             @Override
             public void onAlreadySignedUp() {
-                getView().moveToOwnerDetailActivity(userId);
+                moveToOwnerDetailActivity(userId);
             }
 
             @Override
             public void onNotSignUp() {
-                switch (kakaoLoginType) {
-                    case KAKAO_TALK:
-                        getView().moveToSignUpActivity(userId);
-                        break;
-                    case KAKAO_ACCOUNT:
-                        getView().moveToSignUpActivity(userId);
-                        break;
+                if (kakaoLoginType != KakaoLoginType.LOGGEDIN) {
+                    moveToSignUpActivity(userId);
                 }
             }
         });
     }
 
+    private void moveToOwnerDetailActivity(long userId) {
+        if(isAttachView()) {
+            getView().moveToOwnerDetailActivity(userId);
+        }
+    }
+
+    private void moveToSignUpActivity(long userId) {
+        if(isAttachView()) {
+            getView().moveToSignUpActivity(userId);
+        }
+    }
+
     private void handlingKakaoLoginError(KakaoLoginError kakaoLoginError) {
-        //when the server implementation complement, we must error handling logic implement.
+        Context context = GlobalApplication.getGlobalApplicationContext();
+        switch (kakaoLoginError) {
+            case SERVER_ERROR:
+                getView().showToastMessage(context.getString(R.string.activity_owner_toast_server_error));
+                break;
+            case EXCEED_REQUEST_COUNT_ERROR:
+                getView().showToastMessage(context.getString(R.string.activity_owner_toast_exceed_request_count_error));
+                break;
+            case AUTHORIZATION_FAIL_ERROR:
+                getView().showToastMessage(context.getString(R.string.activity_owner_toast_authorization_fail_error));
+                break;
+            case SERVER_CHECK_ERROR:
+                getView().showToastMessage(context.getString(R.string.activity_owner_toast_server_check_error));
+                break;
+            case SYSTEM_ERROR:
+                getView().showToastMessage(context.getString(R.string.activity_owner_toast_system_error));
+                break;
+            case CANCELED_OPERATION_ERROR:
+                getView().showToastMessage(context.getString(R.string.activity_owner_toast_canceled_operation_error));
+                break;
+            case NETWORK_NOT_CONNECT_ERROR:
+                getView().showToastMessage(context.getString(R.string.activity_owner_toast_network_not_connect_error));
+                break;
+            case UNKNOWN_ERROR:
+                getView().showToastMessage(context.getString(R.string.activity_owner_toast_unknown_error));
+                break;
+        }
     }
 
     private OnKakaoLoginListener onKakaoLoginListener = new OnKakaoLoginListener() {

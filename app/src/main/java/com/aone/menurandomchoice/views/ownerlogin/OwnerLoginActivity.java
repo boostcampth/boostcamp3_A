@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.databinding.DataBindingUtil;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,7 +17,8 @@ import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.ownerdetail.OwnerDetailActivity;
 import com.aone.menurandomchoice.views.ownersignup.OwnerSignUpActivity;
 
-public class OwnerLoginActivity extends BaseActivity<ActivityOwnerLoginBinding, OwnerLoginContract.View, OwnerLoginContract.Presenter>
+public class OwnerLoginActivity
+        extends BaseActivity<ActivityOwnerLoginBinding, OwnerLoginContract.View, OwnerLoginContract.Presenter>
         implements OwnerLoginContract.View {
 
     public static final String EXTRA_USER_ID = "EXTRA_USER_ID";
@@ -105,7 +105,7 @@ public class OwnerLoginActivity extends BaseActivity<ActivityOwnerLoginBinding, 
     }
 
     @Override
-    public void showToastMessage(String message) {
+    public void showToastMessage(@NonNull String message) {
         Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -120,6 +120,5 @@ public class OwnerLoginActivity extends BaseActivity<ActivityOwnerLoginBinding, 
     public void kakaoTalkOtherAccountLoginClick(View view) {
         getPresenter().handlingOtherKaKaoAccountLogin();
     }
-
 
 }

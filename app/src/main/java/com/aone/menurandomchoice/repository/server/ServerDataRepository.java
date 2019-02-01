@@ -1,5 +1,10 @@
 package com.aone.menurandomchoice.repository.server;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.aone.menurandomchoice.GlobalApplication;
+
 import androidx.annotation.NonNull;
 
 public class ServerDataRepository implements ServerDataHelper {
@@ -23,9 +28,14 @@ public class ServerDataRepository implements ServerDataHelper {
     @Override
     public void requestSignedUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener) {
         try {
-            Thread.sleep(1000);
-            onSignedUpCheckListener.onAlreadySignedUp();
-//            onSignedUpCheckListener.onNotSignUp();
+            Thread.sleep(500);
+            SharedPreferences pref = GlobalApplication.getGlobalApplicationContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
+            boolean isSignedUp = pref.getBoolean(String.valueOf(userId), false);
+            if(isSignedUp) {
+                onSignedUpCheckListener.onAlreadySignedUp();
+            } else {
+                onSignedUpCheckListener.onNotSignUp();
+            }
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -37,12 +47,18 @@ public class ServerDataRepository implements ServerDataHelper {
      * so, I used virtual logic.
      */
     @Override
-    public void requestSignUp(long userId, String accessKey, OnSignUpRequestListener onSignUpRequestListener) {
+    public void requestSignUp(long userId, @NonNull String accessKey, @NonNull OnSignUpRequestListener onSignUpRequestListener) {
         try {
-            Thread.sleep(1000);
-            onSignUpRequestListener.onSignUpSuccess();
-        } catch (Exception e) {
+            Thread.sleep(500);
+            SharedPreferences pref = GlobalApplication.getGlobalApplicationContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean(String.valueOf(userId), true);
+            editor.commit();
 
+            onSignUpRequestListener.onSignUpSuccess();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

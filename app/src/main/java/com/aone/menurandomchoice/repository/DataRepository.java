@@ -35,22 +35,22 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void checkLoggedinAccount(OnKakaoLoginListener onKakaoLoginListener) {
+    public void checkLoggedinAccount(@NonNull OnKakaoLoginListener onKakaoLoginListener) {
         kakaoLoginHelper.checkLoggedinAccount(onKakaoLoginListener);
 }
 
     @Override
-    public void executeDeviceKakaoAccountLogin(OnKakaoLoginListener onKakaoLoginListener) {
+    public void executeDeviceKakaoAccountLogin(@NonNull OnKakaoLoginListener onKakaoLoginListener) {
         kakaoLoginHelper.executeDeviceKakaoAccountLogin(onKakaoLoginListener);
     }
 
     @Override
-    public void executeOtherKakaoAccountLogin(OnKakaoLoginListener onKakaoLoginListener) {
+    public void executeOtherKakaoAccountLogin(@NonNull OnKakaoLoginListener onKakaoLoginListener) {
         kakaoLoginHelper.executeOtherKakaoAccountLogin(onKakaoLoginListener);
     }
 
     @Override
-    public void executeKakaoAccountLogout(OnKakaoLogoutListener onKakaoLogoutListener) {
+    public void executeKakaoAccountLogout(@NonNull OnKakaoLogoutListener onKakaoLogoutListener) {
         kakaoLoginHelper.executeKakaoAccountLogout(onKakaoLogoutListener);
     }
 
@@ -65,7 +65,7 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void requestSignUp(long userId, String accessKey, OnSignUpRequestListener onSignUpRequestListener) {
+    public void requestSignUp(long userId,@NonNull  String accessKey, @NonNull OnSignUpRequestListener onSignUpRequestListener) {
         serverDataHelper.requestSignUp(userId, accessKey, onSignUpRequestListener);
     }
 

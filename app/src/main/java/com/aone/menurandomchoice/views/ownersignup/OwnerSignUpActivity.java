@@ -80,10 +80,8 @@ public class OwnerSignUpActivity
 
     public void onSignUpRequestClick(View view) {
         long userId = getIntent().getLongExtra(OwnerLoginActivity.EXTRA_USER_ID, -1);
-        if(userId != -1) {
-            String accessKey = getDataBinding().activityOwnerSignUpEtAccessKey.getText().toString();
-            getPresenter().requestSignUp(userId, accessKey);
-        }
+        String accessKey = getDataBinding().activityOwnerSignUpEtAccessKey.getText().toString();
+        getPresenter().requestSignUp(userId, accessKey);
     }
 
     @Override

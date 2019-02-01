@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -30,7 +29,7 @@
             android:paddingTop="@dimen/x_large_padding"
             android:paddingRight="@dimen/middle_padding"
             android:paddingBottom="@dimen/x_large_padding"
-            android:textSize="@dimen/activity_owner_sign_up_button_editText"
+            android:textSize="@dimen/x_large_text"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -56,12 +55,13 @@
             android:paddingBottom="@dimen/x_large_padding"
             android:text="@string/activity_owner_button_sign_up_request"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/activity_owner_sign_up_button_editText"
+            android:textSize="@dimen/x_large_text"
             android:textStyle="bold"
             android:onClick="@{activity::onSignUpRequestClick}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
