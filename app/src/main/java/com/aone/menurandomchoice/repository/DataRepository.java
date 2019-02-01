@@ -1,11 +1,15 @@
-package com.aone.menurandomchoice.data;
+package com.aone.menurandomchoice.repository;
 
 import android.content.Intent;
 
-import com.aone.menurandomchoice.data.oauth.KakaoLoginHelper;
-import com.aone.menurandomchoice.data.oauth.KakaoLoginRepository;
-import com.aone.menurandomchoice.data.oauth.OnKakaoLoginListener;
-import com.aone.menurandomchoice.data.oauth.OnKakaoLogoutListener;
+import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
+import com.aone.menurandomchoice.repository.oauth.KakaoLoginRepository;
+import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
+import com.aone.menurandomchoice.repository.oauth.OnKakaoLogoutListener;
+import com.aone.menurandomchoice.repository.server.OnSignUpRequestListener;
+import com.aone.menurandomchoice.repository.server.OnSignedUpCheckListener;
+import com.aone.menurandomchoice.repository.server.ServerDataHelper;
+import com.aone.menurandomchoice.repository.server.ServerDataRepository;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +18,7 @@ public class DataRepository implements Repository {
 
     private static Repository repository;
     private KakaoLoginHelper kakaoLoginHelper;
+    private ServerDataHelper serverDataHelper;
 
     @NonNull
     public static Repository getInstance() {
@@ -26,6 +31,7 @@ public class DataRepository implements Repository {
 
     private DataRepository() {
         kakaoLoginHelper = KakaoLoginRepository.getInstance();
+        serverDataHelper = ServerDataRepository.getInstance();
     }
 
     @Override
@@ -51,6 +57,16 @@ public class DataRepository implements Repository {
     @Override
     public boolean isNeedKakaoSDKLoginScreen(int requestCode, int resultCode, @Nullable Intent data) {
         return kakaoLoginHelper.isNeedKakaoSDKLoginScreen(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void requestSignUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener) {
+        serverDataHelper.requestSignUpCheck(userId, onSignedUpCheckListener);
+    }
+
+    @Override
+    public void requestSignUp(long userId, String accessKey, OnSignUpRequestListener onSignUpRequestListener) {
+        serverDataHelper.requestSignUp(userId, accessKey, onSignUpRequestListener);
     }
 
     @Override

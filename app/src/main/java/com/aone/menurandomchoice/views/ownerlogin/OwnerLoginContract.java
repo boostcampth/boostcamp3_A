@@ -10,6 +10,10 @@ public interface OwnerLoginContract {
 
     interface View extends BaseContract.View {
 
+        void moveToOwnerDetailActivity(long userId);
+
+        void moveToSignUpActivity(long userId);
+
         void showToastMessage(String message);
 
     }

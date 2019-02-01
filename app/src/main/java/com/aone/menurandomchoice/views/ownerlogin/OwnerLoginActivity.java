@@ -15,9 +15,12 @@ import android.widget.Toast;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerLoginBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.ownersignup.OwnerSignUpActivity;
 
 public class OwnerLoginActivity extends BaseActivity<ActivityOwnerLoginBinding, OwnerLoginContract.View, OwnerLoginContract.Presenter>
         implements OwnerLoginContract.View {
+
+    public static final String EXTRA_USER_ID = "EXTRA_USER_ID";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +87,24 @@ public class OwnerLoginActivity extends BaseActivity<ActivityOwnerLoginBinding, 
     protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
     }
 
+    @Override
+    public void moveToOwnerDetailActivity(long userId) {
+
+    }
+
+    @Override
+    public void moveToSignUpActivity(long userId) {
+        Intent signUpActivityIntent = new Intent(OwnerLoginActivity.this, OwnerSignUpActivity.class);
+        signUpActivityIntent.putExtra(EXTRA_USER_ID, userId);
+        startActivity(signUpActivityIntent);
+        finish();
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
     private void requestLoginCheckToPresenter() {
         getPresenter().handlingLoggedInAccount();
     }
@@ -96,8 +117,5 @@ public class OwnerLoginActivity extends BaseActivity<ActivityOwnerLoginBinding, 
         getPresenter().handlingOtherKaKaoAccountLogin();
     }
 
-    @Override
-    public void showToastMessage(String message) {
-        Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();
-    }
+
 }

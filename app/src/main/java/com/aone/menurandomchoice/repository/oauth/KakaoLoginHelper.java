@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.data.oauth;
+package com.aone.menurandomchoice.repository.oauth;
 
 import android.content.Intent;
 

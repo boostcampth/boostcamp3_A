@@ -8,10 +8,13 @@ import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerSignUpBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 
 public class OwnerSignUpActivity
         extends BaseActivity<ActivityOwnerSignUpBinding, OwnerSignUpContract.View, OwnerSignUpContract.Presenter>
@@ -73,6 +76,23 @@ public class OwnerSignUpActivity
 
     @Override
     protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
+    }
+
+    public void onSignUpRequestClick(View view) {
+        long userId = getIntent().getLongExtra(OwnerLoginActivity.EXTRA_USER_ID, -1);
+        if(userId != -1) {
+            String accessKey = getDataBinding().activityOwnerSignUpEtAccessKey.getText().toString();
+            getPresenter().requestSignUp(userId, accessKey);
+        }
+    }
+
+    @Override
+    public void moveToOwnerDetailActivity(long userId) {
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 }
