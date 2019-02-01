@@ -15,7 +15,6 @@ public enum KakaoLoginError {
     NO_SESSION_ERROR,
     UNKNOWN_ERROR;
 
-
     public static KakaoLoginError convertToKakaoOauthError(ErrorResult errorResult) {
         if(errorResult != null) {
             switch (errorResult.getErrorCode()) {
@@ -34,7 +33,6 @@ public enum KakaoLoginError {
             return UNKNOWN_ERROR;
         }
     }
-
 
     public static KakaoLoginError convertToKakaoOauthError(KakaoException kakaoException) {
         if(kakaoException != null) {

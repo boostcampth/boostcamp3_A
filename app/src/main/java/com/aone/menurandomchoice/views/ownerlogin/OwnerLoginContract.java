@@ -1,6 +1,5 @@
 package com.aone.menurandomchoice.views.ownerlogin;
 
-import android.app.Activity;
 import android.content.Intent;
 
 import com.aone.menurandomchoice.views.base.BaseContract;
@@ -11,7 +10,7 @@ public interface OwnerLoginContract {
 
     interface View extends BaseContract.View {
 
-        Activity getActivity();
+        void showToastMessage(String message);
 
     }
 
@@ -24,6 +23,7 @@ public interface OwnerLoginContract {
         void handlingOtherKaKaoAccountLogin();
 
         boolean isNeedKakaoSDKLoginScreen(int requestCode, int resultCode, @Nullable Intent data);
+
     }
 
 }

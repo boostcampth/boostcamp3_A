@@ -9,10 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.ViewDataBinding;
 
 public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseContract.View, P extends BaseContract.Presenter<V>>
-        extends AppCompatActivity implements BaseContract.View {
+        extends AppCompatActivity
+        implements BaseContract.View {
 
-    protected B dataBinding;
-    protected P presenter;
+    private B dataBinding;
+    private P presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +61,14 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     @Override
     public Context getAppContext() {
         return getApplicationContext();
+    }
+
+    protected B getDataBinding() {
+        return dataBinding;
+    }
+
+    protected P getPresenter() {
+        return presenter;
     }
 
     private void attachViewToPresenter() {

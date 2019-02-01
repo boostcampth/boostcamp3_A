@@ -10,14 +10,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
-import com.aone.menurandomchoice.data.DataRepository;
 import com.aone.menurandomchoice.databinding.ActivityOwnerLoginBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 
-public class OwnerLoginActivity
-        extends BaseActivity<ActivityOwnerLoginBinding, OwnerLoginContract.View, OwnerLoginContract.Presenter>
+public class OwnerLoginActivity extends BaseActivity<ActivityOwnerLoginBinding, OwnerLoginContract.View, OwnerLoginContract.Presenter>
         implements OwnerLoginContract.View {
 
     @Override
@@ -26,20 +25,6 @@ public class OwnerLoginActivity
 
         setUpBackArrow();
         requestLoginCheckToPresenter();
-
-        dataBinding.activityOwnerTvPhonenumberGuide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DataRepository.getInstance().executeKakaoAccountLogout();
-            }
-        });
-    }
-
-    private void setUpBackArrow() {
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     @Override
@@ -54,10 +39,24 @@ public class OwnerLoginActivity
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(!getPresenter().isNeedKakaoSDKLoginScreen(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
 
         finish();
+    }
+
+    private void setUpBackArrow() {
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @NonNull
@@ -82,30 +81,23 @@ public class OwnerLoginActivity
     }
 
     @Override
-    public Activity getActivity() {
-        return this;
-    }
-
-    @Override
     protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
     }
 
     private void requestLoginCheckToPresenter() {
-        presenter.handlingLoggedInAccount();
+        getPresenter().handlingLoggedInAccount();
     }
 
     public void kakaoTalkAccountLoginClick(View view) {
-        presenter.handlingDeviceKaKaoAccountLogin();
+        getPresenter().handlingDeviceKaKaoAccountLogin();
     }
 
     public void kakaoTalkOtherAccountLoginClick(View view) {
-        presenter.handlingOtherKaKaoAccountLogin();
+        getPresenter().handlingOtherKaKaoAccountLogin();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(!presenter.isNeedKakaoSDKLoginScreen(requestCode, resultCode, data)) {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
+    public void showToastMessage(String message) {
+        Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
