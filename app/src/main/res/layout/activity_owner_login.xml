@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="@dimen/x_large_margin"
+            android:layout_marginEnd="@dimen/x_large_margin"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:background="@drawable/kakao_login_button_background"
+            android:onClick="@{activity::kakaoTalkAccountLoginClick}"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/middle_margin"
+                android:contentDescription="@string/activity_owner_image_kakao_talk_login_tts"
+                android:src="@drawable/talk" />
+
+            <View
+                android:layout_width="1.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/kakao_login_bar" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_owner_button_kakao_talk_login_tts"
+                android:gravity="center"
+                android:text="@string/activity_owner_button_kakao_talk_account_login"
+                android:textColor="@color/colorBrown"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="@dimen/x_large_margin"
+            android:layout_marginEnd="@dimen/x_large_margin"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:background="@drawable/kakao_login_button_background"
+            app:layout_constraintBottom_toTopOf="@+id/activity_owner_login_divide_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{activity::kakaoTalkOtherAccountLoginClick}"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/middle_margin"
+                android:contentDescription="@string/activity_owner_image_kakao_talk_login_tts"
+                android:src="@drawable/account" />
+
+            <View
+                android:layout_width="1.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/kakao_login_bar" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_owner_button_kakao_talk_login_tts"
+                android:gravity="center"
+                android:text="@string/activity_owner_button_kakao_other_account_login"
+                android:textColor="@color/colorBrown"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_owner_login_center_guide_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+
+        <View
+            android:id="@+id/activity_owner_login_divide_view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/colorGray"
+            app:layout_constraintBottom_toBottomOf="@id/activity_owner_login_center_guide_line"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+            app:layout_constraintTop_toTopOf="@id/activity_owner_login_center_guide_line" />
+
+        <TextView
+            android:id="@+id/activity_owner_tv_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:text="@string/activity_owner_textview_login_guide"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_owner_login_divide_view" />
+
+        <TextView
+            android:id="@+id/activity_owner_tv_phonenumber_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_margin"
+            android:gravity="center"
+            android:text="@string/activity_owner_textview_phonenumber_guide"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="35sp"
+            app:layout_constraintEnd_toEndOf="@+id/activity_owner_tv_guide"
+            app:layout_constraintStart_toStartOf="@+id/activity_owner_tv_guide"
+            app:layout_constraintTop_toBottomOf="@+id/activity_owner_tv_guide" />
+
+        <!--<com.kakao.usermgmt.LoginButton-->
+            <!--android:id="@+id/kakao"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"></com.kakao.usermgmt.LoginButton>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
