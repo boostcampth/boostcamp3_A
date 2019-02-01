@@ -19,5 +19,9 @@
     <string name="activity_owner_textview_login_guide">아직 머먹노 업주님이 아니세요?\n최초 로그인 시 인증번호가 필요합니다</string>
     <string name="activity_owner_textview_phonenumber_guide">고객센터\n0000 - 0000</string>
 
+    <!-- activity_owner_sign_up -->
+    <string name="activity_owner_sign_up_label">업주 회원가입</string>
+    <string name="activity_owner_button_sign_up_request">회원가입 요청</string>
+    <string name="activity_owner_access_key_hint">인증번호 6자리</string>
 
 </resources>
