@@ -2,17 +2,18 @@ package com.aone.menurandomchoice.repository.oauth;
 
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public interface KakaoLoginHelper {
 
-    void checkLoggedinAccount(OnKakaoLoginListener onKakaoLoginListener);
+    void checkLoggedinAccount(@NonNull OnKakaoLoginListener onKakaoLoginListener);
 
-    void executeDeviceKakaoAccountLogin(OnKakaoLoginListener onKakaoLoginListener);
+    void executeDeviceKakaoAccountLogin(@NonNull OnKakaoLoginListener onKakaoLoginListener);
 
-    void executeOtherKakaoAccountLogin(OnKakaoLoginListener onKakaoLoginListener);
+    void executeOtherKakaoAccountLogin(@NonNull OnKakaoLoginListener onKakaoLoginListener);
 
-    void executeKakaoAccountLogout(OnKakaoLogoutListener onKakaoLogoutListener);
+    void executeKakaoAccountLogout(@NonNull OnKakaoLogoutListener onKakaoLogoutListener);
 
     boolean isNeedKakaoSDKLoginScreen(int requestCode, int resultCode, @Nullable Intent data);
 

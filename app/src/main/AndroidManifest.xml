@@ -38,10 +38,9 @@
         <activity
             android:name=".views.ownersignup.OwnerSignUpActivity"
             android:label="@string/activity_owner_sign_up_label"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustResize">
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
 
-        </activity>
-
+        <activity android:name=".views.ownerdetail.OwnerDetailActivity"/>
     </application>
 
 </manifest>

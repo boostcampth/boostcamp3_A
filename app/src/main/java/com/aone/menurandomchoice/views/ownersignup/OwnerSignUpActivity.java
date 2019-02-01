@@ -3,9 +3,9 @@ package com.aone.menurandomchoice.views.ownersignup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,12 +14,12 @@ import android.widget.Toast;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerSignUpBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.ownerdetail.OwnerDetailActivity;
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 
 public class OwnerSignUpActivity
         extends BaseActivity<ActivityOwnerSignUpBinding, OwnerSignUpContract.View, OwnerSignUpContract.Presenter>
         implements OwnerSignUpContract.View {
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,10 +88,13 @@ public class OwnerSignUpActivity
 
     @Override
     public void moveToOwnerDetailActivity(long userId) {
+        Intent ownerDetailIntent = new Intent(OwnerSignUpActivity.this, OwnerDetailActivity.class);
+        startActivity(ownerDetailIntent);
+        finish();
     }
 
     @Override
-    public void showToastMessage(String message) {
+    public void showToastMessage(@NonNull String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 

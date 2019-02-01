@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 
 public interface ServerDataHelper {
 
-    void requestSignUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener);
+    void requestSignedUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener);
 
-    void requestSignUp(long userId, String accessKey, OnSignUpRequestListener onSignUpRequestListener);
+    void requestSignUp(long userId, @NonNull String accessKey, @NonNull OnSignUpRequestListener onSignUpRequestListener);
 
 }

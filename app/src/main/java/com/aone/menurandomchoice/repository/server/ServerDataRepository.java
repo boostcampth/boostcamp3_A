@@ -21,10 +21,11 @@ public class ServerDataRepository implements ServerDataHelper {
      * so, I used virtual logic.
      */
     @Override
-    public void requestSignUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener) {
+    public void requestSignedUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener) {
         try {
             Thread.sleep(1000);
-            onSignedUpCheckListener.onNotSignUp();
+            onSignedUpCheckListener.onAlreadySignedUp();
+//            onSignedUpCheckListener.onNotSignUp();
         } catch (Exception e){
             e.printStackTrace();
         }

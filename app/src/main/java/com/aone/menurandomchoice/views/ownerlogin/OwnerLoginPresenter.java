@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.ownerlogin;
 
 import android.content.Intent;
+import android.opengl.Visibility;
 
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginError;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginType;
@@ -9,7 +10,12 @@ import com.aone.menurandomchoice.repository.server.OnSignedUpCheckListener;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.ObservableBoolean;
+import androidx.databinding.ObservableByte;
+import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 
 public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
         implements OwnerLoginContract.Presenter {
@@ -35,37 +41,39 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
     }
 
     private void requestSignUpCheck(final long userId, final KakaoLoginType kakaoLoginType) {
-        getRepository().requestSignUpCheck(userId, new OnSignedUpCheckListener() {
+        getRepository().requestSignedUpCheck(userId, new OnSignedUpCheckListener() {
             @Override
-            public void onAlreadySignUp() {
+            public void onAlreadySignedUp() {
                 getView().moveToOwnerDetailActivity(userId);
             }
 
             @Override
             public void onNotSignUp() {
-                if(kakaoLoginType != KakaoLoginType.LOGGEDIN) {
-                    getView().moveToSignUpActivity(userId);
+                switch (kakaoLoginType) {
+                    case KAKAO_TALK:
+                        getView().moveToSignUpActivity(userId);
+                        break;
+                    case KAKAO_ACCOUNT:
+                        getView().moveToSignUpActivity(userId);
+                        break;
                 }
             }
         });
     }
 
     private void handlingKakaoLoginError(KakaoLoginError kakaoLoginError) {
-        switch (kakaoLoginError) {
-
-        }
-
+        //when the server implementation complement, we must error handling logic implement.
     }
 
     private OnKakaoLoginListener onKakaoLoginListener = new OnKakaoLoginListener() {
 
         @Override
-        public void onKakaoLoginSuccess(long userId, KakaoLoginType kakaoLoginType) {
+        public void onKakaoLoginSuccess(long userId, @NonNull KakaoLoginType kakaoLoginType) {
             requestSignUpCheck(userId, kakaoLoginType);
         }
 
         @Override
-        public void onFail(KakaoLoginError kakaoLoginError) {
+        public void onFail(@NonNull KakaoLoginError kakaoLoginError) {
             handlingKakaoLoginError(kakaoLoginError);
         }
 

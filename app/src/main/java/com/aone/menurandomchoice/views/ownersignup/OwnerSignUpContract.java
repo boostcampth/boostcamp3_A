@@ -10,7 +10,7 @@ public interface OwnerSignUpContract {
 
         void moveToOwnerDetailActivity(long userId);
 
-        void showToastMessage(String message);
+        void showToastMessage(@NonNull String message);
 
     }
 

@@ -1,11 +1,13 @@
 package com.aone.menurandomchoice.repository.oauth;
 
 
+import androidx.annotation.NonNull;
+
 public interface OnKakaoLoginListener {
 
-    void onKakaoLoginSuccess(long userId, KakaoLoginType kakaoLoginType);
+    void onKakaoLoginSuccess(long userId, @NonNull KakaoLoginType kakaoLoginType);
 
-    void onFail(KakaoLoginError kakaoLoginError);
+    void onFail(@NonNull KakaoLoginError kakaoLoginError);
 
 }
 

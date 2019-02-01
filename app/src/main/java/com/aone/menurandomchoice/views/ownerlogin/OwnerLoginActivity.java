@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerLoginBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.ownerdetail.OwnerDetailActivity;
 import com.aone.menurandomchoice.views.ownersignup.OwnerSignUpActivity;
 
 public class OwnerLoginActivity extends BaseActivity<ActivityOwnerLoginBinding, OwnerLoginContract.View, OwnerLoginContract.Presenter>
@@ -89,7 +90,10 @@ public class OwnerLoginActivity extends BaseActivity<ActivityOwnerLoginBinding, 
 
     @Override
     public void moveToOwnerDetailActivity(long userId) {
-
+        Intent ownerDetailIntent = new Intent(OwnerLoginActivity.this, OwnerDetailActivity.class);
+        ownerDetailIntent.putExtra(EXTRA_USER_ID, userId);
+        startActivity(ownerDetailIntent);
+        finish();
     }
 
     @Override

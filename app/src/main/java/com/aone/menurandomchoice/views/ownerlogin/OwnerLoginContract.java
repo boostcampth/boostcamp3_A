@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.aone.menurandomchoice.views.base.BaseContract;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public interface OwnerLoginContract {
@@ -14,7 +15,7 @@ public interface OwnerLoginContract {
 
         void moveToSignUpActivity(long userId);
 
-        void showToastMessage(String message);
+        void showToastMessage(@NonNull String message);
 
     }
 

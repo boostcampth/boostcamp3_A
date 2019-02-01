@@ -37,7 +37,7 @@ public class DataRepository implements Repository {
     @Override
     public void checkLoggedinAccount(OnKakaoLoginListener onKakaoLoginListener) {
         kakaoLoginHelper.checkLoggedinAccount(onKakaoLoginListener);
-    }
+}
 
     @Override
     public void executeDeviceKakaoAccountLogin(OnKakaoLoginListener onKakaoLoginListener) {
@@ -60,8 +60,8 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void requestSignUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener) {
-        serverDataHelper.requestSignUpCheck(userId, onSignedUpCheckListener);
+    public void requestSignedUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener) {
+        serverDataHelper.requestSignedUpCheck(userId, onSignedUpCheckListener);
     }
 
     @Override
