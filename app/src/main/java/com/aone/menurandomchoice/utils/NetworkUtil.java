@@ -3,13 +3,15 @@ package com.aone.menurandomchoice.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import androidx.annotation.NonNull;
+
+import com.aone.menurandomchoice.GlobalApplication;
 
 public class NetworkUtil {
 
-    public static  boolean isNetworkConnecting(@NonNull Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static  boolean isNetworkConnecting() {
+        Context context = GlobalApplication.getGlobalApplicationContext();
 
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 

@@ -2,6 +2,8 @@ package com.aone.menurandomchoice.views.base;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 
 public interface BaseContract {
 
@@ -13,7 +15,7 @@ public interface BaseContract {
 
     interface Presenter<V extends BaseContract.View> {
 
-        void attachView(V view);
+        void attachView(@NonNull V view);
 
         void detachView();
 

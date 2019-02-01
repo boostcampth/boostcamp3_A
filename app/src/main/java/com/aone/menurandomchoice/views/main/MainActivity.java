@@ -1,11 +1,15 @@
 package com.aone.menurandomchoice.views.main;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,11 +37,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                break;
 
             case R.id.btn_upload:
-                //Move to Upload Store Information Activity
+                moveToOwnerLoginActivity();
                 break;
 
             default:
                 Log.d("MainActivity onClick","nothing mapped to clicked view");
         }
+    }
+
+    private void moveToOwnerLoginActivity() {
+        Intent ownerLoginIntent = new Intent(MainActivity.this, OwnerLoginActivity.class);
+        startActivity(ownerLoginIntent);
     }
 }
