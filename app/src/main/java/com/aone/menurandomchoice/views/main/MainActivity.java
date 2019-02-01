@@ -1,11 +1,13 @@
 package com.aone.menurandomchoice.views.main;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.aone.menurandomchoice.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -28,14 +30,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.btn_start:
                 //Move to Random Choice Activity
-                break;
+               break;
 
             case R.id.btn_upload:
                 //Move to Upload Store Information Activity
                 break;
 
             default:
-                return;
+                Log.d("MainActivity onClick","nothing mapped to clicked view");
         }
     }
 }
