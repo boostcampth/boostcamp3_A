@@ -25,4 +25,5 @@
 - [기능 명세 문서](https://docs.google.com/spreadsheets/d/1gO3unq7qZ-FccYGy5GK9pq1_KbzYy0tBdkdrn0i3Fq4/edit#gid=0)
 - [프로젝트 일정](https://docs.google.com/spreadsheets/d/1gO3unq7qZ-FccYGy5GK9pq1_KbzYy0tBdkdrn0i3Fq4/edit#gid=973287441)
 - [서버 DB 설계](https://docs.google.com/spreadsheets/d/1gO3unq7qZ-FccYGy5GK9pq1_KbzYy0tBdkdrn0i3Fq4/edit#gid=240237984)
+- [서버 api 문서](http://ec2-54-180-49-154.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui.html#/)
 
