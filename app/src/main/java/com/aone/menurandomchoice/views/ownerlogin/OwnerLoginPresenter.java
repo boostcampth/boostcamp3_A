@@ -73,7 +73,7 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
                 int errorStringResourceId = kakaoLoginError.getStringResourceId();
                 errorMessage = GlobalApplication.getGlobalApplicationContext().getString(errorStringResourceId);
             } catch (Resources.NotFoundException e) {
-                errorMessage = GlobalApplication.getGlobalApplicationContext().getString(R.string.activity_owner_toast_unknown_error);
+                errorMessage = GlobalApplication.getGlobalApplicationContext().getString(R.string.activity_owner_toast_system_error);
             }
 
             getView().showToastMessage(errorMessage);

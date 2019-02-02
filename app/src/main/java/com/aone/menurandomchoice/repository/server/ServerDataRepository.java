@@ -28,7 +28,6 @@ public class ServerDataRepository implements ServerDataHelper {
     @Override
     public void requestSignedUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener) {
         try {
-            Thread.sleep(500);
             SharedPreferences pref = GlobalApplication.getGlobalApplicationContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
             boolean isSignedUp = pref.getBoolean(String.valueOf(userId), false);
             if(isSignedUp) {
