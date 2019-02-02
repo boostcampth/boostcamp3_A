@@ -49,16 +49,14 @@ public class ServerDataRepository implements ServerDataHelper {
     @Override
     public void requestSignUp(long userId, @NonNull String accessKey, @NonNull OnSignUpRequestListener onSignUpRequestListener) {
         try {
-            Thread.sleep(500);
             SharedPreferences pref = GlobalApplication.getGlobalApplicationContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             editor.putBoolean(String.valueOf(userId), true);
             editor.commit();
 
             onSignUpRequestListener.onSignUpSuccess();
-
         } catch (Exception e) {
-            e.printStackTrace();
+            onSignUpRequestListener.onSignUpFail();
         }
     }
 }
