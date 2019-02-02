@@ -65,7 +65,7 @@ public class KakaoLoginRepository implements KakaoLoginHelper {
     private void openKakaoSession(@NonNull KakaoLoginType kakaoLoginType, final OnKakaoLoginListener onKakaoLoginListener) {
         if(NetworkUtil.isNetworkConnecting()) {
             addCallbackToCurrentSession(kakaoLoginType, onKakaoLoginListener);
-            openCurrentSession(kakaoLoginType, onKakaoLoginListener);
+            openCurrentSession(kakaoLoginType);
         } else {
             clearCallbackOfCurrentSession();
             sendFailToListener(KakaoLoginError.NETWORK_NOT_CONNECT_ERROR, onKakaoLoginListener);
@@ -95,13 +95,12 @@ public class KakaoLoginRepository implements KakaoLoginHelper {
         Session.getCurrentSession().clearCallbacks();
     }
 
-    private void openCurrentSession(KakaoLoginType kakaoLoginType, OnKakaoLoginListener onKakaoLoginListener) {
+    private void openCurrentSession(KakaoLoginType kakaoLoginType) {
         Session currentSession = Session.getCurrentSession();
         switch (kakaoLoginType) {
             case LOGGEDIN:
                 if (!currentSession.checkAndImplicitOpen()) {
                     clearCallbackOfCurrentSession();
-                    sendFailToListener(KakaoLoginError.NO_SESSION_ERROR, onKakaoLoginListener);
                 }
                 break;
             case KAKAO_TALK:

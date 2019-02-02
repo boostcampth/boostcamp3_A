@@ -2,6 +2,7 @@ package com.aone.menurandomchoice.views.ownerlogin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
@@ -66,32 +67,16 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
     }
 
     private void handlingKakaoLoginError(KakaoLoginError kakaoLoginError) {
-        Context context = GlobalApplication.getGlobalApplicationContext();
-        switch (kakaoLoginError) {
-            case SERVER_ERROR:
-                getView().showToastMessage(context.getString(R.string.activity_owner_toast_server_error));
-                break;
-            case EXCEED_REQUEST_COUNT_ERROR:
-                getView().showToastMessage(context.getString(R.string.activity_owner_toast_exceed_request_count_error));
-                break;
-            case AUTHORIZATION_FAIL_ERROR:
-                getView().showToastMessage(context.getString(R.string.activity_owner_toast_authorization_fail_error));
-                break;
-            case SERVER_CHECK_ERROR:
-                getView().showToastMessage(context.getString(R.string.activity_owner_toast_server_check_error));
-                break;
-            case SYSTEM_ERROR:
-                getView().showToastMessage(context.getString(R.string.activity_owner_toast_system_error));
-                break;
-            case CANCELED_OPERATION_ERROR:
-                getView().showToastMessage(context.getString(R.string.activity_owner_toast_canceled_operation_error));
-                break;
-            case NETWORK_NOT_CONNECT_ERROR:
-                getView().showToastMessage(context.getString(R.string.activity_owner_toast_network_not_connect_error));
-                break;
-            case UNKNOWN_ERROR:
-                getView().showToastMessage(context.getString(R.string.activity_owner_toast_unknown_error));
-                break;
+        if(isAttachView()) {
+            String errorMessage;
+            try {
+                int errorStringResourceId = kakaoLoginError.getStringResourceId();
+                errorMessage = GlobalApplication.getGlobalApplicationContext().getString(errorStringResourceId);
+            } catch (Resources.NotFoundException e) {
+                errorMessage = GlobalApplication.getGlobalApplicationContext().getString(R.string.activity_owner_toast_unknown_error);
+            }
+
+            getView().showToastMessage(errorMessage);
         }
     }
 

@@ -1,19 +1,30 @@
 package com.aone.menurandomchoice.repository.oauth;
 
+import com.aone.menurandomchoice.R;
 import com.kakao.network.ErrorResult;
 import com.kakao.util.exception.KakaoException;
 
 public enum KakaoLoginError {
 
-    SERVER_ERROR,
-    EXCEED_REQUEST_COUNT_ERROR,
-    AUTHORIZATION_FAIL_ERROR,
-    SERVER_CHECK_ERROR,
-    SYSTEM_ERROR,
-    CANCELED_OPERATION_ERROR,
-    NETWORK_NOT_CONNECT_ERROR,
-    NO_SESSION_ERROR,
-    UNKNOWN_ERROR;
+
+    SERVER_ERROR(R.string.activity_owner_toast_server_error),
+    EXCEED_REQUEST_COUNT_ERROR(R.string.activity_owner_toast_exceed_request_count_error),
+    AUTHORIZATION_FAIL_ERROR(R.string.activity_owner_toast_authorization_fail_error),
+    SERVER_CHECK_ERROR(R.string.activity_owner_toast_server_check_error),
+    SYSTEM_ERROR(R.string.activity_owner_toast_system_error),
+    CANCELED_OPERATION_ERROR(R.string.activity_owner_toast_canceled_operation_error),
+    NETWORK_NOT_CONNECT_ERROR(R.string.activity_owner_toast_network_not_connect_error),
+    UNKNOWN_ERROR(R.string.activity_owner_toast_unknown_error);
+
+    private int stringResourceId;
+
+    KakaoLoginError(int stringResourceId) {
+        this.stringResourceId = stringResourceId;
+    }
+
+    public int getStringResourceId() {
+        return stringResourceId;
+    }
 
     public static KakaoLoginError convertToKakaoOauthError(ErrorResult errorResult) {
         if(errorResult != null) {
