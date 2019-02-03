@@ -14,7 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
-
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/native_key" />
@@ -34,7 +33,14 @@
 
         <activity
             android:name=".views.ownerlogin.OwnerLoginActivity"
-            android:label="@string/activity_owner_login_label"/>
+            android:label="@string/activity_owner_login_label" />
+
+        <activity
+            android:name=".views.ownersignup.OwnerSignUpActivity"
+            android:label="@string/activity_owner_sign_up_label"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
+
+        <activity android:name=".views.ownerdetail.OwnerDetailActivity"/>
     </application>
 
 </manifest>

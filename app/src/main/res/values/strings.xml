@@ -18,6 +18,18 @@
     <string name="activity_owner_button_kakao_talk_login_tts">카카오계정으로 로그인, 버튼</string>
     <string name="activity_owner_textview_login_guide">아직 머먹노 업주님이 아니세요?\n최초 로그인 시 인증번호가 필요합니다</string>
     <string name="activity_owner_textview_phonenumber_guide">고객센터\n0000 - 0000</string>
+    <string name="activity_owner_toast_server_error">카카오 서버에서 발생된 오류로 인해 인증에 실패했습니다</string>
+    <string name="activity_owner_toast_exceed_request_count_error">허용된 인증 횟수가 초과하여 인증에 실패했습니다</string>
+    <string name="activity_owner_toast_authorization_fail_error">인증 서버에서 발생된 오류로 인해 인증에 실패했습니다</string>
+    <string name="activity_owner_toast_server_check_error">인증 서버가 점검중입니다</string>
+    <string name="activity_owner_toast_system_error">시스템에서 발생된 오류로 인해 인증에 실패했습니다\n개발자에게 알려주세요</string>
+    <string name="activity_owner_toast_canceled_operation_error">카카오톡 인증을 취소했습니다</string>
+    <string name="activity_owner_toast_network_not_connect_error">인터넷 연결을 확인해주세요</string>
+    <string name="activity_owner_toast_unknown_error">알 수 없는 에러가 발생되었습니다\n개발자에게 알려주세요</string>
 
+    <!-- activity_owner_sign_up -->
+    <string name="activity_owner_sign_up_label">업주 회원가입</string>
+    <string name="activity_owner_button_sign_up_request">회원가입 요청</string>
+    <string name="activity_owner_access_key_hint">인증번호 6자리</string>
 
 </resources>

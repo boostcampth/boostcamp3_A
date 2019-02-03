@@ -1,7 +1,7 @@
 package com.aone.menurandomchoice.views.base;
 
-import com.aone.menurandomchoice.data.DataRepository;
-import com.aone.menurandomchoice.data.Repository;
+import com.aone.menurandomchoice.repository.DataRepository;
+import com.aone.menurandomchoice.repository.Repository;
 
 import androidx.annotation.NonNull;
 

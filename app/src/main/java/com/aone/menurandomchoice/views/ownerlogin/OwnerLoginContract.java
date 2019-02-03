@@ -4,13 +4,18 @@ import android.content.Intent;
 
 import com.aone.menurandomchoice.views.base.BaseContract;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public interface OwnerLoginContract {
 
     interface View extends BaseContract.View {
 
-        void showToastMessage(String message);
+        void moveToOwnerDetailActivity(long userId);
+
+        void moveToSignUpActivity(long userId);
+
+        void showToastMessage(@NonNull String message);
 
     }
 
