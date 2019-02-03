@@ -2,7 +2,7 @@ package com.aone.menurandomchoice;
 
 import android.app.Application;
 
-import com.aone.menurandomchoice.data.oauth.KakaoSDKAdapter;
+import com.aone.menurandomchoice.repository.oauth.KakaoSDKAdapter;
 import com.kakao.auth.KakaoSDK;
 
 public class GlobalApplication extends Application {

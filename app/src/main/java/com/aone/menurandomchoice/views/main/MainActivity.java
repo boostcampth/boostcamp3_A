@@ -10,7 +10,6 @@ import android.widget.Button;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
