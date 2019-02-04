@@ -35,6 +35,9 @@
         <activity
             android:name=".views.ownerlogin.OwnerLoginActivity"
             android:label="@string/activity_owner_login_label"/>
+        <activity
+            android:name=".views.ownerstore.OwnerStoreActivity"
+            android:label="@string/activity_owner_store_label"/>
     </application>
 
 </manifest>

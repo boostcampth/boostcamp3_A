@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
             name="activity"
             type="com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity"/>

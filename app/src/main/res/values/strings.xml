@@ -12,6 +12,7 @@
 
     <!-- activity_owner_login -->
     <string name="activity_owner_login_label">업주 로그인</string>
+    <string name="activity_owner_store_label">업주 가게상세화면</string>
     <string name="activity_owner_button_kakao_talk_account_login">카카오톡으로 로그인</string>
     <string name="activity_owner_button_kakao_other_account_login">다른 계정으로 로그인</string>
     <string name="activity_owner_image_kakao_talk_login_tts">카카오계정으로 로그인 이미지</string>

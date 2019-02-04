@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
+import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -43,7 +44,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void moveToOwnerLoginActivity() {
+        Intent ownerLoginIntent = new Intent(MainActivity.this, OwnerStoreActivity.class);
+        startActivity(ownerLoginIntent);
+        /*
         Intent ownerLoginIntent = new Intent(MainActivity.this, OwnerLoginActivity.class);
         startActivity(ownerLoginIntent);
+        */
     }
 }
