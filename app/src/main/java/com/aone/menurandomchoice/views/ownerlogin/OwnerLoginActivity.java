@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerLoginBinding;
@@ -24,6 +23,7 @@ public class OwnerLoginActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setUpPresenterToDataBinding();
         requestLoginCheckToPresenter();
     }
 
@@ -50,6 +50,10 @@ public class OwnerLoginActivity
         super.onBackPressed();
 
         finish();
+    }
+
+    private void setUpPresenterToDataBinding() {
+        getDataBinding().setPresenter(getPresenter());
     }
 
     @Override
@@ -87,14 +91,6 @@ public class OwnerLoginActivity
 
     private void requestLoginCheckToPresenter() {
         getPresenter().handlingLoggedInAccount();
-    }
-
-    public void kakaoTalkAccountLoginClick(View view) {
-        getPresenter().handlingDeviceKaKaoAccountLogin();
-    }
-
-    public void kakaoTalkOtherAccountLoginClick(View view) {
-        getPresenter().handlingOtherKaKaoAccountLogin();
     }
 
 }

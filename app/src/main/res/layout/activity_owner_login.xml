@@ -5,16 +5,9 @@
 
     <data>
 
-        <!-- FIXME activity대신 presenter로 variable을 사용하는게 더 좋습니다.
         <variable
             name="presenter"
             type="com.aone.menurandomchoice.views.ownerlogin.OwnerLoginContract.Presenter"/>
-
-        android:onClick="@{ () -> presenter.handlingDeviceKaKaoAccountLogin()}"
-        -->
-        <variable
-            name="activity"
-            type="com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity"/>
 
     </data>
 
@@ -32,7 +25,7 @@
             android:layout_marginEnd="@dimen/x_large_margin"
             android:layout_marginBottom="@dimen/large_margin"
             android:background="@drawable/kakao_login_button_background"
-            android:onClick="@{activity::kakaoTalkAccountLoginClick}"
+            android:onClick="@{ () -> presenter.handlingDeviceKaKaoAccountLogin()}"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -76,7 +69,7 @@
             app:layout_constraintBottom_toTopOf="@+id/activity_owner_login_divide_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:onClick="@{activity::kakaoTalkOtherAccountLoginClick}"
+            android:onClick="@{ () -> presenter.handlingOtherKaKaoAccountLogin()}"
             >
 
             <ImageView
