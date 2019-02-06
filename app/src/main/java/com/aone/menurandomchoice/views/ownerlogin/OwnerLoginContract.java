@@ -15,9 +15,6 @@ public interface OwnerLoginContract {
 
         void moveToSignUpActivity(long userId);
 
-        // FIXME 여러 Activity에서 토스트를 사용하는데 BaseContract.View에 정의해두면 더 좋을것 같습니다.
-        void showToastMessage(@NonNull String message);
-
     }
 
     interface Presenter extends BaseContract.Presenter<OwnerLoginContract.View> {

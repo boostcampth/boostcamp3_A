@@ -2,10 +2,13 @@ package com.aone.menurandomchoice.views.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
 public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseContract.View, P extends BaseContract.Presenter<V>>
@@ -33,7 +36,6 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         detachViewFromPresenter();
-        onSaveInstanceStateToBundle(outState);
 
         super.onSaveInstanceState(outState);
     }
@@ -53,14 +55,28 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     }
 
     private void setUp() {
-        dataBinding = setUpDataBinding();
+        dataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         presenter = setUpPresenter();
+
+        setUpBackArrow();
+    }
+
+    private void setUpBackArrow() {
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @NonNull
     @Override
     public Context getAppContext() {
         return getApplicationContext();
+    }
+
+    @Override
+    public void showToastMessage(@NonNull String message) {
+        Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     protected B getDataBinding() {
@@ -83,21 +99,12 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
         }
     }
 
-    // FIXME setUpDataBinding() 대신 protected abstract int getLayoutId(); 로 만들고 작업해주는게 더 좋을것 같습니다.
-    /*
-      setUp()에서 사용
-      dataBinding = DataBindingUtil.setContentView(this, getLayoutId());
-     */
-    @NonNull
-    abstract protected B setUpDataBinding();
+    abstract protected int getLayoutId();
 
     @NonNull
     abstract protected P setUpPresenter();
 
     @NonNull
     abstract protected V getView();
-
-    // FIXME abstract로 상속받는부분에서 함수를 무조건 구현하게 하는것보다는 필요한 경우 onSaveInstanceState()를 override해서 사용하도록 하는게 좋을것 같습니다. 현재 존재하는 코드에서도 실제 사용하는 부분이 없습니다.
-    abstract protected void onSaveInstanceStateToBundle(@NonNull Bundle outState);
 
 }

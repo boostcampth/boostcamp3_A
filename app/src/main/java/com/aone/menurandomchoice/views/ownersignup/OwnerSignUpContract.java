@@ -10,8 +10,6 @@ public interface OwnerSignUpContract {
 
         void moveToOwnerDetailActivity(long userId);
 
-        void showToastMessage(@NonNull String message);
-
     }
 
     interface Presenter extends BaseContract.Presenter<OwnerSignUpContract.View> {

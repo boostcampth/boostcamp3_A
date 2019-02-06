@@ -2,14 +2,11 @@ package com.aone.menurandomchoice.views.ownersignup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerSignUpBinding;
@@ -25,7 +22,6 @@ public class OwnerSignUpActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setUpBackArrow();
     }
 
     @Override
@@ -46,20 +42,9 @@ public class OwnerSignUpActivity
         finish();
     }
 
-    private void setUpBackArrow() {
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    @NonNull
     @Override
-    protected ActivityOwnerSignUpBinding setUpDataBinding() {
-        ActivityOwnerSignUpBinding dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_owner_sign_up);
-        dataBinding.setActivity(this);
-
-        return dataBinding;
+    protected int getLayoutId() {
+        return R.layout.activity_owner_sign_up;
     }
 
     @NonNull
@@ -74,10 +59,6 @@ public class OwnerSignUpActivity
         return this;
     }
 
-    @Override
-    protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
-    }
-
     public void onSignUpRequestClick(View view) {
         long userId = getIntent().getLongExtra(OwnerLoginActivity.EXTRA_USER_ID, -1);
         String accessKey = getDataBinding().activityOwnerSignUpEtAccessKey.getText().toString();
@@ -89,11 +70,6 @@ public class OwnerSignUpActivity
         Intent ownerDetailIntent = new Intent(OwnerSignUpActivity.this, OwnerDetailActivity.class);
         startActivity(ownerDetailIntent);
         finish();
-    }
-
-    @Override
-    public void showToastMessage(@NonNull String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 }

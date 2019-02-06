@@ -2,14 +2,11 @@ package com.aone.menurandomchoice.views.ownerlogin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerLoginBinding;
@@ -27,7 +24,6 @@ public class OwnerLoginActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setUpBackArrow();
         requestLoginCheckToPresenter();
     }
 
@@ -56,21 +52,9 @@ public class OwnerLoginActivity
         finish();
     }
 
-    // FIXME 여러 Activity에서 뒤로가기 아이콘을 만들어 주는데 BaseActivity에서 기본으로 설정해주면 좋을것 같습니다.
-    private void setUpBackArrow() {
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    @NonNull
     @Override
-    protected ActivityOwnerLoginBinding setUpDataBinding() {
-        ActivityOwnerLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_owner_login);
-        binding.setActivity(this);
-
-        return binding;
+    protected int getLayoutId() {
+        return R.layout.activity_owner_login;
     }
 
     @NonNull
@@ -83,10 +67,6 @@ public class OwnerLoginActivity
     @Override
     protected OwnerLoginContract.View getView() {
         return this;
-    }
-
-    @Override
-    protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
     }
 
     @Override
@@ -103,11 +83,6 @@ public class OwnerLoginActivity
         signUpActivityIntent.putExtra(EXTRA_USER_ID, userId);
         startActivity(signUpActivityIntent);
         finish();
-    }
-
-    @Override
-    public void showToastMessage(@NonNull String message) {
-        Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void requestLoginCheckToPresenter() {
