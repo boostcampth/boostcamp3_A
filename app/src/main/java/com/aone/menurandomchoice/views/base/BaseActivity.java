@@ -83,6 +83,11 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
         }
     }
 
+    // FIXME setUpDataBinding() 대신 protected abstract int getLayoutId(); 로 만들고 작업해주는게 더 좋을것 같습니다.
+    /*
+      setUp()에서 사용
+      dataBinding = DataBindingUtil.setContentView(this, getLayoutId());
+     */
     @NonNull
     abstract protected B setUpDataBinding();
 
@@ -92,6 +97,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     @NonNull
     abstract protected V getView();
 
+    // FIXME abstract로 상속받는부분에서 함수를 무조건 구현하게 하는것보다는 필요한 경우 onSaveInstanceState()를 override해서 사용하도록 하는게 좋을것 같습니다. 현재 존재하는 코드에서도 실제 사용하는 부분이 없습니다.
     abstract protected void onSaveInstanceStateToBundle(@NonNull Bundle outState);
 
 }

@@ -56,6 +56,7 @@ public class OwnerLoginActivity
         finish();
     }
 
+    // FIXME 여러 Activity에서 뒤로가기 아이콘을 만들어 주는데 BaseActivity에서 기본으로 설정해주면 좋을것 같습니다.
     private void setUpBackArrow() {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {

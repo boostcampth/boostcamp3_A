@@ -1,5 +1,6 @@
 package com.aone.menurandomchoice.views.ownerlogin;
 
+// FIXME Presenter는 Android 패키지를 가지지 않도록 설계하는것이 좋습니다. https://medium.com/@cervonefrancesco/model-view-presenter-android-guidelines-94970b430ddf
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
