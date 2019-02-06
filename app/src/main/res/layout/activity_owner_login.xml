@@ -16,87 +16,35 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <!-- FIXME 카카오톡 로그인, 다른계정 로그인 버튼이 완전 똑같은데 databinding을 이용해서 layout을 만들고 <include/>로 재사용하도록 수정해주세요-->
         <LinearLayout
-            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginStart="@dimen/x_large_margin"
-            android:layout_marginEnd="@dimen/x_large_margin"
-            android:layout_marginBottom="@dimen/large_margin"
-            android:background="@drawable/kakao_login_button_background"
+            android:layout_height="wrap_content"
             android:onClick="@{ () -> presenter.handlingDeviceKaKaoAccountLogin()}"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent" >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="@dimen/middle_margin"
-                android:contentDescription="@string/activity_owner_image_kakao_talk_login_tts"
-                android:src="@drawable/talk" />
-
-            <View
-                android:layout_width="1.5dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="14dp"
-                android:layout_marginBottom="14dp"
-                android:background="@drawable/kakao_login_bar" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_owner_button_kakao_talk_login_tts"
-                android:gravity="center"
-                android:text="@string/activity_owner_button_kakao_talk_account_login"
-                android:textColor="@color/brown"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+            <include
+                layout="@layout/kakao_login_button"
+                app:title="@{@string/activity_owner_button_kakao_talk_account_login}"
+                app:kakaoIcon="@{@drawable/talk}"/>
 
         </LinearLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginStart="@dimen/x_large_margin"
-            android:layout_marginEnd="@dimen/x_large_margin"
-            android:layout_marginBottom="@dimen/large_margin"
-            android:background="@drawable/kakao_login_button_background"
+            android:layout_height="wrap_content"
+            android:onClick="@{ () -> presenter.handlingOtherKaKaoAccountLogin()}"
             app:layout_constraintBottom_toTopOf="@+id/activity_owner_login_divide_view"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:onClick="@{ () -> presenter.handlingOtherKaKaoAccountLogin()}"
-            >
+            app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="@dimen/middle_margin"
-                android:contentDescription="@string/activity_owner_image_kakao_talk_login_tts"
-                android:src="@drawable/account" />
-
-            <View
-                android:layout_width="1.5dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="14dp"
-                android:layout_marginBottom="14dp"
-                android:background="@drawable/kakao_login_bar" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_owner_button_kakao_talk_login_tts"
-                android:gravity="center"
-                android:text="@string/activity_owner_button_kakao_other_account_login"
-                android:textColor="@color/brown"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+            <include
+                layout="@layout/kakao_login_button"
+                app:title="@{@string/activity_owner_button_kakao_other_account_login}"
+                app:kakaoIcon="@{@drawable/account}"/>
 
         </LinearLayout>
 

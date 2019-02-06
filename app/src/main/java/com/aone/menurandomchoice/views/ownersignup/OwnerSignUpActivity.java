@@ -22,6 +22,7 @@ public class OwnerSignUpActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setUpActivityToDataBinding();
     }
 
     @Override
@@ -40,6 +41,10 @@ public class OwnerSignUpActivity
         super.onBackPressed();
 
         finish();
+    }
+
+    private void setUpActivityToDataBinding() {
+        getDataBinding().setActivity(this);
     }
 
     @Override
