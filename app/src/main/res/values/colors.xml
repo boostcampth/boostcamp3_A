@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- FIXME 이미 @color/xxx 로 사용될것이기 때문에 앞에 prefix로 color는 없어도 좋을것 같습니다.-->
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>

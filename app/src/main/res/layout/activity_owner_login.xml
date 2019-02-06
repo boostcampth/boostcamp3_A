@@ -5,6 +5,13 @@
 
     <data>
 
+        <!-- FIXME activity대신 presenter로 variable을 사용하는게 더 좋습니다.
+        <variable
+            name="presenter"
+            type="com.aone.menurandomchoice.views.ownerlogin.OwnerLoginContract.Presenter"/>
+
+        android:onClick="@{ () -> presenter.handlingDeviceKaKaoAccountLogin()}"
+        -->
         <variable
             name="activity"
             type="com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity"/>
@@ -16,6 +23,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
 
+        <!-- FIXME 카카오톡 로그인, 다른계정 로그인 버튼이 완전 똑같은데 databinding을 이용해서 layout을 만들고 <include/>로 재사용하도록 수정해주세요-->
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
