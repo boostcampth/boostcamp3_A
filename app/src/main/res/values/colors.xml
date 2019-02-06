@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- FIXME 이미 @color/xxx 로 사용될것이기 때문에 앞에 prefix로 color는 없어도 좋을것 같습니다.-->
-    <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorWhite">#FFFFFF</color>
-    <color name="colorReddish">#FF3333</color>
-    <color name="colorDark">#2e2e1f</color>
-    <color name="colorBlack">#000000</color>
-    <color name="colorDarkYellow">#ffd502</color>
-    <color name="colorBrown">#472a2b</color>
-    <color name="colorGray">#e7e7e7</color>
-    <color name="colorDarkGray">#bcbcbc</color>
+    <color name="primary">#3f51b5</color>
+    <color name="primaryDark">#303F9F</color>
+    <color name="accent">#FF4081</color>
+    <color name="white">#FFFFFF</color>
+    <color name="reddish">#FF3333</color>
+    <color name="dark">#2e2e1f</color>
+    <color name="black">#000000</color>
+    <color name="darkYellow">#ffd502</color>
+    <color name="brown">#472a2b</color>
+    <color name="gray">#e7e7e7</color>
+    <color name="darkGray">#bcbcbc</color>
 </resources>

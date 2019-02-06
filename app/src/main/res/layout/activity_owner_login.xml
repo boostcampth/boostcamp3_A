@@ -21,7 +21,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite">
+        android:background="@color/white">
 
         <!-- FIXME 카카오톡 로그인, 다른계정 로그인 버튼이 완전 똑같은데 databinding을 이용해서 layout을 만들고 <include/>로 재사용하도록 수정해주세요-->
         <LinearLayout
@@ -59,7 +59,7 @@
                 android:contentDescription="@string/activity_owner_button_kakao_talk_login_tts"
                 android:gravity="center"
                 android:text="@string/activity_owner_button_kakao_talk_account_login"
-                android:textColor="@color/colorBrown"
+                android:textColor="@color/brown"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
@@ -101,7 +101,7 @@
                 android:contentDescription="@string/activity_owner_button_kakao_talk_login_tts"
                 android:gravity="center"
                 android:text="@string/activity_owner_button_kakao_other_account_login"
-                android:textColor="@color/colorBrown"
+                android:textColor="@color/brown"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
@@ -119,7 +119,7 @@
             android:id="@+id/activity_owner_login_divide_view"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:background="@color/colorGray"
+            android:background="@color/gray"
             app:layout_constraintBottom_toBottomOf="@id/activity_owner_login_center_guide_line"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="@+id/linearLayout"
@@ -133,7 +133,7 @@
             android:gravity="center"
             android:lineSpacingExtra="@dimen/small_line_Spacing_Extra"
             android:text="@string/activity_owner_textview_login_guide"
-            android:textColor="@color/colorDarkGray"
+            android:textColor="@color/darkGray"
             android:textSize="@dimen/small_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,7 +146,7 @@
             android:layout_marginTop="@dimen/large_margin"
             android:gravity="center"
             android:text="@string/activity_owner_textview_phonenumber_guide"
-            android:textColor="@color/colorDarkGray"
+            android:textColor="@color/darkGray"
             android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="@+id/activity_owner_tv_guide"
             app:layout_constraintStart_toStartOf="@+id/activity_owner_tv_guide"
