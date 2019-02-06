@@ -1,6 +1,5 @@
 package com.aone.menurandomchoice.views.ownerlogin;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 

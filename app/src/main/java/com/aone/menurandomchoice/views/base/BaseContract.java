@@ -11,6 +11,8 @@ public interface BaseContract {
 
         Context getAppContext();
 
+        void showToastMessage(@NonNull String message);
+
     }
 
     interface Presenter<V extends BaseContract.View> {

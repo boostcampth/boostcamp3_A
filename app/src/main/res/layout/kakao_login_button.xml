@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String"/>
+
+        <variable
+            name="kakaoIcon"
+            type="android.graphics.drawable.Drawable"/>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="@dimen/x_large_margin"
+        android:layout_marginEnd="@dimen/x_large_margin"
+        android:layout_marginBottom="@dimen/large_margin"
+        android:background="@drawable/kakao_login_button_background">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/middle_margin"
+            android:contentDescription="@string/activity_owner_image_kakao_talk_login_tts"
+            android:src="@{kakaoIcon}" />
+
+        <View
+            android:layout_width="1.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/kakao_login_bar" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/activity_owner_button_kakao_talk_login_tts"
+            android:gravity="center"
+            android:text="@{title}"
+            android:textColor="@color/brown"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</layout>
