@@ -90,10 +90,20 @@ public class OverlapView extends FrameLayout {
 
     private void preloadDataOfBottomView() {
         View bottomView = getChildAt(0);
-        OverlapView.ViewHolder viewHolder = (OverlapView.ViewHolder) bottomView.getTag();
+        OverlapView.ViewHolder viewHolder = getViewHolder(bottomView);
         int adapterItemPosition = calculateAdapterItemPosition();
         viewHolder.setItemPosition(adapterItemPosition);
         overlapViewAdapter.onBindView(viewHolder);
+    }
+
+    private OverlapView.ViewHolder getViewHolder(View bottomView) {
+        OverlapView.ViewHolder viewHolder = (OverlapView.ViewHolder) bottomView.getTag();
+        if(viewHolder == null) {
+            viewHolder = createViewHolderFromAdapter();
+            setTagViewHolderToItemView(viewHolder);
+        }
+
+        return viewHolder;
     }
 
     private int calculateAdapterItemPosition() {
