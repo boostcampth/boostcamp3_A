@@ -23,12 +23,13 @@ class OverlapViewDefaultAnimation implements OverlapViewAnimationHelper {
                 .setDuration(PLAY_TIME)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
-                    public void onAnimationStart(Animator animation, boolean isReverse) {
+                    public void onAnimationStart(Animator animation) {
                         onAnimationStateListener.onAnimationStart();
                     }
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        topView.setRotation(0);
                         topView.setAlpha(1);
                         topView.setX(firstCoordinatesOfView.left);
                         topView.setY(firstCoordinatesOfView.top);
@@ -46,10 +47,11 @@ class OverlapViewDefaultAnimation implements OverlapViewAnimationHelper {
         topView.animate()
                 .translationX(firstCoordinatesOfView.left)
                 .translationY(firstCoordinatesOfView.top)
+                .rotation(0)
                 .setDuration(PLAY_TIME)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
-                    public void onAnimationStart(Animator animation, boolean isReverse) {
+                    public void onAnimationStart(Animator animation) {
                         onAnimationStateListener.onAnimationStart();
                     }
 

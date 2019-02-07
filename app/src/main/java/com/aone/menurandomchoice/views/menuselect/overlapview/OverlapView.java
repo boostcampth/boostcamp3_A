@@ -40,7 +40,7 @@ public class OverlapView extends FrameLayout {
 
     public void setOverlapViewAdapter(@NonNull OverlapViewAdapter overlapViewAdapter) {
         this.overlapViewAdapter = overlapViewAdapter;
-        this.overlapViewAdapter.setOverlapAdapterDataObserver(new OverlapAdapterDataObserver() {
+        this.overlapViewAdapter.setOverlapViewAdapterDataObserver(new OverlapViewAdapterDataObserver() {
             @Override
             public void notifyDataSetChange() {
                 initializeOverlapView();

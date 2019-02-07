@@ -1,6 +1,6 @@
 package com.aone.menurandomchoice.views.menuselect.overlapview;
 
-public interface OverlapAdapterDataObserver {
+public interface OverlapViewAdapterDataObserver {
 
     void notifyDataSetChange();
 

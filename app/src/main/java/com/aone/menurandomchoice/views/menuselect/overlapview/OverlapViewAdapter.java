@@ -7,16 +7,17 @@ import androidx.annotation.NonNull;
 
 public abstract class OverlapViewAdapter<VH extends OverlapView.ViewHolder> {
 
-    private OverlapAdapterDataObserver overlapAdapterDataObserver;
+    private OverlapViewAdapterDataObserver overlapViewAdapterDataObserver;
+
     private int topViewIndex = 0;
 
-    void setOverlapAdapterDataObserver(@NonNull OverlapAdapterDataObserver overlapAdapterDataObserver) {
-        this.overlapAdapterDataObserver = overlapAdapterDataObserver;
+    void setOverlapViewAdapterDataObserver(@NonNull OverlapViewAdapterDataObserver overlapViewAdapterDataObserver) {
+        this.overlapViewAdapterDataObserver = overlapViewAdapterDataObserver;
     }
 
     protected void notifyDataSetChange() {
-        if(overlapAdapterDataObserver != null) {
-            overlapAdapterDataObserver.notifyDataSetChange();
+        if(overlapViewAdapterDataObserver != null) {
+            overlapViewAdapterDataObserver.notifyDataSetChange();
         }
     }
 
@@ -24,7 +25,7 @@ public abstract class OverlapViewAdapter<VH extends OverlapView.ViewHolder> {
         topViewIndex ++;
     }
 
-    int getTopViewIndex() {
+    protected int getTopViewIndex() {
         return topViewIndex;
     }
 
