@@ -59,9 +59,7 @@ public class OverlapView extends FrameLayout {
         if(hasAdapterData()) {
             int createViewCount = calculateCreateViewCount();
             for(int i=0; i<createViewCount; i++) {
-                OverlapView.ViewHolder viewHolder = createViewHolderFromAdapter();
-                setTagViewHolderToItemView(viewHolder);
-                addViewToBottom(viewHolder.getItemView());
+                createViewHolderAndAddToBottom();
                 preloadDataOfBottomView();
             }
         }
@@ -73,6 +71,12 @@ public class OverlapView extends FrameLayout {
 
     private int calculateCreateViewCount() {
         return overlapViewAdapter.getItemCount() > 1 ? CREATE_LIMIT_COUNT : 1;
+    }
+
+    private void createViewHolderAndAddToBottom() {
+        OverlapView.ViewHolder viewHolder = createViewHolderFromAdapter();
+        setTagViewHolderToItemView(viewHolder);
+        addViewToBottom(viewHolder.getItemView());
     }
 
     private OverlapView.ViewHolder createViewHolderFromAdapter() {
@@ -89,21 +93,21 @@ public class OverlapView extends FrameLayout {
     }
 
     private void preloadDataOfBottomView() {
-        View bottomView = getChildAt(0);
-        OverlapView.ViewHolder viewHolder = getViewHolder(bottomView);
+        OverlapView.ViewHolder viewHolder = getViewHolderFromBottomView();
+        if(viewHolder == null) {
+            removeViewAt(0);
+            createViewHolderAndAddToBottom();
+            viewHolder = getViewHolderFromBottomView();
+        }
+
         int adapterItemPosition = calculateAdapterItemPosition();
         viewHolder.setItemPosition(adapterItemPosition);
         overlapViewAdapter.onBindView(viewHolder);
     }
-
-    private OverlapView.ViewHolder getViewHolder(View bottomView) {
-        OverlapView.ViewHolder viewHolder = (OverlapView.ViewHolder) bottomView.getTag();
-        if(viewHolder == null) {
-            viewHolder = createViewHolderFromAdapter();
-            setTagViewHolderToItemView(viewHolder);
-        }
-
-        return viewHolder;
+    
+    private OverlapView.ViewHolder getViewHolderFromBottomView() {
+        View bottomView = getChildAt(0);
+        return (OverlapView.ViewHolder) bottomView.getTag();
     }
 
     private int calculateAdapterItemPosition() {

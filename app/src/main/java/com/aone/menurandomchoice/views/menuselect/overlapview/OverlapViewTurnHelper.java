@@ -61,7 +61,7 @@ class OverlapViewTurnHelper {
         });
     }
 
-    void setonTopViewDetachListener(@NonNull final OnTopViewDetachListener onTopViewDetachListener) {
+    void setonTopViewDetachListener(@NonNull OnTopViewDetachListener onTopViewDetachListener) {
         this.onTopViewDetachListener = onTopViewDetachListener;
     }
 

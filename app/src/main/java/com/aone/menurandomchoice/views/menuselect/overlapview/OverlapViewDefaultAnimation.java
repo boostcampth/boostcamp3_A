@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 
 class OverlapViewDefaultAnimation implements OverlapViewAnimationHelper {
 
-    private static int PLAY_TIME = 200;
+    private static final int PLAY_TIME = 200;
 
     @Override
     public void executeDetachAnimation(@NonNull final View topView,
