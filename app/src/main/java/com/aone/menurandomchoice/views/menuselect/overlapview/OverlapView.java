@@ -1,7 +1,9 @@
 package com.aone.menurandomchoice.views.menuselect.overlapview;
 
 import android.content.Context;
+import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,15 +15,39 @@ public class OverlapView extends FrameLayout {
 
     private static final int CREATE_LIMIT_COUNT = 3;
 
+    private OverlapViewTurnHelper overlapViewTurnHelper;
     private OverlapViewAdapter overlapViewAdapter;
     private int position = 0;
 
     public OverlapView(@NonNull Context context) {
         super(context);
+
+        setUp();
     }
 
     public OverlapView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
+        setUp();
+    }
+
+    private void setUp() {
+        setUpTurnHelper();
+    }
+
+    private void setUpTurnHelper() {
+        overlapViewTurnHelper = new OverlapViewTurnHelper();
+        overlapViewTurnHelper.setOnTopViewMovieListener(this, new OnTopViewMoveStateListener() {
+            @Override
+            public void onDetachTopView(View topView, RectF newTopViewRect, RectF oldTopViewRect) {
+                Log.d("ch-yoon", "detachTopView");
+            }
+
+            @Override
+            public void onNotDetachTopView(View topView, RectF newTopViewRect, RectF oldTopViewRect) {
+                Log.d("ch-yoon", "not detachTopView");
+            }
+        });
     }
 
     public void setOverlapViewAdapter(@NonNull OverlapViewAdapter overlapViewAdapter) {
