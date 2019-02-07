@@ -1,12 +1,9 @@
 package com.aone.menurandomchoice.views.menuselect.overlapview;
 
 import android.content.Context;
-import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -16,31 +13,27 @@ public class OverlapView extends FrameLayout {
 
     private static final int CREATE_LIMIT_COUNT = 3;
 
-    private OverlapViewTurnHelper overlapViewTurnHelper;
     private OverlapViewAdapter overlapViewAdapter;
 
     public OverlapView(@NonNull Context context) {
         super(context);
 
-        setUpTurnHelper();
+        setUpViewTurnHelper();
     }
 
     public OverlapView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        setUpTurnHelper();
+        setUpViewTurnHelper();
     }
 
-    private void setUpTurnHelper() {
-        overlapViewTurnHelper = new OverlapViewTurnHelper();
-        overlapViewTurnHelper.setOnTopViewMovieListener(this, new OnTopViewMoveStateListener() {
+    private void setUpViewTurnHelper() {
+        OverlapViewTurnHelper overlapViewTurnHelper = new OverlapViewTurnHelper();
+        overlapViewTurnHelper.setOverlapView(this);
+        overlapViewTurnHelper.setonTopViewDetachListener(new OnTopViewDetachListener() {
             @Override
             public void onDetachTopView() {
                 turnTopViewToBottom();
-            }
-
-            @Override
-            public void onNotDetachTopView() {
             }
         });
     }
@@ -63,30 +56,30 @@ public class OverlapView extends FrameLayout {
     }
 
     private void createDefaultChildViews() {
-        if(hasDataOfAdapter()) {
+        if(hasAdapterData()) {
             int createViewCount = calculateCreateViewCount();
             for(int i=0; i<createViewCount; i++) {
-                OverlapViewViewHolder viewHolder = createViewHolderFromAdapter();
+                OverlapView.ViewHolder viewHolder = createViewHolderFromAdapter();
                 setTagViewHolderToItemView(viewHolder);
                 addViewToBottom(viewHolder.getItemView());
-                loadDataOfBottomView();
+                preloadDataOfBottomView();
             }
         }
     }
 
-    private boolean hasDataOfAdapter() {
-        return (overlapViewAdapter != null) && (0 <overlapViewAdapter.getItemCount());
+    private boolean hasAdapterData() {
+        return overlapViewAdapter != null && 0 < overlapViewAdapter.getItemCount();
     }
 
     private int calculateCreateViewCount() {
         return overlapViewAdapter.getItemCount() > 1 ? CREATE_LIMIT_COUNT : 1;
     }
 
-    private OverlapViewViewHolder createViewHolderFromAdapter() {
+    private OverlapView.ViewHolder createViewHolderFromAdapter() {
         return overlapViewAdapter.onCreateView(LayoutInflater.from(getContext()), this);
     }
 
-    private void setTagViewHolderToItemView(OverlapViewViewHolder viewHolder) {
+    private void setTagViewHolderToItemView(OverlapView.ViewHolder viewHolder) {
         View itemView = viewHolder.getItemView();
         itemView.setTag(viewHolder);
     }
@@ -95,11 +88,12 @@ public class OverlapView extends FrameLayout {
         addView(itemView, 0);
     }
 
-    private void loadDataOfBottomView() {
+    private void preloadDataOfBottomView() {
         View bottomView = getChildAt(0);
-        OverlapViewViewHolder viewHolder = (OverlapViewViewHolder) bottomView.getTag();
+        OverlapView.ViewHolder viewHolder = (OverlapView.ViewHolder) bottomView.getTag();
         int adapterItemPosition = calculateAdapterItemPosition();
-        overlapViewAdapter.onBindView(viewHolder, adapterItemPosition);
+        viewHolder.setItemPosition(adapterItemPosition);
+        overlapViewAdapter.onBindView(viewHolder);
     }
 
     private int calculateAdapterItemPosition() {
@@ -107,12 +101,12 @@ public class OverlapView extends FrameLayout {
     }
 
     private void turnTopViewToBottom() {
-        movePositionToNext();
+        moveTopViewPositionToNext();
         moveTopViewToBottom();
-        loadDataOfBottomView();
+        preloadDataOfBottomView();
     }
 
-    private void movePositionToNext() {
+    private void moveTopViewPositionToNext() {
         overlapViewAdapter.moveTopViewIndexToNext();
     }
 
@@ -122,13 +116,35 @@ public class OverlapView extends FrameLayout {
     }
 
     private View removeTopView() {
-        int topViewIndex = getChildCount() - 1;
-        View topView = getChildAt(topViewIndex);
-        topView.setX(0);
-        topView.setY(0);
+        int topChildViewIndex = getChildCount() - 1;
+        View topView = getChildAt(topChildViewIndex);
         removeView(topView);
 
         return topView;
+    }
+
+    public static abstract class ViewHolder {
+
+        private View itemView;
+        private int itemPosition;
+
+        protected ViewHolder(@NonNull View itemView) {
+            this.itemView = itemView;
+        }
+
+        void setItemPosition(int itemPosition) {
+            this.itemPosition = itemPosition;
+        }
+
+        public int getItemPosition() {
+            return itemPosition;
+        }
+
+        @NonNull
+        View getItemView() {
+            return itemView;
+        }
+
     }
 
 }

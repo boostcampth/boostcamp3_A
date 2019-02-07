@@ -12,11 +12,11 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 
-public class MenuOverlapViewAdapter extends OverlapViewAdapter<MenuOverlapViewViewHolder> {
+public class TestOverlapViewAdapter extends OverlapViewAdapter<TestOverlapViewViewHolder> {
 
     private List<TestData> itemList;
 
-    MenuOverlapViewAdapter() {
+    TestOverlapViewAdapter() {
         setUp();
     }
 
@@ -25,14 +25,15 @@ public class MenuOverlapViewAdapter extends OverlapViewAdapter<MenuOverlapViewVi
     }
 
     @Override
-    protected MenuOverlapViewViewHolder onCreateView(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup) {
+    protected TestOverlapViewViewHolder onCreateView(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup) {
         View menuItemView = layoutInflater.inflate(R.layout.overlapview_test_layout, viewGroup, false);
-        return new MenuOverlapViewViewHolder(menuItemView);
+        return new TestOverlapViewViewHolder(menuItemView);
     }
 
     @Override
-    protected void onBindView(@NonNull MenuOverlapViewViewHolder viewHolder, int position) {
-        viewHolder.setItem(itemList.get(position));
+    protected void onBindView(@NonNull TestOverlapViewViewHolder viewHolder) {
+        int itemPosition = viewHolder.getItemPosition();
+        viewHolder.setItem(itemList.get(itemPosition));
     }
 
     @Override

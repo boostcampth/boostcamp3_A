@@ -4,18 +4,17 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.aone.menurandomchoice.R;
-import com.aone.menurandomchoice.views.menuselect.overlapview.OverlapViewViewHolder;
+import com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView;
 import com.bumptech.glide.Glide;
 
 import androidx.annotation.NonNull;
 
-public class MenuOverlapViewViewHolder extends OverlapViewViewHolder {
+public class TestOverlapViewViewHolder extends OverlapView.ViewHolder {
 
     private ImageView testImageView;
 
-    protected MenuOverlapViewViewHolder(@NonNull View itemView) {
+    TestOverlapViewViewHolder(@NonNull View itemView) {
         super(itemView);
-
         testImageView = itemView.findViewById(R.id.test_menu_overlapView_imageView);
     }
 

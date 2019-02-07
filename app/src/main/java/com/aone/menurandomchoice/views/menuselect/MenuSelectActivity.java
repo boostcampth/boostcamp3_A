@@ -19,6 +19,12 @@ public class MenuSelectActivity extends AppCompatActivity {
 
         OverlapView overlapView = findViewById(R.id.test_overlapView);
 
+        TestOverlapViewAdapter testOverlapViewAdapter = new TestOverlapViewAdapter();
+        testOverlapViewAdapter.setItemList(getTestDataList());
+        overlapView.setOverlapViewAdapter(testOverlapViewAdapter);
+    }
+
+    private List<TestData> getTestDataList() {
         List<TestData> testDataList = new ArrayList<>();
         testDataList.add(new TestData(R.drawable.test1));
         testDataList.add(new TestData(R.drawable.test2));
@@ -29,10 +35,7 @@ public class MenuSelectActivity extends AppCompatActivity {
         testDataList.add(new TestData(R.drawable.test7));
         testDataList.add(new TestData(R.drawable.test8));
 
-        MenuOverlapViewAdapter menuOverlapViewAdapter = new MenuOverlapViewAdapter();
-        menuOverlapViewAdapter.setItemList(testDataList);
-        overlapView.setOverlapViewAdapter(menuOverlapViewAdapter);
-
+        return testDataList;
     }
 
 }
