@@ -39,12 +39,12 @@ public class OverlapView extends FrameLayout {
         overlapViewTurnHelper = new OverlapViewTurnHelper();
         overlapViewTurnHelper.setOnTopViewMovieListener(this, new OnTopViewMoveStateListener() {
             @Override
-            public void onDetachTopView(View topView, RectF newTopViewRect, RectF oldTopViewRect) {
+            public void onDetachTopView() {
                 Log.d("ch-yoon", "detachTopView");
             }
 
             @Override
-            public void onNotDetachTopView(View topView, RectF newTopViewRect, RectF oldTopViewRect) {
+            public void onNotDetachTopView() {
                 Log.d("ch-yoon", "not detachTopView");
             }
         });

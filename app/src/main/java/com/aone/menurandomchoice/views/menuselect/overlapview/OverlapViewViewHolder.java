@@ -8,7 +8,7 @@ public abstract class OverlapViewViewHolder {
 
     private View itemView;
 
-    OverlapViewViewHolder(@NonNull View itemView) {
+    protected OverlapViewViewHolder(@NonNull View itemView) {
         this.itemView = itemView;
     }
 

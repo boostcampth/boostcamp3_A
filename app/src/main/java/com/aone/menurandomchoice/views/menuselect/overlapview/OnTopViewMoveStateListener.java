@@ -5,8 +5,8 @@ import android.view.View;
 
 public interface OnTopViewMoveStateListener {
 
-    void onDetachTopView(View topView, RectF newTopViewRect, RectF oldTopViewRect);
+    void onDetachTopView();
 
-    void onNotDetachTopView(View topView, RectF newTopViewRect, RectF oldTopViewRect);
+    void onNotDetachTopView();
 
 }

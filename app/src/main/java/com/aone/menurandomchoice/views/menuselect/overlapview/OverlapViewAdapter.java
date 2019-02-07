@@ -19,10 +19,10 @@ public abstract class OverlapViewAdapter<VH extends OverlapViewViewHolder> {
         }
     }
 
-    abstract VH onCreateView(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup);
+    abstract protected VH onCreateView(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup);
 
-    abstract void onBindView(@NonNull VH viewHolder, int position);
+    abstract protected void onBindView(@NonNull VH viewHolder, int position);
 
-    abstract int getItemCount();
+    abstract protected int getItemCount();
 
 }
