@@ -43,9 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void moveToOwnerLoginActivity() {
-
         Intent ownerLoginIntent = new Intent(MainActivity.this, OwnerLoginActivity.class);
         startActivity(ownerLoginIntent);
-
     }
 }

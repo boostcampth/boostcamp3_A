@@ -13,7 +13,6 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/activity_owner_store_ll_menu1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

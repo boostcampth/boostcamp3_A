@@ -63,10 +63,12 @@ public class ServerDataRepository implements ServerDataHelper {
 
     @Override
     public void checkStoreUpdated(@NonNull String updateTime, @NonNull OnStoreUpdatedCheckListener onStoreUpdatedCheckListener) {
+        //Todo. request isUpdated to Server
     }
 
     @Override
     public void requestStoreDetail(int storeIdx, @NonNull OnStoreDetailRequestListener onStoreDetailRequestListener) {
+        //Todo. request StoreDetail to Server
 
     }
 

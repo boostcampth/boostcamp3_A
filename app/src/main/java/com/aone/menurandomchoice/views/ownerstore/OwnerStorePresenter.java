@@ -4,8 +4,6 @@ import com.aone.menurandomchoice.repository.Repository;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
-import androidx.databinding.DataBindingUtil;
-
 public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> implements  OwnerStoreContract.Presenter {
 
     @Override
@@ -14,16 +12,16 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
         getRepository().loadStoreDetail(storeIdx, new Repository.OnLoadStoreDetailListener() {
             @Override
             public void onStoreDetailLoaded(StoreDetail storeDetail) {
+
                 if (!isAttachView()) {
                     return;
                 }
-
                 getView().showStoreDetail(storeDetail);
             }
 
             @Override
             public void onFailToLoadStoreDetail() {
-
+                
             }
         });
     }
@@ -33,6 +31,5 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
     public void stopNetwork() {
         getRepository().cancelAll();
     }
-
 
 }

@@ -87,16 +87,9 @@ public class OwnerStoreActivity
         return this;
     }
 
-    public void onMenuDetailClick(View view) {
-        //Todo. menudeail 페이지로 이동
-    }
-
-    public void onMapClick(View view) {
-        //Todo. map 페이지로 이동
-    }
-
     @Override
     public void moveToOwnerEditPage() {
+        //Todo. owneredit 페이지로 이동
     }
 
     @Override
@@ -104,4 +97,11 @@ public class OwnerStoreActivity
         getDataBinding().setStoreDetail(storeDetail);
     }
 
+    public void onMenuDetailClick(View view) {
+        //Todo. menudeail 페이지로 이동
+    }
+
+    public void onMapClick(View view) {
+        //Todo. map 페이지로 이동
+    }
 }

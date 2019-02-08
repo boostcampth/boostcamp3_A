@@ -83,10 +83,6 @@ public class DataRepository implements Repository {
 
         final StoreDetail cachedStoreDetail = localDataRepository.getStoreDetailByStoreIdx(storeIdx);
 
-        if(cachedStoreDetail == null) {
-            throw new RuntimeException("cash Data is not Existed");
-        }
-
         checkStoreUpdated(cachedStoreDetail.getTime(), new OnStoreUpdatedCheckListener() {
             @Override
             public void onAlreadyStoreUpdated() {
@@ -125,7 +121,5 @@ public class DataRepository implements Repository {
     public void cancelAll() {
         // do cancel request
     }
-
-
 
 }
