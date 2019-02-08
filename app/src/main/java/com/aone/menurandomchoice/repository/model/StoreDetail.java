@@ -1,11 +1,7 @@
 package com.aone.menurandomchoice.repository.model;
 
-import android.renderscript.BaseObj;
-
 import com.aone.menurandomchoice.BR;
-
 import java.util.List;
-
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 

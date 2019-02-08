@@ -1,9 +1,12 @@
 package com.aone.menurandomchoice.views.ownerstore;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
+import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 
 import androidx.annotation.NonNull;
@@ -18,7 +21,7 @@ public class OwnerStoreActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setUpBackArrow();
+        setUpActivityToDataBinding();
     }
 
     @Override
@@ -37,7 +40,9 @@ public class OwnerStoreActivity
     }
 
     @Override
-    protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.item_action_bar, menu);
+        return true;
     }
 
     @Override
@@ -46,11 +51,13 @@ public class OwnerStoreActivity
             case android.R.id.home:
                 onBackPressed();
                 return true;
+            case R.id.item_action_bar_edit:
+                moveToOwnerEditPage();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     @Override
     public void onBackPressed() {
@@ -59,20 +66,13 @@ public class OwnerStoreActivity
         finish();
     }
 
-    private void setUpBackArrow() {
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+    private void setUpActivityToDataBinding() {
+        getDataBinding().setActivity(this);
     }
 
-
-    @NonNull
     @Override
-    protected ActivityOwnerStoreBinding setUpDataBinding() {
-        ActivityOwnerStoreBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_owner_store);
-        binding.setActivity(this);
-        return binding;
+    protected int getLayoutId() {
+        return R.layout.activity_owner_store;
     }
 
     @NonNull
@@ -87,8 +87,12 @@ public class OwnerStoreActivity
         return this;
     }
 
-    @Override
-    public void moveToMenuDetailPage() {
+    public void onMenuDetailClick(View view) {
+        //Todo. menudeail 페이지로 이동
+    }
+
+    public void onMapClick(View view) {
+        //Todo. map 페이지로 이동
     }
 
     @Override
@@ -96,6 +100,8 @@ public class OwnerStoreActivity
     }
 
     @Override
-    public void showStoreDetail() {
+    public void showStoreDetail(StoreDetail storeDetail) {
+        getDataBinding().setStoreDetail(storeDetail);
     }
+
 }

@@ -38,4 +38,7 @@
     <string name="activity_owner_detail_location">위치</string>
     <string name="activity_owner_detail_description">소개</string>
 
+    <!--action bar menu -->
+    <string name ="item_action_bar_edit">편집</string>
+
 </resources>

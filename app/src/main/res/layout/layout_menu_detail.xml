@@ -4,6 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <variable
+            name="activity"
+            type="com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity"/>
         <variable name="photoUrl" type = "String"/>
         <variable name="name" type = "String"/>
         <variable name="price" type = "int"/>
@@ -16,7 +19,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:onClick="@{activity::onMenuDetailClick}">
 
         <ImageView
             android:layout_width="100dp"

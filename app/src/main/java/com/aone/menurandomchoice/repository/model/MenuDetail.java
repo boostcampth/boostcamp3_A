@@ -1,10 +1,17 @@
 package com.aone.menurandomchoice.repository.model;
 
-public class MenuDetail {
+import com.aone.menurandomchoice.BR;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+public class MenuDetail extends BaseObservable {
+
     private String name;
 
+    @Bindable
     private int price;
 
+    @Bindable
     private String photoUrl;
 
     private String description;
@@ -13,25 +20,23 @@ public class MenuDetail {
 
     private int sequence;
 
-    public String getName() {
-        return name;
-    }
+    @Bindable
+    public String getName() { return name; }
 
     public void setName(String name) {
         this.name = name;
+        notifyPropertyChanged(BR.name);
     }
 
-    public int getPrice() {
-        return price;
-    }
+    @Bindable
+    public int getPrice() { return price; }
 
     public void setPrice(int price) {
         this.price = price;
+        notifyPropertyChanged(BR.price);
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
+    public String getPhotoUrl() { return photoUrl; }
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;

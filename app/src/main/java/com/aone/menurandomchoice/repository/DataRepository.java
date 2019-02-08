@@ -83,30 +83,31 @@ public class DataRepository implements Repository {
 
         final StoreDetail cachedStoreDetail = localDataRepository.getStoreDetailByStoreIdx(storeIdx);
 
-        if(cachedStoreDetail != null) {
-            checkStoreUpdated(cachedStoreDetail.getTime(), new OnStoreUpdatedCheckListener() {
-                @Override
-                public void onAlreadyStoreUpdated() {
-                    onLoadStoreDetailListener.onStoreDetailLoaded(cachedStoreDetail);
-                }
-
-                @Override
-                public void onNotUpdated() {
-                    requestStoreDetail(storeIdx, new OnStoreDetailRequestListener() {
-                        @Override
-                        public void onStoreDetailLoaded(StoreDetail storeDetail) {
-                            onLoadStoreDetailListener.onStoreDetailLoaded(storeDetail);
-                        }
-
-                        @Override
-                        public void onServerError() {
-                            onLoadStoreDetailListener.onFailToLoadStoreDetail();
-                        }
-                    });
-                }
-
-            });
+        if(cachedStoreDetail == null) {
+            throw new RuntimeException("cash Data is not Existed");
         }
+
+        checkStoreUpdated(cachedStoreDetail.getTime(), new OnStoreUpdatedCheckListener() {
+            @Override
+            public void onAlreadyStoreUpdated() {
+                onLoadStoreDetailListener.onStoreDetailLoaded(cachedStoreDetail);
+            }
+
+            @Override
+            public void onNotUpdated() {
+                requestStoreDetail(storeIdx, new OnStoreDetailRequestListener() {
+                    @Override
+                    public void onStoreDetailLoaded(StoreDetail storeDetail) {
+                        onLoadStoreDetailListener.onStoreDetailLoaded(storeDetail);
+                    }
+
+                    @Override
+                    public void onServerError() {
+                        onLoadStoreDetailListener.onFailToLoadStoreDetail();
+                    }
+                });
+            }
+        });
     }
 
     @Override
