@@ -2,14 +2,10 @@ package com.aone.menurandomchoice.views.ownerlogin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerLoginBinding;
@@ -27,7 +23,7 @@ public class OwnerLoginActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setUpBackArrow();
+        setUpPresenterToDataBinding();
         requestLoginCheckToPresenter();
     }
 
@@ -56,20 +52,13 @@ public class OwnerLoginActivity
         finish();
     }
 
-    private void setUpBackArrow() {
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+    private void setUpPresenterToDataBinding() {
+        getDataBinding().setPresenter(getPresenter());
     }
 
-    @NonNull
     @Override
-    protected ActivityOwnerLoginBinding setUpDataBinding() {
-        ActivityOwnerLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_owner_login);
-        binding.setActivity(this);
-
-        return binding;
+    protected int getLayoutId() {
+        return R.layout.activity_owner_login;
     }
 
     @NonNull
@@ -82,10 +71,6 @@ public class OwnerLoginActivity
     @Override
     protected OwnerLoginContract.View getView() {
         return this;
-    }
-
-    @Override
-    protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
     }
 
     @Override
@@ -104,21 +89,8 @@ public class OwnerLoginActivity
         finish();
     }
 
-    @Override
-    public void showToastMessage(@NonNull String message) {
-        Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
     private void requestLoginCheckToPresenter() {
         getPresenter().handlingLoggedInAccount();
-    }
-
-    public void kakaoTalkAccountLoginClick(View view) {
-        getPresenter().handlingDeviceKaKaoAccountLogin();
-    }
-
-    public void kakaoTalkOtherAccountLoginClick(View view) {
-        getPresenter().handlingOtherKaKaoAccountLogin();
     }
 
 }

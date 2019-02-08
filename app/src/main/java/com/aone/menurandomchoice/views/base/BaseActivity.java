@@ -2,10 +2,13 @@ package com.aone.menurandomchoice.views.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
 public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseContract.View, P extends BaseContract.Presenter<V>>
@@ -33,7 +36,6 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         detachViewFromPresenter();
-        onSaveInstanceStateToBundle(outState);
 
         super.onSaveInstanceState(outState);
     }
@@ -53,14 +55,28 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     }
 
     private void setUp() {
-        dataBinding = setUpDataBinding();
+        dataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         presenter = setUpPresenter();
+
+        setUpBackArrow();
+    }
+
+    private void setUpBackArrow() {
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @NonNull
     @Override
     public Context getAppContext() {
         return getApplicationContext();
+    }
+
+    @Override
+    public void showToastMessage(@NonNull String message) {
+        Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     protected B getDataBinding() {
@@ -83,15 +99,12 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
         }
     }
 
-    @NonNull
-    abstract protected B setUpDataBinding();
+    abstract protected int getLayoutId();
 
     @NonNull
     abstract protected P setUpPresenter();
 
     @NonNull
     abstract protected V getView();
-
-    abstract protected void onSaveInstanceStateToBundle(@NonNull Bundle outState);
 
 }
