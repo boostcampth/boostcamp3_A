@@ -1,21 +1,17 @@
-package com.aone.menurandomchoice.model;
+package com.aone.menurandomchoice.repository.model;
 
-public class Menu {
+public class MenuDetail {
     private String name;
-    private int price;
-    private String photoUrl;
-    private String description;
-    private String category;
-    private int sequence;
 
-    public Menu(String name, int price, String photoUrl, String description, String category, int sequence) {
-        this.name = name;
-        this.price = price;
-        this.photoUrl = photoUrl;
-        this.description = description;
-        this.category = category;
-        this.sequence = sequence;
-    }
+    private int price;
+
+    private String photoUrl;
+
+    private String description;
+
+    private String category;
+
+    private int sequence;
 
     public String getName() {
         return name;

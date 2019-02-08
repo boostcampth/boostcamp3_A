@@ -11,7 +11,6 @@ import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override

@@ -9,8 +9,8 @@
             name="activity"
             type="com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity"/>
         <variable
-            name="store"
-            type="com.aone.menurandomchoice.model.Store"/>
+            name="storeDetail"
+            type="com.aone.menurandomchoice.repository.model.StoreDetail"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:lineSpacingExtra="5dp"
-                    android:text="@{store.name}"
+                    android:text="@{storeDetail.name}"
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="20dp"
-                    android:text="@{store.time}" />
+                    android:text="@{storeDetail.time}" />
 
             </LinearLayout>
 
@@ -63,109 +63,60 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:lineSpacingExtra="5dp"
-                    android:text="등록메뉴" />
+                    android:text="@string/activity_owner_detail_menu_label" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="20dp">
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp">
 
-                    <LinearLayout
+                    <include
                         android:id="@+id/activity_owner_store_ll_menu1"
+                        layout="@layout/layout_menu_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:gravity="center"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@+id/activity_owner_store_ll_menu2"
-                        app:layout_constraintStart_toStartOf="parent">
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:photoUrl="@{storeDetail.menuDetailList.get(0).photoUrl}"
+                        app:name="@{storeDetail.menuDetailList.get(0).name}"
+                        app:price="@{storeDetail.menuDetailList.get(0).price}"/>
 
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="130dp"
-                            app:error="@{@drawable/no_photo}"
-                            app:photoUrl="@{store.menuList.get(0).photoUrl}" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{store.menuList.get(0).name}"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{Integer.toString(store.menuList.get(0).price)}"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <include
                         android:id="@+id/activity_owner_store_ll_menu2"
+                        layout="@layout/layout_menu_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
                         app:layout_constraintLeft_toRightOf="@+id/activity_owner_store_ll_menu1"
-                        app:layout_constraintRight_toLeftOf="@+id/activity_owner_store_ll_menu3">
+                        app:layout_constraintRight_toLeftOf="@+id/activity_owner_store_ll_menu3"
+                        app:photoUrl="@{storeDetail.menuDetailList.get(1).photoUrl}"
+                        app:name="@{storeDetail.menuDetailList.get(1).name}"
+                        app:price="@{storeDetail.menuDetailList.get(1).price}"/>
 
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="130dp"
-                            app:error="@{@drawable/no_photo}"
-                            app:photoUrl="@{store.menuList.get(1).photoUrl}" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{store.menuList.get(1).name}"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/activity_owner_store_tv_price2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{Integer.toString(store.menuList.get(1).price)}"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <include
                         android:id="@+id/activity_owner_store_ll_menu3"
+                        layout="@layout/layout_menu_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:gravity="center"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintLeft_toRightOf="@+id/activity_owner_store_ll_menu2">
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="130dp"
-                            app:error="@{@drawable/no_photo}"
-                            app:photoUrl="@{store.menuList.get(2).photoUrl}" />
-
-                        <TextView
-                            android:id="@+id/activity_owner_store_tv_name3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{store.menuList.get(2).name}"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/activity_owner_store_tv_price3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{Integer.toString(store.menuList.get(2).price)}"
-                            android:textSize="18sp" />
-                    </LinearLayout>
+                        app:layout_constraintLeft_toRightOf="@+id/activity_owner_store_ll_menu2"
+                        app:photoUrl="@{storeDetail.menuDetailList.get(2).photoUrl}"
+                        app:name="@{storeDetail.menuDetailList.get(2).name}"
+                        app:price="@{storeDetail.menuDetailList.get(2).price}"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -186,10 +137,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:lineSpacingExtra="5dp"
-                    android:text="위치" />
+                    android:text="@string/activity_owner_detail_location" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@{storeDetail.address}" />
 
                  <RelativeLayout
                      android:id="@+id/map_view"
@@ -214,76 +175,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:lineSpacingExtra="5dp"
-                    android:text="업체소개" />
+                    android:text="@string/activity_owner_detail_description" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="20dp"
-                    android:text="오랫만에 칼럼에 긴글로 글을 한번 쓴것 같습니다.
-
-라고 생각했는데 다시 훌터보니 그리 길지도 않은 것 같기도 하고..
-
-http://audioguy.co.kr/board/bbs/board.php?bo_table=c_audiog
-
-
-그래도 정말 마음속에 있는 솔직한 이야기 글로 쓸 수 있으니 참 좋으네요.
-
-글이라는 것이 본디 그러한 것인데 말이지요.
-
-나이를 먹으니 이상한 용기만 늘어나는 것 같습니다.
-
-하하하.
-
-좋은 가을 밤 되셔요~~
-
-추천 0
-WRITTEN BY
-
-운영자
-오지성  12-10-04 13:14
-좋은 글 올려주셔서 감사합니다^^
-
-저도......... 하고 싶은 일 하면서......
-좋은 사람들 만난다는게......
-
-힘들면서도..
-어마어마한 행복이라는 것을......
-
-서서히 깨달아 가는것 같습니다^^
-
-jjbassman  12-10-04 15:16
-감사합니다~정말 잘읽었습니다~ ^^
-
-네임  12-10-05 16:34
-경지에 가까이 다가가시는 느낌이 팍팍 오네요... ^^
-
-zamcar  12-10-09 01:38
-좋은글 감사합니다 ^^
-
-번호	댓글 / 제목	글쓴이	날짜	조회	추천
-559	애비로드스튜디오에서 아카데미를 만들었습니다!!	운영자	2015-03-22	3504	0
-558	고양이마녀님의 재미있는 리뷰 3	운영자	2015-03-06	3780	0
-557	국제하이엔드쇼 초대권 관련 공지	운영자	2015-03-03	3289	0
-556	국제하이엔드 오디오쇼 초대권 드립니다! - 신청기간 이번주까지	운영자	2015-02-27	2947	2
-555	오디언트 ID22 리뷰 추천 이벤트 오후2시 마감!	운영자	2015-02-14	2865	3
-554	톤 스튜디오 김대성 대표님 인터뷰!	운영자	2015-02-09	4409	0
-553	정말 효과 좋은 음향판!! 13	운영자	2015-01-05	5815	0
-552	오디언트 ID22 리뷰 마감일	운영자	2015-01-21	3909	0
-551	새로운 오디오가이 인터뷰!! - 임계환 엔지니어편	운영자	2015-01-19	3941	0
-550	이번주 금요일 부산에서 시간되시는분들 뵙시다! 3	운영자	2015-01-14	3949	0
-549	오디언트 ID22 리뷰 올라왔습니다.	운영자	2015-01-19	4137	0
-548	톤 스튜디오 김대성 감독님 오디오가이 인터뷰 했습니다. 2	운영자	2015-01-14	4811	0
-547	부르스스웨디언이 함께한 새로운 스피커 1	운영자	2015-01-13	4197	0
-546	새로운 오디오가이 인터뷰! 1	운영자	2014-12-29	4053	0
-545	원포인트 vs 멀티마이크 녹음 12	운영자	2014-12-26	4959	0
-목록
-처음 1 2 3 4 5 6 7 8 9 10 다음 맨끝 다음검색" />
+                    android:text="@{storeDetail.description}" />
 
             </LinearLayout>
 

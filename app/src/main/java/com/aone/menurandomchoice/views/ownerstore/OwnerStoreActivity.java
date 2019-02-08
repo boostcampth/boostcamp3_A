@@ -22,6 +22,25 @@ public class OwnerStoreActivity
     }
 
     @Override
+    protected void onStart() {
+        int storeIdx = getIntent().getIntExtra("EXTRA_STORE_IDX", 0);
+        getPresenter().loadStoreDetail(storeIdx);
+
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        getPresenter().stopNetwork();
+
+        super.onStop();
+    }
+
+    @Override
+    protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -68,10 +87,15 @@ public class OwnerStoreActivity
         return this;
     }
 
-
     @Override
-    protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
+    public void moveToMenuDetailPage() {
     }
 
+    @Override
+    public void moveToOwnerEditPage() {
+    }
 
+    @Override
+    public void showStoreDetail() {
+    }
 }

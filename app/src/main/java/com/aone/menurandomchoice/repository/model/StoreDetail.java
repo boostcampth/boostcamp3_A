@@ -1,57 +1,65 @@
-package com.aone.menurandomchoice.model;
+package com.aone.menurandomchoice.repository.model;
 
-import java.util.Date;
+import android.renderscript.BaseObj;
+
+import com.aone.menurandomchoice.BR;
+
 import java.util.List;
 
-public class Store {
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+public class StoreDetail extends BaseObservable {
     private String name;
+
     private String time;
+
     private String address;
+
     private String description;
+
     private double latitude;
+
     private double longitude;
-    private List<Menu> menuList;
 
-    public Store(String name, String time, String address, String description, double latitude, double longitude, List<Menu> menuList) {
-        this.name = name;
-        this.time = time;
-        this.address = address;
-        this.description = description;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.menuList = menuList;
-    }
+    private List<MenuDetail> menuDetailList;
 
+    @Bindable
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+        notifyPropertyChanged(BR.name);
     }
 
+    @Bindable
     public String getTime() {
         return time;
     }
 
     public void setTime(String time) {
         this.time = time;
+        notifyPropertyChanged(BR.time);
     }
 
+    @Bindable
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+        notifyPropertyChanged(BR.address);
     }
 
-    public String getDescription() {
-        return description;
-    }
+    @Bindable
+    public String getDescription() { return description; }
 
     public void setDescription(String description) {
         this.description = description;
+        notifyPropertyChanged(BR.description);
     }
 
     public double getLatitude() {
@@ -70,11 +78,11 @@ public class Store {
         this.longitude = longitude;
     }
 
-    public List<Menu> getMenuList() {
-        return menuList;
+    public List<MenuDetail> getMenuDetailList() {
+        return menuDetailList;
     }
 
-    public void setMenuList(List<Menu> menuList) {
-        this.menuList = menuList;
+    public void setMenuDetailList(List<MenuDetail> menuDetailList) {
+        this.menuDetailList = menuDetailList;
     }
 }
