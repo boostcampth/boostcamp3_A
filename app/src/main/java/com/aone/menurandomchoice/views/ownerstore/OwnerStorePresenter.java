@@ -21,7 +21,7 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
             @Override
             public void onFailToLoadStoreDetail() {
-                
+
             }
         });
     }

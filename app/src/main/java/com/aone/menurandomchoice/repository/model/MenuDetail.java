@@ -8,10 +8,8 @@ public class MenuDetail extends BaseObservable {
 
     private String name;
 
-    @Bindable
     private int price;
-
-    @Bindable
+    
     private String photoUrl;
 
     private String description;
