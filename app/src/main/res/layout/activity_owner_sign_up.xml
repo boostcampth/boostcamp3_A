@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite">
+        android:background="@color/white">
 
         <EditText
             android:id="@+id/activity_owner_sign_up_et_access_key"
@@ -54,7 +54,7 @@
             android:paddingRight="@dimen/middle_padding"
             android:paddingBottom="@dimen/x_large_padding"
             android:text="@string/activity_owner_button_sign_up_request"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/white"
             android:textSize="@dimen/x_large_text"
             android:textStyle="bold"
             android:onClick="@{activity::onSignUpRequestClick}"
