@@ -41,6 +41,9 @@
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
 
         <activity android:name=".views.ownerdetail.OwnerDetailActivity"/>
+
+        <activity android:name=".views.locationsearch.LocationSearchActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

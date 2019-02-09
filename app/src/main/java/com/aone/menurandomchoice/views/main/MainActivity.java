@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
+import com.aone.menurandomchoice.views.locationsearch.LocationSearchPresenter;
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (view.getId()) {
             case R.id.btn_start:
+                startActivity(new Intent(MainActivity.this, LocationSearchActivity.class));
                 //Move to Random Choice Activity
                break;
 

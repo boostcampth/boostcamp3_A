@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.data.network.pojo;
+package com.aone.menurandomchoice.repository.network.pojo;
 
 public class MenuLocation {
     private double latitude;

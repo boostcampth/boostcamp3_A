@@ -1,6 +1,6 @@
-package com.aone.menurandomchoice.data.network.pojo;
+package com.aone.menurandomchoice.repository.network.pojo;
 
-public class AddressInfo {
+public class KakaoAddressResult {
     private Object roadAddress;
     private String addressName;
     private Object address;

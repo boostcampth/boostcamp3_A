@@ -1,10 +1,11 @@
-package com.aone.menurandomchoice.data.network;
+package com.aone.menurandomchoice.repository.network;
 
 import androidx.annotation.NonNull;
 
 public interface NetworkResponseListener<T> {
 
     void onError();
-    void onResponseReceived(@NonNull final T response);
+
+    void onReceived(@NonNull final T response);
 
 }

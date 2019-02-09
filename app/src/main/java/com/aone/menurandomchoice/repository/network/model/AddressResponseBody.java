@@ -1,6 +1,6 @@
-package com.aone.menurandomchoice.data.network.model;
+package com.aone.menurandomchoice.repository.network.model;
 
-import com.aone.menurandomchoice.data.network.pojo.AddressInfo;
+import com.aone.menurandomchoice.repository.network.pojo.KakaoAddressResult;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ public class AddressResponseBody {
     private int totalCount;
     private int pageableCount;
     private boolean isEnd;
-    private List<AddressInfo> documents;
+    private List<KakaoAddressResult> documents;
 
     public int getTotalCount() {
         return totalCount;
@@ -34,11 +34,11 @@ public class AddressResponseBody {
         isEnd = end;
     }
 
-    public List<AddressInfo> getDocuments() {
+    public List<KakaoAddressResult> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(List<AddressInfo> documents) {
+    public void setDocuments(List<KakaoAddressResult> documents) {
         this.documents = documents;
     }
 }

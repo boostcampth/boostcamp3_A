@@ -4,6 +4,7 @@ package com.aone.menurandomchoice.views.base.adapter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHol
         implements BaseRecyclerViewAdapterModel<L> {
 
     private List<L> items = new ArrayList<>();
-
+    private OnItemClickListener onItemClickListener;
 
     @Override
     public void setItem(int position, @NonNull L item) {
@@ -89,21 +90,40 @@ public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHol
 
     @NonNull
     @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public VH onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
 
-        return createViewHolder(layoutInflater, viewGroup, i);
+        return createViewHolder(layoutInflater, viewGroup, position);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH viewHolder, int i) {
-        bindViewHolder(viewHolder, getItem(i));
+    public void onBindViewHolder(@NonNull final VH viewHolder, final int position) {
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(viewHolder.itemView, position);
+                }
+            }
+        });
+
+        bindViewHolder(viewHolder, getItem(position));
     }
 
-
     @NonNull
-    abstract VH createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i);
+    abstract public VH createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i);
 
-    abstract void bindViewHolder(@NonNull VH viewHolder, @NonNull L item);
+    abstract public void bindViewHolder(@NonNull VH viewHolder, @NonNull L item);
+
+    public void setOnItemClickListener(
+            OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+
+        void onItemClick(View view, int position);
+    }
 
 }
