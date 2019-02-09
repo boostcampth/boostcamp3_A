@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (view.getId()) {
             case R.id.btn_start:
-                //Move to Random Choice Activity
+                moveToMenuSelectActivity();
                 break;
 
             case R.id.btn_upload:
@@ -44,5 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void moveToOwnerLoginActivity() {
         Intent ownerLoginIntent = new Intent(MainActivity.this, OwnerLoginActivity.class);
         startActivity(ownerLoginIntent);
+    }
+
+    private void moveToMenuSelectActivity() {
+        Intent menuSelectIntent = new Intent(MainActivity.this, MenuSelectActivity.class);
+        startActivity(menuSelectIntent);
     }
 }

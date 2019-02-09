@@ -30,17 +30,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".views.ownerlogin.OwnerLoginActivity"
             android:label="@string/activity_owner_login_label" />
-
         <activity
             android:name=".views.ownersignup.OwnerSignUpActivity"
             android:label="@string/activity_owner_sign_up_label"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
-
-        <activity android:name=".views.ownerdetail.OwnerDetailActivity"/>
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
+        <activity android:name=".views.ownerdetail.OwnerDetailActivity" />
+        <activity android:name=".views.menuselect.MenuSelectActivity"></activity>
     </application>
 
 </manifest>
