@@ -36,4 +36,7 @@
 
     <!-- layout_search_box -->
     <string name="layout_search_box_search_hint">장소 검색</string>
+
+    <!-- Kakao REST API Key -->
+    <string name="KAKAO_REST_API_KEY">KakaoAK d6960a6792d64d6af209195c8bfa4094</string>
 </resources>

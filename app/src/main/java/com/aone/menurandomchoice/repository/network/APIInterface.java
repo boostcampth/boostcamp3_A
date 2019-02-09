@@ -17,5 +17,5 @@ public interface APIInterface {
     Call<List<MenuLocation>> getMenuLocation(@QueryMap Map<String, String> location);
 
     @GET("https://dapi.kakao.com/v2/local/search/address.json")
-    Call<AddressResponseBody> getAddress(@Header("Authorization") String authorization, @Query("query") String q);
+    Call<AddressResponseBody> getAddress(@Header("Authorization") String authorization, @Query("query") String query);
 }

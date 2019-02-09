@@ -15,6 +15,6 @@ public interface LocationSearchContract {
 
         void setAdapter(LocationSearchAdapter adapter);
 
-        void requestLocationSearch(@NonNull String Query);
+        void requestLocationSearch(@NonNull String Query, @NonNull String REST_API_KEY);
     }
 }

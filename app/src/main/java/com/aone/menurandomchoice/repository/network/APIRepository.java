@@ -46,8 +46,8 @@ public class APIRepository implements APIHelper {
     }
 
     @Override
-    public Call<AddressResponseBody> executeLocationSearch(NetworkResponseListener<AddressResponseBody> listener, String Qeury) {
-            Call<AddressResponseBody> call = apiInstance.getAddress("KakaoAK d6960a6792d64d6af209195c8bfa4094",Qeury);
+    public Call<AddressResponseBody> executeLocationSearch(NetworkResponseListener<AddressResponseBody> listener, String Qeury, String REST_API_KEY) {
+            Call<AddressResponseBody> call = apiInstance.getAddress(REST_API_KEY, Qeury);
             call.enqueue( new NetworkResponse<>(listener));
             return call;
     }

@@ -6,5 +6,8 @@ import androidx.annotation.NonNull;
 import retrofit2.Call;
 
 public interface APIHelper {
-    Call<AddressResponseBody> executeLocationSearch(@NonNull NetworkResponseListener<AddressResponseBody> networkResponseListener, String Query);
+    Call<AddressResponseBody> executeLocationSearch(
+            @NonNull NetworkResponseListener<AddressResponseBody> networkResponseListener,
+            String Query,
+            String REST_API_KEY);
 }

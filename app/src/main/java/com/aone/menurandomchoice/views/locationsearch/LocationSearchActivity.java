@@ -14,9 +14,7 @@ import com.aone.menurandomchoice.views.base.BaseActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,8 +26,26 @@ public class LocationSearchActivity extends BaseActivity<ActivityLocationSearchB
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setUpActivityToDataBinding();
+        setUpSearchToolBar();
+        initView();
+    }
+
+    private void setUpActivityToDataBinding() { getDataBinding().setActivity(this); }
+
+    private void initView() {
+        LocationSearchAdapter adapter = new LocationSearchAdapter();
+        RecyclerView recyclerView = getDataBinding().rcContent;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(adapter);
+        getPresenter().setAdapter(adapter);
+    }
+
+    private void setUpSearchToolBar() {
         Toolbar toolbar = getDataBinding().searchBox.toolbar;
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getDataBinding().searchBox.etSearch.setOnEditorActionListener(
                 new TextView.OnEditorActionListener() {
@@ -41,10 +57,7 @@ public class LocationSearchActivity extends BaseActivity<ActivityLocationSearchB
                         }
                         return false;
                     }
-        });
-
-        setUpBackArrow();
-        initView();
+                });
     }
 
     @Override
@@ -68,20 +81,8 @@ public class LocationSearchActivity extends BaseActivity<ActivityLocationSearchB
         finish();
     }
 
-    private void setUpBackArrow() {
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    @NonNull
     @Override
-    protected  ActivityLocationSearchBinding setUpDataBinding() {
-        ActivityLocationSearchBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_location_search);
-        binding.setActivity(this);
-        return binding;
-    }
+    protected int getLayoutId() { return R.layout.activity_location_search; }
 
     @NonNull
     @Override
@@ -91,22 +92,10 @@ public class LocationSearchActivity extends BaseActivity<ActivityLocationSearchB
     @Override
     protected  LocationSearchContract.View getView() { return this; }
 
-    @Override
-    protected void onSaveInstanceStateToBundle(@NonNull Bundle outState) {
-    }
-
-    private void initView() {
-        LocationSearchAdapter adapter = new LocationSearchAdapter();
-        RecyclerView recyclerView = getDataBinding().rcContent;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(adapter);
-        getPresenter().setAdapter(adapter);
-    }
-
     public void requestLocationSearchWord() {
         KeyboardUtil.hideKeyboard(this);
         String inputAddress = getDataBinding().searchBox.etSearch.getText().toString();
-        getPresenter().requestLocationSearch(inputAddress);
+        String REST_API_KEY = getAppContext().getString(R.string.KAKAO_REST_API_KEY);
+        getPresenter().requestLocationSearch(inputAddress, REST_API_KEY);
     }
 }

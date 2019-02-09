@@ -18,13 +18,14 @@ import retrofit2.Call;
 public class LocationSearchPresenter extends BasePresenter<LocationSearchContract.View>
         implements LocationSearchContract.Presenter {
 
-    private Call<AddressResponseBody> call;
-    private LocationSearchAdapter adapter; // adapterView, adapterModel
+    private Call<AddressResponseBody> call; // presenter 소멸시에 Retorit 중단을 위한 객체
+    private LocationSearchAdapter adapter;
 
     public void setAdapter(final LocationSearchAdapter adapter) {
         adapter.setOnItemClickListener( new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                // 테스트를 위해 좌표 찍음
                 Log.d("Clicked ViewHolder", adapter.getItem(position).getX()+"");
             }
         });
@@ -35,7 +36,7 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
         this.adapter.setItems(documents);
     }
 
-    public void requestLocationSearch(@NonNull String Query) {
+    public void requestLocationSearch(@NonNull String Query, @NonNull String REST_API_KEY) {
         this.call = getRepository().executeLocationSearch( new NetworkResponseListener<AddressResponseBody>() {
                 @Override
                 public void onError() {
@@ -46,6 +47,6 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
                 public void onReceived(@NonNull AddressResponseBody response) {
                     updateList(response.getDocuments());
                 }
-            }, Query);
+            }, Query, REST_API_KEY);
     }
 }

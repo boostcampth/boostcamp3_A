@@ -77,8 +77,8 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public Call<AddressResponseBody> executeLocationSearch(NetworkResponseListener<AddressResponseBody> networkResponseListener, String Qeury) {
-        return apiHelper.executeLocationSearch(networkResponseListener, Qeury);
+    public Call<AddressResponseBody> executeLocationSearch(NetworkResponseListener<AddressResponseBody> networkResponseListener, String Qeury, String REST_API_KEY) {
+        return apiHelper.executeLocationSearch(networkResponseListener, Qeury, REST_API_KEY);
     }
 
     @Override
