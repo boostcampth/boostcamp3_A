@@ -15,8 +15,6 @@ public interface OwnerLoginContract {
 
         void moveToSignUpActivity(long userId);
 
-        void showToastMessage(@NonNull String message);
-
     }
 
     interface Presenter extends BaseContract.Presenter<OwnerLoginContract.View> {
