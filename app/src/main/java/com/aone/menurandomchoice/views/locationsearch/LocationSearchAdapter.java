@@ -16,14 +16,25 @@ import androidx.recyclerview.widget.RecyclerView;
 public class LocationSearchAdapter extends BaseRecyclerViewAdapter<KakaoAddressResult, LocationSearchAdapter.LocationViewHolder> {
 
     @Override
-    public void bindViewHolder(@NonNull LocationViewHolder viewHolder, @NonNull KakaoAddressResult item) {
+    protected void bindViewHolder(@NonNull LocationViewHolder viewHolder, @NonNull KakaoAddressResult item) {
         viewHolder.binding.setItem(item);
     }
 
     @NonNull
-    public LocationViewHolder createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i) {
+    protected LocationViewHolder createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i) {
         View view = layoutInflater.inflate(R.layout.location_search_viewholder, viewGroup, false);
-        return new LocationViewHolder(view);
+        final LocationViewHolder viewHolder = new LocationViewHolder(view);
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onViewHolderClickListener != null) {
+                    onViewHolderClickListener.onItemClick(viewHolder.itemView, viewHolder.getAdapterPosition());
+                }
+            }
+        });
+
+        return viewHolder;
     }
 
     public class LocationViewHolder extends RecyclerView.ViewHolder {

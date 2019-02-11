@@ -11,8 +11,8 @@ public class MenuMapper {
     public static Map<String, String> createRequestLocationQueryMap(double latitude, double longitude){
 
         Map<String, String> queryMap = new HashMap<>();
-        queryMap.put(QUERY_STRING_LATITUDE, Double.toString(latitude));
-        queryMap.put(QUERY_STRING_LONGITUDE, Double.toString(longitude));
+        queryMap.put(QUERY_STRING_LATITUDE, latitude+"");
+        queryMap.put(QUERY_STRING_LONGITUDE, longitude+"");
 
         return queryMap;
     }

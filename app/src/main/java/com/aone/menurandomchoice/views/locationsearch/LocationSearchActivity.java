@@ -2,15 +2,21 @@ package com.aone.menurandomchoice.views.locationsearch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityLocationSearchBinding;
+import com.aone.menurandomchoice.repository.network.pojo.KakaoAddressResult;
 import com.aone.menurandomchoice.utils.KeyboardUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapter;
+import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapterView;
+import com.aone.menurandomchoice.views.base.adapter.OnViewHolderClickListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class LocationSearchActivity extends BaseActivity<ActivityLocationSearchBinding, LocationSearchContract.View, LocationSearchContract.Presenter>
                                     implements LocationSearchContract.View {
+
+    private BaseRecyclerViewAdapterView adapterView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +48,17 @@ public class LocationSearchActivity extends BaseActivity<ActivityLocationSearchB
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
         getPresenter().setAdapter(adapter);
+        adapterView = adapter;
+        adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                viewHolderClicked(position);
+            }
+        });
+   }
+
+    private void viewHolderClicked(int position) {
+        getPresenter().requestMenuLocation(position);
     }
 
     private void setUpSearchToolBar() {
@@ -95,7 +114,6 @@ public class LocationSearchActivity extends BaseActivity<ActivityLocationSearchB
     public void requestLocationSearchWord() {
         KeyboardUtil.hideKeyboard(this);
         String inputAddress = getDataBinding().searchBox.etSearch.getText().toString();
-        String REST_API_KEY = getAppContext().getString(R.string.KAKAO_REST_API_KEY);
-        getPresenter().requestLocationSearch(inputAddress, REST_API_KEY);
+        getPresenter().requestLocationSearch(inputAddress);
     }
 }

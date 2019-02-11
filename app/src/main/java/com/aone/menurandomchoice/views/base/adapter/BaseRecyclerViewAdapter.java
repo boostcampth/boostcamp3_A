@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>
-        implements BaseRecyclerViewAdapterModel<L> {
+        implements BaseRecyclerViewAdapterModel<L>, BaseRecyclerViewAdapterView {
 
     private List<L> items = new ArrayList<>();
-    private OnItemClickListener onItemClickListener;
+    protected OnViewHolderClickListener onViewHolderClickListener;
 
     @Override
     public void setItem(int position, @NonNull L item) {
@@ -98,32 +98,21 @@ public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(@NonNull final VH viewHolder, final int position) {
-
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(viewHolder.itemView, position);
-                }
-            }
-        });
-
         bindViewHolder(viewHolder, getItem(position));
     }
 
     @NonNull
-    abstract public VH createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i);
+    abstract protected VH createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i);
 
-    abstract public void bindViewHolder(@NonNull VH viewHolder, @NonNull L item);
+    abstract protected void bindViewHolder(@NonNull VH viewHolder, @NonNull L item);
 
-    public void setOnItemClickListener(
-            OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    @Override
+    public void setOnViewHolderClickListener(@NonNull  OnViewHolderClickListener onViewHolderClickListener) {
+        this.onViewHolderClickListener = onViewHolderClickListener;
     }
-
-    public interface OnItemClickListener {
-
-        void onItemClick(View view, int position);
-    }
+//    public void setOnItemClickListener(
+//           @NonNull OnItemClickListener onItemClickListener) {
+//        this.onItemClickListener = onItemClickListener;
+//    }
 
 }

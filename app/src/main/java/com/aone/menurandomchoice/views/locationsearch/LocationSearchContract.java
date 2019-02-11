@@ -1,7 +1,9 @@
 package com.aone.menurandomchoice.views.locationsearch;
 
+import com.aone.menurandomchoice.repository.network.pojo.KakaoAddressResult;
 import com.aone.menurandomchoice.views.base.BaseContract;
 import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapter;
+import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapterModel;
 
 import androidx.annotation.NonNull;
 
@@ -13,8 +15,10 @@ public interface LocationSearchContract {
 
     interface Presenter extends BaseContract.Presenter<LocationSearchContract.View> {
 
-        void setAdapter(LocationSearchAdapter adapter);
+        void setAdapter(@NonNull BaseRecyclerViewAdapterModel<KakaoAddressResult> adapter);
 
-        void requestLocationSearch(@NonNull String Query, @NonNull String REST_API_KEY);
+        void requestLocationSearch(@NonNull String Query);
+
+        void requestMenuLocation(int position);
     }
 }

@@ -1,43 +1,50 @@
 package com.aone.menurandomchoice.views.locationsearch;
 
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.aone.menurandomchoice.repository.network.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.network.mapper.MenuMapper;
 import com.aone.menurandomchoice.repository.network.model.AddressResponseBody;
+import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
 import com.aone.menurandomchoice.repository.network.pojo.KakaoAddressResult;
 import com.aone.menurandomchoice.views.base.BasePresenter;
-import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapter;
+import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapterModel;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import retrofit2.Call;
 
 public class LocationSearchPresenter extends BasePresenter<LocationSearchContract.View>
         implements LocationSearchContract.Presenter {
 
-    private Call<AddressResponseBody> call; // presenter 소멸시에 Retorit 중단을 위한 객체
-    private LocationSearchAdapter adapter;
+    private BaseRecyclerViewAdapterModel<KakaoAddressResult> adapterModel;
 
-    public void setAdapter(final LocationSearchAdapter adapter) {
-        adapter.setOnItemClickListener( new BaseRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                // 테스트를 위해 좌표 찍음
-                Log.d("Clicked ViewHolder", adapter.getItem(position).getX()+"");
-            }
-        });
-        this.adapter = adapter;
+    public void setAdapter(@NonNull BaseRecyclerViewAdapterModel<KakaoAddressResult> adapterModel) {
+        this.adapterModel = adapterModel;
     }
 
     private void updateList(List<KakaoAddressResult> documents) {
-        this.adapter.setItems(documents);
+        this.adapterModel.setItems(documents);
     }
 
-    public void requestLocationSearch(@NonNull String Query, @NonNull String REST_API_KEY) {
-        this.call = getRepository().executeLocationSearch( new NetworkResponseListener<AddressResponseBody>() {
+    public void requestMenuLocation(int position) {
+        Log.d("Clicked ViewHolder", adapterModel.getItem(position).getX()+"");
+        getRepository().requestMenuLocation(MenuMapper.createRequestLocationQueryMap(37.495573,127.039073),
+                new NetworkResponseListener<MenuLocationResponseBody>() {
+                    @Override
+                    public void onError() {
+
+                    }
+
+                    @Override
+                    public void onReceived(MenuLocationResponseBody response) {
+                        Log.d("Menu", response.getMessage());
+                    }
+                });
+    }
+
+    public void requestLocationSearch(@NonNull String Query) {
+        getRepository().executeLocationSearch(Query, new NetworkResponseListener<AddressResponseBody>() {
                 @Override
                 public void onError() {
 
@@ -47,6 +54,6 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
                 public void onReceived(@NonNull AddressResponseBody response) {
                     updateList(response.getDocuments());
                 }
-            }, Query, REST_API_KEY);
+            });
     }
 }

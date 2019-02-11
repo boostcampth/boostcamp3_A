@@ -6,6 +6,8 @@ import com.aone.menurandomchoice.repository.network.APIHelper;
 import com.aone.menurandomchoice.repository.network.APIRepository;
 import com.aone.menurandomchoice.repository.network.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.network.model.AddressResponseBody;
+import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
+import com.aone.menurandomchoice.repository.network.pojo.MenuLocation;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginRepository;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
@@ -15,8 +17,12 @@ import com.aone.menurandomchoice.repository.server.OnSignedUpCheckListener;
 import com.aone.menurandomchoice.repository.server.ServerDataHelper;
 import com.aone.menurandomchoice.repository.server.ServerDataRepository;
 
+import java.util.List;
+import java.util.Map;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class DataRepository implements Repository {
@@ -77,8 +83,13 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public Call<AddressResponseBody> executeLocationSearch(NetworkResponseListener<AddressResponseBody> networkResponseListener, String Qeury, String REST_API_KEY) {
-        return apiHelper.executeLocationSearch(networkResponseListener, Qeury, REST_API_KEY);
+    public void executeLocationSearch(@NonNull String Qeury, @NonNull NetworkResponseListener<AddressResponseBody> networkResponseListener) {
+        apiHelper.executeLocationSearch(Qeury, networkResponseListener);
+    }
+
+    @Override
+    public void requestMenuLocation(@NonNull Map<String, String> queryMap, @NonNull NetworkResponseListener<MenuLocationResponseBody> networkResponseListener) {
+        apiHelper.requestMenuLocation(queryMap, networkResponseListener);
     }
 
     @Override
