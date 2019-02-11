@@ -10,8 +10,10 @@
 
     <style name="AppTheme.NoActionBar"  parent="Theme.AppCompat.NoActionBar">
         <item name="windowActionBar">false</item>
+
     </style>
-    
+
+
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/black</item>
