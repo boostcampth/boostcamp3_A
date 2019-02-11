@@ -31,20 +31,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> c712ceefb21d0a83f84f662572adc6707886a0b6
         <activity
             android:name=".views.ownerlogin.OwnerLoginActivity"
             android:label="@string/activity_owner_login_label" />
 
+<<<<<<< HEAD
+=======
+        <activity
+            android:name=".views.ownerstore.OwnerStoreActivity"
+            android:label="@string/activity_owner_store_label"/>
+
+>>>>>>> c712ceefb21d0a83f84f662572adc6707886a0b6
         <activity
             android:name=".views.ownersignup.OwnerSignUpActivity"
             android:label="@string/activity_owner_sign_up_label"
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
+<<<<<<< HEAD
 
         <activity android:name=".views.ownerdetail.OwnerDetailActivity" />
 
         <activity android:name=".views.menuselect.MenuSelectActivity"/>
 
+=======
+      
+        <activity android:name=".views.ownerdetail.OwnerDetailActivity" />
+      
+        <activity android:name=".views.menuselect.MenuSelectActivity"/>
+>>>>>>> c712ceefb21d0a83f84f662572adc6707886a0b6
     </application>
 
 </manifest>
