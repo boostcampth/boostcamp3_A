@@ -16,6 +16,7 @@ public enum MenuTable {
     MenuTable(String columnName){
         this.columnName = columnName;
     }
+
     String getColumnName(){
         return this.columnName;
     }

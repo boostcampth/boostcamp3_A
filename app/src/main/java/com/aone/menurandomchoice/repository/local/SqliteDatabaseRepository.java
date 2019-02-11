@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 
@@ -26,9 +28,9 @@ public class SqliteDatabaseRepository extends SQLiteOpenHelper implements Sqlite
 
     private static SqliteDatabaseRepository sqliteDatabaseRepository;
 
-    public static SqliteDatabaseRepository getInstance(Context context) {
+    public static SqliteDatabaseRepository getInstance() {
         if(sqliteDatabaseRepository == null) {
-            sqliteDatabaseRepository = new SqliteDatabaseRepository(context.getApplicationContext());
+            sqliteDatabaseRepository = new SqliteDatabaseRepository(GlobalApplication.getGlobalApplicationContext());
         }
 
         return sqliteDatabaseRepository;
@@ -118,17 +120,16 @@ public class SqliteDatabaseRepository extends SQLiteOpenHelper implements Sqlite
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(STOREDETAIL_SELECT_QUERY, null);
+        
         try {
-            if (cursor.moveToFirst()) {
-                do {
-                    storeDetail.setName(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_NAME.getColumnName())));
-                    storeDetail.setTime(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_TIME.getColumnName())));
-                    storeDetail.setAddress(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_ADDRESS.getColumnName())));
-                    storeDetail.setDescription(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_DESCRIPTION.getColumnName())));
-                    storeDetail.setLatitude(cursor.getDouble(cursor.getColumnIndex(StoreTable.STORES_LATITUDE.getColumnName())));
-                    storeDetail.setLongitude(cursor.getDouble(cursor.getColumnIndex(StoreTable.STORES_LONGITUDE.getColumnName())));
-                    storeDetail.setMenuDetailList(getMenuDetailList());
-                } while(cursor.moveToNext());
+            while(cursor.moveToNext()) {
+                storeDetail.setName(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_NAME.getColumnName())));
+                storeDetail.setTime(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_TIME.getColumnName())));
+                storeDetail.setAddress(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_ADDRESS.getColumnName())));
+                storeDetail.setDescription(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_DESCRIPTION.getColumnName())));
+                storeDetail.setLatitude(cursor.getDouble(cursor.getColumnIndex(StoreTable.STORES_LATITUDE.getColumnName())));
+                storeDetail.setLongitude(cursor.getDouble(cursor.getColumnIndex(StoreTable.STORES_LONGITUDE.getColumnName())));
+                storeDetail.setMenuDetailList(getMenuDetailList());
             }
         } catch (Exception e) {
             Log.d(TAG, "Error Get Store Detail");
@@ -149,18 +150,17 @@ public class SqliteDatabaseRepository extends SQLiteOpenHelper implements Sqlite
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(MenuDetails_SELECT_QUERY, null);
+
         try {
-            if (cursor.moveToFirst()) {
-                do {
-                    MenuDetail menuDetail = new MenuDetail();
-                    menuDetail.setName(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_NAME.getColumnName())));
-                    menuDetail.setPhotoUrl(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_PHOTO_URL.getColumnName())));
-                    menuDetail.setPrice(cursor.getInt(cursor.getColumnIndex(MenuTable.MENU_PRICE.getColumnName())));
-                    menuDetail.setCategory(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_CATEGORY.getColumnName())));
-                    menuDetail.setDescription(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_DESCRIPTION.getColumnName())));
-                    menuDetail.setSequence(cursor.getInt(cursor.getColumnIndex(MenuTable.MENU_SEQUENCE.getColumnName())));
-                    menuDetails.add(menuDetail);
-                } while(cursor.moveToNext());
+            while(cursor.moveToNext()) {
+                MenuDetail menuDetail = new MenuDetail();
+                menuDetail.setName(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_NAME.getColumnName())));
+                menuDetail.setPhotoUrl(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_PHOTO_URL.getColumnName())));
+                menuDetail.setPrice(cursor.getInt(cursor.getColumnIndex(MenuTable.MENU_PRICE.getColumnName())));
+                menuDetail.setCategory(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_CATEGORY.getColumnName())));
+                menuDetail.setDescription(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_DESCRIPTION.getColumnName())));
+                menuDetail.setSequence(cursor.getInt(cursor.getColumnIndex(MenuTable.MENU_SEQUENCE.getColumnName())));
+                menuDetails.add(menuDetail);
             }
         } catch (Exception e) {
             Log.d(TAG, "Error Get Menu Detail");

@@ -39,7 +39,7 @@ public class DataRepository implements Repository {
     private DataRepository() {
         kakaoLoginHelper = KakaoLoginRepository.getInstance();
         serverDataHelper = ServerDataRepository.getInstance();
-        sqliteDatabaseHelper = SqliteDatabaseRepository.getInstance(GlobalApplication.getGlobalApplicationContext());
+        sqliteDatabaseHelper = SqliteDatabaseRepository.getInstance();
     }
 
     @Override
