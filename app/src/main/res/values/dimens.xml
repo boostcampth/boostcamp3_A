@@ -5,4 +5,25 @@
     <dimen name="large_margin">15dp</dimen>
     <dimen name="x_large_margin">20dp</dimen>
     <dimen name="two_x_large_margin">30dp</dimen>
+
+    <dimen name="small_padding">5dp</dimen>
+    <dimen name="middle_padding">10dp</dimen>
+    <dimen name="large_padding">15dp</dimen>
+    <dimen name="x_large_padding">20dp</dimen>
+    <dimen name="two_x_large_padding">30dp</dimen>
+
+    <dimen name="small_line_Spacing_Extra">5dp</dimen>
+
+    <dimen name="small_text">12sp</dimen>
+    <dimen name="middle_text">14sp</dimen>
+    <dimen name="large_text">16sp</dimen>
+    <dimen name="x_large_text">18sp</dimen>
+    <dimen name="two_x_large_text">20sp</dimen>
+
+    <!-- activity_main -->
+    <dimen name="activity_main_title">80dp</dimen>
+    <dimen name="activity_main_button">20dp</dimen>
+
+    <!-- activity_owner_sign_up -->
+    <dimen name="activity_owner_sign_up_button_editText">18sp</dimen>\
 </resources>
