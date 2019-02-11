@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 
 import com.aone.menurandomchoice.GlobalApplication;
 
-import java.util.Date;
-
 import androidx.annotation.NonNull;
 
 public class ServerDataRepository implements ServerDataHelper {
@@ -69,7 +67,19 @@ public class ServerDataRepository implements ServerDataHelper {
     @Override
     public void requestStoreDetail(int storeIdx, @NonNull OnStoreDetailRequestListener onStoreDetailRequestListener) {
         //Todo. request StoreDetail to Server
+        /*
+        requestStoreDetail(storeIdx, new OnStoreDetailRequestListener() {
+            @Override
+            public void onStoreDetailLoaded(StoreDetail storeDetail) {
+                onLoadStoreDetailListener.onStoreDetailLoaded(storeDetail);
+            }
 
+            @Override
+            public void onServerError() {
+                onLoadStoreDetailListener.onFailToLoadStoreDetail();
+            }
+        });
+        */
     }
 
 

@@ -10,8 +10,6 @@ import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.databinding.DataBindingUtil;
 
 public class OwnerStoreActivity
         extends BaseActivity<ActivityOwnerStoreBinding, OwnerStoreContract.View, OwnerStoreContract.Presenter>
@@ -26,17 +24,17 @@ public class OwnerStoreActivity
 
     @Override
     protected void onStart() {
+        super.onStart();
+
         int storeIdx = getIntent().getIntExtra("EXTRA_STORE_IDX", 0);
         getPresenter().loadStoreDetail(storeIdx);
-
-        super.onStart();
     }
 
     @Override
     protected void onStop() {
-        getPresenter().stopNetwork();
-
         super.onStop();
+
+        getPresenter().stopNetwork();
     }
 
     @Override

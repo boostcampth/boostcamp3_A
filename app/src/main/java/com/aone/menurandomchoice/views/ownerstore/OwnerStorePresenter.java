@@ -13,10 +13,9 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
             @Override
             public void onStoreDetailLoaded(StoreDetail storeDetail) {
 
-                if (!isAttachView()) {
-                    return;
+                if (isAttachView()) {
+                    getView().showStoreDetail(storeDetail);
                 }
-                getView().showStoreDetail(storeDetail);
             }
 
             @Override

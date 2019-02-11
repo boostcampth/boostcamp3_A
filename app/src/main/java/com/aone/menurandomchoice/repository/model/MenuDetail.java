@@ -9,7 +9,7 @@ public class MenuDetail extends BaseObservable {
     private String name;
 
     private int price;
-    
+
     private String photoUrl;
 
     private String description;

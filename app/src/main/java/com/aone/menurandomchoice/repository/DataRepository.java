@@ -2,8 +2,9 @@ package com.aone.menurandomchoice.repository;
 
 import android.content.Intent;
 
-import com.aone.menurandomchoice.repository.local.LocalDataHelper;
-import com.aone.menurandomchoice.repository.local.LocalDataRepository;
+import com.aone.menurandomchoice.GlobalApplication;
+import com.aone.menurandomchoice.repository.local.SqliteDatabaseHelper;
+import com.aone.menurandomchoice.repository.local.SqliteDatabaseRepository;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginRepository;
@@ -16,9 +17,6 @@ import com.aone.menurandomchoice.repository.server.OnStoreDetailRequestListener;
 import com.aone.menurandomchoice.repository.server.ServerDataHelper;
 import com.aone.menurandomchoice.repository.server.ServerDataRepository;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -27,7 +25,7 @@ public class DataRepository implements Repository {
     private static Repository repository;
     private KakaoLoginHelper kakaoLoginHelper;
     private ServerDataHelper serverDataHelper;
-    private LocalDataRepository localDataRepository;
+    private SqliteDatabaseHelper sqliteDatabaseHelper;
 
     @NonNull
     public static Repository getInstance() {
@@ -41,6 +39,7 @@ public class DataRepository implements Repository {
     private DataRepository() {
         kakaoLoginHelper = KakaoLoginRepository.getInstance();
         serverDataHelper = ServerDataRepository.getInstance();
+        sqliteDatabaseHelper = SqliteDatabaseRepository.getInstance(GlobalApplication.getGlobalApplicationContext());
     }
 
     @Override
@@ -81,7 +80,7 @@ public class DataRepository implements Repository {
     @Override
     public void loadStoreDetail(final int storeIdx, @NonNull final OnLoadStoreDetailListener onLoadStoreDetailListener) {
 
-        final StoreDetail cachedStoreDetail = localDataRepository.getStoreDetailByStoreIdx(storeIdx);
+        final StoreDetail cachedStoreDetail = getStoreDetail();
 
         checkStoreUpdated(cachedStoreDetail.getTime(), new OnStoreUpdatedCheckListener() {
             @Override
@@ -90,20 +89,11 @@ public class DataRepository implements Repository {
             }
 
             @Override
-            public void onNotUpdated() {
-                requestStoreDetail(storeIdx, new OnStoreDetailRequestListener() {
-                    @Override
-                    public void onStoreDetailLoaded(StoreDetail storeDetail) {
-                        onLoadStoreDetailListener.onStoreDetailLoaded(storeDetail);
-                    }
-
-                    @Override
-                    public void onServerError() {
-                        onLoadStoreDetailListener.onFailToLoadStoreDetail();
-                    }
-                });
+            public void onNotUpdated(@NonNull OnStoreDetailRequestListener onStoreDetailRequestListener) {
+                requestStoreDetail(storeIdx, onStoreDetailRequestListener);
             }
         });
+
     }
 
     @Override
@@ -114,6 +104,22 @@ public class DataRepository implements Repository {
     @Override
     public void requestStoreDetail(int storeIdx, @NonNull OnStoreDetailRequestListener onStoreDetailRequestListener) {
         serverDataHelper.requestStoreDetail(storeIdx, onStoreDetailRequestListener);
+    }
+
+
+    @Override
+    public void addStoreDetail() {
+        sqliteDatabaseHelper.addStoreDetail();
+    }
+
+    @Override
+    public StoreDetail getStoreDetail() {
+        return sqliteDatabaseHelper.getStoreDetail();
+    }
+
+    @Override
+    public void updateStoreDetail(@NonNull final StoreDetail storeDetail) {
+        sqliteDatabaseHelper.updateStoreDetail(storeDetail);
     }
 
 

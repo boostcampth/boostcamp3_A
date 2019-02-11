@@ -7,9 +7,7 @@
         <variable
             name="activity"
             type="com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity"/>
-        <variable name="photoUrl" type = "String"/>
-        <variable name="name" type = "String"/>
-        <variable name="price" type = "int"/>
+        <variable name="menuDetail" type="com.aone.menurandomchoice.repository.model.MenuDetail"/>
     </data>
 
     <LinearLayout
@@ -25,18 +23,18 @@
             android:layout_width="100dp"
             android:layout_height="130dp"
             app:error="@{@drawable/no_photo}"
-            app:photoUrl="@{photoUrl}" />
+            app:photoUrl="@{menuDetail.photoUrl}" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{name}"
+            android:text="@{menuDetail.name}"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{Integer.toString(price)}"
+            android:text="@{Integer.toString(menuDetail.price)}"
             android:textSize="18sp" />
     </LinearLayout>
 
