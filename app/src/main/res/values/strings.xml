@@ -34,9 +34,15 @@
     <string name="activity_owner_access_key_hint">인증번호 6자리</string>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- item_menu_select_view -->
     <string name="item_menu_select_price_tv">원</string>
 =======
+=======
+    <!-- item_menu_select_view -->
+    <string name="item_menu_select_price_tv">원</string>
+  
+>>>>>>> 8b469cdb15b864979920ef97cdf7a36df5d89171
     <!-- activity_owner_detail -->
     <string name="activity_owner_detail_menu_label">등록메뉴</string>
     <string name="activity_owner_detail_location">위치</string>
@@ -44,6 +50,9 @@
 
     <!--action bar menu -->
     <string name ="item_action_bar_edit">편집</string>
+<<<<<<< HEAD
 >>>>>>> c712ceefb21d0a83f84f662572adc6707886a0b6
+=======
+>>>>>>> 8b469cdb15b864979920ef97cdf7a36df5d89171
 
 </resources>
