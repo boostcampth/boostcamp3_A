@@ -58,4 +58,29 @@ public class ServerDataRepository implements ServerDataHelper {
             onSignUpRequestListener.onSignUpFail();
         }
     }
+
+    @Override
+    public void checkStoreUpdated(@NonNull String updateTime, @NonNull OnStoreUpdatedCheckListener onStoreUpdatedCheckListener) {
+        //Todo. request isUpdated to Server
+    }
+
+    @Override
+    public void requestStoreDetail(int storeIdx, @NonNull OnStoreDetailRequestListener onStoreDetailRequestListener) {
+        //Todo. request StoreDetail to Server
+        /*
+        requestStoreDetail(storeIdx, new OnStoreDetailRequestListener() {
+            @Override
+            public void onStoreDetailLoaded(StoreDetail storeDetail) {
+                onLoadStoreDetailListener.onStoreDetailLoaded(storeDetail);
+            }
+
+            @Override
+            public void onServerError() {
+                onLoadStoreDetailListener.onFailToLoadStoreDetail();
+            }
+        });
+        */
+    }
+
+
 }
