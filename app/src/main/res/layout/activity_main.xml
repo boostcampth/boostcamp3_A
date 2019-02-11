@@ -1,82 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="activity"
+            type="com.aone.menurandomchoice.views.main.MainActivity"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@color/white">
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/activity_main_customer_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/middle_margin"
+            android:text="@string/activity_main_customer"
+            android:textColor="@color/black"
+            android:textSize="@dimen/activity_main_title"
+            app:fontFamily="@font/youth"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_customer_division_guide_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_store_number"
-                android:layout_width="wrap_content"
-                android:layout_height="33dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="23dp"
-                android:text="@string/activity_main_store_number"
-                android:textColor="@color/dark"
-                android:textSize="13sp" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_main_customer_division_guide_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
 
-            <TextView
-                android:id="@+id/tv_customer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_store_number"
-                android:layout_centerHorizontal="true"
-                android:text="@string/activity_main_customer"
-                android:textColor="@color/dark"
-                android:textSize="80sp" />
+        <TextView
+            android:id="@+id/activity_main_menu_select_enter_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/middle_margin"
+            android:background="@drawable/activity_main_rounded_button_customer"
+            android:paddingLeft="@dimen/two_x_large_padding"
+            android:paddingTop="@dimen/small_padding"
+            android:paddingRight="@dimen/two_x_large_padding"
+            android:paddingBottom="@dimen/small_padding"
+            android:text="@string/activity_main_button_start"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/activity_main_button"
+            android:onClick="@{activity::moveToMenuSelectActivity}"
+            android:textStyle="bold"
+            app:fontFamily="@font/youth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/activity_main_customer_division_guide_line" />
 
-            <Button
-                android:id="@+id/btn_start"
-                android:layout_width="150dp"
-                android:layout_height="25dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="56dp"
-                android:background="@drawable/activity_main_rounded_button_customer"
-                android:text="@string/activity_main_button_start"
-                android:textColor="@color/white" />
-        </RelativeLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_main_customer_image_guide_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.43" />
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_main_vertical_center_guide_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <ImageView
+            android:id="@+id/activity_main_customer_popcorn_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="2.5dp"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/activity_main_vertical_center_guide_line"
+            app:layout_constraintTop_toTopOf="@+id/activity_main_customer_image_guide_line" />
+
+        <ImageView
+            android:id="@+id/activity_main_customer_doughnut_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_center_guide_line"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toEndOf="@+id/activity_main_customer_salmon_iv"
+            app:layout_constraintTop_toTopOf="@+id/activity_main_customer_image_guide_line" />
+
+        <ImageView
+            android:id="@+id/activity_main_customer_tobacco_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="@dimen/small_margin"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_center_guide_line"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/activity_main_customer_hamburger_iv"
+            app:layout_constraintTop_toTopOf="@+id/activity_main_customer_image_guide_line" />
+
+        <ImageView
+            android:id="@+id/activity_main_customer_salmon_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="2.5dp"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="@+id/activity_main_vertical_center_guide_line"
+            app:layout_constraintTop_toTopOf="@+id/activity_main_customer_image_guide_line" />
+
+        <ImageView
+            android:id="@+id/activity_main_customer_sandwich_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_center_guide_line"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toEndOf="@+id/activity_main_customer_doughnut_iv"
+            app:layout_constraintTop_toTopOf="@+id/activity_main_customer_image_guide_line" />
+
+        <ImageView
+            android:id="@+id/activity_main_customer_hamburger_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="@dimen/small_margin"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_center_guide_line"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/activity_main_customer_popcorn_iv"
+            app:layout_constraintTop_toTopOf="@+id/activity_main_customer_image_guide_line" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_main_center_guide_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@color/reddish"
-            android:orientation="vertical">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/activity_main_center_guide_line"
+            app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:id="@+id/tv_owner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="46dp"
-                android:text="@string/activity_main_owner"
-                android:textColor="@color/white"
-                android:textSize="80sp" />
+        <TextView
+            android:id="@+id/activity_main_owner_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/middle_margin"
+            android:text="@string/activity_main_owner"
+            android:textColor="@color/white"
+            android:textSize="@dimen/activity_main_title"
+            app:fontFamily="@font/youth"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_owner_division_guide_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
-                android:id="@+id/btn_upload"
-                android:layout_width="136dp"
-                android:layout_height="25dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="56dp"
-                android:background="@drawable/activity_main_rounded_button_owner"
-                android:text="@string/activity_main_button_upload"
-                android:textColor="@color/reddish" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_main_owner_division_guide_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.8" />
 
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/activity_main_owner_login_enter_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/middle_margin"
+            android:background="@drawable/activity_main_rounded_button_owner"
+            android:paddingLeft="@dimen/two_x_large_padding"
+            android:paddingTop="@dimen/small_padding"
+            android:paddingRight="@dimen/two_x_large_padding"
+            android:paddingBottom="@dimen/small_padding"
+            android:text="@string/activity_main_button_upload"
+            android:textColor="@color/reddish"
+            android:textSize="@dimen/activity_main_button"
+            android:textStyle="bold"
+            android:onClick="@{activity::moveToOwnerLoginActivity}"
+            app:fontFamily="@font/youth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/activity_main_owner_division_guide_line" />
 
-    </LinearLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_main_owner_image_guide_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.93" />
+
+        <ImageView
+            android:id="@+id/activity_main_owner_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/activity_main_owner_image_guide_line" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
