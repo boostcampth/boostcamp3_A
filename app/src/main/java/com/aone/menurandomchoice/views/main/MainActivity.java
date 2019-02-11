@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (view.getId()) {
             case R.id.btn_start:
-                startActivity(new Intent(MainActivity.this, LocationSearchActivity.class));
                 //Move to Random Choice Activity
                break;
 
