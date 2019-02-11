@@ -13,7 +13,6 @@
 
     </style>
 
-
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/black</item>
