@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.menuregister;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.aone.menurandomchoice.R;
@@ -42,6 +43,12 @@ public class MenuRegisterActivity
     @Override
     protected MenuRegisterContract.View getView() {
         return this;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.item_next_action_bar, menu);
+        return true;
     }
 
     @Override

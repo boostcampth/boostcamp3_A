@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.views.base.adapter;
+package com.aone.menurandomchoice.views.locationsearch.adapter;
 
 import android.view.View;
 
