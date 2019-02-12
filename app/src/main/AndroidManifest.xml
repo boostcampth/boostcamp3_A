@@ -30,26 +30,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-      
+
         <activity
             android:name=".views.ownerlogin.OwnerLoginActivity"
             android:label="@string/activity_owner_login_label" />
 
         <activity
             android:name=".views.ownerstore.OwnerStoreActivity"
-            android:label="@string/activity_owner_store_label"/>
+            android:label="@string/activity_owner_store_label" />
 
         <activity
             android:name=".views.ownersignup.OwnerSignUpActivity"
             android:label="@string/activity_owner_sign_up_label"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
 
         <activity android:name=".views.locationsearch.LocationSearchActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".views.ownerdetail.OwnerDetailActivity" />
-      
-        <activity android:name=".views.menuselect.MenuSelectActivity"/>
+
+        <activity android:name=".views.menuselect.MenuSelectActivity" />
+
+        <activity android:name=".views.menuregister.MenuRegisterActivity"
+            android:label="@string/activity_menu_register_label"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
     </application>
 
 </manifest>

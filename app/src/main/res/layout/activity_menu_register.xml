@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.aone.menurandomchoice.views.menuregister.MenuRegisterContract.Presenter"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".views.menuregister.MenuRegisterActivity">
+
+        <ImageView
+            android:id="@+id/activity_menu_register_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/x_large_margin"
+            android:layout_marginBottom="@dimen/x_large_margin"
+            android:background="@drawable/dot_line_rect"
+            app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_title_et"
+            app:layout_constraintDimensionRatio="9:16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/activity_menu_register_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:background="@drawable/add_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_menu_register_iv"
+            app:layout_constraintEnd_toEndOf="@+id/activity_menu_register_iv" />
+
+        <EditText
+            android:id="@+id/activity_menu_register_title_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/middle_margin"
+            android:layout_marginRight="@dimen/middle_margin"
+            android:layout_marginBottom="@dimen/middle_margin"
+            android:hint="@string/activity_menu_register_title_hint"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/activity_menu_register_text"
+            app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_guide_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/activity_menu_register_guide_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/middle_margin"
+            android:layout_marginRight="@dimen/middle_margin"
+            android:layout_marginBottom="@dimen/middle_margin"
+            android:hint="@string/activity_menu_register_guide_hint"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/activity_menu_register_text"
+            app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_price_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/activity_menu_register_price_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/middle_margin"
+            android:layout_marginRight="@dimen/middle_margin"
+            android:layout_marginBottom="@dimen/middle_margin"
+            android:hint="@string/activity_menu_register_price_hint"
+            android:inputType="text|number"
+            android:maxLength="15"
+            android:textColor="@color/black"
+            android:textSize="@dimen/activity_menu_register_text"
+            app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_recyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_menu_register_recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/middle_margin"
+            android:layout_marginRight="@dimen/middle_margin"
+            android:layout_marginBottom="@dimen/middle_margin"
+            android:minHeight="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
