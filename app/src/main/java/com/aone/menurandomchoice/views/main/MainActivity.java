@@ -5,9 +5,12 @@ import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
+import com.aone.menurandomchoice.views.locationsearch.LocationSearchPresenter;
 import com.aone.menurandomchoice.databinding.ActivityMainBinding;
 import com.aone.menurandomchoice.utils.GlideUtil;
 import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void moveToMenuSelectActivity(View view) {
-        Intent menuSelectIntent = new Intent(MainActivity.this, MenuSelectActivity.class);
+        Intent menuSelectIntent = new Intent(MainActivity.this, LocationSearchActivity.class);
         startActivity(menuSelectIntent);
     }
 
