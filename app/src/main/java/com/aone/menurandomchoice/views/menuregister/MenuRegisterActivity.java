@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.menuregister;
 
-import android.Manifest;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,11 +11,11 @@ import android.view.MenuItem;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
+import com.aone.menurandomchoice.utils.GlideUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
+import com.yalantis.ucrop.UCrop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class MenuRegisterActivity
         extends BaseActivity<ActivityMenuRegisterBinding, MenuRegisterContract.View, MenuRegisterContract.Presenter>
         implements MenuRegisterContract.View {
 
-    private static final int REQUEST_CODE_OPEN_ALBUM = 1;
+    public static final int REQUEST_CODE_OPEN_ALBUM = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class MenuRegisterActivity
                 onBackPressed();
                 return true;
             case R.id.item_action_bar_next:
-                moveToMenuConfirmActivity();
+//                moveToMenuConfirmActivity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -79,15 +80,19 @@ public class MenuRegisterActivity
         super.onBackPressed();
 
         finish();
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_OPEN_ALBUM:
-                if(resultCode == RESULT_OK) {
-                    executeImageCropWithUCrop(data);
-                }
+                attachViewToPresenter();
+                getPresenter().handlingPickPhotoResult(resultCode, data);
+                break;
+            case UCrop.REQUEST_CROP:
+                attachViewToPresenter();
+                getPresenter().handlingUCropResult(resultCode, data);
                 break;
                 default:
                     super.onActivityResult(requestCode, resultCode, data);
@@ -118,47 +123,31 @@ public class MenuRegisterActivity
     }
 
     @Override
-    public void checkPermission() {
-        checkPermissionWithTedPermission();
-    }
-
-    @Override
-    public void executePickImageFromAlbum() {
+    public void executePickPhotoFromAlbum() {
         openAlbumOfDevice();
     }
 
-    private void checkPermissionWithTedPermission() {
-        TedPermission.with(this)
-                .setRationaleMessage(getString(R.string.permission_request_guide))
-                .setDeniedMessage(getString(R.string.permission_denied_guide))
-                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .setPermissionListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted() {
-                        getPresenter().handlingImageRegisterPermissionGranted();
-                    }
+    @Override
+    public void startToUCropLibrary(UCrop uCrop) {
+        uCrop.start(this);
+    }
 
-                    @Override
-                    public void onPermissionDenied(List<String> deniedPermissions) {
-                    }
-                })
-                .check();
+    @Override
+    public void sendCropSuccessImageUri(Uri uri) {
+        GlideUtil.loadImage(getDataBinding().activityMenuRegisterIv, uri);
+    }
+
+    @NonNull
+    @Override
+    public int[] getRegisterTargetImageSize() {
+        return new int[]{getDataBinding().activityMenuRegisterIv.getWidth(),
+                getDataBinding().activityMenuRegisterIv.getHeight()};
     }
 
     private void openAlbumOfDevice() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, REQUEST_CODE_OPEN_ALBUM);
-    }
-
-    private void executeImageCropWithUCrop(Intent data) {
-        if(data != null) {
-            Uri selectedImageUri = data.getData();
-        }
-    }
-
-    private void moveToMenuConfirmActivity() {
-
     }
 
 }

@@ -56,6 +56,7 @@
     <string name="activity_menu_register_title_hint">메뉴 이름을 입력하세요</string>
     <string name="activity_menu_register_guide_hint">메뉴 설명을 입력하세요</string>
     <string name="activity_menu_register_price_hint">메뉴 가격을 입력하세요</string>
+    <string name="activity_menu_register_photo_fail">사진을 불러오는데 실패하였습니다</string>
 
     <!-- category arrays -->
     <string name="arrays_category_korea_food">한식</string>
@@ -70,5 +71,8 @@
     <!-- permission -->
     <string name="permission_request_guide">사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.</string>
     <string name="permission_denied_guide">[설정] > [권한] 에서 권한을 허용할 수 있습니다.</string>
+
+    <!-- UCop -->
+    <string name="uCrop_toolbar_title">사진 편집</string>
 
 </resources>

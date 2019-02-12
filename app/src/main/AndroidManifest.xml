@@ -45,16 +45,26 @@
             android:label="@string/activity_owner_sign_up_label"
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
 
-        <activity android:name=".views.locationsearch.LocationSearchActivity"
+        <activity
+            android:name=".views.locationsearch.LocationSearchActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".views.ownerdetail.OwnerDetailActivity" />
+        <activity
+            android:name=".views.ownerdetail.OwnerDetailActivity" />
 
-        <activity android:name=".views.menuselect.MenuSelectActivity" />
+        <activity
+            android:name=".views.menuselect.MenuSelectActivity" />
 
-        <activity android:name=".views.menuregister.MenuRegisterActivity"
+        <activity
+            android:name=".views.menuregister.MenuRegisterActivity"
             android:label="@string/activity_menu_register_label"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
     </application>
 
 </manifest>
