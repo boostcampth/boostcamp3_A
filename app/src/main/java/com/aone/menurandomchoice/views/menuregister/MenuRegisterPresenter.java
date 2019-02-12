@@ -6,7 +6,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         implements MenuRegisterContract.Presenter {
 
     @Override
-    public void onClickImageRegisterButton() {
+    public void handlingImageRegisterButtonClick() {
         if(isAttachView()) {
             getView().moveToImageRegisterActivity();
         }

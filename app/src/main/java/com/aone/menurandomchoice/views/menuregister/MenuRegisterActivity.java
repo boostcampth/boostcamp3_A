@@ -3,6 +3,7 @@ package com.aone.menurandomchoice.views.menuregister;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
@@ -25,6 +26,7 @@ public class MenuRegisterActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setUpPresenterToDataBinding();
         setUpCategoryRecyclerView();
     }
 
@@ -72,6 +74,10 @@ public class MenuRegisterActivity
         finish();
     }
 
+    private void setUpPresenterToDataBinding() {
+        getDataBinding().setPresenter(getPresenter());
+    }
+
     private void setUpCategoryRecyclerView() {
         MenuCategoryAdapter menuCategoryAdapter = new MenuCategoryAdapter();
         menuCategoryAdapter.setItems(createMenuCategoryItems());
@@ -93,7 +99,7 @@ public class MenuRegisterActivity
 
     @Override
     public void moveToImageRegisterActivity() {
-
+        Toast.makeText(this, "moveTo", Toast.LENGTH_SHORT).show();
     }
 
     private void moveToMenuConfirmActivity() {

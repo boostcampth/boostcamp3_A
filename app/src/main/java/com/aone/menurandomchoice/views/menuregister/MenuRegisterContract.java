@@ -12,7 +12,8 @@ public interface MenuRegisterContract {
 
     interface Presenter extends BaseContract.Presenter<MenuRegisterContract.View> {
 
-        void onClickImageRegisterButton();
+        void handlingImageRegisterButtonClick();
+
     }
 
 }
