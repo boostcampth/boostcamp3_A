@@ -25,5 +25,11 @@
     <dimen name="activity_main_button">20dp</dimen>
 
     <!-- activity_owner_sign_up -->
-    <dimen name="activity_owner_sign_up_button_editText">18sp</dimen>\
+    <dimen name="activity_owner_sign_up_button_editText">18sp</dimen>
+
+    <!-- menu_select_item_view -->
+    <dimen name="item_view_menu_title">30sp</dimen>
+    <dimen name="item_view_menu_guide">20sp</dimen>
+    <dimen name="item_view_price">16sp</dimen>
+    <dimen name="item_view_category">12sp</dimen>
 </resources>
