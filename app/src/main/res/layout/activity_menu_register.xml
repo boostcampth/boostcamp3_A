@@ -33,6 +33,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:background="@drawable/add_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="@+id/imageView" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView2"
             android:layout_width="0dp"
@@ -53,6 +64,8 @@
             android:layout_marginBottom="@dimen/middle_margin"
             android:hint="@string/activity_menu_register_guide_hint"
             android:inputType="textPersonName"
+            android:textColor="@color/black"
+            android:textSize="activity_menu_register_text"
             app:layout_constraintBottom_toTopOf="@+id/editText4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -67,6 +80,8 @@
             android:ems="10"
             android:hint="@string/activity_menu_register_title_hint"
             android:inputType="textPersonName"
+            android:textColor="@color/black"
+            android:textSize="activity_menu_register_text"
             app:layout_constraintBottom_toTopOf="@+id/editText2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -81,20 +96,11 @@
             android:hint="@string/activity_menu_register_price_hint"
             android:inputType="number"
             android:maxLength="15"
+            android:textColor="@color/black"
+            android:textSize="activity_menu_register_text"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="@dimen/large_margin"
-            android:layout_marginBottom="@dimen/large_margin"
-            android:background="@drawable/add_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="@+id/imageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
