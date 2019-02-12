@@ -6,6 +6,8 @@ public interface MenuRegisterContract {
 
     interface View extends BaseContract.View {
 
+        void checkPermission();
+
         void openAlbumOfDevice();
 
     }
@@ -13,6 +15,8 @@ public interface MenuRegisterContract {
     interface Presenter extends BaseContract.Presenter<MenuRegisterContract.View> {
 
         void handlingImageRegisterButtonClick();
+
+        void handlingImageRegisterPermissionGranted();
 
     }
 

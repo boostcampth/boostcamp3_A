@@ -8,7 +8,14 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     @Override
     public void handlingImageRegisterButtonClick() {
         if(isAttachView()) {
-            getView().moveToImageRegisterActivity();
+            getView().checkPermission();
+        }
+    }
+
+    @Override
+    public void handlingImageRegisterPermissionGranted() {
+        if(isAttachView()) {
+            getView().openAlbumOfDevice();
         }
     }
 }

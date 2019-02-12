@@ -1,5 +1,6 @@
 package com.aone.menurandomchoice.views.menuregister;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -11,6 +12,8 @@ import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,8 +104,33 @@ public class MenuRegisterActivity
     }
 
     @Override
-    public void openAlbumOfDevice() {
+    public void checkPermission() {
+        checkPermissionWithTedPermission();
+    }
 
+    @Override
+    public void openAlbumOfDevice() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, REQUEST_CODE_OPEN_ALBUM);
+    }
+
+    private void checkPermissionWithTedPermission() {
+        TedPermission.with(this)
+                .setRationaleMessage(getString(R.string.permission_request_guide))
+                .setDeniedMessage(getString(R.string.permission_denied_guide))
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .setPermissionListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        getPresenter().handlingImageRegisterPermissionGranted();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(List<String> deniedPermissions) {
+                    }
+                })
+                .check();
     }
 
     private void moveToMenuConfirmActivity() {
