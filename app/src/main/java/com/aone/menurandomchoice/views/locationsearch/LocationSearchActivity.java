@@ -2,7 +2,6 @@ package com.aone.menurandomchoice.views.locationsearch;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,10 +10,8 @@ import android.widget.TextView;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityLocationSearchBinding;
-import com.aone.menurandomchoice.repository.network.pojo.KakaoAddressResult;
 import com.aone.menurandomchoice.utils.KeyboardUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
-import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapter;
 import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapterView;
 import com.aone.menurandomchoice.views.base.adapter.OnViewHolderClickListener;
 
@@ -37,6 +34,17 @@ public class LocationSearchActivity extends BaseActivity<ActivityLocationSearchB
         setUpActivityToDataBinding();
         setUpSearchToolBar();
         initView();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        getPresenter().stopNetwork();
     }
 
     private void setUpActivityToDataBinding() { getDataBinding().setActivity(this); }

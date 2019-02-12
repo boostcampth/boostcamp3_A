@@ -52,8 +52,15 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
 
                 @Override
                 public void onReceived(@NonNull AddressResponseBody response) {
-                    updateList(response.getDocuments());
+                    if( isAttachView() ) {
+                        updateList(response.getDocuments());
+                    }
                 }
             });
+    }
+
+    @Override
+    public void stopNetwork() {
+        getRepository().cancelAll();
     }
 }

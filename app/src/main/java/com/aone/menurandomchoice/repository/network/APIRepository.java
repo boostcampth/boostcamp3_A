@@ -4,21 +4,16 @@ import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.network.model.AddressResponseBody;
 import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
-import com.aone.menurandomchoice.repository.network.pojo.MenuLocation;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.lang.ref.WeakReference;
-import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -26,7 +21,6 @@ public class APIRepository implements APIHelper {
 
     private static APIRepository apiRepositoryInstance;
     private APIInterface apiInstance;
-
     private Call<AddressResponseBody> addressResponseBodyCall;
     private Call<MenuLocationResponseBody> menuLocationResponseBodyCall;
 
@@ -63,21 +57,13 @@ public class APIRepository implements APIHelper {
     public void executeLocationSearch(@NonNull String Qeury, @NonNull NetworkResponseListener<AddressResponseBody> listener) {
         String REST_API_KEY = GlobalApplication.getGlobalApplicationContext().getString(R.string.KAKAO_REST_API_KEY);
         addressResponseBodyCall = apiInstance.getAddress(REST_API_KEY, Qeury);
-        addressResponseBodyCall.enqueue( new NetworkResponse<>(listener));
+        addressResponseBodyCall.enqueue(new NetworkResponse<>(listener));
     }
 
     @Override
     public void requestMenuLocation(@NonNull Map<String, String> queryMap, @NonNull NetworkResponseListener<MenuLocationResponseBody> listener) {
         menuLocationResponseBodyCall = apiInstance.getMenuLocation(queryMap);
         menuLocationResponseBodyCall.enqueue( new NetworkResponse<>(listener));
-    }
-
-    public Call<AddressResponseBody> getAddressResponseBodyCall() {
-        return addressResponseBodyCall;
-    }
-
-    public Call<MenuLocationResponseBody> getMenuLocationResponseBodyCall() {
-        return menuLocationResponseBodyCall;
     }
 
 }

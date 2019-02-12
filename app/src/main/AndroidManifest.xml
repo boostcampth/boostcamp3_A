@@ -42,20 +42,14 @@
         <activity
             android:name=".views.ownersignup.OwnerSignUpActivity"
             android:label="@string/activity_owner_sign_up_label"
-<<<<<<< HEAD
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
-
-        <activity android:name=".views.ownerdetail.OwnerDetailActivity"/>
 
         <activity android:name=".views.locationsearch.LocationSearchActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-=======
-            android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
-      
+
         <activity android:name=".views.ownerdetail.OwnerDetailActivity" />
       
         <activity android:name=".views.menuselect.MenuSelectActivity"/>
->>>>>>> develop
     </application>
 
 </manifest>

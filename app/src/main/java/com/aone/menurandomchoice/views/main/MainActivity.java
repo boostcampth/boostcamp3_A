@@ -9,14 +9,11 @@ import android.util.Log;
 import android.view.View;
 
 import com.aone.menurandomchoice.R;
-<<<<<<< HEAD
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchPresenter;
-=======
 import com.aone.menurandomchoice.databinding.ActivityMainBinding;
 import com.aone.menurandomchoice.utils.GlideUtil;
 import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
->>>>>>> develop
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 
@@ -37,17 +34,10 @@ public class MainActivity extends AppCompatActivity {
         loadScreenIcon();
     }
 
-<<<<<<< HEAD
-        switch (view.getId()) {
-            case R.id.btn_start:
-                //Move to Random Choice Activity
-               break;
-=======
     private void setUpDataBinding() {
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         activityMainBinding.setActivity(this);
     }
->>>>>>> develop
 
     private void loadScreenIcon() {
         GlideUtil.loadImage(activityMainBinding.activityMainCustomerTobaccoIv, R.drawable.customer_tobacco_icon);
@@ -59,15 +49,9 @@ public class MainActivity extends AppCompatActivity {
         GlideUtil.loadImage(activityMainBinding.activityMainOwnerIv, R.drawable.owner_icon);
     }
 
-<<<<<<< HEAD
-            default:
-                Log.d("MainActivity onClick","nothing mapped to clicked view");
-        }
-=======
     public void moveToMenuSelectActivity(View view) {
-        Intent menuSelectIntent = new Intent(MainActivity.this, MenuSelectActivity.class);
+        Intent menuSelectIntent = new Intent(MainActivity.this, LocationSearchActivity.class);
         startActivity(menuSelectIntent);
->>>>>>> develop
     }
 
     public void moveToOwnerLoginActivity(View view) {

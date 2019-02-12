@@ -20,5 +20,7 @@ public interface LocationSearchContract {
         void requestLocationSearch(@NonNull String Query);
 
         void requestMenuLocation(int position);
+
+        void stopNetwork();
     }
 }
