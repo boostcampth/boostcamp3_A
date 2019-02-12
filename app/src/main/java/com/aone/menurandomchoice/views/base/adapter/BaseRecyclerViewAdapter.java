@@ -4,16 +4,17 @@ package com.aone.menurandomchoice.views.base.adapter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>
-        implements BaseRecyclerViewAdapterModel<L> {
+        implements BaseRecyclerViewAdapterModel<L>, BaseRecyclerViewAdapterView {
 
     private List<L> items = new ArrayList<>();
-
+    protected OnViewHolderClickListener onViewHolderClickListener;
 
     @Override
     public void setItem(int position, @NonNull L item) {
@@ -89,21 +90,29 @@ public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHol
 
     @NonNull
     @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public VH onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
 
-        return createViewHolder(layoutInflater, viewGroup, i);
+        return createViewHolder(layoutInflater, viewGroup, position);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH viewHolder, int i) {
-        bindViewHolder(viewHolder, getItem(i));
+    public void onBindViewHolder(@NonNull final VH viewHolder, final int position) {
+        bindViewHolder(viewHolder, getItem(position));
     }
 
-
     @NonNull
-    abstract VH createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i);
+    abstract protected VH createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i);
 
-    abstract void bindViewHolder(@NonNull VH viewHolder, @NonNull L item);
+    abstract protected void bindViewHolder(@NonNull VH viewHolder, @NonNull L item);
+
+    @Override
+    public void setOnViewHolderClickListener(@NonNull  OnViewHolderClickListener onViewHolderClickListener) {
+        this.onViewHolderClickListener = onViewHolderClickListener;
+    }
+//    public void setOnItemClickListener(
+//           @NonNull OnItemClickListener onItemClickListener) {
+//        this.onItemClickListener = onItemClickListener;
+//    }
 
 }
