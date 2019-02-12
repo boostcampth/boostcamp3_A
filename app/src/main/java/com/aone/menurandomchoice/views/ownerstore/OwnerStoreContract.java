@@ -20,6 +20,8 @@ public interface OwnerStoreContract {
 
         void onMenuDetailClick(MenuDetail menuDetail);
 
+        void onMapClick();
+
         void stopNetwork();
     }
 }

@@ -1,5 +1,8 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
+import android.util.Log;
+import android.view.View;
+
 import com.aone.menurandomchoice.repository.Repository;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
@@ -10,7 +13,7 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
     @Override
     public void loadStoreDetail(int storeIdx) {
 
-        getRepository().loadStoreDetail(storeIdx, new Repository.OnLoadStoreDetailListener() {
+        getRepository().loadStoreDetail(50, new Repository.OnLoadStoreDetailListener() {
             @Override
             public void onStoreDetailLoaded(StoreDetail storeDetail) {
 
@@ -28,12 +31,17 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
     @Override
     public void onMenuDetailClick(MenuDetail menuDetail) {
+        Log.d("menudetail", menuDetail.getName());
         getView().moveToMenuDetailPage(menuDetail);
+    }
+
+    @Override
+    public void onMapClick() {
+        //Todo. map 페이지로 이동
     }
 
     @Override
     public void stopNetwork() {
         getRepository().cancelAll();
     }
-
 }

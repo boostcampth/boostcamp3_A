@@ -2,12 +2,16 @@
 
 <layout
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="activity"
             type="com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity"/>
+        <variable
+            name="presenter"
+            type="com.aone.menurandomchoice.views.ownerstore.OwnerStorePresenter"/>
         <variable
             name="storeDetail"
             type="com.aone.menurandomchoice.repository.model.StoreDetail"/>
@@ -97,6 +101,7 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@+id/activity_owner_store_ll_menu2"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:presenter= "@{presenter}"
                         app:menuDetail="@{storeDetail.menuDetailList.get(0)}" />
 
                     <include
@@ -107,6 +112,7 @@
                         android:layout_weight="1"
                         app:layout_constraintLeft_toRightOf="@+id/activity_owner_store_ll_menu1"
                         app:layout_constraintRight_toLeftOf="@+id/activity_owner_store_ll_menu3"
+                        app:presenter= "@{presenter}"
                         app:menuDetail="@{storeDetail.menuDetailList.get(1)}"/>
 
                     <include
@@ -119,6 +125,7 @@
                         android:layout_marginRight="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintLeft_toRightOf="@+id/activity_owner_store_ll_menu2"
+                        app:presenter= "@{presenter}"
                         app:menuDetail="@{storeDetail.menuDetailList.get(2)}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -162,7 +169,7 @@
                      android:id="@+id/map_view"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
-                     android:onClick="@{activity::onMapClick}">
+                     android:onClick="@{() -> presenter.onMapClick()}">
                  </RelativeLayout>
 
             </LinearLayout>
@@ -187,8 +194,8 @@
                     android:gravity="start"
                     android:lineSpacingExtra="5dp"
                     android:text="@string/activity_owner_detail_description"
-                    android:textColor="@color/black"
                     android:textStyle="bold"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/large_text"/>
 
                 <TextView

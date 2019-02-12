@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.ownerstore;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ public class OwnerStoreActivity
         super.onCreate(savedInstanceState);
 
         setUpActivityToDataBinding();
+        setUpPresenterToDataBinding();
     }
 
     @Override
@@ -55,7 +57,7 @@ public class OwnerStoreActivity
                 onBackPressed();
                 return true;
             case R.id.item_action_bar_edit:
-                ///moveToOwnerEditPage();
+                moveToOwnerEditPage(getDataBinding().getStoreDetail());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -71,6 +73,10 @@ public class OwnerStoreActivity
 
     private void setUpActivityToDataBinding() {
         getDataBinding().setActivity(this);
+    }
+
+    private void setUpPresenterToDataBinding() {
+        getDataBinding().setPresenter((OwnerStorePresenter) getPresenter());
     }
 
     @Override
@@ -110,9 +116,7 @@ public class OwnerStoreActivity
         */
     }
 
-    public void onMapClick(View view) {
-        //Todo. map 페이지로 이동
-    }
+
 
     @Override
     public void showStoreDetail(StoreDetail storeDetail) {

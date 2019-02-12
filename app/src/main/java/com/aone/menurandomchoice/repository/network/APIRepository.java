@@ -2,6 +2,8 @@ package com.aone.menurandomchoice.repository.network;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.repository.model.BaseResponse;
+import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.network.model.AddressResponseBody;
 import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
 import com.google.gson.FieldNamingPolicy;
@@ -23,6 +25,7 @@ public class APIRepository implements APIHelper {
     private APIInterface apiInstance;
     private Call<AddressResponseBody> addressResponseBodyCall;
     private Call<MenuLocationResponseBody> menuLocationResponseBodyCall;
+    private Call<BaseResponse<StoreDetail>> storeDetailResponseCall;
 
     public static APIRepository getInstance() {
         if(apiRepositoryInstance == null) {
@@ -64,6 +67,13 @@ public class APIRepository implements APIHelper {
     public void requestMenuLocation(@NonNull Map<String, String> queryMap, @NonNull NetworkResponseListener<MenuLocationResponseBody> listener) {
         menuLocationResponseBodyCall = apiInstance.getMenuLocation(queryMap);
         menuLocationResponseBodyCall.enqueue( new NetworkResponse<>(listener));
+    }
+
+    @Override
+    public void requestStoreDetail(@NonNull int storeIdx,
+                                   @NonNull NetworkResponseListener<BaseResponse<StoreDetail>> listener) {
+        storeDetailResponseCall = apiInstance.getStoreDetail(storeIdx);
+        storeDetailResponseCall.enqueue( new NetworkResponse<>(listener));
     }
 
 }

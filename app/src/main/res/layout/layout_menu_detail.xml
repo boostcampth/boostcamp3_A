@@ -6,8 +6,10 @@
     <data>
         <variable
             name="presenter"
-            type="com.aone.menurandomchoice.views.ownerstore.OwnerStorePresenter"/>
-        <variable name="menuDetail" type="com.aone.menurandomchoice.repository.model.MenuDetail"/>
+            type="com.aone.menurandomchoice.views.ownerstore.OwnerStoreContract.Presenter"/>
+        <variable
+            name="menuDetail"
+            type="com.aone.menurandomchoice.repository.model.MenuDetail"/>
     </data>
 
     <LinearLayout
@@ -18,13 +20,13 @@
         android:gravity="center"
         android:orientation="vertical"
         android:background="@drawable/layout_menu_detail_border"
-        android:onClick="@{() -> presenter.onMenuDetailClick(menuDetail)}">
+        android:onClick="@{ () -> presenter.onMenuDetailClick(menuDetail)}" >
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="130dp"
             app:error="@{@drawable/no_photo}"
-            app:photoUrl="@{menuDetail.photoUrl}" />
+            app:photoUrl="@{menuDetail.photoUrl}"/>
 
         <TextView
             android:layout_width="wrap_content"

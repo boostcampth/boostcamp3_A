@@ -2,6 +2,7 @@ package com.aone.menurandomchoice.repository;
 
 import android.content.Intent;
 
+import com.aone.menurandomchoice.repository.model.BaseResponse;
 import com.aone.menurandomchoice.repository.network.APIHelper;
 import com.aone.menurandomchoice.repository.network.APIRepository;
 import com.aone.menurandomchoice.repository.network.NetworkResponseListener;
@@ -101,10 +102,29 @@ public class DataRepository implements Repository {
     }
 
     @Override
+    public void requestStoreDetail(@NonNull int storeIdx,
+                                      @NonNull NetworkResponseListener<BaseResponse<StoreDetail>> networkResponseListener) {
+        apiHelper.requestStoreDetail(storeIdx, networkResponseListener);
+    }
+
+
+    @Override
     public void loadStoreDetail(final int storeIdx, @NonNull final OnLoadStoreDetailListener onLoadStoreDetailListener) {
 
         final StoreDetail cachedStoreDetail = getStoreDetail();
 
+        requestStoreDetail(storeIdx, new NetworkResponseListener<BaseResponse<StoreDetail>>() {
+            @Override
+            public void onError() {
+                onLoadStoreDetailListener.onFailToLoadStoreDetail();
+            }
+
+            @Override
+            public void onReceived(@NonNull BaseResponse<StoreDetail> response) {
+                onLoadStoreDetailListener.onStoreDetailLoaded(response.getData());
+            }
+        });
+        /*
         checkStoreUpdated(cachedStoreDetail.getTime(), new OnStoreUpdatedCheckListener() {
             @Override
             public void onAlreadyStoreUpdated() {
@@ -116,6 +136,7 @@ public class DataRepository implements Repository {
                 requestStoreDetail(storeIdx, onStoreDetailRequestListener);
             }
         });
+        */
 
     }
 
@@ -128,7 +149,6 @@ public class DataRepository implements Repository {
     public void requestStoreDetail(int storeIdx, @NonNull OnStoreDetailRequestListener onStoreDetailRequestListener) {
         serverDataHelper.requestStoreDetail(storeIdx, onStoreDetailRequestListener);
     }
-
 
     @Override
     public void addStoreDetail() {

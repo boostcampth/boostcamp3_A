@@ -1,5 +1,7 @@
 package com.aone.menurandomchoice.repository.network;
 
+import com.aone.menurandomchoice.repository.model.BaseResponse;
+import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.network.model.AddressResponseBody;
 import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
 import com.aone.menurandomchoice.repository.network.pojo.MenuLocation;
@@ -19,4 +21,9 @@ public interface APIHelper {
     void requestMenuLocation(
             @NonNull Map<String, String> queryMap,
             @NonNull NetworkResponseListener<MenuLocationResponseBody> networkResponseListener);
+
+    void requestStoreDetail(
+            @NonNull int storeIdx,
+            @NonNull NetworkResponseListener<BaseResponse<StoreDetail>> networkResponseListener);
+
 }
