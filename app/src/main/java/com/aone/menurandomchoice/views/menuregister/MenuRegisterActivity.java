@@ -2,16 +2,20 @@ package com.aone.menurandomchoice.views.menuregister;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
+import com.gun0912.tedonactivityresult.TedOnActivityResult;
+import com.gun0912.tedonactivityresult.listener.OnActivityResultListener;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -84,11 +88,13 @@ public class MenuRegisterActivity
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_OPEN_ALBUM:
+                if(resultCode == RESULT_OK) {
+                    Uri selectedImageUri = data.getData();
+                }
                 break;
                 default:
                     super.onActivityResult(requestCode, resultCode, data);
         }
-
     }
 
     private void setUpPresenterToDataBinding() {
@@ -121,12 +127,7 @@ public class MenuRegisterActivity
 
     @Override
     public void executePickImageFromAlbum() {
-    }
-
-    private void openAlbumOfDevice() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, REQUEST_CODE_OPEN_ALBUM);
+        openAlbumOfDevice();
     }
 
     private void checkPermissionWithTedPermission() {
@@ -145,6 +146,12 @@ public class MenuRegisterActivity
                     }
                 })
                 .check();
+    }
+
+    private void openAlbumOfDevice() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, REQUEST_CODE_OPEN_ALBUM);
     }
 
     private void moveToMenuConfirmActivity() {
