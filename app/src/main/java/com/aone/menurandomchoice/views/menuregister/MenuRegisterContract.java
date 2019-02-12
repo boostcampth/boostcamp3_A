@@ -6,7 +6,7 @@ public interface MenuRegisterContract {
 
     interface View extends BaseContract.View {
 
-        void moveToImageRegisterActivity();
+        void openAlbumOfDevice();
 
     }
 
