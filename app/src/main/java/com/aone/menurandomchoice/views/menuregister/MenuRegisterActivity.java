@@ -1,5 +1,6 @@
 package com.aone.menurandomchoice.views.menuregister;
 
+import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.aone.menurandomchoice.R;
@@ -7,11 +8,19 @@ import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MenuRegisterActivity
         extends BaseActivity<ActivityMenuRegisterBinding, MenuRegisterContract.View, MenuRegisterContract.Presenter>
         implements MenuRegisterContract.View {
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+    }
 
     @Override
     protected int getLayoutId() {
@@ -51,7 +60,13 @@ public class MenuRegisterActivity
         finish();
     }
 
+    private void setUpCategoryRecyclerView() {
+
+//        getDataBinding().activityMenuRegisterRecyclerView;
+    }
+
     private void moveToMenuConfirmActivity() {
 
     }
+
 }

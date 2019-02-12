@@ -10,10 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>
-        implements BaseRecyclerViewAdapterModel<L> {
+    implements BaseRecyclerViewAdapterModel<L> {
 
     private List<L> items = new ArrayList<>();
-
 
     @Override
     public void setItem(int position, @NonNull L item) {
@@ -102,8 +101,8 @@ public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHol
 
 
     @NonNull
-    abstract VH createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i);
+    protected abstract VH createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i);
 
-    abstract void bindViewHolder(@NonNull VH viewHolder, @NonNull L item);
+    protected abstract void bindViewHolder(@NonNull VH viewHolder, @NonNull L item);
 
 }
