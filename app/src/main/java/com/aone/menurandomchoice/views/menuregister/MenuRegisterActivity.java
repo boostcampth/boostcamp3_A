@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 
 public class MenuRegisterActivity
         extends BaseActivity<ActivityMenuRegisterBinding, MenuRegisterContract.View, MenuRegisterContract.Presenter>
-        implements MenuRegisterContract.View{
+        implements MenuRegisterContract.View {
 
     @Override
     protected int getLayoutId() {

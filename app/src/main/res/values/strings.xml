@@ -44,4 +44,9 @@
     <!-- item_menu_select_view -->
     <string name="item_menu_select_price_tv">원</string>
 
+    <!-- activity_menu_register -->
+    <string name="activity_menu_register_label">메뉴 등록</string>
+    <string name="activity_menu_register_title_hint">메뉴 이름을 입력하세요</string>
+    <string name="activity_menu_register_guide_hint">메뉴 설명을 입력하세요</string>
+    <string name="activity_menu_register_price_hint">메뉴 가격을 입력하세요</string>
 </resources>

@@ -40,9 +40,13 @@
             android:name=".views.ownersignup.OwnerSignUpActivity"
             android:label="@string/activity_owner_sign_up_label"
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
+
         <activity android:name=".views.ownerdetail.OwnerDetailActivity" />
+
         <activity android:name=".views.menuselect.MenuSelectActivity" />
-        <activity android:name=".views.menuregister.MenuRegisterActivity"></activity>
+
+        <activity android:name=".views.menuregister.MenuRegisterActivity"
+            android:label="@string/activity_menu_register_label"/>
     </application>
 
 </manifest>
