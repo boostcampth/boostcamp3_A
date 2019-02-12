@@ -37,6 +37,9 @@
     <string name="activity_owner_detail_menu_label">등록메뉴</string>
     <string name="activity_owner_detail_location">위치</string>
     <string name="activity_owner_detail_description">소개</string>
+    <string name="activity_owner_detail_not_name">상세화면 정보가 없습니다</string>
+    <string name="activity_owner_store_not_description">가게소개를 적어주세요</string>
+    <string name="layout_menu_detail_not_menu">메뉴이름</string>
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>

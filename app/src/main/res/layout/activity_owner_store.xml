@@ -13,6 +13,10 @@
             type="com.aone.menurandomchoice.repository.model.StoreDetail"/>
     </data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,6 +26,7 @@
                 android:id="@+id/activity_owner_store_ll_name_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -35,8 +40,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:lineSpacingExtra="5dp"
-                    android:text="@{storeDetail.name}"
-                    android:textSize="30sp"
+                    android:text="@{storeDetail.name ?? @string/activity_owner_detail_not_name}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/very_large_text"
                     android:textStyle="bold" />
 
                 <TextView
@@ -67,6 +73,9 @@
                     android:layout_marginTop="20dp"
                     android:gravity="start"
                     android:lineSpacingExtra="5dp"
+                    android:textSize="@dimen/large_text"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
                     android:text="@string/activity_owner_detail_menu_label" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -135,6 +144,9 @@
                     android:layout_marginTop="20dp"
                     android:gravity="start"
                     android:lineSpacingExtra="5dp"
+                    android:textSize="@dimen/large_text"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
                     android:text="@string/activity_owner_detail_location" />
 
                 <TextView
@@ -174,18 +186,26 @@
                     android:layout_marginTop="20dp"
                     android:gravity="start"
                     android:lineSpacingExtra="5dp"
-                    android:text="@string/activity_owner_detail_description" />
+                    android:text="@string/activity_owner_detail_description"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/large_text"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
-                    android:text="@{storeDetail.description}" />
+                    android:minLines="5"
+                    android:maxLines="10"
+                    android:text="@{storeDetail.description ?? @string/activity_owner_store_not_description}" />
 
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
 </layout>

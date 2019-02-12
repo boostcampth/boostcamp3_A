@@ -1,11 +1,13 @@
 package com.aone.menurandomchoice.repository.model;
 
 import com.aone.menurandomchoice.BR;
+
+import java.io.Serializable;
 import java.util.List;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-public class StoreDetail extends BaseObservable {
+public class StoreDetail extends BaseObservable implements Serializable {
     private String name;
 
     private String time;

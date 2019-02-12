@@ -52,7 +52,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void moveToOwnerLoginActivity(View view) {
+        /*
         Intent ownerLoginIntent = new Intent(MainActivity.this, OwnerLoginActivity.class);
+        startActivity(ownerLoginIntent);
+        */
+        Intent ownerLoginIntent = new Intent(MainActivity.this, OwnerStoreActivity.class);
         startActivity(ownerLoginIntent);
     }
 

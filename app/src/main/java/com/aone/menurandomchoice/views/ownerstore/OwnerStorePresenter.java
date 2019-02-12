@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
 import com.aone.menurandomchoice.repository.Repository;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
@@ -25,6 +26,10 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
         });
     }
 
+    @Override
+    public void onMenuDetailClick(MenuDetail menuDetail) {
+        getView().moveToMenuDetailPage(menuDetail);
+    }
 
     @Override
     public void stopNetwork() {
