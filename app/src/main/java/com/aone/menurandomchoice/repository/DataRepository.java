@@ -2,6 +2,12 @@ package com.aone.menurandomchoice.repository;
 
 import android.content.Intent;
 
+import com.aone.menurandomchoice.repository.network.APIHelper;
+import com.aone.menurandomchoice.repository.network.APIRepository;
+import com.aone.menurandomchoice.repository.network.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.network.model.AddressResponseBody;
+import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
+import com.aone.menurandomchoice.repository.network.pojo.MenuLocation;
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.repository.local.SqliteDatabaseHelper;
 import com.aone.menurandomchoice.repository.local.SqliteDatabaseRepository;
@@ -17,14 +23,20 @@ import com.aone.menurandomchoice.repository.server.OnStoreDetailRequestListener;
 import com.aone.menurandomchoice.repository.server.ServerDataHelper;
 import com.aone.menurandomchoice.repository.server.ServerDataRepository;
 
+import java.util.List;
+import java.util.Map;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 public class DataRepository implements Repository {
 
     private static Repository repository;
     private KakaoLoginHelper kakaoLoginHelper;
     private ServerDataHelper serverDataHelper;
+    private APIHelper apiHelper;
     private SqliteDatabaseHelper sqliteDatabaseHelper;
 
     @NonNull
@@ -39,6 +51,7 @@ public class DataRepository implements Repository {
     private DataRepository() {
         kakaoLoginHelper = KakaoLoginRepository.getInstance();
         serverDataHelper = ServerDataRepository.getInstance();
+        apiHelper = APIRepository.getInstance();
         sqliteDatabaseHelper = SqliteDatabaseRepository.getInstance();
     }
 
@@ -75,6 +88,16 @@ public class DataRepository implements Repository {
     @Override
     public void requestSignUp(long userId,@NonNull  String accessKey, @NonNull OnSignUpRequestListener onSignUpRequestListener) {
         serverDataHelper.requestSignUp(userId, accessKey, onSignUpRequestListener);
+    }
+
+    @Override
+    public void executeLocationSearch(@NonNull String Qeury, @NonNull NetworkResponseListener<AddressResponseBody> networkResponseListener) {
+        apiHelper.executeLocationSearch(Qeury, networkResponseListener);
+    }
+
+    @Override
+    public void requestMenuLocation(@NonNull Map<String, String> queryMap, @NonNull NetworkResponseListener<MenuLocationResponseBody> networkResponseListener) {
+        apiHelper.requestMenuLocation(queryMap, networkResponseListener);
     }
 
     @Override
@@ -121,7 +144,6 @@ public class DataRepository implements Repository {
     public void updateStoreDetail(@NonNull final StoreDetail storeDetail) {
         sqliteDatabaseHelper.updateStoreDetail(storeDetail);
     }
-
 
     @Override
     public void cancelAll() {

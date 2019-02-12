@@ -4,6 +4,7 @@ package com.aone.menurandomchoice.views.base.adapter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -88,17 +89,16 @@ public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHol
 
     @NonNull
     @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public VH onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
 
-        return createViewHolder(layoutInflater, viewGroup, i);
+        return createViewHolder(layoutInflater, viewGroup, position);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH viewHolder, int i) {
-        bindViewHolder(viewHolder, getItem(i));
+    public void onBindViewHolder(@NonNull final VH viewHolder, final int position) {
+        bindViewHolder(viewHolder, getItem(position));
     }
-
 
     @NonNull
     protected abstract VH createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i);

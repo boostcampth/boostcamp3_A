@@ -33,6 +33,12 @@
     <string name="activity_owner_button_sign_up_request">회원가입 요청</string>
     <string name="activity_owner_access_key_hint">인증번호 6자리</string>
 
+    <!-- layout_search_box -->
+    <string name="layout_search_box_search_hint">장소 검색</string>
+
+    <!-- Kakao REST API Key -->
+    <string name="KAKAO_REST_API_KEY">KakaoAK d6960a6792d64d6af209195c8bfa4094</string>
+
     <!-- activity_owner_detail -->
     <string name="activity_owner_detail_menu_label">등록메뉴</string>
     <string name="activity_owner_detail_location">위치</string>

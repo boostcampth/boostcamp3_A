@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="activity"
+            type="com.aone.menurandomchoice.views.locationsearch.LocationSearchContract.View"/>
+    </data>
+    
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/small_padding"
+                android:paddingStart="@dimen/small_padding"
+                android:paddingRight="@dimen/two_x_large_padding"
+                android:paddingEnd="@dimen/two_x_large_padding"
+                android:inputType="text"
+                android:singleLine="true"
+                android:imeOptions="actionSearch"
+                android:hint="@string/layout_search_box_search_hint"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/large_text"
+                android:gravity="center_horizontal"
+                app:theme="@style/EditTextStyle"/>
+
+            <ImageView
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_search_glass_32px"
+                android:background="@null"
+                android:layout_marginRight="@dimen/two_x_large_padding"
+                android:layout_marginEnd="@dimen/two_x_large_padding"
+                android:layout_marginLeft="@dimen/middle_padding"
+                android:layout_marginStart="@dimen/middle_padding"
+                android:onClick="@{ () -> activity.requestLocationSearchWord()}"/>
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+</layout>
