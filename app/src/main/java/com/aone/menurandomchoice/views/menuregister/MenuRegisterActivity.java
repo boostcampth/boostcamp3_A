@@ -66,7 +66,6 @@ public class MenuRegisterActivity
     }
 
     private void setUpCategoryRecyclerView() {
-
         MenuCategoryAdapter menuCategoryAdapter = new MenuCategoryAdapter();
         menuCategoryAdapter.setItems(createMenuCategoryItems());
 
@@ -83,6 +82,11 @@ public class MenuRegisterActivity
         }
 
         return menuCategoryItems;
+    }
+
+    @Override
+    public void moveToImageRegisterActivity() {
+
     }
 
     private void moveToMenuConfirmActivity() {

@@ -6,10 +6,13 @@ public interface MenuRegisterContract {
 
     interface View extends BaseContract.View {
 
+        void moveToImageRegisterActivity();
+
     }
 
     interface Presenter extends BaseContract.Presenter<MenuRegisterContract.View> {
 
+        void onClickImageRegisterButton();
     }
 
 }
