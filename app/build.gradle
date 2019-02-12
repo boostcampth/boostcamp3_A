@@ -38,5 +38,6 @@ dependencies {
     implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
     implementation 'com.android.support:multidex:1.0.3'
     implementation "gun0912.ted:tedpermission:2.2.2"
+    implementation 'gun0912.ted:tedonactivityresult:1.0.6'
 
 }

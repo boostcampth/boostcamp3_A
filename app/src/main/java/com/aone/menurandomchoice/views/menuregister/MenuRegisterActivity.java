@@ -80,6 +80,17 @@ public class MenuRegisterActivity
         finish();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_OPEN_ALBUM:
+                break;
+                default:
+                    super.onActivityResult(requestCode, resultCode, data);
+        }
+
+    }
+
     private void setUpPresenterToDataBinding() {
         getDataBinding().setPresenter(getPresenter());
     }
@@ -109,7 +120,10 @@ public class MenuRegisterActivity
     }
 
     @Override
-    public void openAlbumOfDevice() {
+    public void executePickImageFromAlbum() {
+    }
+
+    private void openAlbumOfDevice() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, REQUEST_CODE_OPEN_ALBUM);

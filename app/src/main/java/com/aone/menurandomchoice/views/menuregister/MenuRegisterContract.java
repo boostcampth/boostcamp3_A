@@ -8,7 +8,7 @@ public interface MenuRegisterContract {
 
         void checkPermission();
 
-        void openAlbumOfDevice();
+        void executePickImageFromAlbum();
 
     }
 
