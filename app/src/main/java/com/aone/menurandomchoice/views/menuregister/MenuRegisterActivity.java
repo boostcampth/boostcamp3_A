@@ -7,15 +7,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
-import com.gun0912.tedonactivityresult.TedOnActivityResult;
-import com.gun0912.tedonactivityresult.listener.OnActivityResultListener;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -89,7 +86,7 @@ public class MenuRegisterActivity
         switch (requestCode) {
             case REQUEST_CODE_OPEN_ALBUM:
                 if(resultCode == RESULT_OK) {
-                    Uri selectedImageUri = data.getData();
+                    executeImageCropWithUCrop(data);
                 }
                 break;
                 default:
@@ -152,6 +149,12 @@ public class MenuRegisterActivity
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, REQUEST_CODE_OPEN_ALBUM);
+    }
+
+    private void executeImageCropWithUCrop(Intent data) {
+        if(data != null) {
+            Uri selectedImageUri = data.getData();
+        }
     }
 
     private void moveToMenuConfirmActivity() {
