@@ -8,7 +8,7 @@ public interface MenuRegisterContract {
 
     }
 
-    interface Presenter extends BaseContract.Presenter<BaseContract.View> {
+    interface Presenter extends BaseContract.Presenter<MenuRegisterContract.View> {
 
     }
 

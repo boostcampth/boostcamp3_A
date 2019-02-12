@@ -1,16 +1,29 @@
 package com.aone.menurandomchoice.views.menuregister;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
+import com.aone.menurandomchoice.views.base.BaseActivity;
 
-public class MenuRegisterActivity extends AppCompatActivity{
+import androidx.annotation.NonNull;
+
+public class MenuRegisterActivity
+        extends BaseActivity<ActivityMenuRegisterBinding, MenuRegisterContract.View, MenuRegisterContract.Presenter>
+        implements MenuRegisterContract.View{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_register);
+    protected int getLayoutId() {
+        return R.layout.activity_menu_register;
+    }
+
+    @NonNull
+    @Override
+    protected MenuRegisterContract.Presenter setUpPresenter() {
+        return new MenuRegisterPresenter();
+    }
+
+    @NonNull
+    @Override
+    protected MenuRegisterContract.View getView() {
+        return this;
     }
 }
