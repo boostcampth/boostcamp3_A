@@ -10,6 +10,7 @@ import android.view.View;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMainBinding;
 import com.aone.menurandomchoice.utils.GlideUtil;
+import com.aone.menurandomchoice.views.menuregister.MenuRegisterActivity;
 import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
@@ -52,8 +53,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void moveToOwnerLoginActivity(View view) {
-        Intent ownerLoginIntent = new Intent(MainActivity.this, OwnerLoginActivity.class);
-        startActivity(ownerLoginIntent);
+//        Intent ownerLoginIntent = new Intent(MainActivity.this, OwnerLoginActivity.class);
+//        startActivity(ownerLoginIntent);
+        Intent intent = new Intent(this, MenuRegisterActivity.class);
+        startActivity(intent);
     }
 
 }

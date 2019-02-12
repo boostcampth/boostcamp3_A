@@ -40,6 +40,7 @@
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>
+    <string name="item_action_bar_next">다음</string>
 
     <!-- item_menu_select_view -->
     <string name="item_menu_select_price_tv">원</string>
@@ -49,4 +50,5 @@
     <string name="activity_menu_register_title_hint">메뉴 이름을 입력하세요</string>
     <string name="activity_menu_register_guide_hint">메뉴 설명을 입력하세요</string>
     <string name="activity_menu_register_price_hint">메뉴 가격을 입력하세요</string>
+
 </resources>

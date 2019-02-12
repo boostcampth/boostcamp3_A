@@ -10,9 +10,7 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
@@ -65,7 +63,7 @@
             android:hint="@string/activity_menu_register_guide_hint"
             android:inputType="textPersonName"
             android:textColor="@color/black"
-            android:textSize="activity_menu_register_text"
+            android:textSize="@dimen/activity_menu_register_text"
             app:layout_constraintBottom_toTopOf="@+id/editText4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -81,7 +79,7 @@
             android:hint="@string/activity_menu_register_title_hint"
             android:inputType="textPersonName"
             android:textColor="@color/black"
-            android:textSize="activity_menu_register_text"
+            android:textSize="@dimen/activity_menu_register_text"
             app:layout_constraintBottom_toTopOf="@+id/editText2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -97,7 +95,7 @@
             android:inputType="number"
             android:maxLength="15"
             android:textColor="@color/black"
-            android:textSize="activity_menu_register_text"
+            android:textSize="@dimen/activity_menu_register_text"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

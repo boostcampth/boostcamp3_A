@@ -15,8 +15,6 @@ public class OwnerDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_detail);
 
-        Intent intent = new Intent(this, MenuRegisterActivity.class);
-        startActivity(intent);
     }
 
 }
