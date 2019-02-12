@@ -32,7 +32,7 @@ public class TestOverlapViewAdapter extends OverlapViewAdapter<TestOverlapViewVi
 
     @Override
     protected TestOverlapViewViewHolder onCreateView(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup) {
-        View menuItemView = layoutInflater.inflate(R.layout.test_overlapview_layout, viewGroup, false);
+        View menuItemView = layoutInflater.inflate(R.layout.item_menu_select_view, viewGroup, false);
         return new TestOverlapViewViewHolder(menuItemView);
     }
 

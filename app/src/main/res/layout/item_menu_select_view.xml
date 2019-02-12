@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/item_menu_select_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/item_menu_select_title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/middle_margin"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:maxLines="2"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/item_view_menu_title"
+        android:textStyle="bold"
+        app:fontFamily="@font/youth"
+        app:layout_constraintBottom_toTopOf="@+id/item_menu_select_guide_tv"
+        app:layout_constraintEnd_toStartOf="@+id/item_menu_select_right_wall"
+        app:layout_constraintStart_toStartOf="@+id/item_menu_select_left_wall" />
+
+    <TextView
+        android:id="@+id/item_menu_select_guide_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/middle_margin"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:maxLines="3"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/item_view_menu_guide"
+        app:fontFamily="@font/youth"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toStartOf="@+id/item_menu_select_right_wall"
+        app:layout_constraintStart_toStartOf="@+id/item_menu_select_left_wall" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/item_menu_select_bottom_wall"
+        app:layout_constraintEnd_toStartOf="@+id/item_menu_select_right_wall"
+        app:layout_constraintStart_toStartOf="@+id/item_menu_select_left_wall">
+
+        <TextView
+            android:id="@+id/item_menu_select_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:gravity="start"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/item_view_price"
+            app:fontFamily="@font/youth" />
+
+        <TextView
+            android:id="@+id/item_menu_select_price_text_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:gravity="start"
+            android:text="@string/item_menu_select_price_tv"
+            android:textColor="@color/white"
+            android:textSize="@dimen/item_view_price"
+            app:fontFamily="@font/youth" />
+
+        <TextView
+            android:id="@+id/item_menu_select_category_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/middle_margin"
+            android:gravity="start"
+            android:textColor="@color/white"
+            android:textSize="@dimen/item_view_category"
+            app:fontFamily="@font/youth"
+            app:layout_constraintBottom_toTopOf="@+id/item_menu_select_bottom_wall"
+            app:layout_constraintEnd_toStartOf="@+id/item_menu_select_right_wall"
+            app:layout_constraintStart_toStartOf="@+id/item_menu_select_left_wall" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/item_menu_select_left_wall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/x_large_margin" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/item_menu_select_bottom_wall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/x_large_margin" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/item_menu_select_right_wall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

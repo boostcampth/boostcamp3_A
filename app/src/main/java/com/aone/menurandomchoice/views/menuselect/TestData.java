@@ -7,13 +7,36 @@ package com.aone.menurandomchoice.views.menuselect;
 public class TestData {
 
     private int imageResourceId;
+    private String menuTitle;
+    private String menuGuide;
+    private String price;
+    private String category;
 
-    TestData(int imageResourceId) {
+    public TestData(int imageResourceId, String menuTitle, String menuGuide, String price, String category) {
         this.imageResourceId = imageResourceId;
+        this.menuTitle = menuTitle;
+        this.menuGuide = menuGuide;
+        this.price = price;
+        this.category = category;
     }
 
     public int getImageResourceId() {
         return imageResourceId;
     }
 
+    public String getMenuTitle() {
+        return menuTitle;
+    }
+
+    public String getMenuGuide() {
+        return menuGuide;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getCategory() {
+        return category;
+    }
 }
