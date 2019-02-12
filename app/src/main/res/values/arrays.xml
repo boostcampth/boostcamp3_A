@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="category">
+        <item>@string/arrays_category_korea_food</item>
+        <item>@string/arrays_category_japan_food</item>
+        <item>@string/arrays_category_china_food</item>
+        <item>@string/arrays_category_western_food</item>
+        <item>@string/arrays_category_chicken</item>
+        <item>@string/arrays_category_snack_bar</item>
+        <item>@string/arrays_category_world_food</item>
+        <item>@string/arrays_category_fast_food</item>
+        <item>@string/arrays_category_korea_food</item>
+    </string-array>
+
+</resources>

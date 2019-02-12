@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="presenter"
             type="com.aone.menurandomchoice.views.menuregister.MenuRegisterContract.Presenter"/>
@@ -22,8 +23,8 @@
             android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/middle_margin"
-            android:layout_marginBottom="@dimen/middle_margin"
+            android:layout_marginTop="@dimen/x_large_margin"
+            android:layout_marginBottom="@dimen/x_large_margin"
             android:background="@drawable/dot_line_rect"
             app:layout_constraintBottom_toTopOf="@+id/editText3"
             app:layout_constraintDimensionRatio="9:16"
@@ -35,7 +36,6 @@
             android:id="@+id/button2"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginRight="@dimen/large_margin"
             android:layout_marginBottom="@dimen/large_margin"
             android:background="@drawable/add_icon"
@@ -46,8 +46,8 @@
             android:id="@+id/editText2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="@dimen/middle_margin"
+            android:layout_marginRight="@dimen/middle_margin"
             android:layout_marginBottom="@dimen/middle_margin"
             android:hint="@string/activity_menu_register_guide_hint"
             android:inputType="textPersonName"
@@ -61,8 +61,8 @@
             android:id="@+id/editText3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="@dimen/middle_margin"
+            android:layout_marginRight="@dimen/middle_margin"
             android:layout_marginBottom="@dimen/middle_margin"
             android:ems="10"
             android:hint="@string/activity_menu_register_title_hint"
@@ -77,8 +77,8 @@
             android:id="@+id/editText4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="@dimen/middle_margin"
+            android:layout_marginRight="@dimen/middle_margin"
             android:layout_marginBottom="@dimen/middle_margin"
             android:hint="@string/activity_menu_register_price_hint"
             android:inputType="number"
@@ -92,10 +92,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/activity_menu_register_recyclerView"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/middle_margin"
+            android:layout_marginLeft="@dimen/middle_margin"
+            android:layout_marginRight="@dimen/middle_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -46,7 +46,8 @@
         <activity android:name=".views.menuselect.MenuSelectActivity" />
 
         <activity android:name=".views.menuregister.MenuRegisterActivity"
-            android:label="@string/activity_menu_register_label"/>
+            android:label="@string/activity_menu_register_label"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
     </application>
 
 </manifest>

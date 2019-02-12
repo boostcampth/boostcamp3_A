@@ -6,10 +6,15 @@ import android.view.MenuItem;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
+import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class MenuRegisterActivity
         extends BaseActivity<ActivityMenuRegisterBinding, MenuRegisterContract.View, MenuRegisterContract.Presenter>
@@ -19,7 +24,7 @@ public class MenuRegisterActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        setUpCategoryRecyclerView();
     }
 
     @Override
@@ -62,7 +67,22 @@ public class MenuRegisterActivity
 
     private void setUpCategoryRecyclerView() {
 
-//        getDataBinding().activityMenuRegisterRecyclerView;
+        MenuCategoryAdapter menuCategoryAdapter = new MenuCategoryAdapter();
+        menuCategoryAdapter.setItems(createMenuCategoryItems());
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        getDataBinding().activityMenuRegisterRecyclerView.setLayoutManager(layoutManager);
+        getDataBinding().activityMenuRegisterRecyclerView.setAdapter(menuCategoryAdapter);
+    }
+
+    private List<MenuCategoryItem> createMenuCategoryItems() {
+        String[] categories = getResources().getStringArray(R.array.category);
+        ArrayList<MenuCategoryItem> menuCategoryItems = new ArrayList<>();
+        for(String category : categories) {
+            menuCategoryItems.add(new MenuCategoryItem(category));
+        }
+
+        return menuCategoryItems;
     }
 
     private void moveToMenuConfirmActivity() {

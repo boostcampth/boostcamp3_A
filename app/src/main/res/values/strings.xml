@@ -51,4 +51,14 @@
     <string name="activity_menu_register_guide_hint">메뉴 설명을 입력하세요</string>
     <string name="activity_menu_register_price_hint">메뉴 가격을 입력하세요</string>
 
+    <!-- category arrays -->
+    <string name="arrays_category_korea_food">한식</string>
+    <string name="arrays_category_japan_food">일식</string>
+    <string name="arrays_category_china_food">중식</string>
+    <string name="arrays_category_western_food">양식</string>
+    <string name="arrays_category_chicken">치킨</string>
+    <string name="arrays_category_snack_bar">분식</string>
+    <string name="arrays_category_world_food">세계요리</string>
+    <string name="arrays_category_fast_food">패스트 푸드</string>
+
 </resources>
