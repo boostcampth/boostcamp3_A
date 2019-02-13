@@ -82,9 +82,7 @@ public class MenuRegisterActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
-        finish();
+        getPresenter().handlingBackKeyClick();
     }
 
     @Override
@@ -186,6 +184,11 @@ public class MenuRegisterActivity
     @Override
     public String getInputtedMenuPrice() {
         return getDataBinding().activityMenuRegisterPriceEt.getText().toString();
+    }
+
+    @Override
+    public void finishView() {
+        finish();
     }
 
     private void openAlbumOfDevice() {

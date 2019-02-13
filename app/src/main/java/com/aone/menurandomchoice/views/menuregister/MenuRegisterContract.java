@@ -25,6 +25,8 @@ public interface MenuRegisterContract {
 
         void moveToPreviousActivityWithItem(MenuDetail menuDetail);
 
+        void finishView();
+
         @NonNull
         int[] getRegisterTargetImageSize();
 
@@ -54,6 +56,8 @@ public interface MenuRegisterContract {
         void handlingPreviewButtonClick();
 
         void handlingRegisterOkButtonClick();
+
+        void handlingBackKeyClick();
 
     }
 

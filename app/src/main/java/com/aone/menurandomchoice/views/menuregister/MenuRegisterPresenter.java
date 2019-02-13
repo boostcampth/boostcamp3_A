@@ -25,8 +25,6 @@ import static android.app.Activity.RESULT_OK;
 public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.View>
         implements MenuRegisterContract.Presenter {
 
-
-
     private MenuCategoryAdapterContract.Model<MenuCategoryItem> menuCategoryAdapterModel;
     private UCropCreateHelper uCropCreateHelper;
 
@@ -97,6 +95,14 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
             } else {
                 sendRegisterErrorMessage(registerState);
             }
+        }
+    }
+
+    @Override
+    public void handlingBackKeyClick() {
+        getRepository().clearRegisteredImageLocalPath();
+        if(isAttachView()) {
+            getView().finishView();
         }
     }
 
