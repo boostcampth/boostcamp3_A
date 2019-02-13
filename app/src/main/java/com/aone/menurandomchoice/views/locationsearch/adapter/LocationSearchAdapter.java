@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.views.locationsearch;
+package com.aone.menurandomchoice.views.locationsearch.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class LocationSearchAdapter extends BaseRecyclerViewAdapter<KakaoAddressResult, LocationSearchAdapter.LocationViewHolder> {
+public class LocationSearchAdapter
+        extends BaseRecyclerViewAdapter<KakaoAddressResult, LocationSearchAdapter.LocationViewHolder>
+        implements LocationSearchAdapterView {
+
+    private OnViewHolderClickListener onViewHolderClickListener;
 
     @Override
     protected void bindViewHolder(@NonNull LocationViewHolder viewHolder, @NonNull KakaoAddressResult item) {
@@ -35,6 +39,11 @@ public class LocationSearchAdapter extends BaseRecyclerViewAdapter<KakaoAddressR
         });
 
         return viewHolder;
+    }
+
+    @Override
+    public void setOnViewHolderClickListener(@NonNull OnViewHolderClickListener onViewHolderClickListener) {
+        this.onViewHolderClickListener = onViewHolderClickListener;
     }
 
     public class LocationViewHolder extends RecyclerView.ViewHolder {

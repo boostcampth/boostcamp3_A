@@ -12,8 +12,9 @@ import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityLocationSearchBinding;
 import com.aone.menurandomchoice.utils.KeyboardUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
-import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapterView;
-import com.aone.menurandomchoice.views.base.adapter.OnViewHolderClickListener;
+import com.aone.menurandomchoice.views.locationsearch.adapter.LocationSearchAdapterView;
+import com.aone.menurandomchoice.views.locationsearch.adapter.OnViewHolderClickListener;
+import com.aone.menurandomchoice.views.locationsearch.adapter.LocationSearchAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,10 +23,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class LocationSearchActivity extends BaseActivity<ActivityLocationSearchBinding, LocationSearchContract.View, LocationSearchContract.Presenter>
-                                    implements LocationSearchContract.View {
+public class LocationSearchActivity
+        extends BaseActivity<ActivityLocationSearchBinding, LocationSearchContract.View, LocationSearchContract.Presenter>
+        implements LocationSearchContract.View {
 
-    private BaseRecyclerViewAdapterView adapterView;
+    private LocationSearchAdapterView adapterView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class LocationSearchActivity extends BaseActivity<ActivityLocationSearchB
     private void initView() {
         LocationSearchAdapter adapter = new LocationSearchAdapter();
         RecyclerView recyclerView = getDataBinding().rcContent;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
         getPresenter().setAdapter(adapter);

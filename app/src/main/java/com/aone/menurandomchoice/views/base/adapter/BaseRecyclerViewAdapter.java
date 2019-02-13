@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>
-        implements BaseRecyclerViewAdapterModel<L>, BaseRecyclerViewAdapterView {
+    implements BaseRecyclerViewAdapterModel<L> {
 
     private List<L> items = new ArrayList<>();
-    protected OnViewHolderClickListener onViewHolderClickListener;
 
     @Override
     public void setItem(int position, @NonNull L item) {
@@ -102,17 +101,8 @@ public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHol
     }
 
     @NonNull
-    abstract protected VH createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i);
+    protected abstract VH createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i);
 
-    abstract protected void bindViewHolder(@NonNull VH viewHolder, @NonNull L item);
-
-    @Override
-    public void setOnViewHolderClickListener(@NonNull  OnViewHolderClickListener onViewHolderClickListener) {
-        this.onViewHolderClickListener = onViewHolderClickListener;
-    }
-//    public void setOnItemClickListener(
-//           @NonNull OnItemClickListener onItemClickListener) {
-//        this.onItemClickListener = onItemClickListener;
-//    }
+    protected abstract void bindViewHolder(@NonNull VH viewHolder, @NonNull L item);
 
 }

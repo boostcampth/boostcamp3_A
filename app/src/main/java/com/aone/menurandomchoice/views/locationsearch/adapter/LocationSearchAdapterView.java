@@ -1,8 +1,8 @@
-package com.aone.menurandomchoice.views.base.adapter;
+package com.aone.menurandomchoice.views.locationsearch.adapter;
 
 import androidx.annotation.NonNull;
 
-public interface BaseRecyclerViewAdapterView {
+public interface LocationSearchAdapterView {
 
     void setOnViewHolderClickListener(@NonNull OnViewHolderClickListener onViewHolderClickListener);
 

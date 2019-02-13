@@ -1,8 +1,8 @@
 package com.aone.menurandomchoice.views.base.adapter;
 
-import androidx.annotation.NonNull;
-
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public interface BaseRecyclerViewAdapterModel<L> {
 
