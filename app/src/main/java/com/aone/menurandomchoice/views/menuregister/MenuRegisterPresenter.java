@@ -25,6 +25,9 @@ import static android.app.Activity.RESULT_OK;
 public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.View>
         implements MenuRegisterContract.Presenter {
 
+    private MenuCategoryAdapterContract.Model<MenuCategoryItem> menuCategoryAdapterModel;
+    private UCropCreateHelper uCropCreateHelper;
+
     private enum RegisterState {
         SUCCESS(R.string.register_success),
         NO_IMAGE(R.string.register_no_image),
@@ -44,9 +47,6 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         }
 
     }
-
-    private MenuCategoryAdapterContract.Model<MenuCategoryItem> menuCategoryAdapterModel;
-    private UCropCreateHelper uCropCreateHelper;
 
     MenuRegisterPresenter() {
         setUp();
