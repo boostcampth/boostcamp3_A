@@ -136,24 +136,24 @@ public class MenuRegisterActivity
     }
 
     @Override
-    public void startToUCropLibrary(UCrop uCrop) {
+    public void startToUCropLibrary(@NonNull UCrop uCrop) {
         uCrop.start(this);
     }
 
     @Override
-    public void showRegisteredImage(String imagePath) {
+    public void showRegisteredImage(@NonNull String imagePath) {
         GlideUtil.loadImageWithSkipCache(getDataBinding().activityMenuRegisterIv, imagePath);
     }
 
     @Override
-    public void moveToPreviewActivityWithItem(MenuDetail menuDetail) {
+    public void moveToPreviewActivityWithItem(@NonNull MenuDetail menuDetail) {
         Intent menuPreviewIntent = new Intent(this, MenuPreviewActivity.class);
         menuPreviewIntent.putExtra(EXTRA_MENU_DETAIL_ITEM, menuDetail);
         startActivity(menuPreviewIntent);
     }
 
     @Override
-    public void moveToPreviousActivityWithItem(MenuDetail menuDetail) {
+    public void moveToPreviousActivityWithItem(@NonNull MenuDetail menuDetail) {
         Intent resultIntent = new Intent();
         resultIntent.putExtra(EXTRA_MENU_DETAIL_ITEM, menuDetail);
         setResult(RESULT_OK, resultIntent);

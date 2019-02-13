@@ -17,13 +17,13 @@ public interface MenuRegisterContract {
 
         void executePickPhotoFromAlbum();
 
-        void startToUCropLibrary(UCrop uCrop);
+        void startToUCropLibrary(@NonNull UCrop uCrop);
 
-        void showRegisteredImage(String imagePath);
+        void showRegisteredImage(@NonNull String imagePath);
 
-        void moveToPreviewActivityWithItem(MenuDetail menuDetail);
+        void moveToPreviewActivityWithItem(@NonNull MenuDetail menuDetail);
 
-        void moveToPreviousActivityWithItem(MenuDetail menuDetail);
+        void moveToPreviousActivityWithItem(@NonNull MenuDetail menuDetail);
 
         void finishView();
 
