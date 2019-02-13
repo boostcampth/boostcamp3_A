@@ -4,8 +4,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-public interface OnItemClickListener {
+public interface OnMenuCategoryClickListener {
 
-    void onItemClick(@NonNull View view, int position);
+    void onMenuCategoryItemClick(@NonNull View view, int position);
 
 }

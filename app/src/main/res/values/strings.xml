@@ -46,7 +46,8 @@
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>
-    <string name="item_action_bar_next">다음</string>
+    <string name="item_menu_owner_register_preview">미리보기</string>
+    <string name="item_menu_owner_register_ok">완료</string>
 
     <!-- item_menu_select_view -->
     <string name="item_menu_select_price_tv">원</string>
@@ -56,6 +57,7 @@
     <string name="activity_menu_register_title_hint">메뉴 이름을 입력하세요</string>
     <string name="activity_menu_register_guide_hint">메뉴 설명을 입력하세요</string>
     <string name="activity_menu_register_price_hint">메뉴 가격을 입력하세요</string>
+    <string name="activity_menu_register_photo_fail">사진을 불러오는데 실패하였습니다</string>
 
     <!-- category arrays -->
     <string name="arrays_category_korea_food">한식</string>
@@ -66,5 +68,20 @@
     <string name="arrays_category_snack_bar">분식</string>
     <string name="arrays_category_world_food">세계요리</string>
     <string name="arrays_category_fast_food">패스트 푸드</string>
+
+    <!-- permission -->
+    <string name="permission_request_guide">사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.</string>
+    <string name="permission_denied_guide">[설정] > [권한] 에서 권한을 허용할 수 있습니다.</string>
+
+    <!-- UCop -->
+    <string name="uCrop_toolbar_title">사진 편집</string>
+
+    <!-- register state message -->
+    <string name="register_success">성공</string>
+    <string name="register_no_image">사진이 등록되지 않았습니다</string>
+    <string name="register_no_name">메뉴 이름이 등록되지 않았습니다</string>
+    <string name="register_no_description">메뉴 설명이 등록되지 않았습니다</string>
+    <string name="register_no_price">가격이 등록되지 않았습니다</string>
+    <string name="register_no_category">카테고리가 선택되지 않았습니다</string>
 
 </resources>
