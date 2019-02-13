@@ -2,11 +2,11 @@ package com.aone.menurandomchoice.views.menuregister;
 
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
@@ -15,12 +15,9 @@ import com.aone.menurandomchoice.utils.GlideUtil;
 import com.aone.menurandomchoice.views.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
-import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
-import com.bumptech.glide.Glide;
+import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
+import com.aone.menurandomchoice.views.menuregister.adapter.viewholder.OnMenuCategoryClickListener;
 import com.yalantis.ucrop.UCrop;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,8 +27,10 @@ public class MenuRegisterActivity
         extends BaseActivity<ActivityMenuRegisterBinding, MenuRegisterContract.View, MenuRegisterContract.Presenter>
         implements MenuRegisterContract.View {
 
-    public static final int REQUEST_CODE_OPEN_ALBUM = 1;
-    MenuCategoryAdapter menuCategoryAdapter;
+    private static final int REQUEST_CODE_OPEN_ALBUM = 1;
+    private static final String EXTRA_MENU_DETAIL_ITEM = "EXTRA_MENU_DETAIL_ITEM";
+
+    private MenuCategoryAdapterContract.View menuCategoryAdapterView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +85,6 @@ public class MenuRegisterActivity
         super.onBackPressed();
 
         finish();
-
     }
 
     @Override
@@ -110,22 +108,28 @@ public class MenuRegisterActivity
     }
 
     private void setUpCategoryRecyclerView() {
-        menuCategoryAdapter = new MenuCategoryAdapter();
-        menuCategoryAdapter.setItems(createMenuCategoryItems());
+        MenuCategoryAdapter menuCategoryAdapter = new MenuCategoryAdapter();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         getDataBinding().activityMenuRegisterRecyclerView.setLayoutManager(layoutManager);
         getDataBinding().activityMenuRegisterRecyclerView.setAdapter(menuCategoryAdapter);
+
+        setUpAdapterToPresenter(menuCategoryAdapter);
+        setUpAdapterToThis(menuCategoryAdapter);
     }
 
-    private List<MenuCategoryItem> createMenuCategoryItems() {
-        String[] categories = getResources().getStringArray(R.array.category);
-        ArrayList<MenuCategoryItem> menuCategoryItems = new ArrayList<>();
-        for(String category : categories) {
-            menuCategoryItems.add(new MenuCategoryItem(category));
-        }
+    private void setUpAdapterToPresenter(MenuCategoryAdapter menuCategoryAdapter) {
+        getPresenter().setAdapterModel(menuCategoryAdapter);
+    }
 
-        return menuCategoryItems;
+    private void setUpAdapterToThis(MenuCategoryAdapter menuCategoryAdapter) {
+        menuCategoryAdapterView = menuCategoryAdapter;
+        menuCategoryAdapterView.setOnMenuCategoryClickListener(new OnMenuCategoryClickListener() {
+            @Override
+            public void onMenuCategoryItemClick(@NonNull View view, int position) {
+                getPresenter().handlingMenuCategoryItemClick(position);
+            }
+        });
     }
 
     @Override
@@ -144,14 +148,19 @@ public class MenuRegisterActivity
     }
 
     @Override
-    public void moveToPreviewActivity() {
-        MenuDetail menuDetail = createMenuDetailItem();
-        startToMenuPreviewActivity(menuDetail);
+    public void moveToPreviewActivityWithItem(MenuDetail menuDetail) {
+        Intent menuPreviewIntent = new Intent(this, MenuPreviewActivity.class);
+        menuPreviewIntent.putExtra(EXTRA_MENU_DETAIL_ITEM, menuDetail);
+        startActivity(menuPreviewIntent);
     }
 
     @Override
-    public void moveToPreviousActivityWithOk() {
+    public void moveToPreviousActivityWithItem(MenuDetail menuDetail) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(EXTRA_MENU_DETAIL_ITEM, menuDetail);
+        setResult(RESULT_OK, resultIntent);
 
+        finish();
     }
 
     @NonNull
@@ -161,33 +170,28 @@ public class MenuRegisterActivity
                 getDataBinding().activityMenuRegisterIv.getHeight()};
     }
 
+    @NonNull
+    @Override
+    public String getInputtedMenuName() {
+        return getDataBinding().activityMenuRegisterNameEt.getText().toString();
+    }
+
+    @NonNull
+    @Override
+    public String getInputtedMenuDescription() {
+        return getDataBinding().activityMenuRegisterDescriptionEt.getText().toString();
+    }
+
+    @NonNull
+    @Override
+    public String getInputtedMenuPrice() {
+        return getDataBinding().activityMenuRegisterPriceEt.getText().toString();
+    }
+
     private void openAlbumOfDevice() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, REQUEST_CODE_OPEN_ALBUM);
     }
 
-    private MenuDetail createMenuDetailItem() {
-        String name = getDataBinding().activityMenuRegisterTitleEt.getText().toString();
-        String price = getDataBinding().activityMenuRegisterPriceEt.getText().toString();
-        String imagePath = getPresenter().getRegisteredImagePath();
-        String description = getDataBinding().activityMenuRegisterGuideEt.getText().toString();
-//        String category = getPresenter().getSelectedCategory();
-        String category = menuCategoryAdapter.getSelectedCategory();
-
-        MenuDetail menuDetail = new MenuDetail();
-        menuDetail.setName(name);
-        menuDetail.setPrice(Integer.parseInt(price));
-        menuDetail.setPhotoUrl(imagePath);
-        menuDetail.setDescription(description);
-        menuDetail.setCategory(category);
-
-        return menuDetail;
-    }
-
-    private void startToMenuPreviewActivity(MenuDetail menuDetail) {
-        Intent menuPreviewIntent = new Intent(this, MenuPreviewActivity.class);
-        menuPreviewIntent.putExtra("dd", menuDetail);
-        startActivity(menuPreviewIntent);
-    }
 }

@@ -9,4 +9,6 @@ public interface PreferencesHelper {
     @NonNull
     String getSavedRegisterImageLoadPath();
 
+    void clearRegisteredImageLocalPath();
+
 }

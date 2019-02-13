@@ -9,26 +9,24 @@ import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapter;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
 import com.aone.menurandomchoice.views.menuregister.adapter.viewholder.MenuCategoryViewHolder;
-import com.aone.menurandomchoice.views.menuregister.adapter.viewholder.OnItemClickListener;
-
-import java.util.List;
+import com.aone.menurandomchoice.views.menuregister.adapter.viewholder.OnMenuCategoryClickListener;
 
 import androidx.annotation.NonNull;
 
+public class MenuCategoryAdapter extends BaseRecyclerViewAdapter<MenuCategoryItem, MenuCategoryViewHolder>
+    implements MenuCategoryAdapterContract.View, MenuCategoryAdapterContract.Model<MenuCategoryItem> {
 
-public class MenuCategoryAdapter extends BaseRecyclerViewAdapter<MenuCategoryItem, MenuCategoryViewHolder> {
+    private OnMenuCategoryClickListener onMenuCategoryClickListener;
 
     @NonNull
     @Override
     protected MenuCategoryViewHolder createViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup, int i) {
         View itemView = layoutInflater.inflate(R.layout.item_menu_category, viewGroup, false);
         MenuCategoryViewHolder viewHolder = new MenuCategoryViewHolder(itemView);
-        viewHolder.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull View view, int position) {
-                handlingCategorySelection(position);
-            }
-        });
+
+        if(onMenuCategoryClickListener != null) {
+            viewHolder.setOnMenuCategoryClickListener(onMenuCategoryClickListener);
+        }
 
         return viewHolder;
     }
@@ -39,12 +37,21 @@ public class MenuCategoryAdapter extends BaseRecyclerViewAdapter<MenuCategoryIte
     }
 
     @Override
-    public void setItems(@NonNull List<MenuCategoryItem> items) {
-        setSelectionDefaultCategory(items);
-
-        super.setItems(items);
+    public void setOnMenuCategoryClickListener(@NonNull OnMenuCategoryClickListener onMenuCategoryClickListener) {
+        this.onMenuCategoryClickListener = onMenuCategoryClickListener;
     }
 
+    @Override
+    public void setSelectedPositionOfMenuCategories(int position) {
+        handlingCategorySelection(position);
+    }
+
+    @Override
+    public void selectDefaultCategory() {
+        getItems().get(0).setSelect(true);
+    }
+
+    @NonNull
     public String getSelectedCategory() {
         for(MenuCategoryItem item : getItems()) {
             if(item.isSelect()) {
@@ -53,10 +60,6 @@ public class MenuCategoryAdapter extends BaseRecyclerViewAdapter<MenuCategoryIte
         }
 
         return "";
-    }
-
-    private void setSelectionDefaultCategory(List<MenuCategoryItem> items) {
-        items.get(0).setSelect(true);
     }
 
     private void handlingCategorySelection(int position) {

@@ -14,6 +14,8 @@ import com.aone.menurandomchoice.utils.GlideUtil;
 
 public class MenuPreviewActivity extends AppCompatActivity {
 
+    private static final String EXTRA_MENU_DETAIL_ITEM = "EXTRA_MENU_DETAIL_ITEM";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,7 @@ public class MenuPreviewActivity extends AppCompatActivity {
         TextView category = view.findViewById(R.id.item_menu_select_category_tv);
 
         Intent intent = getIntent();
-        MenuDetail menuDetail = intent.getParcelableExtra("dd");
+        MenuDetail menuDetail = intent.getParcelableExtra(EXTRA_MENU_DETAIL_ITEM);
         GlideUtil.loadImageWithSkipCache(iv, menuDetail.getPhotoUrl());
         title.setText(menuDetail.getName());
         guide.setText(menuDetail.getDescription());

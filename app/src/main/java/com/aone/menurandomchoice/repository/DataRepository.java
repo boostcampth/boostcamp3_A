@@ -135,6 +135,11 @@ public class DataRepository implements Repository {
     }
 
     @Override
+    public void clearRegisteredImageLocalPath() {
+        preferencesHelper.clearRegisteredImageLocalPath();
+    }
+
+    @Override
     public void checkStoreUpdated(@NonNull String updateTime, @NonNull OnStoreUpdatedCheckListener onStoreUpdatedCheckListener) {
         serverDataHelper.checkStoreUpdated(updateTime, onStoreUpdatedCheckListener);
     }

@@ -35,4 +35,8 @@ public class PreferencesRepository implements PreferencesHelper {
         return sharedPreferences.getString(PREF_REGISTER_IMAGE_LOCAL_PATH, "");
     }
 
+    @Override
+    public void clearRegisteredImageLocalPath() {
+        sharedPreferences.edit().remove(PREF_REGISTER_IMAGE_LOCAL_PATH).apply();
+    }
 }

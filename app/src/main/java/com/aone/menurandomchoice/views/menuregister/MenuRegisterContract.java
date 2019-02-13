@@ -1,9 +1,11 @@
 package com.aone.menurandomchoice.views.menuregister;
 
 import android.content.Intent;
-import android.net.Uri;
 
+import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.views.base.BaseContract;
+import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
+import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
 import com.yalantis.ucrop.UCrop;
 
 import androidx.annotation.NonNull;
@@ -19,16 +21,29 @@ public interface MenuRegisterContract {
 
         void showRegisteredImage(String imagePath);
 
-        void moveToPreviewActivity();
+        void moveToPreviewActivityWithItem(MenuDetail menuDetail);
 
-        void moveToPreviousActivityWithOk();
+        void moveToPreviousActivityWithItem(MenuDetail menuDetail);
 
         @NonNull
         int[] getRegisterTargetImageSize();
 
+        @NonNull
+        String getInputtedMenuName();
+
+        @NonNull
+        String getInputtedMenuDescription();
+
+        @NonNull
+        String getInputtedMenuPrice();
+
     }
 
     interface Presenter extends BaseContract.Presenter<MenuRegisterContract.View> {
+
+        void setAdapterModel(@NonNull MenuCategoryAdapterContract.Model<MenuCategoryItem> menuCategoryAdapterModel);
+
+        void handlingMenuCategoryItemClick(int position);
 
         void handlingImageRegisterButtonClick();
 
@@ -40,11 +55,6 @@ public interface MenuRegisterContract {
 
         void handlingRegisterOkButtonClick();
 
-        @NonNull
-        String getRegisteredImagePath();
-
-        @NonNull
-        String getSelectedCategory();
     }
 
 }

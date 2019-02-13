@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 
 public interface Repository extends KakaoLoginHelper, ServerDataHelper, SqliteDatabaseHelper, APIHelper, PreferencesHelper {
 
-    public interface OnLoadStoreDetailListener {
+    interface OnLoadStoreDetailListener {
 
         void onStoreDetailLoaded(StoreDetail storeDetail);
 
@@ -22,4 +22,5 @@ public interface Repository extends KakaoLoginHelper, ServerDataHelper, SqliteDa
     void cancelAll();
 
     void loadStoreDetail(int storeIdx, @NonNull OnLoadStoreDetailListener onLoadStoreDetailListener);
+
 }

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MenuCategoryViewHolder extends RecyclerView.ViewHolder {
 
     private ItemMenuCategoryBinding itemMenuCategoryBinding;
-    private OnItemClickListener onItemClickListener;
+    private OnMenuCategoryClickListener onMenuCategoryClickListener;
 
     public MenuCategoryViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -27,8 +27,8 @@ public class MenuCategoryViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void setOnItemClickListener(@NonNull OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setOnMenuCategoryClickListener(@NonNull OnMenuCategoryClickListener onMenuCategoryClickListener) {
+        this.onMenuCategoryClickListener = onMenuCategoryClickListener;
     }
 
     public void setMenuCategoryItem(MenuCategoryItem categoryItem) {
@@ -37,8 +37,8 @@ public class MenuCategoryViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void onClickItemView(View view) {
-        if(onItemClickListener != null) {
-            onItemClickListener.onItemClick(view, getAdapterPosition());
+        if(onMenuCategoryClickListener != null) {
+            onMenuCategoryClickListener.onMenuCategoryItemClick(view, getAdapterPosition());
         }
     }
 

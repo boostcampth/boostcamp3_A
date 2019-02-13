@@ -76,4 +76,12 @@
     <!-- UCop -->
     <string name="uCrop_toolbar_title">사진 편집</string>
 
+    <!-- register state message -->
+    <string name="register_success">성공</string>
+    <string name="register_no_image">사진이 등록되지 않았습니다</string>
+    <string name="register_no_name">메뉴 이름이 등록되지 않았습니다</string>
+    <string name="register_no_description">메뉴 설명이 등록되지 않았습니다</string>
+    <string name="register_no_price">가격이 등록되지 않았습니다</string>
+    <string name="register_no_category">카테고리가 선택되지 않았습니다</string>
+
 </resources>
