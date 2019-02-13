@@ -16,6 +16,9 @@ public class MenuPreviewActivity extends AppCompatActivity {
 
     private static final String EXTRA_MENU_DETAIL_ITEM = "EXTRA_MENU_DETAIL_ITEM";
 
+    /**
+     * 이 코드들은 단순 확인을 위한 샘플코드입니다.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
