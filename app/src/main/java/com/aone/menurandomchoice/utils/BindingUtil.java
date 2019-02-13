@@ -16,7 +16,7 @@ public class BindingUtil {
     public static void loadImage(ImageView imageView, String url, Drawable errorDrawable) {
         Glide.with(imageView.getContext())
                 .load(url)
-                .apply(new RequestOptions().placeholder(errorDrawable).error(errorDrawable))
+                .apply(new RequestOptions().placeholder(errorDrawable).error(errorDrawable).centerCrop())
                 .into(imageView);
     }
 

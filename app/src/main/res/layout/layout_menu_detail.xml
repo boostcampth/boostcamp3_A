@@ -25,12 +25,14 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="130dp"
+            android:scaleType="centerCrop"
             app:error="@{@drawable/no_photo}"
             app:photoUrl="@{menuDetail.photoUrl}"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/middle_margin"
             android:text="@{menuDetail.name ?? @string/layout_menu_detail_not_menu}"
             android:textSize="@dimen/small_text" />
 

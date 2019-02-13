@@ -37,10 +37,12 @@ public class MenuDetail extends BaseObservable implements Serializable {
         notifyPropertyChanged(BR.price);
     }
 
+    @Bindable
     public String getPhotoUrl() { return photoUrl; }
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+        notifyPropertyChanged(BR.photoUrl);
     }
 
     public String getDescription() {

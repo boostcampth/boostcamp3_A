@@ -15,6 +15,7 @@ import com.aone.menurandomchoice.databinding.ActivityMainBinding;
 import com.aone.menurandomchoice.utils.GlideUtil;
 import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
+import com.aone.menurandomchoice.views.ownersignup.OwnerSignUpActivity;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 
 public class MainActivity extends AppCompatActivity {

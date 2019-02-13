@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
@@ -27,6 +26,8 @@ public class OwnerStoreActivity
 
         setUpActivityToDataBinding();
         setUpPresenterToDataBinding();
+
+        initMapView();
     }
 
     @Override
@@ -35,6 +36,8 @@ public class OwnerStoreActivity
 
         int storeIdx = getIntent().getIntExtra("EXTRA_STORE_IDX", 0);
         getPresenter().loadStoreDetail(storeIdx);
+
+
     }
 
     @Override
@@ -98,6 +101,7 @@ public class OwnerStoreActivity
 
     @Override
     public void moveToOwnerEditPage(StoreDetail storeDetail) {
+
         /*
         Intent ownerEditIntent = new Intent(OwnerStoreActivity.this, ownerEditActivity.class);
         ownerEditIntent.putExtra(EXTRA_STORE, storeDetail);
@@ -116,10 +120,17 @@ public class OwnerStoreActivity
         */
     }
 
-
-
     @Override
     public void showStoreDetail(StoreDetail storeDetail) {
+
         getDataBinding().setStoreDetail(storeDetail);
+
+        getDataBinding().activityOwnerStoreLlMenu1.setMenuDetail(storeDetail.getMenuList().get(0));
+        getDataBinding().activityOwnerStoreLlMenu2.setMenuDetail(storeDetail.getMenuList().get(1));
+        getDataBinding().activityOwnerStoreLlMenu3.setMenuDetail(storeDetail.getMenuList().get(2));
+        
+    }
+
+    public void initMapView() {
     }
 }

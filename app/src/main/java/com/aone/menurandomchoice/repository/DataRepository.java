@@ -2,14 +2,13 @@ package com.aone.menurandomchoice.repository;
 
 import android.content.Intent;
 
+import com.aone.menurandomchoice.repository.local.StoreTable;
 import com.aone.menurandomchoice.repository.model.BaseResponse;
 import com.aone.menurandomchoice.repository.network.APIHelper;
 import com.aone.menurandomchoice.repository.network.APIRepository;
 import com.aone.menurandomchoice.repository.network.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.network.model.AddressResponseBody;
 import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
-import com.aone.menurandomchoice.repository.network.pojo.MenuLocation;
-import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.repository.local.SqliteDatabaseHelper;
 import com.aone.menurandomchoice.repository.local.SqliteDatabaseRepository;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
@@ -17,20 +16,16 @@ import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginRepository;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLogoutListener;
-import com.aone.menurandomchoice.repository.server.OnStoreUpdatedCheckListener;
 import com.aone.menurandomchoice.repository.server.OnSignUpRequestListener;
 import com.aone.menurandomchoice.repository.server.OnSignedUpCheckListener;
-import com.aone.menurandomchoice.repository.server.OnStoreDetailRequestListener;
 import com.aone.menurandomchoice.repository.server.ServerDataHelper;
 import com.aone.menurandomchoice.repository.server.ServerDataRepository;
+import com.aone.menurandomchoice.utils.NetworkUtil;
 
-import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 
 public class DataRepository implements Repository {
 
@@ -42,7 +37,7 @@ public class DataRepository implements Repository {
 
     @NonNull
     public static Repository getInstance() {
-        if(repository == null) {
+        if (repository == null) {
             repository = new DataRepository();
         }
 
@@ -59,7 +54,7 @@ public class DataRepository implements Repository {
     @Override
     public void checkLoggedinAccount(@NonNull OnKakaoLoginListener onKakaoLoginListener) {
         kakaoLoginHelper.checkLoggedinAccount(onKakaoLoginListener);
-}
+    }
 
     @Override
     public void executeDeviceKakaoAccountLogin(@NonNull OnKakaoLoginListener onKakaoLoginListener) {
@@ -87,7 +82,7 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void requestSignUp(long userId,@NonNull  String accessKey, @NonNull OnSignUpRequestListener onSignUpRequestListener) {
+    public void requestSignUp(long userId, @NonNull String accessKey, @NonNull OnSignUpRequestListener onSignUpRequestListener) {
         serverDataHelper.requestSignUp(userId, accessKey, onSignUpRequestListener);
     }
 
@@ -102,53 +97,29 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void requestStoreDetail(@NonNull int storeIdx,
-                                      @NonNull NetworkResponseListener<BaseResponse<StoreDetail>> networkResponseListener) {
-        apiHelper.requestStoreDetail(storeIdx, networkResponseListener);
+    public void requestStoreDetail(@NonNull final StoreDetail cachedStoreDetail, @NonNull final int storeIdx,
+                                   @NonNull final OnLoadStoreDetailListener onLoadStoreDetailListener) {
+        apiHelper.requestStoreDetail(cachedStoreDetail, storeIdx, onLoadStoreDetailListener);
     }
 
+    @Override
+    public void checkStoreUpdated(@NonNull final StoreDetail cachedStoreDetail, final int storeIdx, @NonNull final String updateTime,
+                                  @NonNull final OnLoadStoreDetailListener onLoadStoreDetailListener) {
+        apiHelper.checkStoreUpdated(cachedStoreDetail, storeIdx, updateTime, onLoadStoreDetailListener);
+    }
 
     @Override
     public void loadStoreDetail(final int storeIdx, @NonNull final OnLoadStoreDetailListener onLoadStoreDetailListener) {
 
         final StoreDetail cachedStoreDetail = getStoreDetail();
 
-        requestStoreDetail(storeIdx, new NetworkResponseListener<BaseResponse<StoreDetail>>() {
-            @Override
-            public void onError() {
-                onLoadStoreDetailListener.onFailToLoadStoreDetail();
-            }
-
-            @Override
-            public void onReceived(@NonNull BaseResponse<StoreDetail> response) {
-                onLoadStoreDetailListener.onStoreDetailLoaded(response.getData());
-            }
-        });
-        /*
-        checkStoreUpdated(cachedStoreDetail.getTime(), new OnStoreUpdatedCheckListener() {
-            @Override
-            public void onAlreadyStoreUpdated() {
-                onLoadStoreDetailListener.onStoreDetailLoaded(cachedStoreDetail);
-            }
-
-            @Override
-            public void onNotUpdated(@NonNull OnStoreDetailRequestListener onStoreDetailRequestListener) {
-                requestStoreDetail(storeIdx, onStoreDetailRequestListener);
-            }
-        });
-        */
-
+        if(NetworkUtil.isNetworkConnecting()) {
+            checkStoreUpdated(cachedStoreDetail, storeIdx, cachedStoreDetail.getUpdateTime(), onLoadStoreDetailListener);
+        } else {
+            onLoadStoreDetailListener.onFailToLoadStoreDetail(cachedStoreDetail, "Network Connect Error");
+        }
     }
 
-    @Override
-    public void checkStoreUpdated(@NonNull String updateTime, @NonNull OnStoreUpdatedCheckListener onStoreUpdatedCheckListener) {
-        serverDataHelper.checkStoreUpdated(updateTime, onStoreUpdatedCheckListener);
-    }
-
-    @Override
-    public void requestStoreDetail(int storeIdx, @NonNull OnStoreDetailRequestListener onStoreDetailRequestListener) {
-        serverDataHelper.requestStoreDetail(storeIdx, onStoreDetailRequestListener);
-    }
 
     @Override
     public void addStoreDetail() {

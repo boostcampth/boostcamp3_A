@@ -15,6 +15,7 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface APIInterface {
+
     @GET("maps")
     Call<MenuLocationResponseBody> getMenuLocation(@QueryMap Map<String, String> location);
 
@@ -23,5 +24,8 @@ public interface APIInterface {
 
     @GET("stores/{storeIdx}")
     Call<BaseResponse<StoreDetail>> getStoreDetail(@Path("storeIdx") final int storeIdx);
+
+    @GET("stores/{storeIdx}/updates")
+    Call<BaseResponse> checkStoreUpdated(@Path("storeIdx") final int storeIdx, @Query("updateTime") String updateTime);
 
 }

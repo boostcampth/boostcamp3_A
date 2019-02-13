@@ -15,7 +15,7 @@ public interface Repository extends KakaoLoginHelper, ServerDataHelper, SqliteDa
 
         void onStoreDetailLoaded(StoreDetail storeDetail);
 
-        void onFailToLoadStoreDetail();
+        void onFailToLoadStoreDetail(StoreDetail cachedStoreDetail, String errorMessage);
     }
 
     void cancelAll();

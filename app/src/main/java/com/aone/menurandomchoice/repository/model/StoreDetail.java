@@ -20,7 +20,9 @@ public class StoreDetail extends BaseObservable implements Serializable {
 
     private double longitude;
 
-    private List<MenuDetail> menuDetailList;
+    private String updateTime;
+
+    private List<MenuDetail> menuList;
 
     @Bindable
     public String getName() {
@@ -76,11 +78,19 @@ public class StoreDetail extends BaseObservable implements Serializable {
         this.longitude = longitude;
     }
 
-    public List<MenuDetail> getMenuDetailList() {
-        return menuDetailList;
+    public List<MenuDetail> getMenuList() {
+        return menuList;
     }
 
-    public void setMenuDetailList(List<MenuDetail> menuDetailList) {
-        this.menuDetailList = menuDetailList;
+    public void setMenuList(List<MenuDetail> menuList) {
+        this.menuList = menuList;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 }
