@@ -74,6 +74,8 @@ public class LocationSearchActivity extends BaseActivity<ActivityLocationSearchB
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        toolbar.setTitle("");
+
         getDataBinding().searchBox.etSearch.setOnEditorActionListener(
                 new TextView.OnEditorActionListener() {
                     @Override
