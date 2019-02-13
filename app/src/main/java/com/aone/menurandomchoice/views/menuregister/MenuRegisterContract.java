@@ -1,6 +1,5 @@
 package com.aone.menurandomchoice.views.menuregister;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -18,7 +17,11 @@ public interface MenuRegisterContract {
 
         void startToUCropLibrary(UCrop uCrop);
 
-        void sendCropSuccessImageUri(Uri uri);
+        void showRegisteredImage(String imagePath);
+
+        void moveToPreviewActivity();
+
+        void moveToPreviousActivityWithOk();
 
         @NonNull
         int[] getRegisterTargetImageSize();
@@ -33,6 +36,15 @@ public interface MenuRegisterContract {
 
         void handlingUCropResult(int resultCode, @Nullable Intent data);
 
+        void handlingPreviewButtonClick();
+
+        void handlingRegisterOkButtonClick();
+
+        @NonNull
+        String getRegisteredImagePath();
+
+        @NonNull
+        String getSelectedCategory();
     }
 
 }

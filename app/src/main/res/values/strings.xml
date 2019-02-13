@@ -46,7 +46,8 @@
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>
-    <string name="item_action_bar_next">다음</string>
+    <string name="item_menu_owner_register_preview">미리보기</string>
+    <string name="item_menu_owner_register_ok">완료</string>
 
     <!-- item_menu_select_view -->
     <string name="item_menu_select_price_tv">원</string>

@@ -12,16 +12,25 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.yalantis.ucrop.UCrop;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import static android.app.Activity.RESULT_OK;
 
 public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.View>
         implements MenuRegisterContract.Presenter {
+
+    private UCropCreateHelper uCropCreateHelper;
+
+    MenuRegisterPresenter() {
+        setUp();
+    }
+
+    private void setUp() {
+        uCropCreateHelper = new UCropCreateHelper();
+    }
 
     @Override
     public void handlingImageRegisterButtonClick() {
@@ -44,6 +53,30 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         } else {
             sendPhotoFailMessageToView();
         }
+    }
+
+    @Override
+    public void handlingPreviewButtonClick() {
+        if(isAttachView()) {
+            getView().moveToPreviewActivity();
+        }
+    }
+
+    @Override
+    public void handlingRegisterOkButtonClick() {
+
+    }
+
+    @NonNull
+    @Override
+    public String getRegisteredImagePath() {
+        return getRepository().getSavedRegisterImageLoadPath();
+    }
+
+    @NonNull
+    @Override
+    public String getSelectedCategory() {
+        return null;
     }
 
     private void checkPermissionWithTedPermission() {
@@ -82,12 +115,15 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     }
 
     private void handlingUCropSuccess(Intent data) {
-        if(isAttachView()) {
-            if (hasUCropData(data)) {
-                getView().sendCropSuccessImageUri(UCrop.getOutput(data));
-            } else {
-                sendPhotoFailMessageToView();
+        if (hasUCropData(data)) {
+            Uri uri = UCrop.getOutput(data);
+            String imagePath = uri.getPath();
+            if(imagePath != null) {
+                saveRegisteredImageLocalPath(imagePath);
+                sendRegisteredImageUriToView(imagePath);
             }
+        } else {
+            sendPhotoFailMessageToView();
         }
     }
 
@@ -116,17 +152,19 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     }
 
     private UCrop createUCop(Uri uri) {
-        String destinationFileName = DateFormat.getDateInstance().format(new Date()) + ".jpg";
         float widthRatio = 9;
         float heightRatio = 16;
-        int[] registerTargetImageSize = getView().getRegisterTargetImageSize();
+        int[] viewSize = getView().getRegisterTargetImageSize();
 
-        UCropCreateHelper uCropCreateHelper = new UCropCreateHelper();
-        return uCropCreateHelper.createUCop(uri,
-                destinationFileName,
-                widthRatio, heightRatio,
-                registerTargetImageSize[0],
-                registerTargetImageSize[1]);
+        return uCropCreateHelper.createUCop(uri, widthRatio, heightRatio, viewSize[0], viewSize[1]);
+    }
+
+    private void saveRegisteredImageLocalPath(String imagePath) {
+        getRepository().saveRegisteredImageLocalPath(imagePath);
+    }
+
+    private void sendRegisteredImageUriToView(String imagePath) {
+        getView().showRegisteredImage(imagePath);
     }
 
 }

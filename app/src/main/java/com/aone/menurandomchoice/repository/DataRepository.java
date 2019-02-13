@@ -2,6 +2,8 @@ package com.aone.menurandomchoice.repository;
 
 import android.content.Intent;
 
+import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
+import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
 import com.aone.menurandomchoice.repository.network.APIHelper;
 import com.aone.menurandomchoice.repository.network.APIRepository;
 import com.aone.menurandomchoice.repository.network.NetworkResponseListener;
@@ -38,6 +40,7 @@ public class DataRepository implements Repository {
     private ServerDataHelper serverDataHelper;
     private APIHelper apiHelper;
     private SqliteDatabaseHelper sqliteDatabaseHelper;
+    private PreferencesHelper preferencesHelper;
 
     @NonNull
     public static Repository getInstance() {
@@ -53,6 +56,7 @@ public class DataRepository implements Repository {
         serverDataHelper = ServerDataRepository.getInstance();
         apiHelper = APIRepository.getInstance();
         sqliteDatabaseHelper = SqliteDatabaseRepository.getInstance();
+        preferencesHelper = new PreferencesRepository();
     }
 
     @Override
@@ -117,6 +121,17 @@ public class DataRepository implements Repository {
             }
         });
 
+    }
+
+    @Override
+    public void saveRegisteredImageLocalPath(@NonNull String path) {
+        preferencesHelper.saveRegisteredImageLocalPath(path);
+    }
+
+    @NonNull
+    @Override
+    public String getSavedRegisterImageLoadPath() {
+        return preferencesHelper.getSavedRegisterImageLoadPath();
     }
 
     @Override
