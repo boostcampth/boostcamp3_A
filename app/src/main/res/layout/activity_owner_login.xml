@@ -55,7 +55,6 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5" />
 
-
         <View
             android:id="@+id/activity_owner_login_divide_view"
             android:layout_width="0dp"

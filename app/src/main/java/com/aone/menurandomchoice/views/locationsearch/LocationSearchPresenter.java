@@ -1,5 +1,7 @@
 package com.aone.menurandomchoice.views.locationsearch;
 
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.aone.menurandomchoice.repository.network.NetworkResponseListener;
@@ -10,7 +12,9 @@ import com.aone.menurandomchoice.repository.network.pojo.KakaoAddressResult;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapterModel;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 
@@ -27,22 +31,6 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
         this.adapterModel.setItems(documents);
     }
 
-    public void requestMenuLocation(int position) {
-        Log.d("Clicked ViewHolder", adapterModel.getItem(position).getX()+"");
-        getRepository().requestMenuLocation(MenuMapper.createRequestLocationQueryMap(37.495573,127.039073),
-                new NetworkResponseListener<MenuLocationResponseBody>() {
-                    @Override
-                    public void onError() {
-
-                    }
-
-                    @Override
-                    public void onReceived(MenuLocationResponseBody response) {
-                        Log.d("Menu", response.getMessage());
-                    }
-                });
-    }
-
     public void requestLocationSearch(@NonNull String Query) {
         getRepository().executeLocationSearch(Query, new NetworkResponseListener<AddressResponseBody>() {
                 @Override
@@ -57,6 +45,14 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
                     }
                 }
             });
+    }
+
+    @Override
+    public Parcelable getMenuData(int position) {
+        Bundle posXY = new Bundle();
+        posXY.putDouble("longitude", adapterModel.getItem(position).getX());
+        posXY.putDouble("latitude", adapterModel.getItem(position).getY());
+        return posXY;
     }
 
     @Override

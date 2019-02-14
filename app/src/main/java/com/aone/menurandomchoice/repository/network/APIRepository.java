@@ -49,13 +49,10 @@ public class APIRepository implements APIHelper {
                     .addInterceptor(logging)
                     .build();
 
-            Gson gson = new GsonBuilder()
-                    .create();
-
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(client)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
             apiInstance = retrofit.create(APIInterface.class);

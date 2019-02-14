@@ -2,8 +2,6 @@ package com.aone.menurandomchoice.repository.network;
 
 import android.util.Log;
 
-import java.lang.ref.WeakReference;
-
 import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;

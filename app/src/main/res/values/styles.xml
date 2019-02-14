@@ -32,4 +32,14 @@
         <item name="android:textCursorDrawable">@color/reddish</item>
     </style>
 
+    <style name="RadiusButtonTextStyle" parent="Widget.AppCompat.Button">
+        <item name="android:paddingTop">@dimen/small_margin</item>
+        <item name="android:paddingLeft">@dimen/middle_margin</item>
+        <item name="android:paddingRight">@dimen/middle_margin</item>
+        <item name="android:paddingBottom">@dimen/small_margin</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@drawable/item_menu_category_text_color_selector</item>
+    </style>
+
 </resources>

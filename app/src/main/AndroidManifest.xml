@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:name=".GlobalApplication"
@@ -47,8 +50,13 @@
         <activity
             android:name=".views.locationsearch.LocationSearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".views.ownerdetail.OwnerDetailActivity" />
-        <activity android:name=".views.menuselect.MenuSelectActivity" />
+        <activity
+            android:name=".views.ownerdetail.OwnerDetailActivity" />
+        <activity
+            android:name=".views.customermain.CustomerMainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".views.menuselect.MenuSelectActivity" />
         <activity
             android:name=".views.menuregister.MenuRegisterActivity"
             android:label="@string/activity_menu_register_label"
@@ -57,7 +65,8 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".views.MenuPreviewActivity"></activity>
+        <activity
+            android:name=".views.MenuPreviewActivity"/>
     </application>
 
 </manifest>

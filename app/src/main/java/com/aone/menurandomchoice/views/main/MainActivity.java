@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.views.customermain.CustomerMainActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchPresenter;
 import com.aone.menurandomchoice.databinding.ActivityMainBinding;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void moveToMenuSelectActivity(View view) {
-        Intent menuSelectIntent = new Intent(MainActivity.this, LocationSearchActivity.class);
+        Intent menuSelectIntent = new Intent(MainActivity.this, CustomerMainActivity.class);
         startActivity(menuSelectIntent);
     }
 

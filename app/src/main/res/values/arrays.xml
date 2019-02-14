@@ -13,4 +13,12 @@
         <item>@string/arrays_category_korea_food</item>
     </string-array>
 
+    <string-array name="radius">
+        <item>@string/arrays_radius_closest</item>
+        <item>@string/arrays_radius_closer</item>
+        <item>@string/arrays_radius_middle</item>
+        <item>@string/arrays_radius_farther</item>
+        <item>@string/arrays_radius_farthest</item>
+    </string-array>
+
 </resources>
