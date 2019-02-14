@@ -19,7 +19,7 @@ public interface APIInterface {
     @GET("maps")
     Call<MenuLocationResponseBody> getMenuLocation(@QueryMap Map<String, String> location);
 
-    @GET("https://dapi.kakao.com/v2/local/search/address.json")
+    @GET("https://dapi.kakao.com/v2/local/search/keyword.json")
     Call<AddressResponseBody> getAddress(@Header("Authorization") String authorization, @Query("query") String query);
 
     @GET("stores/{storeIdx}")

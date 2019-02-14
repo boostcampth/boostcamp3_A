@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityCustomerMainBinding;
@@ -55,6 +54,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
         getDataBinding().activityCustomerMainMvDaum.setMapViewEventListener(this);
         createCustomMarker(getDataBinding().activityCustomerMainMvDaum);
+       // setTouchBlock();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -116,7 +116,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     @Override
     public void onMapViewInitialized(MapView mapView) {
-        mapView.setMapCenterPointAndZoomLevel(CUSTOM_MARKER_POINT, 1, true);
+        mapView.setMapCenterPointAndZoomLevel(CUSTOM_MARKER_POINT, 2, true);
         Log.i(LOG_TAG, "onMapViewInitialized");
     }
 
@@ -179,6 +179,10 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         return menuCategoryItems;
     }
 
+    private void setUpRadiusButtonArray() {
+
+    }
+
     public void moveToLocationSearchPage() {
         getDataBinding().activityCustomerMainMvDaum.removeAllCircles();
         Intent locationSearchIntent = new Intent(CustomerMainActivity.this, LocationSearchActivity.class);
@@ -193,6 +197,12 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     @Override
     public void onRadiusButtonClicked(View view) {
+        getDataBinding().activityCustomerMainIvRadius1.setSelected(false);
+        getDataBinding().activityCustomerMainIvRadius2.setSelected(false);
+        getDataBinding().activityCustomerMainIvRadius3.setSelected(false);
+        getDataBinding().activityCustomerMainIvRadius4.setSelected(false);
+        getDataBinding().activityCustomerMainIvRadius5.setSelected(false);
+        view.setSelected(true);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

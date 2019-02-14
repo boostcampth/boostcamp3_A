@@ -11,7 +11,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/white"
+            >
 
             <net.daum.mf.map.api.MapView
                 android:id="@+id/activity_customer_main_mv_daum"
