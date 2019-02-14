@@ -37,6 +37,7 @@ public class NetworkResponse<T> implements Callback<T> {
             if (listener != null) {
                 listener.onError();
             }
+
         } else {
             Log.e("onFailure", "other larger issue, i.e. no network connection?");
         }

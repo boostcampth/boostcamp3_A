@@ -25,8 +25,8 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/x_large_margin"
             android:layout_marginBottom="@dimen/x_large_margin"
-            android:background="@drawable/dot_line_rect"
-            app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_title_et"
+            android:src="@drawable/dot_line_rect"
+            app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_name_et"
             app:layout_constraintDimensionRatio="9:16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,11 +39,12 @@
             android:layout_marginRight="@dimen/large_margin"
             android:layout_marginBottom="@dimen/large_margin"
             android:background="@drawable/add_icon"
+            android:onClick="@{()->presenter.handlingImageRegisterButtonClick()}"
             app:layout_constraintBottom_toBottomOf="@+id/activity_menu_register_iv"
             app:layout_constraintEnd_toEndOf="@+id/activity_menu_register_iv" />
 
         <EditText
-            android:id="@+id/activity_menu_register_title_et"
+            android:id="@+id/activity_menu_register_name_et"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/middle_margin"
@@ -53,12 +54,12 @@
             android:inputType="text"
             android:textColor="@color/black"
             android:textSize="@dimen/activity_menu_register_text"
-            app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_guide_et"
+            app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_description_et"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/activity_menu_register_guide_et"
+            android:id="@+id/activity_menu_register_description_et"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/middle_margin"
@@ -80,7 +81,7 @@
             android:layout_marginRight="@dimen/middle_margin"
             android:layout_marginBottom="@dimen/middle_margin"
             android:hint="@string/activity_menu_register_price_hint"
-            android:inputType="text|number"
+            android:inputType="number"
             android:maxLength="15"
             android:textColor="@color/black"
             android:textSize="@dimen/activity_menu_register_text"

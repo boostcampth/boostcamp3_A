@@ -5,13 +5,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="java.util.List" />
         <variable
-            name="activity"
-            type="com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity"/>
+            name="presenter"
+            type="com.aone.menurandomchoice.views.ownerstore.OwnerStoreContract.Presenter"/>
         <variable
             name="storeDetail"
             type="com.aone.menurandomchoice.repository.model.StoreDetail"/>
     </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -22,6 +27,7 @@
                 android:id="@+id/activity_owner_store_ll_name_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -33,18 +39,34 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/two_x_large_margin"
                     android:lineSpacingExtra="5dp"
-                    android:text="@{storeDetail.name}"
-                    android:textSize="30sp"
+                    android:text="@{storeDetail.name ?? @string/activity_owner_detail_not_name}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/very_large_text"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="@{storeDetail.time}" />
+                    android:layout_marginTop="@dimen/large_margin"
+                    android:layout_marginBottom="@dimen/two_x_large_margin"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_owner_store_tv_time"
+                        android:textSize="@dimen/x_large_text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="@dimen/x_large_text"
+                        android:text="@{storeDetail.time}" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -52,7 +74,7 @@
                 android:id="@+id/activity_owner_store_ll_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/middle_margin"
                 android:background="@color/white"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -67,6 +89,9 @@
                     android:layout_marginTop="20dp"
                     android:gravity="start"
                     android:lineSpacingExtra="5dp"
+                    android:textSize="@dimen/large_text"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
                     android:text="@string/activity_owner_detail_menu_label" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,7 +103,7 @@
                     android:layout_marginBottom="20dp">
 
                     <include
-                        android:id="@+id/activity_owner_store_ll_menu1"
+                        android:id="@+id/activity_owner_store_menu1"
                         layout="@layout/layout_menu_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -86,22 +111,24 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="20dp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/activity_owner_store_ll_menu2"
+                        app:layout_constraintRight_toLeftOf="@+id/activity_owner_store_menu2"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:menuDetail="@{storeDetail.menuDetailList.get(0)}" />
+                        app:presenter= "@{presenter}"
+                        app:menuDetail="@{storeDetail.menuList[0]}" />
 
                     <include
-                        android:id="@+id/activity_owner_store_ll_menu2"
+                        android:id="@+id/activity_owner_store_menu2"
                         layout="@layout/layout_menu_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:layout_constraintLeft_toRightOf="@+id/activity_owner_store_ll_menu1"
-                        app:layout_constraintRight_toLeftOf="@+id/activity_owner_store_ll_menu3"
-                        app:menuDetail="@{storeDetail.menuDetailList.get(1)}"/>
+                        app:layout_constraintLeft_toRightOf="@+id/activity_owner_store_menu1"
+                        app:layout_constraintRight_toLeftOf="@+id/activity_owner_store_menu3"
+                        app:presenter= "@{presenter}"
+                        app:menuDetail="@{storeDetail.menuList[1]}"/>
 
                     <include
-                        android:id="@+id/activity_owner_store_ll_menu3"
+                        android:id="@+id/activity_owner_store_menu3"
                         layout="@layout/layout_menu_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -109,8 +136,9 @@
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintLeft_toRightOf="@+id/activity_owner_store_ll_menu2"
-                        app:menuDetail="@{storeDetail.menuDetailList.get(2)}" />
+                        app:layout_constraintLeft_toRightOf="@+id/activity_owner_store_menu2"
+                        app:presenter= "@{presenter}"
+                        app:menuDetail="@{storeDetail.menuList[2]}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -120,7 +148,7 @@
                 android:id="@+id/activity_owner_store_ll_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/middle_margin"
                 android:background="@color/white"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -135,6 +163,9 @@
                     android:layout_marginTop="20dp"
                     android:gravity="start"
                     android:lineSpacingExtra="5dp"
+                    android:textSize="@dimen/large_text"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
                     android:text="@string/activity_owner_detail_location" />
 
                 <TextView
@@ -149,8 +180,12 @@
                  <RelativeLayout
                      android:id="@+id/map_view"
                      android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:onClick="@{activity::onMapClick}">
+                     android:layout_height="150dp"
+                     android:layout_marginLeft="@dimen/x_large_margin"
+                     android:layout_marginRight="@dimen/x_large_margin"
+                     android:layout_marginBottom="@dimen/x_large_margin"
+                     android:background="@color/gray"
+                     android:onClick="@{() -> presenter.onMapClick()}">
                  </RelativeLayout>
 
             </LinearLayout>
@@ -159,7 +194,7 @@
                 android:id="@+id/activity_owner_store_ll_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/middle_margin"
                 android:background="@color/white"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -174,18 +209,25 @@
                     android:layout_marginTop="20dp"
                     android:gravity="start"
                     android:lineSpacingExtra="5dp"
-                    android:text="@string/activity_owner_detail_description" />
+                    android:text="@string/activity_owner_detail_description"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/large_text"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
-                    android:text="@{storeDetail.description}" />
+                    android:maxLines="10"
+                    android:text="@{storeDetail.description ?? @string/activity_owner_store_not_description}" />
 
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
 </layout>

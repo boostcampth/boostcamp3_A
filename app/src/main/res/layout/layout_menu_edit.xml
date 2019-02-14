@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="presenter"
+            type="com.aone.menurandomchoice.views.storeedit.StoreEditContract.Presenter"/>
+        <variable
+            name="menuDetail"
+            type="com.aone.menurandomchoice.repository.model.MenuDetail"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/layout_menu_detail_border"
+        android:onClick="@{ () -> presenter.onMenuEditClick(menuDetail)}" >
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="130dp"
+            android:scaleType="centerCrop"
+            app:error="@{@drawable/no_photo}"
+            app:photoUrl="@{menuDetail.photoUrl}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/middle_margin"
+            android:text="@{menuDetail.name ?? @string/layout_menu_detail_not_menu}"
+            android:textSize="@dimen/small_text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Integer.toString(menuDetail.price)}"
+                android:textSize="@dimen/small_text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="@string/item_menu_select_price_tv"
+                android:textSize="@dimen/small_text" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</layout>
