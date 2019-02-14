@@ -84,19 +84,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:gravity="start"
                     android:lineSpacingExtra="5dp"
-                    android:textSize="@dimen/large_text"
-                    android:textStyle="bold"
+                    android:text="@string/activity_owner_detail_menu_label"
                     android:textColor="@color/black"
-                    android:text="@string/activity_owner_detail_menu_label" />
+                    android:textSize="@dimen/large_text"
+                    android:textStyle="bold" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
+                <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/menu_register_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -107,14 +107,14 @@
                         layout="@layout/layout_menu_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@+id/activity_store_edit_menu2"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:presenter= "@{presenter}"
-                        app:menuDetail="@{storeDetail.menuList[0]}" />
+                        app:menuDetail="@{storeDetail.menuList[0]}"
+                        app:presenter="@{presenter}" />
 
                     <include
                         android:id="@+id/activity_store_edit_menu2"
@@ -124,21 +124,21 @@
                         android:layout_weight="1"
                         app:layout_constraintLeft_toRightOf="@+id/activity_store_edit_menu1"
                         app:layout_constraintRight_toLeftOf="@+id/activity_store_edit_menu3"
-                        app:presenter= "@{presenter}"
-                        app:menuDetail="@{storeDetail.menuList[1]}"/>
+                        app:menuDetail="@{storeDetail.menuList[1]}"
+                        app:presenter="@{presenter}" />
 
                     <include
                         android:id="@+id/activity_store_edit_menu3"
                         layout="@layout/layout_menu_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
+                        android:layout_weight="1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintLeft_toRightOf="@+id/activity_store_edit_menu2"
-                        app:presenter= "@{presenter}"
-                        app:menuDetail="@{storeDetail.menuList[2]}" />
+                        app:menuDetail="@{storeDetail.menuList[2]}"
+                        app:presenter="@{presenter}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
