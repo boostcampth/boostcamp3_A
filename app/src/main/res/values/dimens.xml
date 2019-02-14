@@ -33,4 +33,7 @@
     <dimen name="item_view_menu_guide">20sp</dimen>
     <dimen name="item_view_price">16sp</dimen>
     <dimen name="item_view_category">12sp</dimen>
+
+    <!-- activity_menu_register -->
+    <dimen name="activity_menu_register_text">16sp</dimen>
 </resources>

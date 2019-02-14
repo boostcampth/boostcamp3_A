@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MenuRandomChoice</string>
+    <string name="app_name">JMT</string>
     <string name="native_key">698e7519cb8c33283ceae6eef56f11d5</string>
     <string name="client_secret_key">RowO1RSHdeM9dobv3UcVFHBCycjE6i2b</string>
 
@@ -45,13 +45,50 @@
     <string name="activity_owner_detail_description">소개</string>
     <string name="activity_owner_detail_not_name">상세화면 정보가 없습니다</string>
     <string name="activity_owner_store_not_description">가게소개를 적어주세요</string>
-    <string name="layout_menu_detail_not_menu">메뉴이름</string>
+    <string name="layout_menu_detail_not_menu">menu</string>
     <string name="activity_owner_store_tv_time">운영시간 : </string>
+
+    <!-- activity_store_edit-->
+    <string name="activity_store_edit_label">가게 편집</string>
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>
+    <string name="item_menu_owner_register_preview">미리보기</string>
+    <string name="item_menu_owner_register_ok">완료</string>
 
     <!-- item_menu_select_view -->
     <string name="item_menu_select_price_tv">원</string>
+
+    <!-- activity_menu_register -->
+    <string name="activity_menu_register_label">메뉴 등록</string>
+    <string name="activity_menu_register_title_hint">메뉴 이름을 입력하세요</string>
+    <string name="activity_menu_register_guide_hint">메뉴 설명을 입력하세요</string>
+    <string name="activity_menu_register_price_hint">메뉴 가격을 입력하세요</string>
+    <string name="activity_menu_register_photo_fail">사진을 불러오는데 실패하였습니다</string>
+
+    <!-- category arrays -->
+    <string name="arrays_category_korea_food">한식</string>
+    <string name="arrays_category_japan_food">일식</string>
+    <string name="arrays_category_china_food">중식</string>
+    <string name="arrays_category_western_food">양식</string>
+    <string name="arrays_category_chicken">치킨</string>
+    <string name="arrays_category_snack_bar">분식</string>
+    <string name="arrays_category_world_food">세계요리</string>
+    <string name="arrays_category_fast_food">패스트 푸드</string>
+
+    <!-- permission -->
+    <string name="permission_request_guide">사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.</string>
+    <string name="permission_denied_guide">[설정] > [권한] 에서 권한을 허용할 수 있습니다.</string>
+
+    <!-- UCop -->
+    <string name="uCrop_toolbar_title">사진 편집</string>
+
+    <!-- register state message -->
+    <string name="register_success">성공</string>
+    <string name="register_no_image">사진이 등록되지 않았습니다</string>
+    <string name="register_no_name">메뉴 이름이 등록되지 않았습니다</string>
+    <string name="register_no_description">메뉴 설명이 등록되지 않았습니다</string>
+    <string name="register_no_price">가격이 등록되지 않았습니다</string>
+    <string name="register_no_category">카테고리가 선택되지 않았습니다</string>
 
 </resources>

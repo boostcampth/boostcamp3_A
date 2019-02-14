@@ -9,6 +9,8 @@ public interface OwnerStoreContract {
     interface View extends BaseContract.View {
         void showStoreDetail(StoreDetail storeDetail);
 
+        void showErrorStoreDetail(StoreDetail storeDetail, String errorMessage);
+
         void moveToOwnerEditPage(StoreDetail storeDetail);
 
         void moveToMenuDetailPage(MenuDetail menuDetail);

@@ -2,8 +2,8 @@ package com.aone.menurandomchoice.repository;
 
 import android.content.Intent;
 
-import com.aone.menurandomchoice.repository.local.StoreTable;
-import com.aone.menurandomchoice.repository.model.BaseResponse;
+import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
+import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
 import com.aone.menurandomchoice.repository.network.APIHelper;
 import com.aone.menurandomchoice.repository.network.APIRepository;
 import com.aone.menurandomchoice.repository.network.NetworkResponseListener;
@@ -34,6 +34,7 @@ public class DataRepository implements Repository {
     private ServerDataHelper serverDataHelper;
     private APIHelper apiHelper;
     private SqliteDatabaseHelper sqliteDatabaseHelper;
+    private PreferencesHelper preferencesHelper;
 
     @NonNull
     public static Repository getInstance() {
@@ -49,6 +50,7 @@ public class DataRepository implements Repository {
         serverDataHelper = ServerDataRepository.getInstance();
         apiHelper = APIRepository.getInstance();
         sqliteDatabaseHelper = SqliteDatabaseRepository.getInstance();
+        preferencesHelper = new PreferencesRepository();
     }
 
     @Override
@@ -107,6 +109,23 @@ public class DataRepository implements Repository {
                                   @NonNull final OnLoadStoreDetailListener onLoadStoreDetailListener) {
         apiHelper.checkStoreUpdated(cachedStoreDetail, storeIdx, updateTime, onLoadStoreDetailListener);
     }
+
+    public void saveRegisteredImageLocalPath(@NonNull String path) {
+        preferencesHelper.saveRegisteredImageLocalPath(path);
+    }
+
+    @NonNull
+    @Override
+    public String getSavedRegisterImageLoadPath() {
+        return preferencesHelper.getSavedRegisterImageLoadPath();
+    }
+
+    @Override
+    public void clearRegisteredImageLocalPath() {
+        preferencesHelper.clearRegisteredImageLocalPath();
+    }
+
+
 
     @Override
     public void loadStoreDetail(final int storeIdx, @NonNull final OnLoadStoreDetailListener onLoadStoreDetailListener) {

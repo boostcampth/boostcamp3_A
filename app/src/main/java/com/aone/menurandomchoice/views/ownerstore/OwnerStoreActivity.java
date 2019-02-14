@@ -1,7 +1,7 @@
 package com.aone.menurandomchoice.views.ownerstore;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -10,6 +10,7 @@ import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
 
 import androidx.annotation.NonNull;
 
@@ -24,7 +25,6 @@ public class OwnerStoreActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setUpActivityToDataBinding();
         setUpPresenterToDataBinding();
 
         initMapView();
@@ -74,12 +74,8 @@ public class OwnerStoreActivity
         finish();
     }
 
-    private void setUpActivityToDataBinding() {
-        getDataBinding().setActivity(this);
-    }
-
     private void setUpPresenterToDataBinding() {
-        getDataBinding().setPresenter((OwnerStorePresenter) getPresenter());
+        getDataBinding().setPresenter(getPresenter());
     }
 
     @Override
@@ -102,17 +98,14 @@ public class OwnerStoreActivity
     @Override
     public void moveToOwnerEditPage(StoreDetail storeDetail) {
 
-        /*
-        Intent ownerEditIntent = new Intent(OwnerStoreActivity.this, ownerEditActivity.class);
-        ownerEditIntent.putExtra(EXTRA_STORE, storeDetail);
-        startActivity(ownerEditIntent);
-        */
+        Intent storeEditIntent = new Intent(OwnerStoreActivity.this, StoreEditActivity.class);
+        storeEditIntent.putExtra(EXTRA_STORE, storeDetail);
+        startActivity(storeEditIntent);
     }
 
     @Override
     public void moveToMenuDetailPage(MenuDetail menuDetail) {
         // Todo. menuDetailActivity 연결
-
         /*
         Intent menuDetailIntent = new Intent(OwnerStoreActivity.this, menuDetailActivity.class);
         menuDetailIntent.putExtra(EXTRA_MENU, menuDetail);
@@ -125,12 +118,32 @@ public class OwnerStoreActivity
 
         getDataBinding().setStoreDetail(storeDetail);
 
-        getDataBinding().activityOwnerStoreLlMenu1.setMenuDetail(storeDetail.getMenuList().get(0));
-        getDataBinding().activityOwnerStoreLlMenu2.setMenuDetail(storeDetail.getMenuList().get(1));
-        getDataBinding().activityOwnerStoreLlMenu3.setMenuDetail(storeDetail.getMenuList().get(2));
-        
+        getDataBinding().activityOwnerStoreMenu1.setMenuDetail(storeDetail.getMenuList().get(0));
+        getDataBinding().activityOwnerStoreMenu2.setMenuDetail(storeDetail.getMenuList().get(1));
+        getDataBinding().activityOwnerStoreMenu3.setMenuDetail(storeDetail.getMenuList().get(2));
+
+        //Todo. setMapview(storeDetail.getLatitude(), storeDetail.getLongitude());
+    }
+
+
+    @Override
+    public void showErrorStoreDetail(StoreDetail storeDetail, String errorMessage) {
+
+        getDataBinding().setStoreDetail(storeDetail);
+
+        getDataBinding().activityOwnerStoreMenu1.setMenuDetail(storeDetail.getMenuList().get(0));
+        getDataBinding().activityOwnerStoreMenu2.setMenuDetail(storeDetail.getMenuList().get(1));
+        getDataBinding().activityOwnerStoreMenu3.setMenuDetail(storeDetail.getMenuList().get(2));
+
+        showToastMessage(errorMessage);
+
+        //Todo. setMapview(storeDetail.getLatitude(), storeDetail.getLongitude())
     }
 
     public void initMapView() {
+
+    }
+
+    public void setMapView(double latitude, double longitude) {
     }
 }

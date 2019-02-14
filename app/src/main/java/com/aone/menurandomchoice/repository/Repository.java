@@ -1,5 +1,6 @@
 package com.aone.menurandomchoice.repository;
 
+import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
 import com.aone.menurandomchoice.repository.network.APIHelper;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 import com.aone.menurandomchoice.repository.server.ServerDataHelper;
@@ -9,9 +10,9 @@ import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 
 import androidx.annotation.NonNull;
 
-public interface Repository extends KakaoLoginHelper, ServerDataHelper, SqliteDatabaseHelper, APIHelper {
+public interface Repository extends KakaoLoginHelper, ServerDataHelper, SqliteDatabaseHelper, APIHelper, PreferencesHelper {
 
-    public interface OnLoadStoreDetailListener {
+    interface OnLoadStoreDetailListener {
 
         void onStoreDetailLoaded(StoreDetail storeDetail);
 
@@ -21,4 +22,5 @@ public interface Repository extends KakaoLoginHelper, ServerDataHelper, SqliteDa
     void cancelAll();
 
     void loadStoreDetail(int storeIdx, @NonNull OnLoadStoreDetailListener onLoadStoreDetailListener);
+
 }

@@ -1,6 +1,5 @@
 package com.aone.menurandomchoice.repository.server;
 
-import java.util.Date;
 
 import androidx.annotation.NonNull;
 

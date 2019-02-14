@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -87,13 +88,21 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
         return presenter;
     }
 
-    private void attachViewToPresenter() {
+    protected void attachViewToPresenter() {
+        attachToPresenter();
+    }
+
+    protected void detachViewFromPresenter() {
+        detachFromPresenter();
+    }
+
+    private void attachToPresenter() {
         if(presenter != null && !presenter.isAttachView()) {
             presenter.attachView(getView());
         }
     }
 
-    private void detachViewFromPresenter() {
+    private void detachFromPresenter() {
         if(presenter != null && presenter.isAttachView()) {
             presenter.detachView();
         }
