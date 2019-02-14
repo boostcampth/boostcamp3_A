@@ -55,7 +55,7 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
 
     private void moveToOwnerDetailActivity(long userId) {
         if(isAttachView()) {
-            getView().moveToOwnerDetailActivity(userId);
+            getView().moveToOwnerStoreActivity(userId);
         }
     }
 

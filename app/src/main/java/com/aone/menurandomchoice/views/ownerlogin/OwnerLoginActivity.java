@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerLoginBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
-import com.aone.menurandomchoice.views.ownerdetail.OwnerDetailActivity;
 import com.aone.menurandomchoice.views.ownersignup.OwnerSignUpActivity;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 
@@ -75,7 +74,7 @@ public class OwnerLoginActivity
     }
 
     @Override
-    public void moveToOwnerDetailActivity(long userId) {
+    public void moveToOwnerStoreActivity(long userId) {
         Intent ownerDetailIntent = new Intent(this, OwnerStoreActivity.class);
         startActivity(ownerDetailIntent);
         finish();

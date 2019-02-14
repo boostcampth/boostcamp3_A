@@ -8,7 +8,7 @@ public interface OwnerSignUpContract {
 
     interface View extends BaseContract.View {
 
-        void moveToOwnerDetailActivity(long userId);
+        void moveToOwnerStoreActivity(long userId);
 
     }
 
