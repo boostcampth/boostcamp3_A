@@ -19,8 +19,7 @@
         android:layout_marginLeft="8dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="@drawable/layout_menu_detail_border"
-        android:onClick="@{ () -> presenter.onMenuEditClick(menuDetail)}" >
+        android:background="@drawable/layout_menu_detail_border">
 
         <ImageView
             android:layout_width="100dp"

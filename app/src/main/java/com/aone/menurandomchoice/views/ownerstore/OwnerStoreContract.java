@@ -7,13 +7,15 @@ import com.aone.menurandomchoice.views.base.BaseContract;
 public interface OwnerStoreContract {
 
     interface View extends BaseContract.View {
+
         void showStoreDetail(StoreDetail storeDetail);
 
         void showErrorStoreDetail(StoreDetail storeDetail, String errorMessage);
 
         void moveToOwnerEditPage(StoreDetail storeDetail);
 
-        void moveToMenuDetailPage(MenuDetail menuDetail);
+        void moveToMenuPreviewPage(MenuDetail menuDetail);
+
     }
 
     interface Presenter extends BaseContract.Presenter<OwnerStoreContract.View> {
@@ -25,5 +27,6 @@ public interface OwnerStoreContract {
         void onMapClick();
 
         void stopNetwork();
+
     }
 }

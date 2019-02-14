@@ -12,7 +12,7 @@
         android:id="@+id/item_menu_select_iv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio=":1"
+        app:layout_constraintDimensionRatio="3:4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,9 @@
         android:id="@+id/item_menu_select_title_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/middle_margin"
+        android:layout_marginLeft="@dimen/large_margin"
+        android:layout_marginRight="@dimen/large_margin"
+        android:layout_marginBottom="@dimen/large_margin"
         android:ellipsize="end"
         android:gravity="start"
         android:maxLines="2"
@@ -32,14 +34,16 @@
         android:textStyle="bold"
         app:fontFamily="@font/youth"
         app:layout_constraintBottom_toTopOf="@+id/item_menu_select_guide_tv"
-        app:layout_constraintEnd_toStartOf="@+id/item_menu_select_right_wall"
-        app:layout_constraintStart_toStartOf="@+id/item_menu_select_left_wall" />
+        app:layout_constraintEnd_toEndOf="@+id/item_menu_select_iv"
+        app:layout_constraintStart_toStartOf="@+id/item_menu_select_iv" />
 
     <TextView
         android:id="@+id/item_menu_select_guide_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/middle_margin"
+        android:layout_marginLeft="@dimen/large_margin"
+        android:layout_marginRight="@dimen/large_margin"
+        android:layout_marginBottom="@dimen/large_margin"
         android:ellipsize="end"
         android:gravity="start"
         android:maxLines="3"
@@ -47,18 +51,21 @@
         android:textSize="@dimen/item_view_menu_guide"
         app:fontFamily="@font/youth"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-        app:layout_constraintEnd_toStartOf="@+id/item_menu_select_right_wall"
-        app:layout_constraintStart_toStartOf="@+id/item_menu_select_left_wall" />
+        app:layout_constraintEnd_toEndOf="@+id/item_menu_select_iv"
+        app:layout_constraintStart_toStartOf="@+id/item_menu_select_iv" />
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/large_margin"
+        android:layout_marginRight="@dimen/large_margin"
+        android:layout_marginBottom="@dimen/large_margin"
         android:gravity="start"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/item_menu_select_bottom_wall"
-        app:layout_constraintEnd_toStartOf="@+id/item_menu_select_right_wall"
-        app:layout_constraintStart_toStartOf="@+id/item_menu_select_left_wall">
+        app:layout_constraintBottom_toBottomOf="@+id/item_menu_select_iv"
+        app:layout_constraintEnd_toEndOf="@+id/item_menu_select_iv"
+        app:layout_constraintStart_toStartOf="@+id/item_menu_select_iv">
 
         <TextView
             android:id="@+id/item_menu_select_price_tv"
@@ -90,33 +97,9 @@
             android:gravity="start"
             android:textColor="@color/white"
             android:textSize="@dimen/item_view_category"
-            app:fontFamily="@font/youth"
-            app:layout_constraintBottom_toTopOf="@+id/item_menu_select_bottom_wall"
-            app:layout_constraintEnd_toStartOf="@+id/item_menu_select_right_wall"
-            app:layout_constraintStart_toStartOf="@+id/item_menu_select_left_wall" />
+            app:fontFamily="@font/youth" />
 
     </LinearLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/item_menu_select_left_wall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/x_large_margin" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/item_menu_select_bottom_wall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="@dimen/x_large_margin" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/item_menu_select_right_wall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

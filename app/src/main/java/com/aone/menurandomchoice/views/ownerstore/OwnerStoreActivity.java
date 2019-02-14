@@ -10,6 +10,7 @@ import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
 
 import androidx.annotation.NonNull;
@@ -36,8 +37,6 @@ public class OwnerStoreActivity
 
         int storeIdx = getIntent().getIntExtra("EXTRA_STORE_IDX", 0);
         getPresenter().loadStoreDetail(storeIdx);
-
-
     }
 
     @Override
@@ -104,13 +103,10 @@ public class OwnerStoreActivity
     }
 
     @Override
-    public void moveToMenuDetailPage(MenuDetail menuDetail) {
-        // Todo. menuDetailActivity 연결
-        /*
-        Intent menuDetailIntent = new Intent(OwnerStoreActivity.this, menuDetailActivity.class);
-        menuDetailIntent.putExtra(EXTRA_MENU, menuDetail);
-        startActivity(menuDetailIntent);
-        */
+    public void moveToMenuPreviewPage(MenuDetail menuDetail) {
+        Intent menuPreviewIntent = new Intent(this, MenuPreviewActivity.class);
+        menuPreviewIntent.putExtra(MenuPreviewActivity.EXTRA_MENU_DETAIL_ITEM, menuDetail);
+        startActivity(menuPreviewIntent);
     }
 
     @Override

@@ -34,7 +34,7 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
     @Override
     public void onMenuDetailClick(MenuDetail menuDetail) {
-        getView().moveToMenuDetailPage(menuDetail);
+        getView().moveToMenuPreviewPage(menuDetail);
     }
 
     @Override
