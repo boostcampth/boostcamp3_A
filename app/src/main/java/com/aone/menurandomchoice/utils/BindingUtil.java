@@ -18,6 +18,4 @@ public class BindingUtil {
                 .apply(new RequestOptions().placeholder(errorDrawable).error(errorDrawable))
                 .into(imageView);
     }
-
-
 }

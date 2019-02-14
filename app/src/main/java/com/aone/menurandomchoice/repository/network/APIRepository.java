@@ -40,14 +40,10 @@ public class APIRepository implements APIHelper {
                     .addInterceptor(logging)
                     .build();
 
-            Gson gson = new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                    .create();
-
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(client)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
             apiInstance = retrofit.create(APIInterface.class);
@@ -66,4 +62,4 @@ public class APIRepository implements APIHelper {
         menuLocationResponseBodyCall.enqueue( new NetworkResponse<>(listener));
     }
 
-}
+ }

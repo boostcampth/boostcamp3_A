@@ -2,9 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="activity"
+            type="com.aone.menurandomchoice.views.customermain.CustomerMainContract.View"/>
+    </data>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <net.daum.mf.map.api.MapView
                 android:id="@+id/activity_customer_main_mv_daum"
@@ -34,7 +41,9 @@
                         android:background="@drawable/activity_main_rounded_button_owner"
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/small_padding"
-                        android:paddingTop="@dimen/small_padding">
+                        android:paddingTop="@dimen/small_padding"
+                        android:onClick="@{ () -> activity.moveToLocationSearchPage()}"
+                        >
 
                         <ImageView
                             android:id="@+id/btn_submit"
@@ -54,7 +63,8 @@
                             android:layout_marginRight="18dp"
                             android:singleLine="true"
                             android:text="지역명으로 검색"
-                            android:textColor="@android:color/black"
+                            app:fontFamily="@font/youth"
+                            android:textColor="@android:color/darker_gray"
                             android:textSize="@dimen/large_text" />
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
@@ -71,19 +81,26 @@
                 android:id="@+id/activity_customer_main_tv_radius"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="@string/activity_customer_main_radius_label"
+                android:layout_marginTop="@dimen/large_margin"
+                android:layout_marginLeft="@dimen/large_margin"
+                android:layout_marginStart="@dimen/large_margin"
+                app:fontFamily="@font/youth"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/activity_customer_main_mapview_guide_line" />
 
-
-            <ImageView
+            <Button
                 android:id="@+id/activity_customer_main_iv_radius_1"
+                app:theme="@style/RadiusButtonTextStyle"
+                android:background = "@drawable/activity_customer_main_botton_ring"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:src="@drawable/activity_customer_main_botton_ring"
                 android:layout_margin="5dp"
+                android:text="@string/arrays_radius_closest"
+                android:onClick="@{(v) -> activity.onRadiusButtonClicked(v)}"
+                app:fontFamily="@font/youth"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintBottom_toTopOf="@+id/activity_customer_main_tv_category"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -91,12 +108,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_customer_main_tv_radius"
                 />
 
-            <ImageView
+            <Button
                 android:id="@+id/activity_customer_main_iv_radius_2"
+                app:theme="@style/RadiusButtonTextStyle"
+                android:background = "@drawable/activity_customer_main_botton_ring"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
-                android:src="@drawable/activity_customer_main_botton_ring"
+                android:text="@string/arrays_radius_closer"
+                android:onClick="@{(v) -> activity.onRadiusButtonClicked(v)}"
+                app:fontFamily="@font/youth"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintBottom_toTopOf="@+id/activity_customer_main_tv_category"
                 app:layout_constraintLeft_toRightOf="@+id/activity_customer_main_iv_radius_1"
@@ -104,12 +125,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_customer_main_tv_radius"
                 />
 
-            <ImageView
+            <Button
                 android:id="@+id/activity_customer_main_iv_radius_3"
+                app:theme="@style/RadiusButtonTextStyle"
+                android:background = "@drawable/activity_customer_main_botton_ring"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
-                android:src="@drawable/activity_customer_main_botton_ring"
+                android:text="@string/arrays_radius_middle"
+                android:onClick="@{(v) -> activity.onRadiusButtonClicked(v)}"
+                app:fontFamily="@font/youth"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintBottom_toTopOf="@+id/activity_customer_main_tv_category"
                 app:layout_constraintLeft_toRightOf="@+id/activity_customer_main_iv_radius_2"
@@ -118,12 +143,16 @@
                 />
 
 
-            <ImageView
+            <Button
                 android:id="@+id/activity_customer_main_iv_radius_4"
+                app:theme="@style/RadiusButtonTextStyle"
+                android:background = "@drawable/activity_customer_main_botton_ring"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
-                android:src="@drawable/activity_customer_main_botton_ring"
+                android:text="@string/arrays_radius_farther"
+                android:onClick="@{(v) -> activity.onRadiusButtonClicked(v)}"
+                app:fontFamily="@font/youth"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintBottom_toTopOf="@+id/activity_customer_main_tv_category"
                 app:layout_constraintLeft_toRightOf="@+id/activity_customer_main_iv_radius_3"
@@ -132,12 +161,16 @@
                 />
 
 
-            <ImageView
+            <Button
                 android:id="@+id/activity_customer_main_iv_radius_5"
+                app:theme="@style/RadiusButtonTextStyle"
+                android:background = "@drawable/activity_customer_main_botton_ring"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
-                android:src="@drawable/activity_customer_main_botton_ring"
+                android:text="@string/arrays_radius_farthest"
+                android:onClick="@{(v) -> activity.onRadiusButtonClicked(v)}"
+                app:fontFamily="@font/youth"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintBottom_toTopOf="@+id/activity_customer_main_tv_category"
                 app:layout_constraintLeft_toRightOf="@+id/activity_customer_main_iv_radius_4"
@@ -145,8 +178,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_customer_main_tv_radius"
                 />
 
+
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline2"
+                android:id="@+id/activity_customer_main_options_guide_line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -157,39 +191,48 @@
                 android:id="@+id/activity_customer_main_tv_category"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintTop_toTopOf="@+id/guideline2"
+                android:layout_marginLeft="@dimen/large_margin"
+                android:layout_marginStart="@dimen/large_margin"
+                android:text="@string/activity_customer_main_category_label"
+                app:fontFamily="@font/youth"
+                app:layout_constraintTop_toTopOf="@+id/activity_customer_main_options_guide_line"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/activity_customer_main_rc"
+                android:id="@+id/activity_customer_main_rc_category"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:minHeight="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintBottom_toTopOf="@id/activity_customer_main_bottom_guide_line"
+                app:layout_constraintTop_toBottomOf="@+id/activity_customer_main_tv_category"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline3"
+                android:id="@+id/activity_customer_main_bottom_guide_line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.925"
                 />
 
-            <ImageView
-                android:id="@+id/activity_customer_main_iv_start"
+            <Button
+                android:id="@+id/activity_customer_main_btn_start"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@color/reddish"
+                android:text="@string/activity_customer_main_swipe_start"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:onClick="@{ () -> activity.moveToMenuSelectPage()}"
+                app:fontFamily="@font/youth"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/guideline3" />
+                app:layout_constraintTop_toBottomOf="@id/activity_customer_main_bottom_guide_line" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

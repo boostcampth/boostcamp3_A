@@ -67,4 +67,16 @@
     <string name="arrays_category_world_food">세계요리</string>
     <string name="arrays_category_fast_food">패스트 푸드</string>
 
+    <!-- radius arrays -->
+    <string name="arrays_radius_closest">300m</string>
+    <string name="arrays_radius_closer">500m</string>
+    <string name="arrays_radius_middle">1km</string>
+    <string name="arrays_radius_farther">2km</string>
+    <string name="arrays_radius_farthest">3km</string>
+
+    <!-- customer main -->
+    <string name="activity_customer_main_radius_label">반경</string>
+    <string name="activity_customer_main_category_label">카테고리 선택</string>
+    <string name="activity_customer_main_swipe_start">메뉴 랜덤 스와이프 시작!</string>
+
 </resources>

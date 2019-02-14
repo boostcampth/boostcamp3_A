@@ -16,6 +16,9 @@ import com.aone.menurandomchoice.views.locationsearch.adapter.LocationSearchAdap
 import com.aone.menurandomchoice.views.locationsearch.adapter.OnViewHolderClickListener;
 import com.aone.menurandomchoice.views.locationsearch.adapter.LocationSearchAdapter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -68,7 +71,11 @@ public class LocationSearchActivity
    }
 
     private void viewHolderClicked(int position) {
-        getPresenter().requestMenuLocation(position);
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("posXY", getPresenter().getMenuData(position));
+        setResult(RESULT_OK,resultIntent);
+
+        finish();
     }
 
     private void setUpSearchToolBar() {
@@ -126,6 +133,12 @@ public class LocationSearchActivity
     public void requestLocationSearchWord() {
         KeyboardUtil.hideKeyboard(this);
         String inputAddress = getDataBinding().searchBox.etSearch.getText().toString();
-        getPresenter().requestLocationSearch(inputAddress);
+
+        if(inputAddress.trim().length() == 0) {
+            showToastMessage("error");
+        } else {
+            getPresenter().requestLocationSearch(inputAddress);
+        }
     }
+
 }
