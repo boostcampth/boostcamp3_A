@@ -148,7 +148,7 @@ public class MenuRegisterActivity
     @Override
     public void moveToPreviewActivityWithItem(@NonNull MenuDetail menuDetail) {
         Intent menuPreviewIntent = new Intent(this, MenuPreviewActivity.class);
-        menuPreviewIntent.putExtra(EXTRA_MENU_DETAIL_ITEM, menuDetail);
+        menuPreviewIntent.putExtra(MenuPreviewActivity.EXTRA_MENU_DETAIL_ITEM, menuDetail);
         startActivity(menuPreviewIntent);
     }
 
