@@ -2,19 +2,14 @@ package com.aone.menurandomchoice.views.locationsearch;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 
-import com.aone.menurandomchoice.repository.network.NetworkResponseListener;
-import com.aone.menurandomchoice.repository.network.mapper.MenuMapper;
-import com.aone.menurandomchoice.repository.network.model.AddressResponseBody;
-import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
-import com.aone.menurandomchoice.repository.network.pojo.KakaoAddressResult;
+import com.aone.menurandomchoice.repository.remote.response.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.remote.response.AddressResponseBody;
+import com.aone.menurandomchoice.repository.pojo.KakaoAddressResult;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapterModel;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import androidx.annotation.NonNull;
 
@@ -40,7 +35,7 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
 
                 @Override
                 public void onReceived(@NonNull AddressResponseBody response) {
-                    if( isAttachView() ) {
+                    if(isAttachView()) {
                         updateList(response.getDocuments());
                     }
                 }

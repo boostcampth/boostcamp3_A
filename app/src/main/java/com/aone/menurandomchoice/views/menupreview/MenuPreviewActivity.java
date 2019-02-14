@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aone.menurandomchoice.R;
-import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.pojo.MenuDetail;
 import com.aone.menurandomchoice.utils.GlideUtil;
 
 public class MenuPreviewActivity extends AppCompatActivity {

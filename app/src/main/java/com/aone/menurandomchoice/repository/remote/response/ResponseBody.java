@@ -1,10 +1,9 @@
-package com.aone.menurandomchoice.repository.model;
+package com.aone.menurandomchoice.repository.remote.response;
 
-public class BaseResponse<T> {
+public class ResponseBody<T> {
+
     private int status;
-
     private String message;
-
     private T data;
 
     public int getStatus() {
@@ -30,4 +29,5 @@ public class BaseResponse<T> {
     public void setData(T data) {
         this.data = data;
     }
+
 }

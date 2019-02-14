@@ -1,9 +1,6 @@
 package com.aone.menurandomchoice.repository.local;
 
-import com.aone.menurandomchoice.repository.model.MenuDetail;
-import com.aone.menurandomchoice.repository.model.StoreDetail;
-
-import java.util.List;
+import com.aone.menurandomchoice.repository.pojo.StoreDetail;
 
 import androidx.annotation.NonNull;
 

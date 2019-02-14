@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
-import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.pojo.MenuDetail;
 import com.aone.menurandomchoice.utils.GlideUtil;
 import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.base.BaseActivity;

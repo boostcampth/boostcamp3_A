@@ -9,7 +9,7 @@
             type="com.aone.menurandomchoice.views.ownerstore.OwnerStoreContract.Presenter"/>
         <variable
             name="menuDetail"
-            type="com.aone.menurandomchoice.repository.model.MenuDetail"/>
+            type="com.aone.menurandomchoice.repository.pojo.MenuDetail"/>
     </data>
 
     <LinearLayout

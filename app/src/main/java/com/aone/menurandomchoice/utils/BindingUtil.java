@@ -18,4 +18,5 @@ public class BindingUtil {
                 .apply(new RequestOptions().placeholder(errorDrawable).error(errorDrawable).centerCrop())
                 .into(imageView);
     }
+
 }

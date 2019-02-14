@@ -1,17 +1,21 @@
-package com.aone.menurandomchoice.repository.network.pojo;
+package com.aone.menurandomchoice.repository.pojo;
 
 import com.google.gson.annotations.SerializedName;
 
 public class KakaoAddressResult {
+
     @SerializedName("road_address")
     private Object roadAddress;
+
     @SerializedName("address_name")
     private String addressName;
+
+    @SerializedName("address_type")
+    private String addressType;
+
     private Object address;
     private double y;
     private double x;
-    @SerializedName("address_type")
-    private String addressType;
 
     public Object getRoadAddress() {
         return roadAddress;

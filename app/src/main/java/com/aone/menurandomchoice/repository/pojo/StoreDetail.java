@@ -1,30 +1,23 @@
-package com.aone.menurandomchoice.repository.model;
+package com.aone.menurandomchoice.repository.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.aone.menurandomchoice.BR;
 
-import java.io.Serializable;
 import java.util.List;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 public class StoreDetail extends BaseObservable implements Parcelable {
+
     private String name;
-
     private String time;
-
     private String address;
-
     private String description;
-
     private double latitude;
-
     private double longitude;
-
     private String updateTime;
-
     private List<MenuDetail> menuList;
 
     public StoreDetail() {
@@ -139,4 +132,5 @@ public class StoreDetail extends BaseObservable implements Parcelable {
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
+
 }

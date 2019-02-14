@@ -2,7 +2,7 @@ package com.aone.menurandomchoice.views.menuregister;
 
 import android.content.Intent;
 
-import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.pojo.MenuDetail;
 import com.aone.menurandomchoice.views.base.BaseContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.aone.menurandomchoice.R;
-import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.pojo.MenuDetail;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;

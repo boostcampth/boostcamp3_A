@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.LocationSearchViewholderBinding;
-import com.aone.menurandomchoice.repository.network.pojo.KakaoAddressResult;
+import com.aone.menurandomchoice.repository.pojo.KakaoAddressResult;
 import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapter;
 
 import androidx.annotation.NonNull;
