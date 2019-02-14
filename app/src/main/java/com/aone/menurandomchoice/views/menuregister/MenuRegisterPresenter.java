@@ -213,8 +213,8 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     }
 
     private UCrop createUCop(Uri uri) {
-        final float X_RATIO = 8;
-        final float Y_RATIO = 9;
+        final float X_RATIO = 3;
+        final float Y_RATIO = 4;
         int[] viewSize = getView().getRegisterTargetImageSize();
 
         return uCropCreateHelper.createUCop(uri, X_RATIO, Y_RATIO, viewSize[0], viewSize[1]);

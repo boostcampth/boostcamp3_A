@@ -31,4 +31,15 @@ public class GlideUtil {
                 .into(imageView);
     }
 
+    public static void loadImageWithSkipCache(ImageView imageView, int resourceId) {
+        Glide.with(GlobalApplication.getGlobalApplicationContext())
+                .load(resourceId)
+                .apply(new RequestOptions()
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .transforms(new CenterCrop(), new RoundedCorners(30)))
+                .thumbnail(0.1f)
+                .into(imageView);
+    }
+
 }
