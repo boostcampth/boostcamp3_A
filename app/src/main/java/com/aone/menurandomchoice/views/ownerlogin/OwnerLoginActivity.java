@@ -12,6 +12,7 @@ import com.aone.menurandomchoice.databinding.ActivityOwnerLoginBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.ownerdetail.OwnerDetailActivity;
 import com.aone.menurandomchoice.views.ownersignup.OwnerSignUpActivity;
+import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 
 public class OwnerLoginActivity
         extends BaseActivity<ActivityOwnerLoginBinding, OwnerLoginContract.View, OwnerLoginContract.Presenter>
@@ -75,8 +76,7 @@ public class OwnerLoginActivity
 
     @Override
     public void moveToOwnerDetailActivity(long userId) {
-        Intent ownerDetailIntent = new Intent(OwnerLoginActivity.this, OwnerDetailActivity.class);
-        ownerDetailIntent.putExtra(EXTRA_USER_ID, userId);
+        Intent ownerDetailIntent = new Intent(this, OwnerStoreActivity.class);
         startActivity(ownerDetailIntent);
         finish();
     }
