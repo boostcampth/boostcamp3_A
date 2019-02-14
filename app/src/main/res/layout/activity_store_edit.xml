@@ -8,7 +8,7 @@
         <import type="java.util.List" />
         <variable
             name="presenter"
-            type="com.aone.menurandomchoice.views.ownerstore.OwnerStoreContract.Presenter"/>
+            type="com.aone.menurandomchoice.views.storeedit.StoreEditContract.Presenter"/>
         <variable
             name="storeDetail"
             type="com.aone.menurandomchoice.repository.model.StoreDetail"/>
@@ -18,30 +18,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/gray">
 
             <LinearLayout
-                android:id="@+id/activity_owner_store_ll_name_time"
+                android:id="@+id/activity_store_edit_ll_name_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/activity_owner_store_ll_menu"
+                app:layout_constraintBottom_toTopOf="@+id/activity_store_edit_ll_menu"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintVertical_chainStyle="spread_inside">
 
-                <TextView
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/two_x_large_margin"
                     android:lineSpacingExtra="5dp"
-                    android:text="@{storeDetail.name ?? @string/activity_owner_detail_not_name}"
+                    android:text="@{storeDetail.name}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/very_large_text"
                     android:textStyle="bold" />
@@ -60,7 +60,7 @@
                         android:text="@string/activity_owner_store_tv_time"
                         android:textSize="@dimen/x_large_text" />
 
-                    <TextView
+                    <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -71,7 +71,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/activity_owner_store_ll_menu"
+                android:id="@+id/activity_store_edit_ll_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/middle_margin"
@@ -79,7 +79,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_owner_store_ll_name_time">
+                app:layout_constraintTop_toBottomOf="@+id/activity_store_edit_ll_name_time">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -103,40 +103,40 @@
                     android:layout_marginBottom="20dp">
 
                     <include
-                        android:id="@+id/activity_owner_store_menu1"
-                        layout="@layout/layout_menu_detail"
+                        android:id="@+id/activity_store_edit_menu1"
+                        layout="@layout/layout_menu_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="20dp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/activity_owner_store_menu2"
+                        app:layout_constraintRight_toLeftOf="@+id/activity_store_edit_menu2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:presenter= "@{presenter}"
                         app:menuDetail="@{storeDetail.menuList[0]}" />
 
                     <include
-                        android:id="@+id/activity_owner_store_menu2"
-                        layout="@layout/layout_menu_detail"
+                        android:id="@+id/activity_store_edit_menu2"
+                        layout="@layout/layout_menu_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:layout_constraintLeft_toRightOf="@+id/activity_owner_store_menu1"
-                        app:layout_constraintRight_toLeftOf="@+id/activity_owner_store_menu3"
+                        app:layout_constraintLeft_toRightOf="@+id/activity_store_edit_menu1"
+                        app:layout_constraintRight_toLeftOf="@+id/activity_store_edit_menu3"
                         app:presenter= "@{presenter}"
                         app:menuDetail="@{storeDetail.menuList[1]}"/>
 
                     <include
-                        android:id="@+id/activity_owner_store_menu3"
-                        layout="@layout/layout_menu_detail"
+                        android:id="@+id/activity_store_edit_menu3"
+                        layout="@layout/layout_menu_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintLeft_toRightOf="@+id/activity_owner_store_menu2"
+                        app:layout_constraintLeft_toRightOf="@+id/activity_store_edit_menu2"
                         app:presenter= "@{presenter}"
                         app:menuDetail="@{storeDetail.menuList[2]}" />
 
@@ -145,7 +145,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/activity_owner_store_ll_address"
+                android:id="@+id/activity_store_edit_ll_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/middle_margin"
@@ -153,7 +153,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_owner_store_ll_menu">
+                app:layout_constraintTop_toBottomOf="@+id/activity_store_edit_ll_menu">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -175,23 +175,23 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="20dp"
-                    android:text="@{storeDetail.address}" />
+                    android:background="@drawable/layout_menu_detail_border"
+                    android:text="@{storeDetail.address}"
+                    android:onClick="@{() -> presenter.onAddressClick()}"/>
 
-                 <RelativeLayout
-                     android:id="@+id/map_view"
-                     android:layout_width="match_parent"
-                     android:layout_height="150dp"
-                     android:layout_marginLeft="@dimen/x_large_margin"
-                     android:layout_marginRight="@dimen/x_large_margin"
-                     android:layout_marginBottom="@dimen/x_large_margin"
-                     android:background="@color/gray"
-                     android:onClick="@{() -> presenter.onMapClick()}">
-                 </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/map_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x_large_margin"
+                    android:layout_marginRight="@dimen/x_large_margin"
+                    android:onClick="@{() -> presenter.onMapClick()}">
+                </RelativeLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/activity_owner_store_ll_description"
+                android:id="@+id/activity_store_edit_ll_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/middle_margin"
@@ -199,7 +199,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_owner_store_ll_address">
+                app:layout_constraintTop_toBottomOf="@+id/activity_store_edit_ll_address">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -214,7 +214,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/large_text"/>
 
-                <TextView
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -222,7 +222,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
                     android:maxLines="10"
-                    android:text="@{storeDetail.description ?? @string/activity_owner_store_not_description}" />
+                    android:text="@{storeDetail.description}" />
 
             </LinearLayout>
 

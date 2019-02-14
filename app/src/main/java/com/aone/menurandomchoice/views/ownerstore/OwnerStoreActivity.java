@@ -1,13 +1,16 @@
 package com.aone.menurandomchoice.views.ownerstore;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
 
 import androidx.annotation.NonNull;
 
@@ -15,11 +18,16 @@ public class OwnerStoreActivity
         extends BaseActivity<ActivityOwnerStoreBinding, OwnerStoreContract.View, OwnerStoreContract.Presenter>
         implements OwnerStoreContract.View {
 
+    public static final String EXTRA_MENU = "EXTRA_MENU";
+    public static final String EXTRA_STORE = "EXTRA_STORE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setUpActivityToDataBinding();
+        setUpPresenterToDataBinding();
+
+        initMapView();
     }
 
     @Override
@@ -28,6 +36,8 @@ public class OwnerStoreActivity
 
         int storeIdx = getIntent().getIntExtra("EXTRA_STORE_IDX", 0);
         getPresenter().loadStoreDetail(storeIdx);
+
+
     }
 
     @Override
@@ -50,7 +60,7 @@ public class OwnerStoreActivity
                 onBackPressed();
                 return true;
             case R.id.item_action_bar_edit:
-                moveToOwnerEditPage();
+                moveToOwnerEditPage(getDataBinding().getStoreDetail());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -64,8 +74,8 @@ public class OwnerStoreActivity
         finish();
     }
 
-    private void setUpActivityToDataBinding() {
-        getDataBinding().setActivity(this);
+    private void setUpPresenterToDataBinding() {
+        getDataBinding().setPresenter(getPresenter());
     }
 
     @Override
@@ -86,20 +96,54 @@ public class OwnerStoreActivity
     }
 
     @Override
-    public void moveToOwnerEditPage() {
-        //Todo. owneredit 페이지로 이동
+    public void moveToOwnerEditPage(StoreDetail storeDetail) {
+
+        Intent storeEditIntent = new Intent(OwnerStoreActivity.this, StoreEditActivity.class);
+        storeEditIntent.putExtra(EXTRA_STORE, storeDetail);
+        startActivity(storeEditIntent);
+    }
+
+    @Override
+    public void moveToMenuDetailPage(MenuDetail menuDetail) {
+        // Todo. menuDetailActivity 연결
+        /*
+        Intent menuDetailIntent = new Intent(OwnerStoreActivity.this, menuDetailActivity.class);
+        menuDetailIntent.putExtra(EXTRA_MENU, menuDetail);
+        startActivity(menuDetailIntent);
+        */
     }
 
     @Override
     public void showStoreDetail(StoreDetail storeDetail) {
+
         getDataBinding().setStoreDetail(storeDetail);
+
+        getDataBinding().activityOwnerStoreMenu1.setMenuDetail(storeDetail.getMenuList().get(0));
+        getDataBinding().activityOwnerStoreMenu2.setMenuDetail(storeDetail.getMenuList().get(1));
+        getDataBinding().activityOwnerStoreMenu3.setMenuDetail(storeDetail.getMenuList().get(2));
+
+        //Todo. setMapview(storeDetail.getLatitude(), storeDetail.getLongitude());
     }
 
-    public void onMenuDetailClick(View view) {
-        //Todo. menudeail 페이지로 이동
+
+    @Override
+    public void showErrorStoreDetail(StoreDetail storeDetail, String errorMessage) {
+
+        getDataBinding().setStoreDetail(storeDetail);
+
+        getDataBinding().activityOwnerStoreMenu1.setMenuDetail(storeDetail.getMenuList().get(0));
+        getDataBinding().activityOwnerStoreMenu2.setMenuDetail(storeDetail.getMenuList().get(1));
+        getDataBinding().activityOwnerStoreMenu3.setMenuDetail(storeDetail.getMenuList().get(2));
+
+        showToastMessage(errorMessage);
+
+        //Todo. setMapview(storeDetail.getLatitude(), storeDetail.getLongitude())
     }
 
-    public void onMapClick(View view) {
-        //Todo. map 페이지로 이동
+    public void initMapView() {
+
+    }
+
+    public void setMapView(double latitude, double longitude) {
     }
 }

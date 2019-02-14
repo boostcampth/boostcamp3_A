@@ -2,6 +2,7 @@ package com.aone.menurandomchoice.utils;
 
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -14,7 +15,7 @@ public class BindingUtil {
     public static void loadImage(ImageView imageView, String url, Drawable errorDrawable) {
         Glide.with(imageView.getContext())
                 .load(url)
-                .apply(new RequestOptions().placeholder(errorDrawable).error(errorDrawable))
+                .apply(new RequestOptions().placeholder(errorDrawable).error(errorDrawable).centerCrop())
                 .into(imageView);
     }
 

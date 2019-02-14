@@ -27,10 +27,10 @@ public class OwnerSignUpPresenter extends BasePresenter<OwnerSignUpContract.View
         getRepository().requestSignUp(userId, accessKey, new OnSignUpRequestListener() {
             @Override
             public void onSignUpSuccess() {
-                moveToOwnerDetailActivity(userId);
 
                 getRepository().addStoreDetail();
 
+                moveToOwnerDetailActivity(userId);
             }
 
             /**

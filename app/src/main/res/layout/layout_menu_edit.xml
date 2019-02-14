@@ -6,7 +6,7 @@
     <data>
         <variable
             name="presenter"
-            type="com.aone.menurandomchoice.views.ownerstore.OwnerStoreContract.Presenter"/>
+            type="com.aone.menurandomchoice.views.storeedit.StoreEditContract.Presenter"/>
         <variable
             name="menuDetail"
             type="com.aone.menurandomchoice.repository.model.MenuDetail"/>
@@ -20,7 +20,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:background="@drawable/layout_menu_detail_border"
-        android:onClick="@{ () -> presenter.onMenuDetailClick(menuDetail)}" >
+        android:onClick="@{ () -> presenter.onMenuEditClick(menuDetail)}" >
 
         <ImageView
             android:layout_width="100dp"

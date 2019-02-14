@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.aone.menurandomchoice.BR;
+
+import java.io.Serializable;
+
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
@@ -76,10 +79,12 @@ public class MenuDetail extends BaseObservable implements Parcelable {
         notifyPropertyChanged(BR.price);
     }
 
+    @Bindable
     public String getPhotoUrl() { return photoUrl; }
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+        notifyPropertyChanged(BR.photoUrl);
     }
 
     public String getDescription() {

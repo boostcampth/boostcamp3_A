@@ -2,9 +2,11 @@ package com.aone.menurandomchoice.repository.network;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.repository.Repository;
+import com.aone.menurandomchoice.repository.model.BaseResponse;
+import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.network.model.AddressResponseBody;
 import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -14,6 +16,8 @@ import androidx.annotation.NonNull;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -23,6 +27,11 @@ public class APIRepository implements APIHelper {
     private APIInterface apiInstance;
     private Call<AddressResponseBody> addressResponseBodyCall;
     private Call<MenuLocationResponseBody> menuLocationResponseBodyCall;
+    private Call<BaseResponse> checkStoreUpdatedCall;
+    private Call<BaseResponse<StoreDetail>> storeDetailResponseCall;
+
+    public static final int STATUS_OK = 200;
+    public static final int STATUS_NOT_MATCH = 204;
 
     public static APIRepository getInstance() {
         if(apiRepositoryInstance == null) {
@@ -41,7 +50,6 @@ public class APIRepository implements APIHelper {
                     .build();
 
             Gson gson = new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                     .create();
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -64,6 +72,61 @@ public class APIRepository implements APIHelper {
     public void requestMenuLocation(@NonNull Map<String, String> queryMap, @NonNull NetworkResponseListener<MenuLocationResponseBody> listener) {
         menuLocationResponseBodyCall = apiInstance.getMenuLocation(queryMap);
         menuLocationResponseBodyCall.enqueue( new NetworkResponse<>(listener));
+    }
+
+    @Override
+    public void requestStoreDetail(@NonNull final StoreDetail cachedStoreDetail, final int storeIdx,
+                                   @NonNull final Repository.OnLoadStoreDetailListener onLoadStoreDetailListener) {
+        storeDetailResponseCall = apiInstance.getStoreDetail(storeIdx);
+        storeDetailResponseCall.enqueue(new Callback<BaseResponse<StoreDetail>>() {
+            @Override
+            public void onFailure(@NonNull Call<BaseResponse<StoreDetail>> call, @NonNull Throwable t) {
+                onLoadStoreDetailListener.onFailToLoadStoreDetail(cachedStoreDetail, t.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call<BaseResponse<StoreDetail>> call,
+                                   @NonNull Response<BaseResponse<StoreDetail>> storeDetailResponse) {
+
+                int storeDetailStatus = storeDetailResponse.body().getStatus();
+
+                if(storeDetailStatus == STATUS_OK) {
+                    onLoadStoreDetailListener.onStoreDetailLoaded(storeDetailResponse.body().getData());
+                }
+                else {
+                    onLoadStoreDetailListener.onFailToLoadStoreDetail(cachedStoreDetail, "Server Internal Error");
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void checkStoreUpdated(@NonNull final StoreDetail cachedStoreDetail, final int storeIdx, @NonNull final String updateTime,
+                                  @NonNull final Repository.OnLoadStoreDetailListener onLoadStoreDetailListener) {
+
+        checkStoreUpdatedCall = apiInstance.checkStoreUpdated(storeIdx, updateTime);
+        checkStoreUpdatedCall.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onFailure(@NonNull Call<BaseResponse> call, @NonNull Throwable t) {
+                onLoadStoreDetailListener.onFailToLoadStoreDetail(cachedStoreDetail, t.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call<BaseResponse> call, @NonNull Response<BaseResponse> checkStoreResponse) {
+
+                int checkStoreStatus = checkStoreResponse.body().getStatus();
+
+                if (checkStoreStatus == STATUS_NOT_MATCH) {
+                    requestStoreDetail(cachedStoreDetail, storeIdx, onLoadStoreDetailListener);
+                } else if (checkStoreStatus == STATUS_OK) {
+                    onLoadStoreDetailListener.onStoreDetailLoaded(cachedStoreDetail);
+                } else {
+                    onLoadStoreDetailListener.onFailToLoadStoreDetail(cachedStoreDetail, "Server Internal Error");
+                }
+            }
+        });
+
     }
 
 }

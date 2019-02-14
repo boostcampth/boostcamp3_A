@@ -19,6 +19,7 @@
     <dimen name="large_text">16sp</dimen>
     <dimen name="x_large_text">18sp</dimen>
     <dimen name="two_x_large_text">20sp</dimen>
+    <dimen name="very_large_text">30sp</dimen>
 
     <!-- activity_main -->
     <dimen name="activity_main_title">80dp</dimen>

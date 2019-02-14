@@ -38,6 +38,9 @@
             android:name=".views.ownerstore.OwnerStoreActivity"
             android:label="@string/activity_owner_store_label" />
         <activity
+            android:name=".views.storeedit.StoreEditActivity"
+            android:label="@string/activity_store_edit_label" />
+        <activity
             android:name=".views.ownersignup.OwnerSignUpActivity"
             android:label="@string/activity_owner_sign_up_label"
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
