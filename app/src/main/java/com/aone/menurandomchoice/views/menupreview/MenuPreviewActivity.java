@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.views;
+package com.aone.menurandomchoice.views.menupreview;
 
 import androidx.appcompat.app.AppCompatActivity;
 
