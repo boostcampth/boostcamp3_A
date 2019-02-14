@@ -51,8 +51,6 @@
             android:name=".views.locationsearch.LocationSearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".views.ownerdetail.OwnerDetailActivity" />
-        <activity
             android:name=".views.customermain.CustomerMainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
@@ -66,7 +64,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".views.menupreview.MenuPreviewActivity"/>
+            android:name=".views.menupreview.MenuPreviewActivity"
+            android:label="@string/menu_preview_label"/>
     </application>
 
 </manifest>

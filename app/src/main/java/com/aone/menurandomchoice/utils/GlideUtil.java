@@ -23,7 +23,6 @@ public class GlideUtil {
                 .apply(new RequestOptions()
                         .skipMemoryCache(true)
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .centerCrop()
                         .transform(new RoundedCorners(30)))
                 .thumbnail(0.1f)
                 .into(imageView);

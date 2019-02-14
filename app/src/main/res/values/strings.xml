@@ -102,4 +102,7 @@
     <string name="register_no_price">가격이 등록되지 않았습니다</string>
     <string name="register_no_category">카테고리가 선택되지 않았습니다</string>
 
+    <!-- menu preview activity -->
+    <string name="menu_preview_label">등록 메뉴</string>
+
 </resources>

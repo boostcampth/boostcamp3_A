@@ -1,9 +1,11 @@
 package com.aone.menurandomchoice.views.menupreview;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,5 +40,24 @@ public class MenuPreviewActivity extends AppCompatActivity {
         guide.setText(menuDetail.getDescription());
         price.setText(menuDetail.getPrice()+"");
         category.setText(menuDetail.getCategory()+"");
+
+        setUpBackArrow();
+    }
+
+    private void setUpBackArrow() {
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
