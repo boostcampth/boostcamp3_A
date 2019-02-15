@@ -19,15 +19,31 @@
         android:layout_marginLeft="8dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="@drawable/layout_menu_detail_border"
+        android:background="@color/gray"
         android:onClick="@{ () -> presenter.onMenuEditClick(menuDetail)}" >
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="130dp"
-            android:scaleType="centerCrop"
-            app:error="@{@drawable/no_photo}"
-            app:photoUrl="@{menuDetail.photoUrl}"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/activity_menu_register_iv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/dot_line_rect" />
+
+            <Button
+                android:id="@+id/activity_menu_register_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="@dimen/large_margin"
+                android:layout_marginBottom="@dimen/large_margin"
+                android:background="@drawable/add_icon"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
 
         <TextView
             android:layout_width="wrap_content"

@@ -1,7 +1,5 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
-import android.util.Log;
-
 import com.aone.menurandomchoice.repository.Repository;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
@@ -27,7 +25,6 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
                 if (isAttachView()) {
                     getView().showErrorStoreDetail(cachedStoreDetail, errorMessage);
                 }
-                Log.d("FailLoadStoreDetail", errorMessage);
             }
         });
     }
@@ -38,8 +35,8 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
     }
 
     @Override
-    public void onMapClick() {
-        //Todo. map 페이지로 이동
+    public void onMapClick(double latitude, double longitude) {
+        getView().moveToMapDetailPage(latitude, longitude);
     }
 
     @Override

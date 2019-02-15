@@ -169,7 +169,7 @@
                     android:text="@string/activity_owner_detail_location" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -179,14 +179,14 @@
                     android:text="@{storeDetail.address}"
                     android:onClick="@{() -> presenter.onAddressClick()}"/>
 
+
                 <RelativeLayout
-                    android:id="@+id/map_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/x_large_margin"
-                    android:layout_marginRight="@dimen/x_large_margin"
-                    android:onClick="@{() -> presenter.onMapClick()}">
-                </RelativeLayout>
+                    android:layout_height="150dp"
+                    android:background="@color/gray"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp" />
 
             </LinearLayout>
 

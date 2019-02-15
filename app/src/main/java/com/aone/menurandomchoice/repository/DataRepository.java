@@ -129,7 +129,6 @@ public class DataRepository implements Repository {
 
     @Override
     public void loadStoreDetail(final int storeIdx, @NonNull final OnLoadStoreDetailListener onLoadStoreDetailListener) {
-
         final StoreDetail cachedStoreDetail = getStoreDetail();
 
         if(NetworkUtil.isNetworkConnecting()) {

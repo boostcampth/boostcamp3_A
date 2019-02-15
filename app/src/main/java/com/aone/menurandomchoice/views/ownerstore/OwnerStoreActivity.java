@@ -12,6 +12,10 @@ import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
 
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
+
 import androidx.annotation.NonNull;
 
 public class OwnerStoreActivity
@@ -26,8 +30,7 @@ public class OwnerStoreActivity
         super.onCreate(savedInstanceState);
 
         setUpPresenterToDataBinding();
-
-        initMapView();
+        initMapView(getDataBinding().mapView);
     }
 
     @Override
@@ -114,6 +117,16 @@ public class OwnerStoreActivity
     }
 
     @Override
+    public void moveToMapDetailPage(double latitude, double longitude) {
+        /*
+        Intent mapDetailIntent = new Intent(OwnerStoreActivity.this, MapDetailActivity.class);
+        mapDetailIntent.putExtra("latitude", latitude);
+        mapDetailIntent.putExtra("longitude", longitude);
+        startActivity(mapDetailIntent);
+        */
+    }
+
+    @Override
     public void showStoreDetail(StoreDetail storeDetail) {
 
         getDataBinding().setStoreDetail(storeDetail);
@@ -122,7 +135,7 @@ public class OwnerStoreActivity
         getDataBinding().activityOwnerStoreMenu2.setMenuDetail(storeDetail.getMenuList().get(1));
         getDataBinding().activityOwnerStoreMenu3.setMenuDetail(storeDetail.getMenuList().get(2));
 
-        //Todo. setMapview(storeDetail.getLatitude(), storeDetail.getLongitude());
+        setMapView(getDataBinding().mapView, storeDetail.getLatitude(), storeDetail.getLongitude());
     }
 
 
@@ -136,14 +149,25 @@ public class OwnerStoreActivity
         getDataBinding().activityOwnerStoreMenu3.setMenuDetail(storeDetail.getMenuList().get(2));
 
         showToastMessage(errorMessage);
-
-        //Todo. setMapview(storeDetail.getLatitude(), storeDetail.getLongitude())
     }
 
-    public void initMapView() {
+    public void initMapView(MapView mapView) {
+        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(37.5514579595, 126.951949155);
+
+        MapPOIItem marker = new MapPOIItem();
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+        mapView.setMapCenterPoint(mapPoint, false);
+        mapView.addPOIItem(marker);
 
     }
 
-    public void setMapView(double latitude, double longitude) {
+    public void setMapView(MapView mapView, double latitude, double longitude) {
+        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude);
+
+        MapPOIItem marker = new MapPOIItem();
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+        mapView.setMapCenterPoint(mapPoint, false);
+        mapView.addPOIItem(marker);
     }
+
 }

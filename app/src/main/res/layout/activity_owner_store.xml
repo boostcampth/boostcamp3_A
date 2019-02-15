@@ -177,7 +177,7 @@
                     android:layout_marginBottom="20dp"
                     android:text="@{storeDetail.address}" />
 
-                 <RelativeLayout
+                 <net.daum.mf.map.api.MapView
                      android:id="@+id/map_view"
                      android:layout_width="match_parent"
                      android:layout_height="150dp"
@@ -185,8 +185,8 @@
                      android:layout_marginRight="@dimen/x_large_margin"
                      android:layout_marginBottom="@dimen/x_large_margin"
                      android:background="@color/gray"
-                     android:onClick="@{() -> presenter.onMapClick()}">
-                 </RelativeLayout>
+                     android:onClick="@{() -> presenter.onMapClick(storeDetail.latitude, storeDetail.longitude)}">
+                 </net.daum.mf.map.api.MapView>
 
             </LinearLayout>
 
