@@ -20,11 +20,11 @@ public class JMTCallback<T> implements Callback<JMTResponseBody<T>> {
     @Override
     public void onResponse(Call<JMTResponseBody<T>> call, Response<JMTResponseBody<T>> response) {
         if(response.isSuccessful()) {
-            JMTResponseBody<T> JMTResponseBody = response.body();
-            if (JMTResponseBody != null) {
-                int statusCode = JMTResponseBody.getStatus();
+            JMTResponseBody<T> jmtResponseBody = response.body();
+            if (jmtResponseBody != null) {
+                int statusCode = jmtResponseBody.getStatus();
                 if(statusCode == 200) {
-                    listener.onReceived(JMTResponseBody.getData());
+                    listener.onReceived(jmtResponseBody.getData());
                 } else {
                     listener.onError(JMTErrorCode.convertToJMTErrorCode(statusCode));
                 }
