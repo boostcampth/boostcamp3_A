@@ -7,8 +7,8 @@ import android.view.MenuItem;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
-import com.aone.menurandomchoice.repository.pojo.MenuDetail;
-import com.aone.menurandomchoice.repository.pojo.StoreDetail;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;

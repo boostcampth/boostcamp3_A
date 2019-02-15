@@ -1,11 +1,10 @@
-package com.aone.menurandomchoice.repository.remote.response;
+package com.aone.menurandomchoice.repository.model;
 
-import com.aone.menurandomchoice.repository.pojo.KakaoAddressResult;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class AddressResponseBody {
+public class KakaoAddressResult {
 
     @SerializedName("total_count")
     private int totalCount;
@@ -16,7 +15,7 @@ public class AddressResponseBody {
     @SerializedName("is_end")
     private boolean isEnd;
 
-    private List<KakaoAddressResult> documents;
+    private List<KakaoAddress> documents;
 
     public int getTotalCount() {
         return totalCount;
@@ -42,11 +41,11 @@ public class AddressResponseBody {
         isEnd = end;
     }
 
-    public List<KakaoAddressResult> getDocuments() {
+    public List<KakaoAddress> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(List<KakaoAddressResult> documents) {
+    public void setDocuments(List<KakaoAddress> documents) {
         this.documents = documents;
     }
 

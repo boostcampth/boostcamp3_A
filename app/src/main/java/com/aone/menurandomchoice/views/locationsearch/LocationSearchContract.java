@@ -2,7 +2,7 @@ package com.aone.menurandomchoice.views.locationsearch;
 
 import android.os.Parcelable;
 
-import com.aone.menurandomchoice.repository.pojo.KakaoAddressResult;
+import com.aone.menurandomchoice.repository.model.KakaoAddress;
 import com.aone.menurandomchoice.views.base.BaseContract;
 import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapterModel;
 
@@ -18,7 +18,7 @@ public interface LocationSearchContract {
 
     interface Presenter extends BaseContract.Presenter<LocationSearchContract.View> {
 
-        void setAdapter(@NonNull BaseRecyclerViewAdapterModel<KakaoAddressResult> adapter);
+        void setAdapter(@NonNull BaseRecyclerViewAdapterModel<KakaoAddress> adapter);
 
         void requestLocationSearch(@NonNull String Query);
 

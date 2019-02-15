@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.aone.menurandomchoice.GlobalApplication;
-import com.aone.menurandomchoice.repository.pojo.MenuDetail;
-import com.aone.menurandomchoice.repository.pojo.StoreDetail;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.model.StoreDetail;
 
 import java.util.ArrayList;
 import java.util.List;

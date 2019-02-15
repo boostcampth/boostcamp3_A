@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.repository.pojo;
+package com.aone.menurandomchoice.repository.model;
 
 public class MenuLocation {
 

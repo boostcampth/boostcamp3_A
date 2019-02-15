@@ -1,6 +1,6 @@
 package com.aone.menurandomchoice.repository.remote.response;
 
-public class ResponseBody<T> {
+public class JMTResponseBody<T> {
 
     private int status;
     private String message;

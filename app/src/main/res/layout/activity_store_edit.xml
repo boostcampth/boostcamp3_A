@@ -11,7 +11,7 @@
             type="com.aone.menurandomchoice.views.storeedit.StoreEditContract.Presenter"/>
         <variable
             name="storeDetail"
-            type="com.aone.menurandomchoice.repository.pojo.StoreDetail"/>
+            type="com.aone.menurandomchoice.repository.model.StoreDetail"/>
     </data>
 
     <ScrollView

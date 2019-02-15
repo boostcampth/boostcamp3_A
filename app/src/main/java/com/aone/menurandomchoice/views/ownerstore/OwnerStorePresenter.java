@@ -1,26 +1,28 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
-import com.aone.menurandomchoice.repository.Repository;
-import com.aone.menurandomchoice.repository.pojo.MenuDetail;
-import com.aone.menurandomchoice.repository.pojo.StoreDetail;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.model.StoreDetail;
+import com.aone.menurandomchoice.repository.remote.response.NetworkResponseListener;
 import com.aone.menurandomchoice.views.base.BasePresenter;
+
+import androidx.annotation.NonNull;
 
 public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> implements  OwnerStoreContract.Presenter {
 
     @Override
     public void loadStoreDetail(int storeIdx) {
-        getRepository().loadStoreDetail(50, new Repository.OnLoadStoreDetailListener() {
+        getRepository().loadStoreDetail(50, new NetworkResponseListener<StoreDetail>() {
             @Override
-            public void onStoreDetailLoaded(StoreDetail storeDetail) {
+            public void onReceived(@NonNull StoreDetail storeDetail) {
                 if (isAttachView()) {
                     getView().showStoreDetail(storeDetail);
                 }
             }
 
             @Override
-            public void onFailToLoadStoreDetail(String errorMessage) {
+            public void onError() {
                 if (isAttachView()) {
-                    getView().showToastMessage(errorMessage);
+                    getView().showToastMessage("서버에러");
                 }
             }
         });

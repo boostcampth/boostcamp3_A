@@ -1,7 +1,7 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
-import com.aone.menurandomchoice.repository.pojo.MenuDetail;
-import com.aone.menurandomchoice.repository.pojo.StoreDetail;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseContract;
 
 public interface OwnerStoreContract {

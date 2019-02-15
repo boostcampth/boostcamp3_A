@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.repository.pojo;
+package com.aone.menurandomchoice.repository.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
