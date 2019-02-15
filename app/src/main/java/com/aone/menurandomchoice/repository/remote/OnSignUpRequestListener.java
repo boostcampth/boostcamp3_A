@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.repository.server;
+package com.aone.menurandomchoice.repository.remote;
 
 public interface OnSignUpRequestListener {
 

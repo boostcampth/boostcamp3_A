@@ -4,11 +4,12 @@ import android.content.Intent;
 
 import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
 import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
-import com.aone.menurandomchoice.repository.network.APIHelper;
-import com.aone.menurandomchoice.repository.network.APIRepository;
-import com.aone.menurandomchoice.repository.network.NetworkResponseListener;
-import com.aone.menurandomchoice.repository.network.model.AddressResponseBody;
-import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
+import com.aone.menurandomchoice.repository.model.EmptyObject;
+import com.aone.menurandomchoice.repository.model.MenuLocation;
+import com.aone.menurandomchoice.repository.remote.APIHelper;
+import com.aone.menurandomchoice.repository.remote.APIRepository;
+import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.local.SqliteDatabaseHelper;
 import com.aone.menurandomchoice.repository.local.SqliteDatabaseRepository;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
@@ -16,12 +17,11 @@ import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginRepository;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLogoutListener;
-import com.aone.menurandomchoice.repository.server.OnSignUpRequestListener;
-import com.aone.menurandomchoice.repository.server.OnSignedUpCheckListener;
-import com.aone.menurandomchoice.repository.server.ServerDataHelper;
-import com.aone.menurandomchoice.repository.server.ServerDataRepository;
+import com.aone.menurandomchoice.repository.remote.OnSignUpRequestListener;
+import com.aone.menurandomchoice.repository.remote.OnSignedUpCheckListener;
 import com.aone.menurandomchoice.utils.NetworkUtil;
 
+import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -31,7 +31,6 @@ public class DataRepository implements Repository {
 
     private static Repository repository;
     private KakaoLoginHelper kakaoLoginHelper;
-    private ServerDataHelper serverDataHelper;
     private APIHelper apiHelper;
     private SqliteDatabaseHelper sqliteDatabaseHelper;
     private PreferencesHelper preferencesHelper;
@@ -47,7 +46,6 @@ public class DataRepository implements Repository {
 
     private DataRepository() {
         kakaoLoginHelper = KakaoLoginRepository.getInstance();
-        serverDataHelper = ServerDataRepository.getInstance();
         apiHelper = APIRepository.getInstance();
         sqliteDatabaseHelper = SqliteDatabaseRepository.getInstance();
         preferencesHelper = new PreferencesRepository();
@@ -80,36 +78,40 @@ public class DataRepository implements Repository {
 
     @Override
     public void requestSignedUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener) {
-        serverDataHelper.requestSignedUpCheck(userId, onSignedUpCheckListener);
+        apiHelper.requestSignedUpCheck(userId, onSignedUpCheckListener);
     }
 
     @Override
     public void requestSignUp(long userId, @NonNull String accessKey, @NonNull OnSignUpRequestListener onSignUpRequestListener) {
-        serverDataHelper.requestSignUp(userId, accessKey, onSignUpRequestListener);
+        apiHelper.requestSignUp(userId, accessKey, onSignUpRequestListener);
     }
 
     @Override
-    public void executeLocationSearch(@NonNull String Qeury, @NonNull NetworkResponseListener<AddressResponseBody> networkResponseListener) {
-        apiHelper.executeLocationSearch(Qeury, networkResponseListener);
+    public void executeLocationSearch(@NonNull String query,
+                                      @NonNull NetworkResponseListener<KakaoAddressResult> networkResponseListener) {
+        apiHelper.executeLocationSearch(query, networkResponseListener);
     }
 
     @Override
-    public void requestMenuLocation(@NonNull Map<String, String> queryMap, @NonNull NetworkResponseListener<MenuLocationResponseBody> networkResponseListener) {
+    public void requestMenuLocation(@NonNull Map<String, String> queryMap,
+                                    @NonNull NetworkResponseListener<List<MenuLocation>> networkResponseListener) {
         apiHelper.requestMenuLocation(queryMap, networkResponseListener);
     }
 
     @Override
-    public void requestStoreDetail(@NonNull final StoreDetail cachedStoreDetail, @NonNull final int storeIdx,
-                                   @NonNull final OnLoadStoreDetailListener onLoadStoreDetailListener) {
-        apiHelper.requestStoreDetail(cachedStoreDetail, storeIdx, onLoadStoreDetailListener);
+    public void requestStoreDetail(int storeIdx,
+                                   @NonNull NetworkResponseListener<StoreDetail> networkResponseListener) {
+        apiHelper.requestStoreDetail(storeIdx, networkResponseListener);
     }
 
     @Override
-    public void checkStoreUpdated(@NonNull final StoreDetail cachedStoreDetail, final int storeIdx, @NonNull final String updateTime,
-                                  @NonNull final OnLoadStoreDetailListener onLoadStoreDetailListener) {
-        apiHelper.checkStoreUpdated(cachedStoreDetail, storeIdx, updateTime, onLoadStoreDetailListener);
+    public void checkStoreUpdated(int storeIdx,
+                                  @NonNull String updateTime,
+                                  @NonNull NetworkResponseListener<EmptyObject> networkResponseListener) {
+        apiHelper.checkStoreUpdated(storeIdx, updateTime, networkResponseListener);
     }
 
+    @Override
     public void saveRegisteredImageLocalPath(@NonNull String path) {
         preferencesHelper.saveRegisteredImageLocalPath(path);
     }
@@ -125,20 +127,29 @@ public class DataRepository implements Repository {
         preferencesHelper.clearRegisteredImageLocalPath();
     }
 
-
-
     @Override
-    public void loadStoreDetail(final int storeIdx, @NonNull final OnLoadStoreDetailListener onLoadStoreDetailListener) {
-
+    public void loadStoreDetail(final int storeIdx,
+                                final @NonNull NetworkResponseListener<StoreDetail> networkResponseListener) {
         final StoreDetail cachedStoreDetail = getStoreDetail();
+        checkStoreUpdated(storeIdx, cachedStoreDetail.getUpdateTime(), new NetworkResponseListener<EmptyObject>() {
+            @Override
+            public void onReceived(@NonNull EmptyObject response) {
+                // 서버에서 시각을 보내줘야 하지만, 아직 그 부분이 안되있어서 일단 EmptyObject로만 정의
+                // 서버에서 받은 시각과 로컬 시각을 확인해서 어떤 데이터를 보내줄지 처리해야함
+                // 현재 코드는, 일단 시각이 동일하지 않다는 전제로 처리했음
 
-        if(NetworkUtil.isNetworkConnecting()) {
-            checkStoreUpdated(cachedStoreDetail, storeIdx, cachedStoreDetail.getUpdateTime(), onLoadStoreDetailListener);
-        } else {
-            onLoadStoreDetailListener.onFailToLoadStoreDetail(cachedStoreDetail, "Network Connect Error");
-        }
+//              if(serverTime == cachedStoreDetail.getUpdateTime() {
+//                  onLoadStoreDetailListener.onStoreDetailLoaded(cachedStoreDetail);
+//              } else
+                requestStoreDetail(storeIdx, networkResponseListener);
+            }
+
+            @Override
+            public void onError() {
+                networkResponseListener.onError();
+            }
+        });
     }
-
 
     @Override
     public void addStoreDetail() {

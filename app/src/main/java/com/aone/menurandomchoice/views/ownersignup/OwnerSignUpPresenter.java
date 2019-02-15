@@ -1,6 +1,6 @@
 package com.aone.menurandomchoice.views.ownersignup;
 
-import com.aone.menurandomchoice.repository.server.OnSignUpRequestListener;
+import com.aone.menurandomchoice.repository.remote.OnSignUpRequestListener;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
 import androidx.annotation.NonNull;

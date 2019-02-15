@@ -5,23 +5,16 @@ import android.os.Parcelable;
 
 import com.aone.menurandomchoice.BR;
 
-import java.io.Serializable;
-
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 public class MenuDetail extends BaseObservable implements Parcelable {
 
     private String name;
-
     private int price;
-
     private String photoUrl;
-
     private String description;
-
     private String category;
-
     private int sequence;
 
     public MenuDetail() {
@@ -110,4 +103,5 @@ public class MenuDetail extends BaseObservable implements Parcelable {
     public void setSequence(int sequence) {
         this.sequence = sequence;
     }
+
 }

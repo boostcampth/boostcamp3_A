@@ -10,8 +10,6 @@ public interface OwnerStoreContract {
 
         void showStoreDetail(StoreDetail storeDetail);
 
-        void showErrorStoreDetail(StoreDetail storeDetail, String errorMessage);
-
         void moveToOwnerEditPage(StoreDetail storeDetail);
 
         void moveToMenuPreviewPage(MenuDetail menuDetail);

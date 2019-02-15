@@ -121,21 +121,6 @@ public class OwnerStoreActivity
         //Todo. setMapview(storeDetail.getLatitude(), storeDetail.getLongitude());
     }
 
-
-    @Override
-    public void showErrorStoreDetail(StoreDetail storeDetail, String errorMessage) {
-
-        getDataBinding().setStoreDetail(storeDetail);
-
-        getDataBinding().activityOwnerStoreMenu1.setMenuDetail(storeDetail.getMenuList().get(0));
-        getDataBinding().activityOwnerStoreMenu2.setMenuDetail(storeDetail.getMenuList().get(1));
-        getDataBinding().activityOwnerStoreMenu3.setMenuDetail(storeDetail.getMenuList().get(2));
-
-        showToastMessage(errorMessage);
-
-        //Todo. setMapview(storeDetail.getLatitude(), storeDetail.getLongitude())
-    }
-
     public void initMapView() {
 
     }
