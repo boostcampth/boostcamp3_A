@@ -10,6 +10,7 @@ import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.OwnerInfo;
 import com.aone.menurandomchoice.repository.remote.response.JMTCallback;
+import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.repository.remote.response.KakaoCallback;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
@@ -49,7 +50,7 @@ public class APIRepository implements APIHelper {
                     .getAddress(REST_API_KEY, query)
                     .enqueue(new KakaoCallback<>(listener));
         } else {
-            listener.onError();
+            listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
         }
     }
 
@@ -61,7 +62,7 @@ public class APIRepository implements APIHelper {
                     .getMenuLocation(queryMap)
                     .enqueue(new JMTCallback<>(listener));
         } else {
-            listener.onError();
+            listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
         }
     }
 
@@ -73,7 +74,7 @@ public class APIRepository implements APIHelper {
                     .getStoreDetail(storeIdx)
                     .enqueue(new JMTCallback<>(listener));
         } else {
-            listener.onError();
+            listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
         }
 
     }
@@ -87,7 +88,7 @@ public class APIRepository implements APIHelper {
                     .checkStoreUpdated(storeIdx, updateTime)
                     .enqueue(new JMTCallback<>(listener));
         } else {
-            listener.onError();
+            listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
         }
     }
 
@@ -99,7 +100,7 @@ public class APIRepository implements APIHelper {
                     .getSignedUpCheckRequest(new OwnerInfo(String.valueOf(userId)))
                     .enqueue(new JMTCallback<>(listener));
         } else {
-            listener.onError();
+            listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
         }
     }
 

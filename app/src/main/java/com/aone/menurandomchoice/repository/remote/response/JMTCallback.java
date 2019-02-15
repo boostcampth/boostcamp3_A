@@ -21,19 +21,17 @@ public class JMTCallback<T> implements Callback<JMTResponseBody<T>> {
     public void onResponse(Call<JMTResponseBody<T>> call, Response<JMTResponseBody<T>> response) {
         if(response.isSuccessful()) {
             JMTResponseBody<T> JMTResponseBody = response.body();
-            if(JMTResponseBody != null) {
+            if (JMTResponseBody != null) {
                 int statusCode = JMTResponseBody.getStatus();
                 if(statusCode == 200) {
                     listener.onReceived(JMTResponseBody.getData());
                 } else {
-                    listener.onError();
+                    listener.onError(JMTErrorCode.convertToJMTErrorCode(statusCode));
                 }
-            } else {
-                listener.onError();
             }
-        } else {
-            listener.onError();
         }
+
+        listener.onError(JMTErrorCode.UNKNOWN_ERROR);
     }
 
     @EverythingIsNonNull
@@ -43,9 +41,7 @@ public class JMTCallback<T> implements Callback<JMTResponseBody<T>> {
             call.cancel();
         }
 
-        listener.onError();
+        listener.onError(JMTErrorCode.UNKNOWN_ERROR);
     }
-
-
 
 }

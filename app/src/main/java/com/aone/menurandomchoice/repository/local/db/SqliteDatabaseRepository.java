@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.repository.local;
+package com.aone.menurandomchoice.repository.local.db;
 
 import android.content.ContentValues;
 import android.content.Context;

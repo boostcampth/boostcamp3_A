@@ -34,17 +34,21 @@ public class KakaoLoginRepository implements KakaoLoginHelper {
 
     @Override
     public void checkLoggedinAccount(@NonNull OnKakaoLoginListener onKakaoLoginListener) {
-        openKakaoSession(KakaoLoginType.LOGGEDIN, onKakaoLoginListener);
+        addCallbackToCurrentSession(onKakaoLoginListener);
+        if (!Session.getCurrentSession().checkAndImplicitOpen()) {
+            clearCallbackOfCurrentSession();
+            onKakaoLoginListener.onFail(KakaoLoginError.NO_SESSION_ERROR);
+        }
     }
 
     @Override
     public void executeDeviceKakaoAccountLogin(@NonNull OnKakaoLoginListener onKakaoLoginListener) {
-        openKakaoSession(KakaoLoginType.KAKAO_TALK, onKakaoLoginListener);
+        openKakaoSession(AuthType.KAKAO_TALK, onKakaoLoginListener);
     }
 
     @Override
     public void executeOtherKakaoAccountLogin(@NonNull OnKakaoLoginListener onKakaoLoginListener) {
-        openKakaoSession(KakaoLoginType.KAKAO_ACCOUNT, onKakaoLoginListener);
+        openKakaoSession(AuthType.KAKAO_ACCOUNT, onKakaoLoginListener);
     }
 
     @Override
@@ -62,24 +66,24 @@ public class KakaoLoginRepository implements KakaoLoginHelper {
         return Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data);
     }
 
-    private void openKakaoSession(@NonNull KakaoLoginType kakaoLoginType, final OnKakaoLoginListener onKakaoLoginListener) {
+    private void openKakaoSession(@NonNull AuthType authType, final OnKakaoLoginListener onKakaoLoginListener) {
         if(NetworkUtil.isNetworkConnecting()) {
-            addCallbackToCurrentSession(kakaoLoginType, onKakaoLoginListener);
-            openCurrentSession(kakaoLoginType);
+            addCallbackToCurrentSession(onKakaoLoginListener);
+            Session.getCurrentSession().open(authType, KakaoSDK.getCurrentActivity());
         } else {
             clearCallbackOfCurrentSession();
             sendFailToListener(KakaoLoginError.NETWORK_NOT_CONNECT_ERROR, onKakaoLoginListener);
         }
     }
 
-    private void addCallbackToCurrentSession(final KakaoLoginType kakaoLoginType, final OnKakaoLoginListener onKakaoLoginListener) {
+    private void addCallbackToCurrentSession(final OnKakaoLoginListener onKakaoLoginListener) {
         clearCallbackOfCurrentSession();
 
         Session.getCurrentSession().addCallback(new ISessionCallback() {
             @Override
             public void onSessionOpened() {
                 clearCallbackOfCurrentSession();
-                requestUserInfoToUserManagement(kakaoLoginType, onKakaoLoginListener);
+                requestUserInfoToUserManagement(onKakaoLoginListener);
             }
 
             @Override
@@ -95,26 +99,7 @@ public class KakaoLoginRepository implements KakaoLoginHelper {
         Session.getCurrentSession().clearCallbacks();
     }
 
-    private void openCurrentSession(KakaoLoginType kakaoLoginType) {
-        Session currentSession = Session.getCurrentSession();
-        switch (kakaoLoginType) {
-            case LOGGEDIN:
-                if (!currentSession.checkAndImplicitOpen()) {
-                    clearCallbackOfCurrentSession();
-                }
-                break;
-            case KAKAO_TALK:
-                currentSession.open(AuthType.KAKAO_TALK, KakaoSDK.getCurrentActivity());
-                break;
-            case KAKAO_ACCOUNT:
-                currentSession.open(AuthType.KAKAO_ACCOUNT, KakaoSDK.getCurrentActivity());
-                break;
-            default:
-                throw new IllegalStateException("used an invalid argument when opening the kakao session");
-        }
-    }
-
-    private void requestUserInfoToUserManagement(final KakaoLoginType kakaoLoginType, final OnKakaoLoginListener onKakaoLoginListener) {
+    private void requestUserInfoToUserManagement(final OnKakaoLoginListener onKakaoLoginListener) {
         UserManagement.getInstance().me(new MeV2ResponseCallback() {
             @Override
             public void onSessionClosed(ErrorResult errorResult) {
@@ -124,14 +109,14 @@ public class KakaoLoginRepository implements KakaoLoginHelper {
 
             @Override
             public void onSuccess(MeV2Response result) {
-                sendLoginToListener(result, kakaoLoginType, onKakaoLoginListener);
+                sendLoginToListener(result, onKakaoLoginListener);
             }
         });
     }
 
-    private void sendLoginToListener(MeV2Response result, KakaoLoginType kakaoLoginType, OnKakaoLoginListener onKakaoLoginListener) {
+    private void sendLoginToListener(MeV2Response result, OnKakaoLoginListener onKakaoLoginListener) {
         if(onKakaoLoginListener != null) {
-            onKakaoLoginListener.onKakaoLoginSuccess(result.getId(), kakaoLoginType);
+            onKakaoLoginListener.onKakaoLoginSuccess(result.getId());
         }
     }
 

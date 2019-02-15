@@ -1,14 +1,12 @@
 package com.aone.menurandomchoice.views.main;
 
-import android.util.Log;
-
 import com.aone.menurandomchoice.repository.model.LoginData;
 import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginError;
-import com.aone.menurandomchoice.repository.oauth.KakaoLoginType;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLogoutListener;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
 import androidx.annotation.NonNull;
@@ -27,13 +25,13 @@ public class MainPresenter extends BasePresenter<MainContract.View>
     public void handlingOwnerLoginButtonClick() {
         getRepository().checkLoggedinAccount(new OnKakaoLoginListener() {
             @Override
-            public void onKakaoLoginSuccess(long userId, @NonNull KakaoLoginType kakaoLoginType) {
+            public void onKakaoLoginSuccess(long userId) {
                 requestSignedUpCheck(userId);
             }
 
             @Override
             public void onFail(@NonNull KakaoLoginError kakaoLoginError) {
-                if(isAttachView()) {
+                if (isAttachView()) {
                     getView().moveToOwnerLoginActivity();
                 }
             }
@@ -48,7 +46,7 @@ public class MainPresenter extends BasePresenter<MainContract.View>
             }
 
             @Override
-            public void onError() {
+            public void onError(JMTErrorCode errorCode) {
                 requestKakaoAccountLogout();
             }
         });

@@ -11,16 +11,15 @@ import com.aone.menurandomchoice.repository.remote.APIHelper;
 import com.aone.menurandomchoice.repository.remote.APIRepository;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
-import com.aone.menurandomchoice.repository.local.SqliteDatabaseHelper;
-import com.aone.menurandomchoice.repository.local.SqliteDatabaseRepository;
+import com.aone.menurandomchoice.repository.local.db.SqliteDatabaseHelper;
+import com.aone.menurandomchoice.repository.local.db.SqliteDatabaseRepository;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginRepository;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLogoutListener;
 import com.aone.menurandomchoice.repository.remote.OnSignUpRequestListener;
-import com.aone.menurandomchoice.repository.remote.OnSignedUpCheckListener;
-import com.aone.menurandomchoice.utils.NetworkUtil;
+import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 
 import java.util.List;
 import java.util.Map;
@@ -146,8 +145,8 @@ public class DataRepository implements Repository {
             }
 
             @Override
-            public void onError() {
-                networkResponseListener.onError();
+            public void onError(JMTErrorCode errorCode) {
+                networkResponseListener.onError(errorCode);
             }
         });
     }
