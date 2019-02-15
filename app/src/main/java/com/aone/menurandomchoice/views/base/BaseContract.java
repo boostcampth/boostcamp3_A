@@ -13,6 +13,10 @@ public interface BaseContract {
 
         void showToastMessage(@NonNull String message);
 
+        void showProgressDialog();
+
+        void hideProgressDialog();
+
     }
 
     interface Presenter<V extends BaseContract.View> {

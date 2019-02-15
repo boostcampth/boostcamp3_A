@@ -1,5 +1,6 @@
 package com.aone.menurandomchoice.views.ownersignup;
 
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseContract;
 
 import androidx.annotation.NonNull;
@@ -8,7 +9,7 @@ public interface OwnerSignUpContract {
 
     interface View extends BaseContract.View {
 
-        void moveToOwnerStoreActivity(long userId);
+        void moveToOwnerStoreActivity(@NonNull UserAccessInfo userAccessInfo);
 
     }
 

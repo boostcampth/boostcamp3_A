@@ -21,6 +21,7 @@ public class BasePresenter<V extends BaseContract.View> implements BaseContract.
 
     @Override
     public void detachView() {
+        view.hideProgressDialog();
         view = null;
     }
 
@@ -35,6 +36,18 @@ public class BasePresenter<V extends BaseContract.View> implements BaseContract.
 
     protected Repository getRepository() {
         return repository;
+    }
+
+    protected void showProgressBarOfView() {
+        if(isAttachView()) {
+            getView().showProgressDialog();
+        }
+    }
+
+    protected void hideProgressBarOfView() {
+        if(isAttachView()) {
+            getView().hideProgressDialog();
+        }
     }
 
 }

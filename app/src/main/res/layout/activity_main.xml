@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="activity"
-            type="com.aone.menurandomchoice.views.main.MainActivity"/>
+            name="presenter"
+            type="com.aone.menurandomchoice.views.main.MainContract.Presenter"/>
 
     </data>
 
@@ -49,7 +49,7 @@
             android:text="@string/activity_main_button_start"
             android:textColor="@android:color/white"
             android:textSize="@dimen/activity_main_button"
-            android:onClick="@{activity::moveToMenuSelectActivity}"
+            android:onClick="@{() -> presenter.handlingCustomerEnterButtonClick()}"
             android:textStyle="bold"
             app:fontFamily="@font/youth"
             app:layout_constraintEnd_toEndOf="parent"
@@ -189,7 +189,7 @@
             android:textColor="@color/reddish"
             android:textSize="@dimen/activity_main_button"
             android:textStyle="bold"
-            android:onClick="@{activity::moveToOwnerLoginActivity}"
+            android:onClick="@{() -> presenter.handlingOwnerLoginButtonClick()}"
             app:fontFamily="@font/youth"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

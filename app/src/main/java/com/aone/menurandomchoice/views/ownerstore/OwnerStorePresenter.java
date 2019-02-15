@@ -1,8 +1,10 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
+import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
 import androidx.annotation.NonNull;
@@ -20,10 +22,8 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
             }
 
             @Override
-            public void onError() {
-                if (isAttachView()) {
-                    getView().showToastMessage("서버에러");
-                }
+            public void onError(JMTErrorCode errorCode) {
+                handlingJMTError(errorCode);
             }
         });
     }
@@ -41,6 +41,16 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
     @Override
     public void stopNetwork() {
         getRepository().cancelAll();
+    }
+
+    private void handlingJMTError(JMTErrorCode errorCode) {
+        if(isAttachView()) {
+            String errorMessage = GlobalApplication
+                    .getGlobalApplicationContext()
+                    .getString(errorCode.getStringResourceId());
+
+            getView().showToastMessage(errorMessage);
+        }
     }
 
 }

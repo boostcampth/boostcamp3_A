@@ -6,7 +6,7 @@ import com.kakao.util.exception.KakaoException;
 
 public enum KakaoLoginError {
 
-
+    NO_SESSION_ERROR(R.string.activity_owner_toast_no_session_error),
     SERVER_ERROR(R.string.activity_owner_toast_server_error),
     EXCEED_REQUEST_COUNT_ERROR(R.string.activity_owner_toast_exceed_request_count_error),
     AUTHORIZATION_FAIL_ERROR(R.string.activity_owner_toast_authorization_fail_error),

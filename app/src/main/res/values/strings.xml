@@ -27,11 +27,13 @@
     <string name="activity_owner_toast_canceled_operation_error">카카오톡 인증을 취소했습니다</string>
     <string name="activity_owner_toast_network_not_connect_error">인터넷 연결을 확인해주세요</string>
     <string name="activity_owner_toast_unknown_error">알 수 없는 에러가 발생되었습니다\n개발자에게 알려주세요</string>
+    <string name="activity_owner_toast_no_session_error">로그인 된 정보가 없습니다. 로그인 화면으로 이동합니다</string>
 
     <!-- activity_owner_sign_up -->
     <string name="activity_owner_sign_up_label">업주 회원가입</string>
     <string name="activity_owner_button_sign_up_request">회원가입 요청</string>
     <string name="activity_owner_access_key_hint">인증번호 6자리</string>
+    <string name="activity_owner_access_key_guide">인증번호 6자리를 입력하세요</string>
 
     <!-- layout_search_box -->
     <string name="layout_search_box_search_hint">장소 검색</string>
@@ -105,4 +107,16 @@
     <!-- menu preview activity -->
     <string name="menu_preview_label">등록 메뉴</string>
 
+    <!-- JMT response code -->
+    <string name="JMT_response_success">요청에 성공했습니다</string>
+    <string name="JMT_response_no_result">요청된 결과가 없습니다</string>
+    <string name="JMT_response_wrong_request_error">앱 시스템에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
+    <string name="JMT_response_not_found_error">서버 시스템에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
+    <string name="JMT_response_server_system_error">서버 시스템에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
+    <string name="JMT_response_server_database_error">서버 시스템에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
+    <string name="JMT_response_unknown_error">알 수 없는 에러가 발생했습니다. 개발자에게 알려주세요</string>
+    <string name="JMT_response_network_not_connect_error">인터넷 연결을 확인해주세요</string>
+
+    <!-- custom dialog progress -->
+    <string name="custom_progress_dialog_message">로딩 중</string>
 </resources>
