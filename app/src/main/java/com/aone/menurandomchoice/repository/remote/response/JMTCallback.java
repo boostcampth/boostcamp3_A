@@ -1,5 +1,7 @@
 package com.aone.menurandomchoice.repository.remote.response;
 
+import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
+
 import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +39,11 @@ public class JMTCallback<T> implements Callback<JMTResponseBody<T>> {
     @EverythingIsNonNull
     @Override
     public void onFailure(Call<JMTResponseBody<T>> call, Throwable t) {
+        if(!call.isCanceled()) {
+            call.cancel();
+        }
 
+        listener.onError();
     }
 
 

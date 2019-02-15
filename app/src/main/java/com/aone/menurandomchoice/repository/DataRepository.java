@@ -8,7 +8,7 @@ import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.remote.APIHelper;
 import com.aone.menurandomchoice.repository.remote.APIRepository;
-import com.aone.menurandomchoice.repository.remote.response.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.local.SqliteDatabaseHelper;
 import com.aone.menurandomchoice.repository.local.SqliteDatabaseRepository;
@@ -131,26 +131,24 @@ public class DataRepository implements Repository {
     public void loadStoreDetail(final int storeIdx,
                                 final @NonNull NetworkResponseListener<StoreDetail> networkResponseListener) {
         final StoreDetail cachedStoreDetail = getStoreDetail();
-        if(NetworkUtil.isNetworkConnecting()) {
-            checkStoreUpdated(storeIdx, cachedStoreDetail.getUpdateTime(), new NetworkResponseListener<EmptyObject>() {
-                @Override
-                public void onReceived(@NonNull EmptyObject response) {
-                    // 서버에서 시각을 보내줘야 하지만, 아직 그 부분이 안되있어서 일단 EmptyObject로만 정의
-                    // 서버에서 받은 시각과 로컬 시각을 확인해서 어떤 데이터를 보내줄지 처리해야함
-                    // 현재 코드는, 일단 시각이 동일하지 않다는 전제로 처리했음
+        checkStoreUpdated(storeIdx, cachedStoreDetail.getUpdateTime(), new NetworkResponseListener<EmptyObject>() {
+            @Override
+            public void onReceived(@NonNull EmptyObject response) {
+                // 서버에서 시각을 보내줘야 하지만, 아직 그 부분이 안되있어서 일단 EmptyObject로만 정의
+                // 서버에서 받은 시각과 로컬 시각을 확인해서 어떤 데이터를 보내줄지 처리해야함
+                // 현재 코드는, 일단 시각이 동일하지 않다는 전제로 처리했음
 
 //              if(serverTime == cachedStoreDetail.getUpdateTime() {
 //                  onLoadStoreDetailListener.onStoreDetailLoaded(cachedStoreDetail);
 //              } else
-                    requestStoreDetail(storeIdx, networkResponseListener);
-                }
+                requestStoreDetail(storeIdx, networkResponseListener);
+            }
 
-                @Override
-                public void onError() {
-                    networkResponseListener.onError();
-                }
-            });
-        }
+            @Override
+            public void onError() {
+                networkResponseListener.onError();
+            }
+        });
     }
 
     @Override

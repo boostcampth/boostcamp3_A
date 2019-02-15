@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.repository.remote.response;
+package com.aone.menurandomchoice.repository.remote;
 
 import androidx.annotation.NonNull;
 

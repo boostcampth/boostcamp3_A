@@ -2,7 +2,7 @@ package com.aone.menurandomchoice.views.ownerstore;
 
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
-import com.aone.menurandomchoice.repository.remote.response.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
 import androidx.annotation.NonNull;

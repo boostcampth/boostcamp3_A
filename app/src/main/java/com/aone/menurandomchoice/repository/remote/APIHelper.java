@@ -4,7 +4,6 @@ import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
-import com.aone.menurandomchoice.repository.remote.response.NetworkResponseListener;
 
 import java.util.List;
 import java.util.Map;

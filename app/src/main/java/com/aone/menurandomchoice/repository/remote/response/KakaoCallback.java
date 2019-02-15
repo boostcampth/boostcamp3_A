@@ -1,5 +1,7 @@
 package com.aone.menurandomchoice.repository.remote.response;
 
+import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
+
 import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,6 +21,8 @@ public class KakaoCallback<T> implements Callback<T> {
     public void onResponse(Call<T> call, Response<T> response) {
         if(response.isSuccessful() && response.body() != null) {
             listener.onReceived(response.body());
+        } else {
+            listener.onError();
         }
     }
 
@@ -26,7 +30,8 @@ public class KakaoCallback<T> implements Callback<T> {
     @Override
     public void onFailure(Call<T> call, Throwable t) {
         if(!call.isCanceled()) {
-            listener.onError();
+            call.cancel();
         }
+        listener.onError();
     }
 }

@@ -3,7 +3,7 @@ package com.aone.menurandomchoice.views.locationsearch;
 import android.os.Bundle;
 import android.os.Parcelable;
 
-import com.aone.menurandomchoice.repository.remote.response.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.KakaoAddress;
 import com.aone.menurandomchoice.views.base.BasePresenter;
