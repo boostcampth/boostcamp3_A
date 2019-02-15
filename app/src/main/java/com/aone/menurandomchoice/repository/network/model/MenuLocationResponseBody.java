@@ -4,6 +4,8 @@ import com.aone.menurandomchoice.repository.network.pojo.MenuLocation;
 
 import java.util.List;
 
+import okhttp3.Response;
+
 public class MenuLocationResponseBody {
     private Integer status;
     private String message;

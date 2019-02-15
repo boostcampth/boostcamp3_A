@@ -14,16 +14,14 @@ import com.aone.menurandomchoice.databinding.ActivityCustomerMainBinding;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
-import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
+import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
+import com.aone.menurandomchoice.views.menuregister.adapter.viewholder.OnMenuCategoryClickListener;
 import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
 
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -33,6 +31,8 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         implements CustomerMainContract.View, MapView.MapViewEventListener {
 
     private static final String LOG_TAG = "CustomMainActivity";
+
+    private MenuCategoryAdapterContract.View menuCategoryAdapterView;
 
     private MapPOIItem mCustomMarker;
     private MapPoint CUSTOM_MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.4020737, 127.1086766);
@@ -128,6 +128,8 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     @Override
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
         MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
+
+
         circle.setCenter(mapPoint);
         mapView.addCircle(circle);
         mCustomMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude));
@@ -163,20 +165,28 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     private void setUpCategoryRecyclerView() {
         MenuCategoryAdapter menuCategoryAdapter = new MenuCategoryAdapter();
-        menuCategoryAdapter.setItems(createMenuCategoryItems());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         getDataBinding().activityCustomerMainRcCategory.setLayoutManager(layoutManager);
         getDataBinding().activityCustomerMainRcCategory.setAdapter(menuCategoryAdapter);
+
+
+        setUpAdapterToPresenter(menuCategoryAdapter);
+        setUpAdapterToThis(menuCategoryAdapter);
     }
 
-    private List<MenuCategoryItem> createMenuCategoryItems() {
-        String[] categories = getResources().getStringArray(R.array.category);
-        ArrayList<MenuCategoryItem> menuCategoryItems = new ArrayList<>();
-        for(String category : categories) {
-            menuCategoryItems.add(new MenuCategoryItem(category));
-        }
-        return menuCategoryItems;
+    private void setUpAdapterToPresenter(MenuCategoryAdapter menuCategoryAdapter) {
+        getPresenter().setAdapterModel(menuCategoryAdapter);
+    }
+
+    private void setUpAdapterToThis(MenuCategoryAdapter menuCategoryAdapter) {
+        menuCategoryAdapterView = menuCategoryAdapter;
+        menuCategoryAdapterView.setOnMenuCategoryClickListener(new OnMenuCategoryClickListener() {
+            @Override
+            public void onMenuCategoryItemClick(@NonNull View view, int position) {
+                getPresenter().handlingMenuCategoryItemClick(position);
+            }
+        });
     }
 
     private void setUpRadiusButtonArray() {

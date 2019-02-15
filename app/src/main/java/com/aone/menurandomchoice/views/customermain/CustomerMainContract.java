@@ -3,6 +3,10 @@ package com.aone.menurandomchoice.views.customermain;
 import android.view.View;
 
 import com.aone.menurandomchoice.views.base.BaseContract;
+import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
+import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
+
+import androidx.annotation.NonNull;
 
 public interface CustomerMainContract {
 
@@ -20,6 +24,10 @@ public interface CustomerMainContract {
         void requestMenuList(double latitude, double longitude);
 
         void stopNetwork();
+
+        void setAdapterModel(@NonNull MenuCategoryAdapterContract.Model<MenuCategoryItem> menuCategoryAdapterModel);
+
+        void handlingMenuCategoryItemClick(int position);
     }
 
 }
