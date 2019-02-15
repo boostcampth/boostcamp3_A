@@ -5,6 +5,7 @@ import android.content.Intent;
 import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
 import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
+import com.aone.menurandomchoice.repository.model.LoginData;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.remote.APIHelper;
 import com.aone.menurandomchoice.repository.remote.APIRepository;
@@ -77,8 +78,8 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void requestSignedUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener) {
-        apiHelper.requestSignedUpCheck(userId, onSignedUpCheckListener);
+    public void requestSignedUpCheck(long userId, @NonNull NetworkResponseListener<LoginData> networkResponseListener) {
+        apiHelper.requestSignedUpCheck(userId, networkResponseListener);
     }
 
     @Override

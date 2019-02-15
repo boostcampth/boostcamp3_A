@@ -38,19 +38,19 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
     }
 
     private void requestSignUpCheck(final long userId, final KakaoLoginType kakaoLoginType) {
-        getRepository().requestSignedUpCheck(userId, new OnSignedUpCheckListener() {
-            @Override
-            public void onAlreadySignedUp() {
-                moveToOwnerDetailActivity(userId);
-            }
-
-            @Override
-            public void onNotSignUp() {
-                if (kakaoLoginType != KakaoLoginType.LOGGEDIN) {
-                    moveToSignUpActivity(userId);
-                }
-            }
-        });
+//        getRepository().requestSignedUpCheck(userId, new OnSignedUpCheckListener() {
+//            @Override
+//            public void onAlreadySignedUp() {
+//                moveToOwnerDetailActivity(userId);
+//            }
+//
+//            @Override
+//            public void onNotSignUp() {
+//                if (kakaoLoginType != KakaoLoginType.LOGGEDIN) {
+//                    moveToSignUpActivity(userId);
+//                }
+//            }
+//        });
     }
 
     private void moveToOwnerDetailActivity(long userId) {

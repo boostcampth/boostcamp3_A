@@ -1,5 +1,6 @@
 package com.aone.menurandomchoice.views.main;
 
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseContract;
 
 public interface MainContract {
@@ -10,7 +11,7 @@ public interface MainContract {
 
         void moveToOwnerLoginActivity();
 
-        void moveToOwnerStoreActivity();
+        void moveToOwnerStoreActivity(UserAccessInfo userAccessInfo);
 
     }
 

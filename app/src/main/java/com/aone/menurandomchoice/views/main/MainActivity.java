@@ -2,13 +2,12 @@ package com.aone.menurandomchoice.views.main;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.customermain.CustomerMainActivity;
 import com.aone.menurandomchoice.databinding.ActivityMainBinding;
@@ -68,8 +67,9 @@ public class MainActivity
     }
 
     @Override
-    public void moveToOwnerStoreActivity() {
+    public void moveToOwnerStoreActivity(UserAccessInfo userAccessInfo) {
         Intent ownerStoreIntent = new Intent(this, OwnerStoreActivity.class);
+        ownerStoreIntent.putExtra(OwnerStoreActivity.EXTRA_USER_ACCESS_INFO, userAccessInfo);
         startActivity(ownerStoreIntent);
     }
 
