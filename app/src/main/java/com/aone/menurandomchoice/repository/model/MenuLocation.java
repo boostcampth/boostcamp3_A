@@ -1,6 +1,7 @@
-package com.aone.menurandomchoice.repository.network.pojo;
+package com.aone.menurandomchoice.repository.model;
 
 public class MenuLocation {
+
     private double latitude;
     private double longitude;
     private int category;

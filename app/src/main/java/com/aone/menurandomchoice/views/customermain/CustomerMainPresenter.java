@@ -1,16 +1,18 @@
 package com.aone.menurandomchoice.views.customermain;
 
 import com.aone.menurandomchoice.R;
-import com.aone.menurandomchoice.repository.network.NetworkResponseListener;
-import com.aone.menurandomchoice.repository.network.mapper.MenuMapper;
 import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
-import com.aone.menurandomchoice.repository.network.pojo.MenuLocation;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
+import android.util.Log;
 
-import java.util.ArrayList;
+import com.aone.menurandomchoice.repository.model.MenuLocation;
+import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.remote.mapper.MenuMapper;
+
 import java.util.List;
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 
@@ -22,15 +24,16 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
 
     public void requestMenuList(double latitude, double longitude) {
         getRepository().requestMenuLocation(MenuMapper.createRequestLocationQueryMap(latitude,longitude),
-                new NetworkResponseListener<MenuLocationResponseBody>() {
+                new NetworkResponseListener<List<MenuLocation>>() {
                     @Override
-                    public void onError() {
-
+                    public void onReceived(@NonNull List<MenuLocation> response) {
+                        Log.d("Menu", response.toString());
+                        menuList = response;
                     }
 
                     @Override
-                    public void onReceived(MenuLocationResponseBody response) {
-                        menuList = response.getData();
+                    public void onError() {
+
                     }
         });
     }

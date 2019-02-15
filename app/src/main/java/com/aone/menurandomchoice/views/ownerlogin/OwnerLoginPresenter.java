@@ -8,7 +8,7 @@ import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginError;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginType;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
-import com.aone.menurandomchoice.repository.server.OnSignedUpCheckListener;
+import com.aone.menurandomchoice.repository.remote.OnSignedUpCheckListener;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
 import androidx.annotation.NonNull;

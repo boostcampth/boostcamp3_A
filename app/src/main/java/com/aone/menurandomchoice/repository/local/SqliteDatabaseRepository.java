@@ -11,9 +11,7 @@ import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import androidx.annotation.NonNull;
 
