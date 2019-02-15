@@ -54,8 +54,7 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
 
     private void moveToOwnerStoreActivity(LoginData loginData) {
         if(isAttachView()) {
-            int storeIndex = loginData.getStoreIdx();
-            getView().moveToOwnerStoreActivity(new UserAccessInfo(storeIndex, true));
+            getView().moveToOwnerStoreActivity(new UserAccessInfo(loginData.getStoreIdx(), true));
         }
     }
 

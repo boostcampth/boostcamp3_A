@@ -31,6 +31,6 @@ public interface APIHelper {
 
     void requestSignUp(long userId,
                        @NonNull String accessKey,
-                       @NonNull OnSignUpRequestListener onSignUpRequestListener);
+                       @NonNull NetworkResponseListener<LoginData> networkResponseListener);
 
 }

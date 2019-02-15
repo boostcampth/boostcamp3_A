@@ -65,10 +65,7 @@ public class MainPresenter extends BasePresenter<MainContract.View>
 
     private void handlingAlreadySignedUp(LoginData loginData) {
         if(isAttachView()) {
-            int storeIndex = loginData.getStoreIdx();
-            boolean isOwner = true;
-
-            getView().moveToOwnerStoreActivity(new UserAccessInfo(storeIndex, isOwner));
+            getView().moveToOwnerStoreActivity(new UserAccessInfo(loginData.getStoreIdx(), true));
         }
     }
 }

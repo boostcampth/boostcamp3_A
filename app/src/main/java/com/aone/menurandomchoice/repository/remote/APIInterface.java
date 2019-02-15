@@ -4,6 +4,7 @@ import com.aone.menurandomchoice.repository.model.LoginData;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.OwnerInfo;
+import com.aone.menurandomchoice.repository.model.SignUpData;
 import com.aone.menurandomchoice.repository.remote.response.JMTResponseBody;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
@@ -39,4 +40,6 @@ public interface APIInterface {
     @POST("login")
     Call<JMTResponseBody<LoginData>> getSignedUpCheckRequest(@Body OwnerInfo ownerInfo);
 
+    @POST("access")
+    Call<JMTResponseBody<LoginData>> getSignUpRequest(@Body SignUpData signUpData);
 }

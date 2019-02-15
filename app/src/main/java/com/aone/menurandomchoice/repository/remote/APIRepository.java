@@ -1,14 +1,12 @@
 package com.aone.menurandomchoice.repository.remote;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.LoginData;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.OwnerInfo;
+import com.aone.menurandomchoice.repository.model.SignUpData;
 import com.aone.menurandomchoice.repository.remote.response.JMTCallback;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.repository.remote.response.KakaoCallback;
@@ -104,38 +102,16 @@ public class APIRepository implements APIHelper {
         }
     }
 
-//    @Override
-//    public void requestSignedUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener) {
-//        try {
-//            SharedPreferences pref = GlobalApplication.getGlobalApplicationContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
-//            boolean isSignedUp = pref.getBoolean(String.valueOf(userId), false);
-//            if(isSignedUp) {
-//                onSignedUpCheckListener.onAlreadySignedUp();
-//            } else {
-//                onSignedUpCheckListener.onNotSignUp();
-//            }
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-
-    /**
-     * do check sign up of userId from server
-     * but we don't have a server yet.
-     * so, I used virtual logic.
-     */
     @Override
-    public void requestSignUp(long userId, @NonNull String accessKey, @NonNull OnSignUpRequestListener onSignUpRequestListener) {
-        try {
-            SharedPreferences pref = GlobalApplication.getGlobalApplicationContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean(String.valueOf(userId), true);
-            editor.commit();
-
-            onSignUpRequestListener.onSignUpSuccess();
-        } catch (Exception e) {
-            onSignUpRequestListener.onSignUpFail();
+    public void requestSignUp(long userId,
+                              @NonNull String accessKey,
+                              @NonNull NetworkResponseListener<LoginData> listener) {
+        if(NetworkUtil.isNetworkConnecting()) {
+            apiCreator.getApiInstance()
+                    .getSignUpRequest(new SignUpData(String.valueOf(userId), accessKey))
+                    .enqueue(new JMTCallback<>(listener));
+        } else {
+            listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
         }
     }
-
 }

@@ -11,14 +11,13 @@ import com.aone.menurandomchoice.repository.remote.APIHelper;
 import com.aone.menurandomchoice.repository.remote.APIRepository;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
-import com.aone.menurandomchoice.repository.local.db.SqliteDatabaseHelper;
-import com.aone.menurandomchoice.repository.local.db.SqliteDatabaseRepository;
+import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseHelper;
+import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseRepository;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginRepository;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLogoutListener;
-import com.aone.menurandomchoice.repository.remote.OnSignUpRequestListener;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class DataRepository implements Repository {
     private static Repository repository;
     private KakaoLoginHelper kakaoLoginHelper;
     private APIHelper apiHelper;
-    private SqliteDatabaseHelper sqliteDatabaseHelper;
+    private SQLiteDatabaseHelper SQLiteDatabaseHelper;
     private PreferencesHelper preferencesHelper;
 
     @NonNull
@@ -47,7 +46,7 @@ public class DataRepository implements Repository {
     private DataRepository() {
         kakaoLoginHelper = KakaoLoginRepository.getInstance();
         apiHelper = APIRepository.getInstance();
-        sqliteDatabaseHelper = SqliteDatabaseRepository.getInstance();
+        SQLiteDatabaseHelper = SQLiteDatabaseRepository.getInstance();
         preferencesHelper = new PreferencesRepository();
     }
 
@@ -82,8 +81,10 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void requestSignUp(long userId, @NonNull String accessKey, @NonNull OnSignUpRequestListener onSignUpRequestListener) {
-        apiHelper.requestSignUp(userId, accessKey, onSignUpRequestListener);
+    public void requestSignUp(long userId,
+                              @NonNull String accessKey,
+                              @NonNull NetworkResponseListener<LoginData> networkResponseListener) {
+        apiHelper.requestSignUp(userId, accessKey, networkResponseListener);
     }
 
     @Override
@@ -152,18 +153,18 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void addStoreDetail() {
-        sqliteDatabaseHelper.addStoreDetail();
+    public void addDefaultStoreDetail() {
+        SQLiteDatabaseHelper.addDefaultStoreDetail();
     }
 
     @Override
     public StoreDetail getStoreDetail() {
-        return sqliteDatabaseHelper.getStoreDetail();
+        return SQLiteDatabaseHelper.getStoreDetail();
     }
 
     @Override
     public void updateStoreDetail(@NonNull final StoreDetail storeDetail) {
-        sqliteDatabaseHelper.updateStoreDetail(storeDetail);
+        SQLiteDatabaseHelper.updateStoreDetail(storeDetail);
     }
 
     @Override

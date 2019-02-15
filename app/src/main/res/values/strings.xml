@@ -33,6 +33,7 @@
     <string name="activity_owner_sign_up_label">업주 회원가입</string>
     <string name="activity_owner_button_sign_up_request">회원가입 요청</string>
     <string name="activity_owner_access_key_hint">인증번호 6자리</string>
+    <string name="activity_owner_access_key_guide">인증번호 6자리를 입력하세요</string>
 
     <!-- layout_search_box -->
     <string name="layout_search_box_search_hint">장소 검색</string>

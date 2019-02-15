@@ -10,6 +10,8 @@ import android.view.View;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerSignUpBinding;
+import com.aone.menurandomchoice.repository.model.LoginData;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
@@ -71,9 +73,10 @@ public class OwnerSignUpActivity
     }
 
     @Override
-    public void moveToOwnerStoreActivity(long userId) {
-        Intent ownerDetailIntent = new Intent(OwnerSignUpActivity.this, OwnerStoreActivity.class);
-        startActivity(ownerDetailIntent);
+    public void moveToOwnerStoreActivity(@NonNull UserAccessInfo userAccessInfo) {
+        Intent ownerStoreIntent = new Intent(OwnerSignUpActivity.this, OwnerStoreActivity.class);
+        ownerStoreIntent.putExtra(OwnerStoreActivity.EXTRA_USER_ACCESS_INFO, userAccessInfo);
+        startActivity(ownerStoreIntent);
         finish();
     }
 
