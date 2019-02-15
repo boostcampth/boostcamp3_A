@@ -28,6 +28,8 @@ public class JMTCallback<T> implements Callback<JMTResponseBody<T>> {
                 } else {
                     listener.onError(JMTErrorCode.convertToJMTErrorCode(statusCode));
                 }
+
+                return;
             }
         }
 
