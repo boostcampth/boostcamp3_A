@@ -21,12 +21,15 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
 
     @Override
     public void handlingDeviceKaKaoAccountLogin() {
+        showProgressBarOfView();
         getRepository().executeDeviceKakaoAccountLogin(onKakaoLoginListener);
     }
 
     @Override
     public void handlingOtherKaKaoAccountLogin() {
+        showProgressBarOfView();
         getRepository().executeOtherKakaoAccountLogin(onKakaoLoginListener);
+
     }
 
     @Override
@@ -43,29 +46,35 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
 
             @Override
             public void onError(JMTErrorCode errorCode) {
-                if(errorCode == JMTErrorCode.REQUEST_NO_RESULT) {
+                hideProgressBarOfView();
+
+                if (errorCode == JMTErrorCode.REQUEST_NO_RESULT) {
                     moveToSignUpActivity(userId);
                 } else {
                     handlingJMTError(errorCode);
                 }
             }
         });
+
     }
 
     private void moveToOwnerStoreActivity(LoginData loginData) {
         if(isAttachView()) {
+            getView().hideProgressDialog();
             getView().moveToOwnerStoreActivity(new UserAccessInfo(loginData.getStoreIdx(), true));
         }
     }
 
     private void moveToSignUpActivity(long userId) {
         if(isAttachView()) {
+            getView().hideProgressDialog();
             getView().moveToSignUpActivity(userId);
         }
     }
 
     private void handlingKakaoLoginError(KakaoLoginError kakaoLoginError) {
         if(isAttachView()) {
+            getView().hideProgressDialog();
             String errorMessage = getErrorMessage(kakaoLoginError.getStringResourceId());
             getView().showToastMessage(errorMessage);
         }
@@ -73,6 +82,7 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
 
     private void handlingJMTError(JMTErrorCode errorCode) {
         if(isAttachView()) {
+            getView().hideProgressDialog();
             String errorMessage = getErrorMessage(errorCode.getStringResourceId());
             getView().showToastMessage(errorMessage);
         }
@@ -88,11 +98,13 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
 
         @Override
         public void onKakaoLoginSuccess(long userId) {
+            showProgressBarOfView();
             requestSignUpCheck(userId);
         }
 
         @Override
         public void onFail(@NonNull KakaoLoginError kakaoLoginError) {
+            hideProgressBarOfView();
             handlingKakaoLoginError(kakaoLoginError);
         }
 

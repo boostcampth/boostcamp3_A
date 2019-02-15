@@ -16,6 +16,7 @@ public class MainPresenter extends BasePresenter<MainContract.View>
 
     @Override
     public void handlingCustomerEnterButtonClick() {
+        showProgressBarOfView();
         if(isAttachView()) {
             getView().moveToCustomerMainActivity();
         }
@@ -23,6 +24,7 @@ public class MainPresenter extends BasePresenter<MainContract.View>
 
     @Override
     public void handlingOwnerLoginButtonClick() {
+        showProgressBarOfView();
         getRepository().checkLoggedinAccount(new OnKakaoLoginListener() {
             @Override
             public void onKakaoLoginSuccess(long userId) {
@@ -31,9 +33,8 @@ public class MainPresenter extends BasePresenter<MainContract.View>
 
             @Override
             public void onFail(@NonNull KakaoLoginError kakaoLoginError) {
-                if (isAttachView()) {
-                    getView().moveToOwnerLoginActivity();
-                }
+                hideProgressBarOfView();
+                handlingKakaoLoginFail();
             }
         });
     }
@@ -42,11 +43,13 @@ public class MainPresenter extends BasePresenter<MainContract.View>
         getRepository().requestSignedUpCheck(userId, new NetworkResponseListener<LoginData>() {
             @Override
             public void onReceived(@NonNull LoginData loginData) {
-                handlingAlreadySignedUp(loginData);
+                showProgressBarOfView();
+                moveToOwnerStoreActivity(loginData);
             }
 
             @Override
             public void onError(JMTErrorCode errorCode) {
+                showProgressBarOfView();
                 requestKakaoAccountLogout();
             }
         });
@@ -56,16 +59,27 @@ public class MainPresenter extends BasePresenter<MainContract.View>
         getRepository().executeKakaoAccountLogout(new OnKakaoLogoutListener() {
             @Override
             public void onKakaoLogoutSuccess() {
-                if(isAttachView()) {
-                    getView().moveToOwnerLoginActivity();
-                }
+                showProgressBarOfView();
+                moveToOwnerLoginActivity();
             }
         });
     }
 
-    private void handlingAlreadySignedUp(LoginData loginData) {
+    private void moveToOwnerStoreActivity(LoginData loginData) {
         if(isAttachView()) {
             getView().moveToOwnerStoreActivity(new UserAccessInfo(loginData.getStoreIdx(), true));
+        }
+    }
+
+    private void handlingKakaoLoginFail() {
+        if (isAttachView()) {
+            getView().moveToOwnerLoginActivity();
+        }
+    }
+
+    private void moveToOwnerLoginActivity() {
+        if(isAttachView()) {
+            getView().moveToOwnerLoginActivity();
         }
     }
 }

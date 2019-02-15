@@ -17,10 +17,14 @@ public class OwnerSignUpPresenter extends BasePresenter<OwnerSignUpContract.View
 
     @Override
     public void requestSignUp(final long userId, @NonNull String accessKey) {
-        if (isPossibleAccessKey(accessKey)) {
-            requestSignUpToRepository(userId, accessKey);
-        } else {
-            sendMessageToView(R.string.activity_owner_access_key_guide);
+        if(isAttachView()) {
+            getView().showProgressDialog();
+            if (isPossibleAccessKey(accessKey)) {
+                requestSignUpToRepository(userId, accessKey);
+            } else {
+                getView().hideProgressDialog();
+                sendMessageToView(R.string.activity_owner_access_key_guide);
+            }
         }
 
     }
@@ -39,6 +43,7 @@ public class OwnerSignUpPresenter extends BasePresenter<OwnerSignUpContract.View
 
             @Override
             public void onError(JMTErrorCode errorCode) {
+                getView().hideProgressDialog();
                 sendMessageToView(errorCode.getStringResourceId());
             }
         });
@@ -46,6 +51,7 @@ public class OwnerSignUpPresenter extends BasePresenter<OwnerSignUpContract.View
 
     private void moveToOwnerDetailActivity(LoginData loginData) {
         if (isAttachView()) {
+            getView().hideProgressDialog();
             getView().moveToOwnerStoreActivity(new UserAccessInfo(loginData.getStoreIdx(), false));
         }
     }
