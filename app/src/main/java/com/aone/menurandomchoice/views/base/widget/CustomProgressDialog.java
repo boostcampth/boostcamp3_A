@@ -46,6 +46,7 @@ public class CustomProgressDialog {
         if(activity != null && !activity.isFinishing()) {
             progressDialog = new AppCompatDialog(activity);
             progressDialog.setContentView(R.layout.custom_progress_dialog);
+            progressDialog.setCancelable(false);
             Window progressWindow = progressDialog.getWindow();
             if (progressWindow != null) {
                 progressWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

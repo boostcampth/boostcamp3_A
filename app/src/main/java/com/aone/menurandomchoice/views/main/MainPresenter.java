@@ -59,7 +59,7 @@ public class MainPresenter extends BasePresenter<MainContract.View>
         getRepository().executeKakaoAccountLogout(new OnKakaoLogoutListener() {
             @Override
             public void onKakaoLogoutSuccess() {
-                showProgressBarOfView();
+                hideProgressBarOfView();
                 moveToOwnerLoginActivity();
             }
         });
