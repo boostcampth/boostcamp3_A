@@ -3,14 +3,17 @@ package com.aone.menurandomchoice.views.menuselect;
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.model.UserAccessInfo;
+import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.menuselect.adapter.MenuSelectOverlapViewAdapterContract;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
     implements MenuSelectContract.Presenter {
@@ -18,8 +21,15 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
     private MenuSelectOverlapViewAdapterContract.Model adapterModel;
 
     @Override
-    public void requestMenuList() {
-        requestMenuDetailListToRepository();
+    public void requestMenuList(@Nullable MenuSearchRequest menuSearchRequest) {
+        menuSearchRequest = new MenuSearchRequest(111,111,111,"DD");
+
+        if(menuSearchRequest != null) {
+            requestMenuDetailListToRepository(menuSearchRequest);
+        } else {
+            sendErrorMessageToView(R.string.item_menu_select_system_error);
+            getView().finish();
+        }
     }
 
     @Override
@@ -37,15 +47,21 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
         }
     }
 
-    private void requestMenuDetailListToRepository() {
-        List<MenuDetail> menuDetailList = new ArrayList<>();
-        menuDetailList.add(new MenuDetail("김치말이국수", 15000, R.drawable.test1, "이거 완전맛있어용~!!! 먹어보세용~!!!! 두말하면 잔소리~!!", "한식", 0));
-        menuDetailList.add(new MenuDetail("얼큰순대국",7000, R.drawable.test2, "숙취 해소에는 이만한게 없지용~!!", "한식", 0));
-        menuDetailList.add(new MenuDetail("이름이 엄청나게 긴 메뉴입니당", 12000, R.drawable.test3, "메뉴 설명 짧게도 해보고", "한식", 0));
+    private void requestMenuDetailListToRepository(MenuSearchRequest menuSearchRequest) {
+        getRepository().requestMenuList(menuSearchRequest, new NetworkResponseListener<List<MenuDetail>>() {
+            @Override
+            public void onReceived(@NonNull List<MenuDetail> menuDetailList) {
+                if(adapterModel != null) {
+                    adapterModel.setItemList(menuDetailList);
+                }
+            }
 
-        if(adapterModel != null) {
-            adapterModel.setItemList(menuDetailList);
-        }
+            @Override
+            public void onError(JMTErrorCode errorCode) {
+                sendErrorMessageToView(errorCode.getStringResourceId());
+                getView().finish();
+            }
+        });
     }
 
     private UserAccessInfo getUserAccessInfo() {

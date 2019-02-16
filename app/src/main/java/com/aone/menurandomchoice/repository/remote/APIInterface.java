@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.repository.remote;
 
 import com.aone.menurandomchoice.repository.model.LoginData;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.OwnerInfo;
@@ -42,4 +43,8 @@ public interface APIInterface {
 
     @POST("access")
     Call<JMTResponseBody<LoginData>> getSignUpRequest(@Body SignUpData signUpData);
+
+    @GET("maps/menu")
+    Call<JMTResponseBody<List<MenuDetail>>> createMenuListRequestCall(@QueryMap Map<String, String> searchRequest);
+
 }

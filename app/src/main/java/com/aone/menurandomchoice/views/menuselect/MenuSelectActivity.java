@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuSelectBinding;
+import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menuselect.adapter.MenuSelectOverlapViewAdapter;
@@ -18,13 +19,15 @@ public class MenuSelectActivity
         extends BaseActivity<ActivityMenuSelectBinding, MenuSelectContract.View, MenuSelectContract.Presenter>
         implements MenuSelectContract.View {
 
+    public static final String EXTRA_MENU_SEARCH_REQUEST = "EXTRA_MENU_SEARCH_REQUEST";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setUpPresenterToDataBinding();
         setUpOverlapView();
-        getPresenter().requestMenuList();
+        passedGetIntentInfoToPresenter();
     }
 
     @Override
@@ -76,6 +79,11 @@ public class MenuSelectActivity
         Intent ownerStoreIntent = new Intent(this, OwnerStoreActivity.class);
         ownerStoreIntent.putExtra(OwnerStoreActivity.EXTRA_USER_ACCESS_INFO, userAccessInfo);
         startActivity(ownerStoreIntent);
+    }
+
+    private void passedGetIntentInfoToPresenter() {
+        MenuSearchRequest menuSearchRequest = getIntent().getParcelableExtra(EXTRA_MENU_SEARCH_REQUEST);
+        getPresenter().requestMenuList(menuSearchRequest);
     }
 
 }

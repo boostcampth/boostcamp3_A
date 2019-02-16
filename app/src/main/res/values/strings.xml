@@ -62,6 +62,7 @@
     <string name="item_menu_select_label">메뉴 선택</string>
     <string name="item_menu_select_price_tv">원</string>
     <string name="item_menu_select_error">앱에서 에러가 했습니다. 개발자에게 알려주세요</string>
+    <string name="item_menu_select_system_error">시스템에서 오류가 발생했습니다. 개발자에게 알려주세요</string>
 
     <!-- activity_menu_register -->
     <string name="activity_menu_register_label">메뉴 등록</string>

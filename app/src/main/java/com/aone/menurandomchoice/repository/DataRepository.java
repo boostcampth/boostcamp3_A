@@ -6,7 +6,9 @@ import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
 import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.LoginData;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
+import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.remote.APIHelper;
 import com.aone.menurandomchoice.repository.remote.APIRepository;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
@@ -110,6 +112,12 @@ public class DataRepository implements Repository {
                                   @NonNull String updateTime,
                                   @NonNull NetworkResponseListener<EmptyObject> networkResponseListener) {
         apiHelper.checkStoreUpdated(storeIdx, updateTime, networkResponseListener);
+    }
+
+    @Override
+    public void requestMenuList(@NonNull MenuSearchRequest menuSearchRequest,
+                                                 @NonNull NetworkResponseListener<List<MenuDetail>> networkResponseListener) {
+        apiHelper.requestMenuList(menuSearchRequest, networkResponseListener);
     }
 
     @Override
