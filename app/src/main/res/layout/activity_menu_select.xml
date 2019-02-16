@@ -19,4 +19,5 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,6 +59,7 @@
     <string name="item_menu_owner_register_ok">완료</string>
 
     <!-- item_menu_select_view -->
+    <string name="item_menu_select_label">메뉴 선택</string>
     <string name="item_menu_select_price_tv">원</string>
 
     <!-- activity_menu_register -->
