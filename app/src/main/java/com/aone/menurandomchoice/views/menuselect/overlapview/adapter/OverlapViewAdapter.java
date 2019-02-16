@@ -18,7 +18,11 @@ public abstract class OverlapViewAdapter<VH extends OverlapView.ViewHolder> {
     }
 
     public void moveTopViewIndexToNext() {
-        topViewIndex ++;
+        if(topViewIndex < getItemCount() - 1) {
+            topViewIndex ++;
+        } else {
+            topViewIndex = 0;
+        }
     }
 
     public int getTopViewIndex() {

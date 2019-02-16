@@ -1,10 +1,12 @@
-package com.aone.menurandomchoice.views.menuselect;
+package com.aone.menurandomchoice.views.menuselect.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.views.menuselect.adapter.viewholder.MenuSelectOverlapViewViewHolder;
 import com.aone.menurandomchoice.views.menuselect.overlapview.adapter.OverlapViewAdapter;
 
 import java.util.ArrayList;
@@ -18,11 +20,13 @@ import androidx.annotation.NonNull;
  * 실제 구현과는 별개의 코드. 전부 삭제해야 함.
  */
 
-public class TestOverlapViewAdapter extends OverlapViewAdapter<TestOverlapViewViewHolder> {
+public class MenuSelectOverlapViewAdapter
+        extends OverlapViewAdapter<MenuSelectOverlapViewViewHolder>
+        implements MenuSelectOverlapViewAdapterContract.Model {
 
-    private List<TestData> itemList;
+    private List<MenuDetail> itemList;
 
-    TestOverlapViewAdapter() {
+    public MenuSelectOverlapViewAdapter() {
         setUp();
     }
 
@@ -31,13 +35,13 @@ public class TestOverlapViewAdapter extends OverlapViewAdapter<TestOverlapViewVi
     }
 
     @Override
-    public TestOverlapViewViewHolder onCreateView(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup) {
+    public MenuSelectOverlapViewViewHolder onCreateView(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup) {
         View menuItemView = layoutInflater.inflate(R.layout.item_menu_select_view, viewGroup, false);
-        return new TestOverlapViewViewHolder(menuItemView);
+        return new MenuSelectOverlapViewViewHolder(menuItemView);
     }
 
     @Override
-    public void onBindView(@NonNull TestOverlapViewViewHolder viewHolder) {
+    public void onBindView(@NonNull MenuSelectOverlapViewViewHolder viewHolder) {
         int itemPosition = viewHolder.getItemPosition();
         viewHolder.setItem(itemList.get(itemPosition));
     }
@@ -47,12 +51,12 @@ public class TestOverlapViewAdapter extends OverlapViewAdapter<TestOverlapViewVi
         return itemList.size();
     }
 
-    public void setItemList(@NonNull List<TestData> itemList) {
+    public void setItemList(@NonNull List<MenuDetail> itemList) {
         this.itemList = itemList;
         notifyDataSetChange();
     }
 
-    public TestData getTopViewData() {
+    public MenuDetail getTopViewData() {
         return itemList.get(getTopViewIndex());
     }
 
