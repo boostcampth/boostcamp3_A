@@ -61,7 +61,7 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
             public void onError(JMTErrorCode errorCode) {
                 hideProgressBarOfView();
                 sendErrorMessageToView(errorCode.getStringResourceId());
-                getView().finish();
+                finishView();
             }
         });
     }
