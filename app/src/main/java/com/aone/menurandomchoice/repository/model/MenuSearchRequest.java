@@ -10,6 +10,10 @@ public class MenuSearchRequest implements Parcelable {
     private int radius;
     private String category;
 
+    public MenuSearchRequest() {
+
+    }
+
     public MenuSearchRequest(double latitude, double longitude, int radius, String category) {
         this.latitude = latitude;
         this.longitude = longitude;

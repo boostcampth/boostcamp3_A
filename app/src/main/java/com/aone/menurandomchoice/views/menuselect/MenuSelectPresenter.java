@@ -22,13 +22,13 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
 
     @Override
     public void requestMenuList(@Nullable MenuSearchRequest menuSearchRequest) {
-        menuSearchRequest = new MenuSearchRequest(111,111,111,"DD");
-
         if(menuSearchRequest != null) {
+            showProgressBarOfView();
             requestMenuDetailListToRepository(menuSearchRequest);
         } else {
+            hideProgressBarOfView();
             sendErrorMessageToView(R.string.item_menu_select_system_error);
-            getView().finish();
+            finishView();
         }
     }
 
@@ -51,6 +51,7 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
         getRepository().requestMenuList(menuSearchRequest, new NetworkResponseListener<List<MenuDetail>>() {
             @Override
             public void onReceived(@NonNull List<MenuDetail> menuDetailList) {
+                hideProgressBarOfView();
                 if(adapterModel != null) {
                     adapterModel.setItemList(menuDetailList);
                 }
@@ -58,6 +59,7 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
 
             @Override
             public void onError(JMTErrorCode errorCode) {
+                hideProgressBarOfView();
                 sendErrorMessageToView(errorCode.getStringResourceId());
                 getView().finish();
             }
@@ -83,10 +85,16 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
         }
     }
 
-    private void sendErrorMessageToView(int stringResourceId) {
+    private void sendErrorMessageToView(int resourceId) {
         if(isAttachView()) {
-            String errorMessage = GlobalApplication.getGlobalApplicationContext().getString(stringResourceId);
+            String errorMessage = GlobalApplication.getGlobalApplicationContext().getString(resourceId);
             getView().showToastMessage(errorMessage);
+        }
+    }
+
+    private void finishView() {
+        if(isAttachView()) {
+            getView().finish();
         }
     }
 

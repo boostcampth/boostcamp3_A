@@ -58,12 +58,6 @@ public class MenuSelectActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.item_menu_owner_menu_register, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -82,7 +76,13 @@ public class MenuSelectActivity
     }
 
     private void passedGetIntentInfoToPresenter() {
-        MenuSearchRequest menuSearchRequest = getIntent().getParcelableExtra(EXTRA_MENU_SEARCH_REQUEST);
+        MenuSearchRequest menuSearchRequest = new MenuSearchRequest();
+
+        //menuSearchRequest는 getIntent를 통해 얻게된 객체를 넘겨줘야 하지만
+        //아직 전 화면의 기능이 완성되지 않았기 때문에 테스트를 위해 빈 객체를
+        //넘겨줌
+        //MenuSearchRequest menuSearchRequest = getIntent().getParcelableExtra(EXTRA_MENU_SEARCH_REQUEST);
+
         getPresenter().requestMenuList(menuSearchRequest);
     }
 

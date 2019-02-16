@@ -13,12 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-
-
-/**
- * OverlapView 가 정상적으로 작동되는지 확인하기 위한 테스트 코드이므로
- * 실제 구현과는 별개의 코드. 전부 삭제해야 함.
- */
+import androidx.annotation.Nullable;
 
 public class MenuSelectOverlapViewAdapter
         extends OverlapViewAdapter<MenuSelectOverlapViewViewHolder>
@@ -56,8 +51,18 @@ public class MenuSelectOverlapViewAdapter
         notifyDataSetChange();
     }
 
+    @Nullable
+    @Override
     public MenuDetail getTopViewData() {
-        return itemList.get(getTopViewIndex());
+        if(hasData()) {
+            return itemList.get(getTopViewIndex());
+        } else {
+            return null;
+        }
+    }
+
+    private boolean hasData() {
+        return 0 < itemList.size();
     }
 
 }
