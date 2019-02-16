@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.views.menuselect.overlapview;
+package com.aone.menurandomchoice.views.menuselect.overlapview.animation;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -7,7 +7,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-class OverlapViewDefaultAnimation implements OverlapViewAnimationHelper {
+public class OverlapViewDefaultAnimation implements OverlapViewAnimationHelper {
 
     private static final int PLAY_TIME = 200;
 

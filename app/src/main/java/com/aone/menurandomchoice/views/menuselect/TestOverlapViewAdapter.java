@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aone.menurandomchoice.R;
-import com.aone.menurandomchoice.views.menuselect.overlapview.OverlapViewAdapter;
+import com.aone.menurandomchoice.views.menuselect.overlapview.adapter.OverlapViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,19 +31,19 @@ public class TestOverlapViewAdapter extends OverlapViewAdapter<TestOverlapViewVi
     }
 
     @Override
-    protected TestOverlapViewViewHolder onCreateView(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup) {
+    public TestOverlapViewViewHolder onCreateView(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup) {
         View menuItemView = layoutInflater.inflate(R.layout.item_menu_select_view, viewGroup, false);
         return new TestOverlapViewViewHolder(menuItemView);
     }
 
     @Override
-    protected void onBindView(@NonNull TestOverlapViewViewHolder viewHolder) {
+    public void onBindView(@NonNull TestOverlapViewViewHolder viewHolder) {
         int itemPosition = viewHolder.getItemPosition();
         viewHolder.setItem(itemList.get(itemPosition));
     }
 
     @Override
-    protected int getItemCount() {
+    public int getItemCount() {
         return itemList.size();
     }
 

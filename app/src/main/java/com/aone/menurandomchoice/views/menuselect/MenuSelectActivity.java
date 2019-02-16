@@ -1,22 +1,24 @@
 package com.aone.menurandomchoice.views.menuselect;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 
 import android.os.Bundle;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.databinding.ActivityMenuSelectBinding;
+import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuSelectActivity extends AppCompatActivity {
+public class MenuSelectActivity
+        extends BaseActivity<ActivityMenuSelectBinding, MenuSelectContract.View, MenuSelectContract.Presenter>
+        implements MenuSelectContract.View {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_select);
-
 
         /**
          * 아래에 있는 코드들은 OverlapView 테스트를 위한 샘플 코드
@@ -33,6 +35,23 @@ public class MenuSelectActivity extends AppCompatActivity {
         TestOverlapViewAdapter testOverlapViewAdapter = new TestOverlapViewAdapter();
         testOverlapViewAdapter.setItemList(getTestDataList());
         overlapView.setOverlapViewAdapter(testOverlapViewAdapter);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_menu_select;
+    }
+
+    @NonNull
+    @Override
+    protected MenuSelectContract.Presenter setUpPresenter() {
+        return new MenuSelectPresenter();
+    }
+
+    @NonNull
+    @Override
+    protected MenuSelectContract.View getView() {
+        return this;
     }
     
     private List<TestData> getTestDataList() {
