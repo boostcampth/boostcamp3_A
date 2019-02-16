@@ -10,6 +10,8 @@ public interface MenuSelectContract {
 
     interface Presenter extends BaseContract.Presenter<MenuSelectContract.View> {
 
+        void handlingMenuSelectButtonClick();
+
     }
 
 }

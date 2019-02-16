@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.aone.menurandomchoice.views.menuselect.MenuSelectContract.Presenter"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:clipChildren="false"
-        tools:context=".views.menuselect.MenuSelectActivity">
+        android:clipChildren="false">
 
         <com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView
             android:id="@+id/test_overlapView"
@@ -18,12 +24,22 @@
             android:layout_marginTop="@dimen/middle_margin"
             android:layout_marginRight="@dimen/middle_margin"
             android:layout_marginBottom="@dimen/middle_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/activity_menu_select_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
         </com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView>
+
+        <Button
+            android:id="@+id/activity_menu_select_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="@dimen/middle_margin"
+            android:background="@drawable/item_menu_select_ok_selector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
