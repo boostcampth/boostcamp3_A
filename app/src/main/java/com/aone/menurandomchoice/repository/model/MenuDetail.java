@@ -1,5 +1,6 @@
 package com.aone.menurandomchoice.repository.model;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -16,8 +17,13 @@ public class MenuDetail extends BaseObservable implements Parcelable {
     private String description;
     private String category;
     private int sequence;
+    private int storeIdx;
 
-    public MenuDetail() {
+    //로컬에서 테스트를 하기 위해, 로컬의 이미지 id를 담기 위한 임시 코드
+    //삭제 예정
+    int url;
+    public int getUrl() {
+        return url;
     }
 
     protected MenuDetail(Parcel in) {
@@ -27,6 +33,8 @@ public class MenuDetail extends BaseObservable implements Parcelable {
         description = in.readString();
         category = in.readString();
         sequence = in.readInt();
+        storeIdx = in.readInt();
+        url = in.readInt();
     }
 
     @Override
@@ -37,6 +45,8 @@ public class MenuDetail extends BaseObservable implements Parcelable {
         dest.writeString(description);
         dest.writeString(category);
         dest.writeInt(sequence);
+        dest.writeInt(storeIdx);
+        dest.writeInt(url);
     }
 
     @Override
@@ -55,6 +65,18 @@ public class MenuDetail extends BaseObservable implements Parcelable {
             return new MenuDetail[size];
         }
     };
+
+    public MenuDetail() {
+    }
+
+    public MenuDetail(String name, int price, int photoUrl, String description, String category, int sequence) {
+        this.name = name;
+        this.price = price;
+        this.url = photoUrl;
+        this.description = description;
+        this.category = category;
+        this.sequence = sequence;
+    }
 
     @Bindable
     public String getName() { return name; }
@@ -104,4 +126,15 @@ public class MenuDetail extends BaseObservable implements Parcelable {
         this.sequence = sequence;
     }
 
+    public int getStoreIdx() {
+        return storeIdx;
+    }
+
+    public void setStoreIdx(int storeIdx) {
+        this.storeIdx = storeIdx;
+    }
+
+    public String getPriceStr() {
+        return price + "";
+    }
 }

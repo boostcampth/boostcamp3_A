@@ -29,7 +29,6 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
     public void handlingOtherKaKaoAccountLogin() {
         showProgressBarOfView();
         getRepository().executeOtherKakaoAccountLogin(onKakaoLoginListener);
-
     }
 
     @Override
