@@ -11,7 +11,7 @@ public interface OwnerLoginContract {
 
     interface View extends BaseContract.View {
 
-        void moveToOwnerDetailActivity(long userId);
+        void moveToOwnerStoreActivity(long userId);
 
         void moveToSignUpActivity(long userId);
 

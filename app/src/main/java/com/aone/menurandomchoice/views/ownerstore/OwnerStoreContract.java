@@ -7,15 +7,15 @@ import com.aone.menurandomchoice.views.base.BaseContract;
 public interface OwnerStoreContract {
 
     interface View extends BaseContract.View {
-        void showStoreDetail(StoreDetail storeDetail);
 
-        void showErrorStoreDetail(StoreDetail storeDetail, String errorMessage);
+        void showStoreDetail(StoreDetail storeDetail);
 
         void moveToOwnerEditPage(StoreDetail storeDetail);
 
-        void moveToMenuDetailPage(MenuDetail menuDetail);
-
         void moveToMapDetailPage(double latitude, double longitude);
+
+        void moveToMenuPreviewPage(MenuDetail menuDetail);
+
     }
 
     interface Presenter extends BaseContract.Presenter<OwnerStoreContract.View> {
@@ -27,5 +27,6 @@ public interface OwnerStoreContract {
         void onMapClick(double latitude, double longitude);
 
         void stopNetwork();
+
     }
 }

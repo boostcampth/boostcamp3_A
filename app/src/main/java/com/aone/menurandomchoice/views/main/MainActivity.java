@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveToOwnerLoginActivity(View view) {
         /*
-        Intent intent = new Intent(this, MenuRegisterActivity.class);
-        startActivity(intent);
+          Intent ownerLoginIntent = new Intent(this, OwnerLoginActivity.class);
+        startActivity(ownerLoginIntent);
         */
         
         Intent intent = new Intent(this, OwnerStoreActivity.class);

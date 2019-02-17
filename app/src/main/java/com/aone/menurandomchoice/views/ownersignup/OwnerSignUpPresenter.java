@@ -1,6 +1,6 @@
 package com.aone.menurandomchoice.views.ownersignup;
 
-import com.aone.menurandomchoice.repository.server.OnSignUpRequestListener;
+import com.aone.menurandomchoice.repository.remote.OnSignUpRequestListener;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
 import androidx.annotation.NonNull;
@@ -46,7 +46,7 @@ public class OwnerSignUpPresenter extends BasePresenter<OwnerSignUpContract.View
 
     private void moveToOwnerDetailActivity(long userId) {
         if (isAttachView()) {
-            getView().moveToOwnerDetailActivity(userId);
+            getView().moveToOwnerStoreActivity(userId);
         }
     }
 

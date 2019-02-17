@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.LocationSearchViewholderBinding;
-import com.aone.menurandomchoice.repository.network.pojo.KakaoAddressResult;
+import com.aone.menurandomchoice.repository.model.KakaoAddress;
 import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapter;
 
 import androidx.annotation.NonNull;
@@ -14,13 +14,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class LocationSearchAdapter
-        extends BaseRecyclerViewAdapter<KakaoAddressResult, LocationSearchAdapter.LocationViewHolder>
+        extends BaseRecyclerViewAdapter<KakaoAddress, LocationSearchAdapter.LocationViewHolder>
         implements LocationSearchAdapterView {
 
     private OnViewHolderClickListener onViewHolderClickListener;
 
     @Override
-    protected void bindViewHolder(@NonNull LocationViewHolder viewHolder, @NonNull KakaoAddressResult item) {
+    protected void bindViewHolder(@NonNull LocationViewHolder viewHolder, @NonNull KakaoAddress item) {
         viewHolder.binding.setItem(item);
     }
 

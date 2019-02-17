@@ -44,12 +44,18 @@
     <string name="activity_owner_detail_location">위치</string>
     <string name="activity_owner_detail_description">소개</string>
     <string name="activity_owner_detail_not_name">상세화면 정보가 없습니다</string>
-    <string name="activity_owner_store_not_description">가게소개를 적어주세요</string>
+    <string name="activity_owner_store_not_description">아직 상점소개가 없습니다.</string>
     <string name="layout_menu_detail_not_menu">menu</string>
     <string name="activity_owner_store_tv_time">운영시간 : </string>
+    <string name="activity_owner_detail_name_label">가게이름</string>
+    <string name="activity_owner_detail_time_label">운영시간</string>
 
     <!-- activity_store_edit-->
     <string name="activity_store_edit_label">가게 편집</string>
+    <string name="activity_store_edit_starttime_label">영업 시작시간</string>
+    <string name="activity_store_edit_endtime_label">영업 종료시간</string>
+    <string name="activity_store_edit_default_starttime">10:00</string>
+    <string name="activity_store_edit_default_endtime">18:00</string>
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>
@@ -102,5 +108,8 @@
     <string name="register_no_description">메뉴 설명이 등록되지 않았습니다</string>
     <string name="register_no_price">가격이 등록되지 않았습니다</string>
     <string name="register_no_category">카테고리가 선택되지 않았습니다</string>
+
+    <!-- menu preview activity -->
+    <string name="menu_preview_label">등록 메뉴</string>
 
 </resources>

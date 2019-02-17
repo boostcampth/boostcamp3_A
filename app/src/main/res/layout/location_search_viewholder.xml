@@ -4,7 +4,7 @@
     <data>
         <variable
             name="item"
-            type="com.aone.menurandomchoice.repository.network.pojo.KakaoAddressResult"/>
+            type="com.aone.menurandomchoice.repository.model.KakaoAddress"/>
     </data>
 
     <LinearLayout

@@ -42,9 +42,11 @@
                     android:layout_marginTop="@dimen/two_x_large_margin"
                     android:lineSpacingExtra="5dp"
                     android:text="@{storeDetail.name ?? @string/activity_owner_detail_not_name}"
+                    android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/very_large_text"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:fontFamily="@font/youth"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -65,7 +67,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:textSize="@dimen/x_large_text"
-                        android:text="@{storeDetail.time}" />
+                        app:opentime="@{storeDetail.opentime}"
+                        app:closetime="@{storeDetail.closetime}" />
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -177,16 +181,14 @@
                     android:layout_marginBottom="20dp"
                     android:text="@{storeDetail.address}" />
 
-                 <net.daum.mf.map.api.MapView
-                     android:id="@+id/map_view"
-                     android:layout_width="match_parent"
-                     android:layout_height="150dp"
-                     android:layout_marginLeft="@dimen/x_large_margin"
-                     android:layout_marginRight="@dimen/x_large_margin"
-                     android:layout_marginBottom="@dimen/x_large_margin"
-                     android:background="@color/gray"
-                     android:onClick="@{() -> presenter.onMapClick(storeDetail.latitude, storeDetail.longitude)}">
-                 </net.daum.mf.map.api.MapView>
+                <RelativeLayout
+                    android:id="@+id/map_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="@dimen/x_large_margin"
+                    android:layout_marginRight="@dimen/x_large_margin"
+                    android:layout_marginBottom="@dimen/x_large_margin"
+                    android:onClick="@{() -> presenter.onMapClick(storeDetail.latitude, storeDetail.longitude)}"/>
 
             </LinearLayout>
 

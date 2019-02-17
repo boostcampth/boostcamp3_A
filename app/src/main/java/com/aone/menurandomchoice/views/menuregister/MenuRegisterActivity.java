@@ -12,7 +12,7 @@ import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.utils.GlideUtil;
-import com.aone.menurandomchoice.views.MenuPreviewActivity;
+import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
@@ -148,7 +148,7 @@ public class MenuRegisterActivity
     @Override
     public void moveToPreviewActivityWithItem(@NonNull MenuDetail menuDetail) {
         Intent menuPreviewIntent = new Intent(this, MenuPreviewActivity.class);
-        menuPreviewIntent.putExtra(EXTRA_MENU_DETAIL_ITEM, menuDetail);
+        menuPreviewIntent.putExtra(MenuPreviewActivity.EXTRA_MENU_DETAIL_ITEM, menuDetail);
         startActivity(menuPreviewIntent);
     }
 

@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.utils.GlideUtil;
 import com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -34,10 +35,7 @@ public class TestOverlapViewViewHolder extends OverlapView.ViewHolder {
     }
 
     public void setItem(TestData item) {
-        Glide.with(testImageView.getContext())
-                .load(item.getImageResourceId())
-                .apply(new RequestOptions().centerCrop().transform(new RoundedCorners(30)))
-                .into(testImageView);
+        GlideUtil.loadImageWithSkipCache(testImageView, item.getImageResourceId());
 
         testMenuTitleTextView.setText(item.getMenuTitle());
         testMenuGuideTextView.setText(item.getMenuGuide());

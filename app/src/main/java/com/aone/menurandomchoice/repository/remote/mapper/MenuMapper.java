@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.repository.network.mapper;
+package com.aone.menurandomchoice.repository.remote.mapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,4 +16,5 @@ public class MenuMapper {
 
         return queryMap;
     }
+
 }

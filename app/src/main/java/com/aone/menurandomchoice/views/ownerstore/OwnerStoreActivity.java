@@ -1,15 +1,21 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.main.MainActivity;
+import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
 
 import net.daum.mf.map.api.MapPOIItem;
@@ -25,29 +31,43 @@ public class OwnerStoreActivity
     public static final String EXTRA_MENU = "EXTRA_MENU";
     public static final String EXTRA_STORE = "EXTRA_STORE";
 
+    public static final double DEFAULT_LATITUDE = 37.5514579595;
+    public static final double DEFAULT_LONGITUDE = 126.951949155;
+
+    ViewGroup mapViewContainer;
+    MapView mapView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setUpPresenterToDataBinding();
-        initMapView(getDataBinding().mapView);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
+        initMapView();
         int storeIdx = getIntent().getIntExtra("EXTRA_STORE_IDX", 0);
         getPresenter().loadStoreDetail(storeIdx);
-
-
     }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        detachMapView();
+    }
+
 
     @Override
     protected void onStop() {
         super.onStop();
 
         getPresenter().stopNetwork();
+
     }
 
     @Override
@@ -100,20 +120,16 @@ public class OwnerStoreActivity
 
     @Override
     public void moveToOwnerEditPage(StoreDetail storeDetail) {
-
         Intent storeEditIntent = new Intent(OwnerStoreActivity.this, StoreEditActivity.class);
         storeEditIntent.putExtra(EXTRA_STORE, storeDetail);
         startActivity(storeEditIntent);
     }
 
     @Override
-    public void moveToMenuDetailPage(MenuDetail menuDetail) {
-        // Todo. menuDetailActivity 연결
-        /*
-        Intent menuDetailIntent = new Intent(OwnerStoreActivity.this, menuDetailActivity.class);
-        menuDetailIntent.putExtra(EXTRA_MENU, menuDetail);
-        startActivity(menuDetailIntent);
-        */
+    public void moveToMenuPreviewPage(MenuDetail menuDetail) {
+        Intent menuPreviewIntent = new Intent(this, MenuPreviewActivity.class);
+        menuPreviewIntent.putExtra(MenuPreviewActivity.EXTRA_MENU_DETAIL_ITEM, menuDetail);
+        startActivity(menuPreviewIntent);
     }
 
     @Override
@@ -131,43 +147,60 @@ public class OwnerStoreActivity
 
         getDataBinding().setStoreDetail(storeDetail);
 
-        getDataBinding().activityOwnerStoreMenu1.setMenuDetail(storeDetail.getMenuList().get(0));
-        getDataBinding().activityOwnerStoreMenu2.setMenuDetail(storeDetail.getMenuList().get(1));
-        getDataBinding().activityOwnerStoreMenu3.setMenuDetail(storeDetail.getMenuList().get(2));
-
-        setMapView(getDataBinding().mapView, storeDetail.getLatitude(), storeDetail.getLongitude());
+        setMapView(storeDetail.getLatitude(), storeDetail.getLongitude(), storeDetail.getName());
     }
 
 
-    @Override
-    public void showErrorStoreDetail(StoreDetail storeDetail, String errorMessage) {
 
-        getDataBinding().setStoreDetail(storeDetail);
+    @SuppressLint("ClickableViewAccessibility")
+    public void initMapView() {
+        mapViewContainer = getDataBinding().mapView;
+        mapView = new MapView(this);
 
-        getDataBinding().activityOwnerStoreMenu1.setMenuDetail(storeDetail.getMenuList().get(0));
-        getDataBinding().activityOwnerStoreMenu2.setMenuDetail(storeDetail.getMenuList().get(1));
-        getDataBinding().activityOwnerStoreMenu3.setMenuDetail(storeDetail.getMenuList().get(2));
-
-        showToastMessage(errorMessage);
-    }
-
-    public void initMapView(MapView mapView) {
-        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(37.5514579595, 126.951949155);
-
-        MapPOIItem marker = new MapPOIItem();
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
         mapView.setMapCenterPoint(mapPoint, false);
-        mapView.addPOIItem(marker);
+        mapViewContainer.addView(mapView);
 
+        mapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
     }
 
-    public void setMapView(MapView mapView, double latitude, double longitude) {
+    @SuppressLint("ClickableViewAccessibility")
+    public void setMapView(double latitude, double longitude, String name) {
+
+        if(latitude == 0 && longitude == 0) {
+            latitude = DEFAULT_LATITUDE;
+            longitude = DEFAULT_LONGITUDE;
+        }
         MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude);
+        mapView.setMapCenterPoint(mapPoint, false);
 
         MapPOIItem marker = new MapPOIItem();
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        mapView.setMapCenterPoint(mapPoint, false);
+        marker.setItemName(name);
+        marker.setTag(0);
+        marker.setMapPoint(mapPoint);
+        marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
         mapView.addPOIItem(marker);
+
+        final double finalLatitude = latitude;
+        final double finalLongitude = longitude;
+        mapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    moveToMapDetailPage(finalLatitude, finalLongitude);
+                    return true;
+                }
+                return true;
+            }
+        });
     }
 
+    public void detachMapView() {
+        mapViewContainer.removeView(mapView);
+    }
 }
