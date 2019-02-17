@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 
 import com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView;
@@ -21,6 +22,7 @@ public class OverlapViewTurnHelper {
 
     private static final float ROTATE_SENSITIVITY = 0.03f;
     private static final float DETACH_ALLOW_RANGE = 0.4f;
+    private static final int DRAG_CALCULATE_UNIT_MS = 100;
 
     private OverlapViewAnimationHelper overlapViewAnimationHelper;
     private OnTopViewDetachListener onTopViewDetachListener;
@@ -35,6 +37,12 @@ public class OverlapViewTurnHelper {
     private boolean isTouchingTopView = false;
     private boolean isAnimationPlaying = false;
 
+    private DetachStateCalculator detachStateCalculator;
+    private VelocityTracker velocityTracker;
+    private float xSpeedWithBasedPX;
+    private float ySpeedWithBasedPX;
+
+
     public OverlapViewTurnHelper() {
         setUp();
     }
@@ -46,6 +54,7 @@ public class OverlapViewTurnHelper {
         downTouchCoordinates = new PointF();
         moveTouchCoordinates = new PointF();
         viewTouchArea = ViewTouchArea.NONE;
+        detachStateCalculator = new DetachStateCalculator();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -84,6 +93,9 @@ public class OverlapViewTurnHelper {
             case MotionEvent.ACTION_DOWN:
                 isTouchingTopView = isTouchTopView(topView, event);
                 if(isTouchingTopView) {
+                    obtainVelocityTracker();
+                    velocityTracker.addMovement(event);
+
                     recordCoordinatesOfTouchDown(event);
                     recordCoordinatesOfOldTopView(topView);
                     recordViewTouchArea();
@@ -92,6 +104,8 @@ public class OverlapViewTurnHelper {
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (isTouchingTopView) {
+                    velocityTracker.addMovement(event);
+
                     recordCoordinatesOfTouchMove(event);
                     PointF coordinatesToMove = calculateCoordinatesToMove();
                     moveTopViewToCoordinates(topView, coordinatesToMove);
@@ -102,8 +116,12 @@ public class OverlapViewTurnHelper {
             case MotionEvent.ACTION_UP:
                 if (isTouchingTopView) {
                     isTouchingTopView = false;
+
+                    recordDragSpeed();
+                    recyclerVelocityTracker();
+
                     recordCoordinatesOfNewTopView(topView);
-                    if(isDetachTopView(topView) && isMoreChildView()) {
+                    if(isDetachTopView() && isMoreChildView()) {
                         requestDetachAnimationToHelper(topView);
                     } else {
                         requestNotDetachAnimationToHelper(topView);
@@ -114,6 +132,25 @@ public class OverlapViewTurnHelper {
         }
 
         return true;
+    }
+
+    private void obtainVelocityTracker() {
+        if(velocityTracker == null) {
+            velocityTracker = VelocityTracker.obtain();
+        }
+    }
+
+    private void recyclerVelocityTracker() {
+        if(velocityTracker != null) {
+            velocityTracker.recycle();
+            velocityTracker = null;
+        }
+    }
+
+    private void recordDragSpeed() {
+        velocityTracker.computeCurrentVelocity(DRAG_CALCULATE_UNIT_MS);
+        xSpeedWithBasedPX = velocityTracker.getXVelocity();
+        ySpeedWithBasedPX = velocityTracker.getYVelocity();
     }
 
     private void recordCoordinatesOfTouchDown(MotionEvent event) {
@@ -223,17 +260,11 @@ public class OverlapViewTurnHelper {
         );
     }
 
-    private boolean isDetachTopView(View topView) {
-        float allowableWidth = topView.getWidth() * DETACH_ALLOW_RANGE;
-        float allowableHeight = topView.getHeight() * DETACH_ALLOW_RANGE;
-
-        float detachLineOfLeft = newTopViewRect.left + allowableWidth;
-        float detachLineOfTop = newTopViewRect.top + allowableHeight;
-        float detachLineOfRight = newTopViewRect.right - allowableWidth;
-        float detachLineOfBottom = newTopViewRect.bottom - allowableHeight;
-
-        return detachLineOfLeft <= oldTopViewRect.left || oldTopViewRect.right <= detachLineOfRight
-                || detachLineOfTop <= oldTopViewRect.top || oldTopViewRect.bottom <= detachLineOfBottom;
+    private boolean isDetachTopView() {
+        return detachStateCalculator.isPossibleDetachView(oldTopViewRect,
+                newTopViewRect,
+                xSpeedWithBasedPX,
+                ySpeedWithBasedPX);
     }
 
     private boolean isMoreChildView() {
