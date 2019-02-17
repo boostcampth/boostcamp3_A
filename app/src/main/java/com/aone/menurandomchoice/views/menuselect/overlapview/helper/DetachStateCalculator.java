@@ -1,8 +1,10 @@
 package com.aone.menurandomchoice.views.menuselect.overlapview.helper;
 
 import android.graphics.RectF;
+import android.util.Log;
 
 import com.aone.menurandomchoice.utils.DisplayUtil;
+import com.aone.menurandomchoice.views.menuselect.overlapview.model.DetachState;
 
 import androidx.annotation.NonNull;
 
@@ -21,7 +23,9 @@ public class DetachStateCalculator {
         NONE, LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN
     }
 
-    public boolean isPossibleDetachView(@NonNull RectF oldViewRect, @NonNull RectF newViewRect, float xSpeedWithBasedPX, float ySpeedWithBasedPX) {
+
+    @NonNull
+    DetachState calculateDetachState(@NonNull RectF oldViewRect, @NonNull RectF newViewRect, float xSpeedWithBasedPX, float ySpeedWithBasedPX) {
         recordViewRect(oldViewRect, newViewRect);
         recordDragSpeedAfterConvertDP(xSpeedWithBasedPX, ySpeedWithBasedPX);
 
@@ -30,8 +34,16 @@ public class DetachStateCalculator {
 
         RectF rectOfAllowableLine = calculateRectOfAllowableLine();
         boolean isPassedAllowableLine = isPassedAllowableLine(rectOfAllowableLine);
+        boolean isDetachView = calculateDetachPossibility(isPassedAllowableLine, dragDirection, detachDirection);
 
-        return calculateDetachPossibility(isPassedAllowableLine, dragDirection, detachDirection);
+        return createDetachState(isDetachView);
+    }
+
+    private DetachState createDetachState(boolean isDetachView) {
+        float xDragRatio = xSpeedWithBasedDP/(Math.abs(xSpeedWithBasedDP) + Math.abs(ySpeedWithBasedDP));
+        float yDragRatio = ySpeedWithBasedDP/(Math.abs(xSpeedWithBasedDP) + Math.abs(ySpeedWithBasedDP));
+
+        return new DetachState(isDetachView, xDragRatio, yDragRatio);
     }
 
     private void recordViewRect(RectF oldViewRect, RectF newViewRect) {
@@ -242,4 +254,5 @@ public class DetachStateCalculator {
     private boolean isDirectionOfDrag(Direction dragDirection) {
         return dragDirection != Direction.NONE;
     }
+
 }

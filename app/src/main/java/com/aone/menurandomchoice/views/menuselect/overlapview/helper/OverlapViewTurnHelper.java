@@ -11,6 +11,7 @@ import com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView;
 import com.aone.menurandomchoice.views.menuselect.overlapview.animation.OnAnimationStateListener;
 import com.aone.menurandomchoice.views.menuselect.overlapview.animation.OverlapViewAnimationHelper;
 import com.aone.menurandomchoice.views.menuselect.overlapview.animation.OverlapViewDefaultAnimation;
+import com.aone.menurandomchoice.views.menuselect.overlapview.model.DetachState;
 
 import androidx.annotation.NonNull;
 
@@ -21,7 +22,6 @@ public class OverlapViewTurnHelper {
     }
 
     private static final float ROTATE_SENSITIVITY = 0.03f;
-    private static final float DETACH_ALLOW_RANGE = 0.4f;
     private static final int DRAG_CALCULATE_UNIT_MS = 100;
 
     private OverlapViewAnimationHelper overlapViewAnimationHelper;
@@ -121,8 +121,9 @@ public class OverlapViewTurnHelper {
                     recyclerVelocityTracker();
 
                     recordCoordinatesOfNewTopView(topView);
-                    if(isDetachTopView() && isMoreChildView()) {
-                        requestDetachAnimationToHelper(topView);
+                    DetachState detachState = calculateDetachState();
+                    if(detachState.isDetach() && isMoreChildView()) {
+                        requestDetachAnimationToHelper(topView, detachState);
                     } else {
                         requestNotDetachAnimationToHelper(topView);
                     }
@@ -221,10 +222,12 @@ public class OverlapViewTurnHelper {
         }
     }
 
-    private void requestDetachAnimationToHelper(View topView) {
+    private void requestDetachAnimationToHelper(View topView, DetachState detachState) {
         overlapViewAnimationHelper.executeDetachAnimation(topView,
                 oldTopViewRect,
                 newTopViewRect,
+                detachState.getXDragRatio(),
+                detachState.getYDragRatio(),
                 new OnAnimationStateListener() {
                     @Override
                     public void onAnimationStart() {
@@ -260,8 +263,8 @@ public class OverlapViewTurnHelper {
         );
     }
 
-    private boolean isDetachTopView() {
-        return detachStateCalculator.isPossibleDetachView(oldTopViewRect,
+    private DetachState calculateDetachState() {
+        return detachStateCalculator.calculateDetachState(oldTopViewRect,
                 newTopViewRect,
                 xSpeedWithBasedPX,
                 ySpeedWithBasedPX);
