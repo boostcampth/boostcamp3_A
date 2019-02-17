@@ -76,5 +76,4 @@ public class MenuCategoryAdapter extends BaseRecyclerViewAdapter<MenuCategoryIte
             }
         }
     }
-
 }

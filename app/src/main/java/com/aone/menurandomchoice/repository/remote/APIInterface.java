@@ -27,7 +27,7 @@ public interface APIInterface {
     @GET("maps")
     Call<JMTResponseBody<List<MenuLocation>>> getMenuLocation(@QueryMap Map<String, String> location);
 
-    @GET("https://dapi.kakao.com/v2/local/search/address.json")
+    @GET("https://dapi.kakao.com/v2/local/search/keyword.json")
     Call<KakaoAddressResult> getAddress(@Header("Authorization") String authorization,
                                         @Query("query") String query);
 
@@ -37,6 +37,11 @@ public interface APIInterface {
     @GET("stores/{storeIdx}/updates")
     Call<JMTResponseBody<EmptyObject>> checkStoreUpdated(@Path("storeIdx") final int storeIdx,
                                                          @Query("updateTime") String updateTime);
+
+    // for getting mock data
+    @GET("https://dapi.kakao.com/v2/local/search/category.json")
+    Call<KakaoAddressResult> getMenuFD6(@Header("Authorization") String authorization,
+                                        @QueryMap Map<String, String> query);
 
     @POST("login")
     Call<JMTResponseBody<LoginData>> getSignedUpCheckRequest(@Body OwnerInfo ownerInfo);

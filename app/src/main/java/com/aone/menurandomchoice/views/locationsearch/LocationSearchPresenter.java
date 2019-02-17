@@ -3,12 +3,14 @@ package com.aone.menurandomchoice.views.locationsearch;
 import android.os.Bundle;
 import android.os.Parcelable;
 
+
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.KakaoAddress;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapterModel;
+
 
 import java.util.List;
 
@@ -32,7 +34,11 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
             @Override
             public void onReceived(@NonNull KakaoAddressResult response) {
                 if(isAttachView()) {
-                    updateList(response.getDocuments());
+                    if(response.getDocuments().size() > 0) {
+                        updateList(response.getDocuments());
+                    } else {
+                        getView().showToastMessage("결과값이 없습니다");
+                    }
                 }
             }
 

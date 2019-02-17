@@ -135,10 +135,9 @@ public class LocationSearchActivity
         String inputAddress = getDataBinding().searchBox.etSearch.getText().toString();
 
         if(inputAddress.trim().length() == 0) {
-            showToastMessage("error");
+            showToastMessage("값을 입력해주세요");
         } else {
             getPresenter().requestLocationSearch(inputAddress);
         }
     }
-
 }

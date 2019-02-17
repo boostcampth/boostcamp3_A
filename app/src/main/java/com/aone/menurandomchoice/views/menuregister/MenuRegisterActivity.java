@@ -41,9 +41,7 @@ public class MenuRegisterActivity
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_menu_register;
-    }
+    protected int getLayoutId() { return R.layout.activity_menu_register; }
 
     @NonNull
     @Override
