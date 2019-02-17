@@ -5,6 +5,8 @@ import com.aone.menurandomchoice.R;
 public enum JMTErrorCode {
 
     REQUEST_NO_RESULT(204, R.string.JMT_response_no_result),
+    NO_SIGNED_UP_INFO(2041, R.string.JMT_response_no_singed_up_info),
+    FAIL_SIGN_UP(2042, R.string.JMT_response_fail_sign_up),
     WRONG_REQUEST(400, R.string.JMT_response_wrong_request_error),
     NOT_FOUND(404, R.string.JMT_response_not_found_error),
     SERVER_SYSTEM_ERROR(500, R.string.JMT_response_server_system_error),

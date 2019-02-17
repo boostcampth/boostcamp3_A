@@ -36,7 +36,7 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
         return getRepository().isNeedKakaoSDKLoginScreen(requestCode, resultCode, data);
     }
 
-    private void requestSignUpCheck(final long userId) {
+    private void requestSignedUpCheck(final long userId) {
         getRepository().requestSignedUpCheck(userId, new NetworkResponseListener<LoginData>() {
             @Override
             public void onReceived(@NonNull LoginData loginData) {
@@ -47,14 +47,13 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
             public void onError(JMTErrorCode errorCode) {
                 hideProgressBarOfView();
 
-                if (errorCode == JMTErrorCode.REQUEST_NO_RESULT) {
+                if (errorCode == JMTErrorCode.NO_SIGNED_UP_INFO) {
                     moveToSignUpActivity(userId);
                 } else {
                     handlingJMTError(errorCode);
                 }
             }
         });
-
     }
 
     private void moveToOwnerStoreActivity(LoginData loginData) {
@@ -98,7 +97,7 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
         @Override
         public void onKakaoLoginSuccess(long userId) {
             showProgressBarOfView();
-            requestSignUpCheck(userId);
+            requestSignedUpCheck(userId);
         }
 
         @Override
