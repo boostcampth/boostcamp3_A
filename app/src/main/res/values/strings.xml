@@ -67,6 +67,7 @@
     <string name="activity_menu_register_photo_fail">사진을 불러오는데 실패하였습니다</string>
 
     <!-- category arrays -->
+    <string name="arrays_category_all_food">전체</string>
     <string name="arrays_category_korea_food">한식</string>
     <string name="arrays_category_japan_food">일식</string>
     <string name="arrays_category_china_food">중식</string>
@@ -77,16 +78,25 @@
     <string name="arrays_category_fast_food">패스트 푸드</string>
 
     <!-- radius arrays -->
-    <string name="arrays_radius_closest">300m</string>
-    <string name="arrays_radius_closer">500m</string>
-    <string name="arrays_radius_middle">1km</string>
-    <string name="arrays_radius_farther">2km</string>
-    <string name="arrays_radius_farthest">3km</string>
+    <string name="arrays_radius_closest">50m</string>
+    <string name="arrays_radius_closer">100m</string>
+    <string name="arrays_radius_middle">200m</string>
+    <string name="arrays_radius_farther">400m</string>
+    <string name="arrays_radius_farthest">800m</string>
+
+    <string name="tag_radius_closest">50</string>
+    <string name="tag_radius_closer">100</string>
+    <string name="tag_radius_middle">200</string>
+    <string name="tag_radius_farther">400</string>
+    <string name="tag_radius_farthest">800</string>
 
     <!-- customer main -->
+    <string name="activity_customer_main_search_glass">search glass</string>
+    <string name="activity_customer_main_search_by_location_name">지역명으로 검색</string>
     <string name="activity_customer_main_radius_label">반경</string>
     <string name="activity_customer_main_category_label">카테고리 선택</string>
     <string name="activity_customer_main_swipe_start">메뉴 랜덤 스와이프 시작!</string>
+    <string name="activity_customer_main_map_gps">gps</string>
     <!-- permission -->
     <string name="permission_request_guide">사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.</string>
     <string name="permission_denied_guide">[설정] > [권한] 에서 권한을 허용할 수 있습니다.</string>

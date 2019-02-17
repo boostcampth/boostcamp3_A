@@ -1,18 +1,15 @@
 package com.aone.menurandomchoice.views.customermain;
 
 import com.aone.menurandomchoice.R;
-import com.aone.menurandomchoice.repository.network.model.MenuLocationResponseBody;
-import com.aone.menurandomchoice.views.base.BasePresenter;
-import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
-import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
-import android.util.Log;
-
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.mapper.MenuMapper;
+import com.aone.menurandomchoice.views.base.BasePresenter;
+import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
+import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 
@@ -22,13 +19,21 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
     private MenuCategoryAdapterContract.Model<MenuCategoryItem> menuCategoryAdapterModel;
     private List<MenuLocation> menuList;
 
-    public void requestMenuList(double latitude, double longitude) {
+    public void requestMenuList(final double latitude, final double longitude, final double radius) {
+
         getRepository().requestMenuLocation(MenuMapper.createRequestLocationQueryMap(latitude,longitude),
                 new NetworkResponseListener<List<MenuLocation>>() {
                     @Override
                     public void onReceived(@NonNull List<MenuLocation> response) {
-                        Log.d("Menu", response.toString());
-                        menuList = response;
+                        if(isAttachView()) {
+                            menuList = response;
+                            if(response.size() > 0) {
+                                getMenuCountFiltered(latitude, longitude, radius);
+                            } else {
+                                getView().setMarkerAtNewLocation(latitude, longitude, null);
+                                getView().showToastMessage("결과값이 없습니다");
+                            }
+                        }
                     }
 
                     @Override
@@ -38,21 +43,28 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
         });
     }
 
-    public int getNumberFiltered(double centerLat, double centerLon, double radius, int category) {
+    public void getMenuCountFiltered(double centerLat, double centerLon, double radius) {
 
-        int count = 0;
+        String category = menuCategoryAdapterModel.getSelectedCategory();
         int len = menuList.size();
-        double distance = 0;
-        radius = radius*radius;
-        for(int i = 0; i < len; i++) {
-            if(menuList.get(i).getCategory() == category ) {
-                distance = Math.pow(centerLat - menuList.get(i).getLatitude(), 2) + Math.pow(centerLon - menuList.get(i).getLongitude(), 2);
+        double distance;
+        List<MenuLocation> closerDistanceList = new ArrayList<>();
+        MenuLocation menuLocation;
+
+        for (int i = 0; i < len; i++) {
+            menuLocation = menuList.get(i);
+            if(category.equals("전체") || category.equals(menuLocation.getCategory())) {
+                distance = LocationDistance.distance(centerLat
+                                                        , centerLon
+                                                        , menuLocation.getLatitude()
+                                                        , menuLocation.getLongitude()
+                                                        , "meter");
                 if (radius >= distance) {
-                    count++;
+                    closerDistanceList.add(menuLocation);
                 }
             }
         }
-        return count;
+        getView().setMarkerAtNewLocation(centerLat, centerLon, closerDistanceList);
     }
 
     @Override
@@ -65,6 +77,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
     @Override
     public void handlingMenuCategoryItemClick(int position) {
         menuCategoryAdapterModel.setSelectedPositionOfMenuCategories(position);
+        getView().updateMapByRadiusCategory();
     }
 
     private List<MenuCategoryItem> createMenuCategoryItems() {

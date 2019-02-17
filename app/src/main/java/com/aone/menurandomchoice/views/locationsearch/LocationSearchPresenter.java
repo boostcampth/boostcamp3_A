@@ -33,7 +33,11 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
             @Override
             public void onReceived(@NonNull KakaoAddressResult response) {
                 if(isAttachView()) {
-                    updateList(response.getDocuments());
+                    if(response.getDocuments().size() > 0) {
+                        updateList(response.getDocuments());
+                    } else {
+                        getView().showToastMessage("결과값이 없습니다");
+                    }
                 }
             }
 

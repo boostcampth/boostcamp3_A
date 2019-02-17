@@ -2,21 +2,29 @@ package com.aone.menurandomchoice.repository.remote;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
-import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
+import com.aone.menurandomchoice.repository.model.KakaoAddress;
+import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
+import com.aone.menurandomchoice.repository.model.MenuLocation;
+import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.remote.response.JMTCallback;
 import com.aone.menurandomchoice.repository.remote.response.KakaoCallback;
-import com.aone.menurandomchoice.repository.model.StoreDetail;
-import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.utils.NetworkUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.internal.EverythingIsNonNull;
 
 public class APIRepository implements APIHelper {
 
@@ -52,15 +60,54 @@ public class APIRepository implements APIHelper {
     }
 
     @Override
+    @EverythingIsNonNull
     public void requestMenuLocation(@NonNull Map<String, String> queryMap,
-                                    @NonNull NetworkResponseListener<List<MenuLocation>> listener) {
-        if(NetworkUtil.isNetworkConnecting()) {
+                                    @NonNull final NetworkResponseListener<List<MenuLocation>> listener) {
+        // test with mock data
+        Map<String, String> queryMapFD6 = new HashMap<>();
+        queryMapFD6.put("category_group_code", "FD6");
+        queryMapFD6.put("x", queryMap.get("longitude"));
+        queryMapFD6.put("y", queryMap.get("latitude"));
+        queryMapFD6.put("radius", "1000");
+        queryMapFD6.put("sort","distance");
+
+        final String category[] = {"한식", "일식", "중식", "양식"};
+        final List<MenuLocation> mockData = new ArrayList<>();
+        apiCreator
+                .getApiInstance()
+                .getMenuFD6(GlobalApplication.getGlobalApplicationContext().getString(R.string.KAKAO_REST_API_KEY), queryMapFD6)
+                .enqueue(new Callback<KakaoAddressResult>() {
+                    @Override
+                    public void onResponse(Call<KakaoAddressResult> call, Response<KakaoAddressResult> response) {
+                        if(response.isSuccessful()) {
+                                List<KakaoAddress> mock = response.body().getDocuments();
+                                int len = mock.size();
+                                for (int i = 0; i < len; i++) {
+                                    mockData.add(new MenuLocation(mock.get(i).getY(), mock.get(i).getX(), category[i%4]));
+                                }
+                                listener.onReceived(mockData);
+                        } else {
+                            Log.d("Mock", "response success but fail");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<KakaoAddressResult> call, Throwable t) {
+                        if(call.isCanceled()) {
+
+                        } else {
+
+                        }
+                    }
+                });
+
+/*        if(NetworkUtil.isNetworkConnecting()) {
             apiCreator.getApiInstance()
                     .getMenuLocation(queryMap)
                     .enqueue(new JMTCallback<>(listener));
         } else {
             listener.onError();
-        }
+        }*/
     }
 
     @Override

@@ -4,21 +4,11 @@ public class MenuLocation {
 
     private double latitude;
     private double longitude;
-    private int category;
+    private String category;
 
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
+    public MenuLocation(double latitude, double longitude, String category) {
+        this.latitude = latitude;
         this.longitude = longitude;
-    }
-
-    public int getCategory() {
-        return category;
-    }
-
-    public void setCategory(int category) {
         this.category = category;
     }
 
@@ -26,7 +16,12 @@ public class MenuLocation {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public double getLongitude() {
+        return longitude;
     }
+
+    public String getCategory() {
+        return category;
+    }
+
 }

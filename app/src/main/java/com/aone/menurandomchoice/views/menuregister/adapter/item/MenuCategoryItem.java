@@ -1,8 +1,6 @@
 package com.aone.menurandomchoice.views.menuregister.adapter.item;
 
-import java.util.Observable;
-
-public class MenuCategoryItem extends Observable {
+public class MenuCategoryItem {
 
     private String categoryName;
     private boolean isSelect;

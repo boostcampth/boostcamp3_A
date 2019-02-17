@@ -2,24 +2,23 @@ package com.aone.menurandomchoice.repository;
 
 import android.content.Intent;
 
+import com.aone.menurandomchoice.repository.local.SqliteDatabaseHelper;
+import com.aone.menurandomchoice.repository.local.SqliteDatabaseRepository;
 import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
 import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
-import com.aone.menurandomchoice.repository.model.MenuLocation;
-import com.aone.menurandomchoice.repository.remote.APIHelper;
-import com.aone.menurandomchoice.repository.remote.APIRepository;
-import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
-import com.aone.menurandomchoice.repository.local.SqliteDatabaseHelper;
-import com.aone.menurandomchoice.repository.local.SqliteDatabaseRepository;
+import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginRepository;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLogoutListener;
+import com.aone.menurandomchoice.repository.remote.APIHelper;
+import com.aone.menurandomchoice.repository.remote.APIRepository;
+import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.OnSignUpRequestListener;
 import com.aone.menurandomchoice.repository.remote.OnSignedUpCheckListener;
-import com.aone.menurandomchoice.utils.NetworkUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -40,7 +39,6 @@ public class DataRepository implements Repository {
         if (repository == null) {
             repository = new DataRepository();
         }
-
         return repository;
     }
 

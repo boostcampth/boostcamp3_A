@@ -1,16 +1,21 @@
 package com.aone.menurandomchoice.views.customermain;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityCustomerMainBinding;
+import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
@@ -18,25 +23,34 @@ import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterC
 import com.aone.menurandomchoice.views.menuregister.adapter.viewholder.OnMenuCategoryClickListener;
 import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
 
+import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBinding, CustomerMainContract.View, CustomerMainContract.Presenter>
         implements CustomerMainContract.View, MapView.MapViewEventListener {
 
     private static final String LOG_TAG = "CustomMainActivity";
+    private LocationManager locationManager;
+
+    private List<View> radiusButton = new ArrayList<>();
 
     private MenuCategoryAdapterContract.View menuCategoryAdapterView;
 
+    private MapView mMapView;
     private MapPOIItem mCustomMarker;
-    private MapPoint CUSTOM_MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.4020737, 127.1086766);
-
+    private MapPoint CUSTOM_MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.4980854357918, 127.028000275071);
     private MapCircle circle = new MapCircle(
             MapPoint.mapPointWithGeoCoord(CUSTOM_MARKER_POINT.getMapPointGeoCoord().latitude, CUSTOM_MARKER_POINT.getMapPointGeoCoord().longitude), // center
             50, // radius
@@ -48,22 +62,16 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
         setUpActivityToDataBinding();
         setUpSearchToolBar();
+        setRadiusButtonList();
         setUpCategoryRecyclerView();
 
-        getDataBinding().activityCustomerMainMvDaum.setMapViewEventListener(this);
-        createCustomMarker(getDataBinding().activityCustomerMainMvDaum);
-       // setTouchBlock();
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private void setTouchBlock() {
-        getDataBinding().activityCustomerMainMvDaum.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }});
+        mMapView = getDataBinding().activityCustomerMainMvDaum;
+        mMapView.setMapViewEventListener(this);
+        createCustomMarker(mMapView);
     }
 
     private void createCustomMarker(MapView mapView) {
@@ -74,7 +82,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mCustomMarker.setMapPoint(CUSTOM_MARKER_POINT);
 
         mCustomMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
-
         mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_red);
         mCustomMarker.setCustomImageAutoscale(false);
         mCustomMarker.setCustomImageAnchor(0.5f, 1.0f);
@@ -82,7 +89,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mapView.addPOIItem(mCustomMarker);
         mapView.selectPOIItem(mCustomMarker, true);
         mapView.setMapCenterPoint(CUSTOM_MARKER_POINT, false);
-
     }
 
     private void setUpActivityToDataBinding() {
@@ -91,11 +97,50 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     private void setUpSearchToolBar() {
         Toolbar toolbar = getDataBinding().toolbar;
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
    }
+
+   public void onGPSButtonClicked() {
+        Log.d("GPS buttond","clicked!");
+       if ( Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission( getApplicationContext()
+               , android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+           ActivityCompat.requestPermissions( CustomerMainActivity.this, new String[] {
+                   android.Manifest.permission.ACCESS_FINE_LOCATION  },0 );
+       } else {
+           Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+           if (location != null) {
+               Log.d("GPS","location is not null");
+               mMapView.moveCamera(CameraUpdateFactory.newMapPoint(MapPoint.mapPointWithGeoCoord(location.getLatitude(), location.getLongitude()), 2));
+               requestNewMenuList(MapPoint.mapPointWithGeoCoord(location.getLatitude(), location.getLongitude()));
+           } else {
+               Log.d("GPS","location is null");
+               locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 0, gpsLocationListener);
+           }
+       }
+   }
+
+    private LocationListener gpsLocationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            Log.d("GPS Listener",location.getProvider()+"location changed");
+            locationManager.removeUpdates(this);
+            mMapView.moveCamera(CameraUpdateFactory.newMapPoint(MapPoint.mapPointWithGeoCoord(location.getLatitude(), location.getLongitude()), 2));
+            requestNewMenuList(MapPoint.mapPointWithGeoCoord(location.getLatitude(), location.getLongitude()));
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            Log.d("GPS Listener","status changed");
+        }
+
+        public void onProviderEnabled(String provider) {
+            Log.d("GPS Listener","provider enabled");
+        }
+
+        public void onProviderDisabled(String provider) {
+            Log.d("GPS Listener","provider disabled");
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -127,12 +172,88 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     @Override
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
-        MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
+        requestNewMenuList(mapPoint);
+    }
 
-
+    private void requestNewMenuList(MapPoint mapPoint) {
+        mMapView.removeAllCircles();
         circle.setCenter(mapPoint);
-        mapView.addCircle(circle);
-        mCustomMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude));
+        mMapView.addCircle(circle);
+        mMapView.removeAllPOIItems();
+
+        double radius = getRadius();
+        getPresenter().requestMenuList(mapPoint.getMapPointGeoCoord().latitude, mapPoint.getMapPointGeoCoord().longitude, radius);
+    }
+
+    private double getRadius() {
+        double radius = 50;
+        View radiusView;
+        for(int i =0; i < radiusButton.size(); i++) {
+            radiusView = radiusButton.get(i);
+            if(radiusView.isSelected()) {
+                radius = Double.valueOf((String)radiusView.getTag());
+                break;
+            }
+        }
+        return radius;
+    }
+
+    public void updateMapByRadiusCategory() {
+        double radius = getRadius();
+        mMapView.removeAllPOIItems();
+        MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
+        getPresenter().getMenuCountFiltered(mapPointGeo.latitude, mapPointGeo.longitude, radius);
+    }
+
+    @Override
+    public void onRadiusButtonClicked(View view) {
+        double radius = 50;
+        View radiusView;
+        for(int i =0; i < radiusButton.size(); i++) {
+            radiusView = radiusButton.get(i);
+            radiusView.setSelected(false);
+            if(radiusView == view ) {
+                radiusView.setSelected(true);
+                radius = Double.valueOf((String)radiusView.getTag());
+            }
+        }
+
+        mMapView.removeAllCircles();
+        circle.setRadius((int)radius);
+        mMapView.addCircle(circle);
+
+        updateMapByRadiusCategory();
+    }
+
+    public void setMarkerAtNewLocation(double lat, double lon, List<MenuLocation> closerDistanceList) {
+        int len = 0;
+        if(closerDistanceList != null) {
+            len = closerDistanceList.size();
+        }
+
+        MapPOIItem closerMenu;
+        for(int i = 0; i < len; i++) {
+            closerMenu = new MapPOIItem();
+            closerMenu.setItemName("");
+            closerMenu.setMapPoint(MapPoint.mapPointWithGeoCoord(closerDistanceList.get(i).getLatitude()
+                                                                , closerDistanceList.get(i).getLongitude()));
+            closerMenu.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+            closerMenu.setCustomImageResourceId(R.drawable.custom_marker_star);
+            closerMenu.setCustomImageAutoscale(false);
+            closerMenu.setCustomImageAnchor(0.5f, 0.5f);
+            closerMenu.setShowCalloutBalloonOnTouch(false);
+            mMapView.addPOIItem(closerMenu);
+        }
+        mCustomMarker.setItemName(len+"");
+        mCustomMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lon));
+        mMapView.addPOIItem(mCustomMarker);
+        mMapView.selectPOIItem(mCustomMarker, true);
+
+        int radius = (int)getRadius()/50;
+        float zoomLevel = radius/2 + 1;
+/*        50 100 200 400 800
+                1 2 3 4 5 */
+        //mMapView.moveCamera(CameraUpdateFactory.newMapPoint(MapPoint.mapPointWithGeoCoord(lat, lon), zoomLevel));
     }
 
     @Override
@@ -170,7 +291,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         getDataBinding().activityCustomerMainRcCategory.setLayoutManager(layoutManager);
         getDataBinding().activityCustomerMainRcCategory.setAdapter(menuCategoryAdapter);
 
-
         setUpAdapterToPresenter(menuCategoryAdapter);
         setUpAdapterToThis(menuCategoryAdapter);
     }
@@ -189,33 +309,28 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         });
     }
 
-    private void setUpRadiusButtonArray() {
-
-    }
-
     public void moveToLocationSearchPage() {
-        getDataBinding().activityCustomerMainMvDaum.removeAllCircles();
+        mMapView.removeAllCircles();
         Intent locationSearchIntent = new Intent(CustomerMainActivity.this, LocationSearchActivity.class);
         startActivityForResult(locationSearchIntent,3000);
     }
 
     public void moveToMenuSelectPage() {
-        getDataBinding().activityCustomerMainMvDaum.removeAllCircles();
+        mMapView.removeAllCircles();
         Intent menuSelectIntent = new Intent(CustomerMainActivity.this, MenuSelectActivity.class);
         startActivity(menuSelectIntent);
     }
 
-    @Override
-    public void onRadiusButtonClicked(View view) {
-        getDataBinding().activityCustomerMainIvRadius1.setSelected(false);
-        getDataBinding().activityCustomerMainIvRadius2.setSelected(false);
-        getDataBinding().activityCustomerMainIvRadius3.setSelected(false);
-        getDataBinding().activityCustomerMainIvRadius4.setSelected(false);
-        getDataBinding().activityCustomerMainIvRadius5.setSelected(false);
-        view.setSelected(true);
+    private void setRadiusButtonList() {
+        radiusButton.add(getDataBinding().activityCustomerMainIvRadius1);
+        radiusButton.add(getDataBinding().activityCustomerMainIvRadius2);
+        radiusButton.add(getDataBinding().activityCustomerMainIvRadius3);
+        radiusButton.add(getDataBinding().activityCustomerMainIvRadius4);
+        radiusButton.add(getDataBinding().activityCustomerMainIvRadius5);
+        getDataBinding().activityCustomerMainIvRadius1.setSelected(true);
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK){
             switch (requestCode){
                 case 3000:
@@ -224,7 +339,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
                         showToastMessage("좌표 값이 없습니다.");
                         return;
                     }
-                    getDataBinding().activityCustomerMainMvDaum.setMapCenterPointAndZoomLevel(
+                    mMapView.setMapCenterPointAndZoomLevel(
                             MapPoint.mapPointWithGeoCoord(posXY.getDouble("latitude"), posXY.getDouble("longitude")),
                             1,
                             true);

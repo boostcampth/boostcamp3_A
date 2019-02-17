@@ -54,6 +54,7 @@
                             android:layout_marginStart="@dimen/middle_padding"
                             android:background="@null"
                             android:padding="0dp"
+                            android:contentDescription="@string/activity_customer_main_search_glass"
                             android:src="@drawable/ic_search_glass_32px" />
 
                         <TextView
@@ -63,12 +64,25 @@
                             android:layout_marginEnd="18dp"
                             android:layout_marginRight="18dp"
                             android:singleLine="true"
-                            android:text="지역명으로 검색"
+                            android:text="@string/activity_customer_main_search_by_location_name"
                             app:fontFamily="@font/youth"
                             android:textColor="@android:color/darker_gray"
                             android:textSize="@dimen/large_text" />
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
+
+            <ImageView
+                android:id="@+id/imgGPS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="38dp"
+                android:src="@drawable/ic_gps_fixed_black_24dp"
+                android:contentDescription="@string/activity_customer_main_map_gps"
+                android:onClick="@{() -> activity.onGPSButtonClicked()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <androidx.constraintlayout.widget.Guideline
@@ -83,10 +97,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/activity_customer_main_radius_label"
-                android:layout_marginTop="@dimen/large_margin"
-                android:layout_marginLeft="@dimen/large_margin"
-                android:layout_marginStart="@dimen/large_margin"
+                android:paddingTop="@dimen/large_margin"
+                android:paddingLeft="@dimen/large_margin"
+                android:paddingStart="@dimen/large_margin"
+                android:paddingRight="@dimen/large_margin"
                 app:fontFamily="@font/youth"
+                android:background="@drawable/activity_customer_main_divider_line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -100,6 +116,7 @@
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
                 android:text="@string/arrays_radius_closest"
+                android:tag="@string/tag_radius_closest"
                 android:onClick="@{(v) -> activity.onRadiusButtonClicked(v)}"
                 app:fontFamily="@font/youth"
                 app:layout_constraintDimensionRatio="1:1"
@@ -117,6 +134,7 @@
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
                 android:text="@string/arrays_radius_closer"
+                android:tag="@string/tag_radius_closer"
                 android:onClick="@{(v) -> activity.onRadiusButtonClicked(v)}"
                 app:fontFamily="@font/youth"
                 app:layout_constraintDimensionRatio="1:1"
@@ -134,6 +152,7 @@
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
                 android:text="@string/arrays_radius_middle"
+                android:tag="@string/tag_radius_middle"
                 android:onClick="@{(v) -> activity.onRadiusButtonClicked(v)}"
                 app:fontFamily="@font/youth"
                 app:layout_constraintDimensionRatio="1:1"
@@ -152,6 +171,7 @@
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
                 android:text="@string/arrays_radius_farther"
+                android:tag="@string/tag_radius_farther"
                 android:onClick="@{(v) -> activity.onRadiusButtonClicked(v)}"
                 app:fontFamily="@font/youth"
                 app:layout_constraintDimensionRatio="1:1"
@@ -170,6 +190,7 @@
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
                 android:text="@string/arrays_radius_farthest"
+                android:tag="@string/tag_radius_farthest"
                 android:onClick="@{(v) -> activity.onRadiusButtonClicked(v)}"
                 app:fontFamily="@font/youth"
                 app:layout_constraintDimensionRatio="1:1"
@@ -192,8 +213,10 @@
                 android:id="@+id/activity_customer_main_tv_category"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/large_margin"
-                android:layout_marginStart="@dimen/large_margin"
+                android:paddingTop="@dimen/large_margin"
+                android:paddingLeft="@dimen/large_margin"
+                android:paddingStart="@dimen/large_margin"
+                android:paddingRight="@dimen/large_margin"
                 android:text="@string/activity_customer_main_category_label"
                 app:fontFamily="@font/youth"
                 app:layout_constraintTop_toTopOf="@+id/activity_customer_main_options_guide_line"
