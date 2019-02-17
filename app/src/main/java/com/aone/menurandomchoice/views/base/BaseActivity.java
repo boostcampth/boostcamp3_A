@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.base;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -63,6 +64,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     }
 
     private void setUp() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         dataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         presenter = setUpPresenter();
 
