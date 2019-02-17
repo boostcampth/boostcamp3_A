@@ -54,7 +54,8 @@
             android:name=".views.customermain.CustomerMainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".views.menuselect.MenuSelectActivity" />
+            android:name=".views.menuselect.MenuSelectActivity"
+            android:label="@string/item_menu_select_label"/>
         <activity
             android:name=".views.menuregister.MenuRegisterActivity"
             android:label="@string/activity_menu_register_label"

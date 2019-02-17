@@ -1,9 +1,12 @@
 package com.aone.menurandomchoice.repository.remote;
 
 import com.aone.menurandomchoice.repository.model.EmptyObject;
+import com.aone.menurandomchoice.repository.model.LoginData;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
+import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
-import com.aone.menurandomchoice.repository.model.StoreDetail;
 
 import java.util.List;
 import java.util.Map;
@@ -26,10 +29,13 @@ public interface APIHelper {
                            @NonNull NetworkResponseListener<EmptyObject> networkResponseListener);
 
     void requestSignedUpCheck(long userId,
-                              @NonNull OnSignedUpCheckListener onSignedUpCheckListener);
+                              @NonNull NetworkResponseListener<LoginData> networkResponseListener);
 
     void requestSignUp(long userId,
                        @NonNull String accessKey,
-                       @NonNull OnSignUpRequestListener onSignUpRequestListener);
+                       @NonNull NetworkResponseListener<LoginData> networkResponseListener);
+
+    void requestMenuList(@NonNull MenuSearchRequest menuSearchRequest,
+                                          @NonNull NetworkResponseListener<List<MenuDetail>> networkResponseListener);
 
 }

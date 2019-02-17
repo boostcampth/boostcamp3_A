@@ -1,12 +1,12 @@
-package com.aone.menurandomchoice.repository.local;
+package com.aone.menurandomchoice.repository.local.db;
 
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 
 import androidx.annotation.NonNull;
 
-public interface SqliteDatabaseHelper {
+public interface SQLiteDatabaseHelper {
 
-    void addStoreDetail();
+    void addDefaultStoreDetail();
 
     StoreDetail getStoreDetail();
 

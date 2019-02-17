@@ -28,8 +28,8 @@ public class MenuPreviewActivity extends AppCompatActivity {
 
         View view = findViewById(R.id.preview_item_layout);
         ImageView iv = view.findViewById(R.id.item_menu_select_iv);
-        TextView title = view.findViewById(R.id.item_menu_select_title_tv);
-        TextView guide = view.findViewById(R.id.item_menu_select_guide_tv);
+        TextView title = view.findViewById(R.id.item_menu_select_name_tv);
+        TextView guide = view.findViewById(R.id.item_menu_select_description_tv);
         TextView price = view.findViewById(R.id.item_menu_select_price_tv);
         TextView category = view.findViewById(R.id.item_menu_select_category_tv);
 

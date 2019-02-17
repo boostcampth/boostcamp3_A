@@ -4,6 +4,7 @@ import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.mapper.MenuMapper;
+import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
@@ -37,7 +38,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(JMTErrorCode errorCode) {
 
                     }
         });

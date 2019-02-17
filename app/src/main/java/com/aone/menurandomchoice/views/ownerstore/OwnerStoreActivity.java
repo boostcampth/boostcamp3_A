@@ -21,6 +21,7 @@ public class OwnerStoreActivity
 
     public static final String EXTRA_MENU = "EXTRA_MENU";
     public static final String EXTRA_STORE = "EXTRA_STORE";
+    public static final String EXTRA_USER_ACCESS_INFO = "EXTRA_USER_ACCESS_INFO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

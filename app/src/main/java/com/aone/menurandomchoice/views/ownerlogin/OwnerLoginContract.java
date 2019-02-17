@@ -2,6 +2,7 @@ package com.aone.menurandomchoice.views.ownerlogin;
 
 import android.content.Intent;
 
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseContract;
 
 import androidx.annotation.NonNull;
@@ -11,15 +12,13 @@ public interface OwnerLoginContract {
 
     interface View extends BaseContract.View {
 
-        void moveToOwnerStoreActivity(long userId);
+        void moveToOwnerStoreActivity(@NonNull UserAccessInfo userAccessInfo);
 
         void moveToSignUpActivity(long userId);
 
     }
 
     interface Presenter extends BaseContract.Presenter<OwnerLoginContract.View> {
-
-        void handlingLoggedInAccount();
 
         void handlingDeviceKaKaoAccountLogin();
 

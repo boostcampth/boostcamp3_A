@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.KakaoAddress;
+import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapterModel;
 
@@ -42,7 +43,7 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
             }
 
             @Override
-            public void onError() {
+            public void onError(JMTErrorCode errorCode) {
 
             }
         });
