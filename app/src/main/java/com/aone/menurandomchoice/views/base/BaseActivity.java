@@ -1,14 +1,20 @@
 package com.aone.menurandomchoice.views.base;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.Toast;
+
+import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.views.base.widget.CustomProgressDialog;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
@@ -18,6 +24,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
 
     private B dataBinding;
     private P presenter;
+    private CustomProgressDialog customProgressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +67,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
         presenter = setUpPresenter();
 
         setUpBackArrow();
+        setUpProgressDialog();
     }
 
     private void setUpBackArrow() {
@@ -67,6 +75,10 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void setUpProgressDialog() {
+        customProgressDialog = new CustomProgressDialog();
     }
 
     @NonNull
@@ -78,6 +90,16 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     @Override
     public void showToastMessage(@NonNull String message) {
         Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgressDialog() {
+        customProgressDialog.show(this);
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        customProgressDialog.hide();
     }
 
     protected B getDataBinding() {
@@ -107,6 +129,8 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
             presenter.detachView();
         }
     }
+
+
 
     abstract protected int getLayoutId();
 

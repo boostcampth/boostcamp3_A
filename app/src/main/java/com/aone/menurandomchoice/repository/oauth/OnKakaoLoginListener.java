@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 
 public interface OnKakaoLoginListener {
 
-    void onKakaoLoginSuccess(long userId, @NonNull KakaoLoginType kakaoLoginType);
+    void onKakaoLoginSuccess(long userId);
 
     void onFail(@NonNull KakaoLoginError kakaoLoginError);
 

@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.repository.local;
+package com.aone.menurandomchoice.repository.local.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -17,18 +17,16 @@ import androidx.annotation.NonNull;
 
 import static androidx.constraintlayout.motion.widget.MotionScene.TAG;
 
-public class SqliteDatabaseRepository extends SQLiteOpenHelper implements SqliteDatabaseHelper {
+public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLiteDatabaseHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "randommenu";
 
-    private Context mContext;
+    private static SQLiteDatabaseRepository sqliteDatabaseRepository;
 
-    private static SqliteDatabaseRepository sqliteDatabaseRepository;
-
-    public static SqliteDatabaseRepository getInstance() {
+    public static SQLiteDatabaseRepository getInstance() {
         if(sqliteDatabaseRepository == null) {
-            sqliteDatabaseRepository = new SqliteDatabaseRepository(GlobalApplication.getGlobalApplicationContext());
+            sqliteDatabaseRepository = new SQLiteDatabaseRepository(GlobalApplication.getGlobalApplicationContext());
         }
 
         return sqliteDatabaseRepository;
@@ -58,9 +56,8 @@ public class SqliteDatabaseRepository extends SQLiteOpenHelper implements Sqlite
             MenuTable.MENU_SEQUENCE.getColumnName() + " INTEGER NOT NULL)" ;
 
 
-    public SqliteDatabaseRepository(Context context) {
+    public SQLiteDatabaseRepository(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.mContext = context;
     }
 
     @Override
@@ -79,8 +76,7 @@ public class SqliteDatabaseRepository extends SQLiteOpenHelper implements Sqlite
 
 
     @Override
-    public void addStoreDetail() {
-
+    public void addDefaultStoreDetail() {
         SQLiteDatabase db = getWritableDatabase();
 
         db.beginTransaction();
@@ -103,11 +99,9 @@ public class SqliteDatabaseRepository extends SQLiteOpenHelper implements Sqlite
         } finally {
             db.endTransaction();
         }
-
     }
 
-
-    public void addMenuDetail(@NonNull SQLiteDatabase db, final int sequence) {
+    private void addMenuDetail(@NonNull SQLiteDatabase db, final int sequence) {
         try {
             ContentValues values = new ContentValues();
             values.putNull(MenuTable.MENU_NAME.getColumnName());
@@ -155,7 +149,7 @@ public class SqliteDatabaseRepository extends SQLiteOpenHelper implements Sqlite
     }
 
 
-    public List<MenuDetail> getMenuDetailList() {
+    private List<MenuDetail> getMenuDetailList() {
         List<MenuDetail> menuDetails = new ArrayList<>();
 
         String MenuDetails_SELECT_QUERY =

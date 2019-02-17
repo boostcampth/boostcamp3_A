@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerLoginBinding;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.ownersignup.OwnerSignUpActivity;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
@@ -24,7 +25,6 @@ public class OwnerLoginActivity
         super.onCreate(savedInstanceState);
 
         setUpPresenterToDataBinding();
-        requestLoginCheckToPresenter();
     }
 
     @Override
@@ -74,8 +74,9 @@ public class OwnerLoginActivity
     }
 
     @Override
-    public void moveToOwnerStoreActivity(long userId) {
+    public void moveToOwnerStoreActivity(@NonNull UserAccessInfo userAccessInfo) {
         Intent ownerDetailIntent = new Intent(this, OwnerStoreActivity.class);
+        ownerDetailIntent.putExtra(OwnerStoreActivity.EXTRA_USER_ACCESS_INFO, userAccessInfo);
         startActivity(ownerDetailIntent);
         finish();
     }
@@ -86,10 +87,6 @@ public class OwnerLoginActivity
         signUpActivityIntent.putExtra(EXTRA_USER_ID, userId);
         startActivity(signUpActivityIntent);
         finish();
-    }
-
-    private void requestLoginCheckToPresenter() {
-        getPresenter().handlingLoggedInAccount();
     }
 
 }

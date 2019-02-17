@@ -1,6 +1,11 @@
 package com.aone.menurandomchoice.views.ownersignup;
 
-import com.aone.menurandomchoice.repository.remote.OnSignUpRequestListener;
+import com.aone.menurandomchoice.GlobalApplication;
+import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.repository.model.LoginData;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
+import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
 import androidx.annotation.NonNull;
@@ -12,46 +17,51 @@ public class OwnerSignUpPresenter extends BasePresenter<OwnerSignUpContract.View
 
     @Override
     public void requestSignUp(final long userId, @NonNull String accessKey) {
-        if (isPossibleAccessKey(accessKey)) {
-            requestSignUpToRepository(userId, accessKey);
-        } else {
-            sendMessageToView("인증번호를 올바르게 입력해주세요");
+        if(isAttachView()) {
+            getView().showProgressDialog();
+            if (isPossibleAccessKey(accessKey)) {
+                requestSignUpToRepository(userId, accessKey);
+            } else {
+                getView().hideProgressDialog();
+                sendMessageToView(R.string.activity_owner_access_key_guide);
+            }
         }
+
     }
 
     private boolean isPossibleAccessKey(String accessKey) {
         return accessKey.length() == POSSIBLE_ACCESS_KEY_LENGTH ;
     }
 
-    private void requestSignUpToRepository(final long userId, @NonNull String accessKey) {
-        getRepository().requestSignUp(userId, accessKey, new OnSignUpRequestListener() {
+    private void requestSignUpToRepository(long userId, @NonNull String accessKey) {
+        getRepository().requestSignUp(userId, accessKey, new NetworkResponseListener<LoginData>() {
             @Override
-            public void onSignUpSuccess() {
-
-                getRepository().addStoreDetail();
-
-                moveToOwnerDetailActivity(userId);
+            public void onReceived(@NonNull LoginData loginData) {
+                getRepository().addDefaultStoreDetail();
+                moveToOwnerDetailActivity(loginData);
             }
 
-            /**
-             * When the server implementation is complete,
-             * we must implement error handling logic
-             */
             @Override
-            public void onSignUpFail() {
-                sendMessageToView("가입에 실패했습니다.");
+            public void onError(JMTErrorCode errorCode) {
+                getView().hideProgressDialog();
+                sendMessageToView(errorCode.getStringResourceId());
             }
         });
     }
 
-    private void moveToOwnerDetailActivity(long userId) {
+    private void moveToOwnerDetailActivity(LoginData loginData) {
         if (isAttachView()) {
-            getView().moveToOwnerStoreActivity(userId);
+            getView().hideProgressDialog();
+            getView().moveToOwnerStoreActivity(new UserAccessInfo(loginData.getStoreIdx(), false));
         }
     }
 
-    private void sendMessageToView(String message) {
+    private void sendMessageToView(int messageResourceId) {
         if(isAttachView()) {
+            String message = GlobalApplication
+                    .getGlobalApplicationContext()
+                    .getString(messageResourceId);
+
             getView().showToastMessage(message);
         }
     }

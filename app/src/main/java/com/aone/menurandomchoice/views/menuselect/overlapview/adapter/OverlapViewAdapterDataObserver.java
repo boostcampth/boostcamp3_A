@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.views.menuselect.overlapview;
+package com.aone.menurandomchoice.views.menuselect.overlapview.adapter;
 
 public interface OverlapViewAdapterDataObserver {
 

@@ -5,21 +5,22 @@ import android.content.Intent;
 import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
 import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
+import com.aone.menurandomchoice.repository.model.LoginData;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
+import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.remote.APIHelper;
 import com.aone.menurandomchoice.repository.remote.APIRepository;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
-import com.aone.menurandomchoice.repository.local.SqliteDatabaseHelper;
-import com.aone.menurandomchoice.repository.local.SqliteDatabaseRepository;
+import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseHelper;
+import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseRepository;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginRepository;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLogoutListener;
-import com.aone.menurandomchoice.repository.remote.OnSignUpRequestListener;
-import com.aone.menurandomchoice.repository.remote.OnSignedUpCheckListener;
-import com.aone.menurandomchoice.utils.NetworkUtil;
+import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class DataRepository implements Repository {
     private static Repository repository;
     private KakaoLoginHelper kakaoLoginHelper;
     private APIHelper apiHelper;
-    private SqliteDatabaseHelper sqliteDatabaseHelper;
+    private SQLiteDatabaseHelper SQLiteDatabaseHelper;
     private PreferencesHelper preferencesHelper;
 
     @NonNull
@@ -47,7 +48,7 @@ public class DataRepository implements Repository {
     private DataRepository() {
         kakaoLoginHelper = KakaoLoginRepository.getInstance();
         apiHelper = APIRepository.getInstance();
-        sqliteDatabaseHelper = SqliteDatabaseRepository.getInstance();
+        SQLiteDatabaseHelper = SQLiteDatabaseRepository.getInstance();
         preferencesHelper = new PreferencesRepository();
     }
 
@@ -77,13 +78,15 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void requestSignedUpCheck(long userId, @NonNull OnSignedUpCheckListener onSignedUpCheckListener) {
-        apiHelper.requestSignedUpCheck(userId, onSignedUpCheckListener);
+    public void requestSignedUpCheck(long userId, @NonNull NetworkResponseListener<LoginData> networkResponseListener) {
+        apiHelper.requestSignedUpCheck(userId, networkResponseListener);
     }
 
     @Override
-    public void requestSignUp(long userId, @NonNull String accessKey, @NonNull OnSignUpRequestListener onSignUpRequestListener) {
-        apiHelper.requestSignUp(userId, accessKey, onSignUpRequestListener);
+    public void requestSignUp(long userId,
+                              @NonNull String accessKey,
+                              @NonNull NetworkResponseListener<LoginData> networkResponseListener) {
+        apiHelper.requestSignUp(userId, accessKey, networkResponseListener);
     }
 
     @Override
@@ -109,6 +112,12 @@ public class DataRepository implements Repository {
                                   @NonNull String updateTime,
                                   @NonNull NetworkResponseListener<EmptyObject> networkResponseListener) {
         apiHelper.checkStoreUpdated(storeIdx, updateTime, networkResponseListener);
+    }
+
+    @Override
+    public void requestMenuList(@NonNull MenuSearchRequest menuSearchRequest,
+                                                 @NonNull NetworkResponseListener<List<MenuDetail>> networkResponseListener) {
+        apiHelper.requestMenuList(menuSearchRequest, networkResponseListener);
     }
 
     @Override
@@ -142,25 +151,25 @@ public class DataRepository implements Repository {
             }
 
             @Override
-            public void onError() {
-                networkResponseListener.onError();
+            public void onError(JMTErrorCode errorCode) {
+                networkResponseListener.onError(errorCode);
             }
         });
     }
 
     @Override
-    public void addStoreDetail() {
-        sqliteDatabaseHelper.addStoreDetail();
+    public void addDefaultStoreDetail() {
+        SQLiteDatabaseHelper.addDefaultStoreDetail();
     }
 
     @Override
     public StoreDetail getStoreDetail() {
-        return sqliteDatabaseHelper.getStoreDetail();
+        return SQLiteDatabaseHelper.getStoreDetail();
     }
 
     @Override
     public void updateStoreDetail(@NonNull final StoreDetail storeDetail) {
-        sqliteDatabaseHelper.updateStoreDetail(storeDetail);
+        SQLiteDatabaseHelper.updateStoreDetail(storeDetail);
     }
 
     @Override

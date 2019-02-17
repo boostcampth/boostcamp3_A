@@ -1,4 +1,4 @@
-package com.aone.menurandomchoice.views.menuselect.overlapview;
+package com.aone.menurandomchoice.views.menuselect.overlapview.helper;
 
 import android.annotation.SuppressLint;
 import android.graphics.PointF;
@@ -6,9 +6,14 @@ import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView;
+import com.aone.menurandomchoice.views.menuselect.overlapview.animation.OnAnimationStateListener;
+import com.aone.menurandomchoice.views.menuselect.overlapview.animation.OverlapViewAnimationHelper;
+import com.aone.menurandomchoice.views.menuselect.overlapview.animation.OverlapViewDefaultAnimation;
+
 import androidx.annotation.NonNull;
 
-class OverlapViewTurnHelper {
+public class OverlapViewTurnHelper {
 
     enum ViewTouchArea {
         TOP, BOTTOM, NONE
@@ -30,7 +35,7 @@ class OverlapViewTurnHelper {
     private boolean isTouchingTopView = false;
     private boolean isAnimationPlaying = false;
 
-    OverlapViewTurnHelper() {
+    public OverlapViewTurnHelper() {
         setUp();
     }
 
@@ -44,7 +49,7 @@ class OverlapViewTurnHelper {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    void setOverlapView(@NonNull OverlapView overlapView) {
+    public void setOverlapView(@NonNull OverlapView overlapView) {
         this.overlapView = overlapView;
         this.overlapView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -61,7 +66,7 @@ class OverlapViewTurnHelper {
         });
     }
 
-    void setonTopViewDetachListener(@NonNull OnTopViewDetachListener onTopViewDetachListener) {
+    public void setonTopViewDetachListener(@NonNull OnTopViewDetachListener onTopViewDetachListener) {
         this.onTopViewDetachListener = onTopViewDetachListener;
     }
 

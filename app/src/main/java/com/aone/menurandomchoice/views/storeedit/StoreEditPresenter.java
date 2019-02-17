@@ -9,19 +9,7 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
 
     @Override
     public void saveStoreDetail(StoreDetail storeDetail) {
-
-        /*
-        getRepository().saveStoreDetail(storeDetail, new onSaveStoreDetailListener() {
-            @Override
-            public void onSaved() {
-                getView().showStoreSave();
-            }
-            @Override
-            public void onFail() {
-                getView().sho
-            }
-        });
-        */
+        //Todo . retrofit
     }
 
 

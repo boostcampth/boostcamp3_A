@@ -14,8 +14,6 @@ public interface StoreEditContract {
 
         void setEndTimePickerDialog(String endTime);
 
-        void setStoreLocation();
-
         void showOpentimeChanged(String hour, String minute);
 
         void showClosetimeChanged(String hour, String minute);
