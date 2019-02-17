@@ -30,6 +30,8 @@ public interface CustomerMainContract {
 
         void requestMenuList(double latitude, double longitude, double radius);
 
+        String getSelectedCategory();
+
         void stopNetwork();
 
         void getMenuCountFiltered(double centerLat, double centerLon, double radius);

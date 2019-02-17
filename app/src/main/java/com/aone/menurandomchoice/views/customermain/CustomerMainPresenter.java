@@ -44,6 +44,10 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
         });
     }
 
+    public String getSelectedCategory() {
+        return menuCategoryAdapterModel.getSelectedCategory();
+    }
+
     public void getMenuCountFiltered(double centerLat, double centerLon, double radius) {
 
         String category = menuCategoryAdapterModel.getSelectedCategory();

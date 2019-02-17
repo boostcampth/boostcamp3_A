@@ -16,6 +16,7 @@ import android.view.View;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityCustomerMainBinding;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
+import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
@@ -82,7 +83,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mCustomMarker.setMapPoint(CUSTOM_MARKER_POINT);
 
         mCustomMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
-        mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_red);
+        mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_chicken);
         mCustomMarker.setCustomImageAutoscale(false);
         mCustomMarker.setCustomImageAnchor(0.5f, 1.0f);
 
@@ -238,9 +239,9 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
             closerMenu.setMapPoint(MapPoint.mapPointWithGeoCoord(closerDistanceList.get(i).getLatitude()
                                                                 , closerDistanceList.get(i).getLongitude()));
             closerMenu.setMarkerType(MapPOIItem.MarkerType.CustomImage);
-            closerMenu.setCustomImageResourceId(R.drawable.custom_marker_star);
+            closerMenu.setCustomImageResourceId(R.drawable.custom_marker_pin);
             closerMenu.setCustomImageAutoscale(false);
-            closerMenu.setCustomImageAnchor(0.5f, 0.5f);
+            closerMenu.setCustomImageAnchor(0.5f, 1.0f);
             closerMenu.setShowCalloutBalloonOnTouch(false);
             mMapView.addPOIItem(closerMenu);
         }
@@ -248,12 +249,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mCustomMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lon));
         mMapView.addPOIItem(mCustomMarker);
         mMapView.selectPOIItem(mCustomMarker, true);
-
-        int radius = (int)getRadius()/50;
-        float zoomLevel = radius/2 + 1;
-/*        50 100 200 400 800
-                1 2 3 4 5 */
-        //mMapView.moveCamera(CameraUpdateFactory.newMapPoint(MapPoint.mapPointWithGeoCoord(lat, lon), zoomLevel));
     }
 
     @Override
@@ -317,7 +312,16 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     public void moveToMenuSelectPage() {
         mMapView.removeAllCircles();
+
         Intent menuSelectIntent = new Intent(CustomerMainActivity.this, MenuSelectActivity.class);
+        int radius = (int)getRadius();
+        String category = getPresenter().getSelectedCategory();
+        MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
+        menuSelectIntent.putExtra("MenuData",new MenuSearchRequest(mapPointGeo.latitude
+                , mapPointGeo.longitude
+                , radius
+                , category));
+
         startActivity(menuSelectIntent);
     }
 

@@ -77,13 +77,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="38dp"
-                android:src="@drawable/ic_gps_fixed_black_24dp"
+                android:layout_marginBottom="@dimen/two_x_large_margin"
+                android:src="@drawable/custom_gps_fixed"
                 android:contentDescription="@string/activity_customer_main_map_gps"
                 android:onClick="@{() -> activity.onGPSButtonClicked()}"
+                app:layout_constraintBottom_toTopOf="@+id/activity_customer_main_mapview_guide_line"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/activity_customer_main_mapview_guide_line"
@@ -199,7 +200,6 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_customer_main_tv_radius"
                 />
-
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/activity_customer_main_options_guide_line"
