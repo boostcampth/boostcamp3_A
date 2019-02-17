@@ -10,6 +10,8 @@ public interface OverlapViewAnimationHelper {
     void executeDetachAnimation(@NonNull View topView,
                                 @NonNull RectF firstCoordinatesOfView,
                                 @NonNull RectF lastCoordinatesOfView,
+                                float xDragRatio,
+                                float yDragRatio,
                                 @NonNull OnAnimationStateListener onAnimationStateListener);
 
     void executeNotDetachAnimation(@NonNull View topView,

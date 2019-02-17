@@ -40,7 +40,6 @@
             android:layout_marginTop="@dimen/middle_margin"
             android:layout_marginRight="@dimen/middle_margin"
             android:layout_marginBottom="@dimen/middle_margin"
-            android:background="@android:color/white"
             app:layout_constraintBottom_toTopOf="@+id/activity_menu_select_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
