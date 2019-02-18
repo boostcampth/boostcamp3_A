@@ -12,6 +12,8 @@ public interface OwnerStoreContract {
 
         void moveToOwnerEditPage(StoreDetail storeDetail);
 
+        void moveToMapDetailPage(double latitude, double longitude);
+
         void moveToMenuPreviewPage(MenuDetail menuDetail);
 
     }
@@ -22,7 +24,7 @@ public interface OwnerStoreContract {
 
         void onMenuDetailClick(MenuDetail menuDetail);
 
-        void onMapClick();
+        void onMapClick(double latitude, double longitude);
 
         void stopNetwork();
 

@@ -2,10 +2,8 @@ package com.aone.menurandomchoice.views.main;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseActivity;
@@ -14,6 +12,10 @@ import com.aone.menurandomchoice.databinding.ActivityMainBinding;
 import com.aone.menurandomchoice.utils.GlideUtil;
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
+import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class MainActivity
         extends BaseActivity<ActivityMainBinding, MainContract.View, MainContract.Presenter>
@@ -59,6 +61,8 @@ public class MainActivity
         Intent customerMainIntent = new Intent(MainActivity.this, CustomerMainActivity.class);
         startActivity(customerMainIntent);
     }
+
+
 
     @Override
     public void moveToOwnerLoginActivity() {

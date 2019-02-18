@@ -30,12 +30,14 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
     @Override
     public void onMenuDetailClick(MenuDetail menuDetail) {
+        if(menuDetail.getPhotoUrl() == null)
+            return;
         getView().moveToMenuPreviewPage(menuDetail);
     }
 
     @Override
-    public void onMapClick() {
-        //Todo. map 페이지로 이동
+    public void onMapClick(double latitude, double longitude) {
+        getView().moveToMapDetailPage(latitude, longitude);
     }
 
     @Override

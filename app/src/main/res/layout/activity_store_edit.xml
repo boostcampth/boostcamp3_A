@@ -27,45 +27,97 @@
                 android:id="@+id/activity_store_edit_ll_name_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/x_large_margin"
                 android:background="@color/white"
-                android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/activity_store_edit_ll_menu"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintVertical_chainStyle="spread_inside">
 
-                <EditText
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/two_x_large_margin"
+                    android:layout_marginLeft="@dimen/x_large_margin"
+                    android:layout_marginRight="@dimen/x_large_margin"
+                    android:layout_marginTop="@dimen/x_large_margin"
+                    android:padding="@dimen/small_margin"
+                    android:gravity="start"
+                    android:text="@string/activity_owner_detail_name_label"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/large_text"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x_large_margin"
+                    android:layout_marginRight="@dimen/x_large_margin"
+                    android:layout_marginTop="@dimen/small_margin"
                     android:lineSpacingExtra="5dp"
                     android:text="@{storeDetail.name}"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/very_large_text"
-                    android:textStyle="bold" />
+                    android:paddingLeft="@dimen/x_large_margin"
+                    android:paddingRight="@dimen/x_large_margin"
+                    android:hint="가게이름을 적어주세요."
+                    android:maxLines="3"
+                    android:background="@drawable/edit_text_round"/>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/large_margin"
-                    android:layout_marginBottom="@dimen/two_x_large_margin"
+                    android:layout_marginTop="@dimen/two_x_large_margin"
+                    android:layout_marginLeft="@dimen/x_large_margin"
+                    android:layout_marginStart="@dimen/x_large_margin"
                     android:orientation="horizontal"
-                    android:gravity="center">
+                    android:gravity="start"
+                    android:onClick="@{() -> presenter.onStartTimeSetClick(storeDetail.opentime)}">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/activity_owner_store_tv_time"
-                        android:textSize="@dimen/x_large_text" />
+                        android:lineSpacingExtra="5dp"
+                        android:text="@string/activity_store_edit_starttime_label"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/large_text"
+                        android:textStyle="bold" />
 
-                    <EditText
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="@dimen/two_x_large_margin"
                         android:textSize="@dimen/x_large_text"
-                        android:text="@{storeDetail.time}" />
+                        android:text="@{storeDetail.opentime ?? @string/activity_store_edit_default_starttime}"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x_large_margin"
+                    android:layout_marginBottom="@dimen/two_x_large_margin"
+                    android:layout_marginLeft="@dimen/x_large_margin"
+                    android:orientation="horizontal"
+                    android:gravity="left"
+                    android:onClick="@{() -> presenter.onEndTimeSetClick(storeDetail.closetime)}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="5dp"
+                        android:text="@string/activity_store_edit_endtime_label"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/large_text"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/two_x_large_margin"
+                        android:textSize="@dimen/x_large_text"
+                        android:text="@{storeDetail.closetime ?? @string/activity_store_edit_default_endtime}"/>
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -94,7 +146,8 @@
                     android:textSize="@dimen/large_text"
                     android:textStyle="bold" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/menu_register_layout"
                     android:layout_width="match_parent"
@@ -162,31 +215,31 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:gravity="start"
-                    android:lineSpacingExtra="5dp"
-                    android:textSize="@dimen/large_text"
+                    android:textSize="@dimen/middle_text"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:text="@string/activity_owner_detail_location" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="위치검색"
+                    android:padding="@dimen/x_large_margin"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/layout_menu_detail_border"
+                    android:background="@drawable/edit_text_round"
                     android:text="@{storeDetail.address}"
-                    android:onClick="@{() -> presenter.onAddressClick()}"/>
+                    android:onClick="@{() -> presenter.onLocationSearchClick()}"/>
 
                 <RelativeLayout
                     android:id="@+id/map_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:layout_marginLeft="@dimen/x_large_margin"
                     android:layout_marginRight="@dimen/x_large_margin"
-                    android:onClick="@{() -> presenter.onMapClick()}">
-                </RelativeLayout>
+                    android:layout_marginBottom="@dimen/x_large_margin" />
 
             </LinearLayout>
 
@@ -215,14 +268,17 @@
                     android:textSize="@dimen/large_text"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:textSize="@dimen/middle_text"
+                    android:hint="상점에 대한 소개를 남겨주세요!"
+                    android:padding="@dimen/x_large_margin"
+                    android:layout_margin="@dimen/x_large_margin"
+                    android:background="@drawable/edit_text_round"
+                    android:minLines="5"
                     android:maxLines="10"
-                    android:text="@{storeDetail.description}" />
+                    android:text="@{storeDetail.description}"
+                    android:gravity="start" />
 
             </LinearLayout>
 
