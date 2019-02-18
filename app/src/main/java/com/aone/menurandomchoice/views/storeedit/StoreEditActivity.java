@@ -16,6 +16,7 @@ import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
 import com.aone.menurandomchoice.views.menuregister.MenuRegisterActivity;
+import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
@@ -23,36 +24,30 @@ import net.daum.mf.map.api.MapView;
 
 import androidx.annotation.NonNull;
 
-import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.DEFAULT_LATITUDE;
-import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.DEFAULT_LONGITUDE;
-import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.EXTRA_STORE;
-
-
 public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, StoreEditContract.View, StoreEditContract.Presenter>
 implements  StoreEditContract.View{
-
-    MapView mapView;
-    ViewGroup mapViewContainer;
 
     public static final int REQUEST_CODE_LOCATIONSEARCH = 10;
     public static final String EXTRA_MENU_DETAIL_INFO = "EXTRA_MENU_DETAIL_INFO";
     private static final int REQUEST_CODE_MENU_REGISTER = 1;
+
+    private MapView mapView;
+    private ViewGroup mapViewContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setUpPresenterToDataBinding();
+        setUpMapView();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        initMapView();
-
-        StoreDetail storeDetail = getIntent().getParcelableExtra(EXTRA_STORE);
-        getDataBinding().setStoreDetail(storeDetail);
+        attachMapView();
+        passedGetIntentToPresenter();
     }
 
     @Override
@@ -79,10 +74,6 @@ implements  StoreEditContract.View{
         return new StoreEditPresenter();
     }
 
-    private void setUpPresenterToDataBinding() {
-        getDataBinding().setPresenter(getPresenter());
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.item_menu_store_edit_save, menu);
@@ -104,18 +95,53 @@ implements  StoreEditContract.View{
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        finish();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_MENU_REGISTER:
+                    attachViewToPresenter();
+                    MenuDetail menuDetail = data.getParcelableExtra(MenuRegisterActivity.EXTRA_MENU_DETAIL_ITEM);
+                    getPresenter().handlingReceivedMenuDetailData(menuDetail);
+                    break;
+                case REQUEST_CODE_LOCATIONSEARCH:
+                    attachViewToPresenter();
+                    String address = data.getStringExtra("address");
+                    Double longitude = data.getDoubleExtra("longitude", 0);
+                    Double latitude = data.getDoubleExtra("latitude", 0);
+                    getPresenter().handlingReceivedMapInfo(address, longitude, latitude);
+                    break;
+                default:
+                    super.onActivityResult(requestCode, resultCode, data);
+            }
+        }
     }
 
+    private void setUpPresenterToDataBinding() {
+        getDataBinding().setPresenter(getPresenter());
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void setUpMapView() {
+        mapViewContainer = getDataBinding().mapView;
+        mapView = new MapView(this);
+
+        mapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void showStoreDetailInfo(@NonNull StoreDetail storeDetail) {
+        getDataBinding().setStoreDetail(storeDetail);
+    }
 
     @Override
     public void moveToMenuEditPage(MenuDetail menuDetail) {
         Intent menuRegisterIntent = new Intent(StoreEditActivity.this, MenuRegisterActivity.class);
         menuRegisterIntent.putExtra(EXTRA_MENU_DETAIL_INFO, menuDetail);
-
         startActivityForResult(menuRegisterIntent, REQUEST_CODE_MENU_REGISTER);
     }
 
@@ -126,97 +152,23 @@ implements  StoreEditContract.View{
     }
 
     @Override
-    public void setStartTimePickerDialog(String openTime) {
-        if(openTime == null) {
-            openTime = getResources().getString(R.string.activity_store_edit_default_starttime);
-        }
-
+    public void showStartTimePickerDialog(@NonNull String openTime) {
         showTimePicker(openTime, "opentime");
     }
 
     @Override
-    public void setEndTimePickerDialog(String closeTime) {
-        if(closeTime == null) {
-            closeTime = getResources().getString(R.string.activity_store_edit_default_endtime);
-        }
-
+    public void showEndTimePickerDialog(@NonNull String closeTime) {
         showTimePicker(closeTime, "closetime");
     }
 
     @Override
-    public void showOpentimeChanged(String hour, String minute) {
-        getDataBinding().getStoreDetail().setOpentime(hour + ":" + minute);
+    public void showChangedOpenTime(@NonNull String openTime) {
+        getDataBinding().getStoreDetail().setOpentime(openTime);
     }
 
     @Override
-    public void showClosetimeChanged(String hour, String minute) {
-        getDataBinding().getStoreDetail().setClosetime(hour + ":" + minute);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_CODE_MENU_REGISTER:
-                    attachViewToPresenter();
-                    MenuDetail menuDetail = data.getParcelableExtra(MenuRegisterActivity.EXTRA_MENU_DETAIL_ITEM);
-                    getPresenter().handlingReceivedMenuDetailData(menuDetail);
-                    break;
-                case REQUEST_CODE_LOCATIONSEARCH:
-                    String address = data.getStringExtra("address");
-                    Double longitude = data.getDoubleExtra("longitude", 0);
-                    Double latitude = data.getDoubleExtra("latitude", 0);
-                    setAddress(address, longitude, latitude);
-                    break;
-                default:
-                    super.onActivityResult(requestCode, resultCode, data);
-            }
-        }
-    }
-
-
-    @SuppressLint("ClickableViewAccessibility")
-    public void initMapView() {
-        mapViewContainer = getDataBinding().mapView;
-        mapView = new MapView(this);
-
-        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
-        mapView.setMapCenterPoint(mapPoint, false);
-        mapViewContainer.addView(mapView);
-
-        mapView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    public void setMapView(double latitude, double longitude, String name) {
-
-        if(latitude == 0 && longitude == 0) {
-            latitude = DEFAULT_LATITUDE;
-            longitude = DEFAULT_LONGITUDE;
-        }
-        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude);
-        mapView.setMapCenterPoint(mapPoint, false);
-
-        MapPOIItem marker = new MapPOIItem();
-        marker.setItemName(name);
-        marker.setTag(0);
-        marker.setMapPoint(mapPoint);
-        marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
-        mapView.addPOIItem(marker);
-
-        final double finalLatitude = latitude;
-        final double finalLongitude = longitude;
-        mapView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+    public void showChangedCloseTime(@NonNull String closeTime) {
+        getDataBinding().getStoreDetail().setClosetime(closeTime);
     }
 
     @Override
@@ -225,7 +177,47 @@ implements  StoreEditContract.View{
         getDataBinding().getStoreDetail().getMenuList().set(menuDetailIndex, menuDetail);
     }
 
-    public void showTimePicker(String time, String type) {
+    @NonNull
+    @Override
+    public String getInputtedStoreName() {
+        return getDataBinding().activityStoreEditStoreNameEt.getText().toString();
+    }
+
+    @NonNull
+    @Override
+    public String getInputtedDescription() {
+        return getDataBinding().activityStoreEditDescriptionEt.getText().toString();
+    }
+
+    @Override
+    public void moveCenterToMap(@NonNull MapPoint centerPoint) {
+        mapView.setMapCenterPoint(centerPoint, false);
+    }
+
+    @Override
+    public void showStoreMakerToMap(@NonNull MapPOIItem marker) {
+        mapView.addPOIItem(marker);
+    }
+
+    @Override
+    public void setMapAddress(@NonNull String address) {
+        getDataBinding().getStoreDetail().setAddress(address);
+    }
+
+    private void passedGetIntentToPresenter() {
+        StoreDetail storeDetail = getIntent().getParcelableExtra(OwnerStoreActivity.EXTRA_STORE);
+        getPresenter().handlingReceivedStoreDetail(storeDetail);
+    }
+
+    private void attachMapView() {
+        mapViewContainer.addView(mapView);
+    }
+
+    private void detachMapView() {
+        mapViewContainer.removeView(mapView);
+    }
+
+    private void showTimePicker(String time, String type) {
         Bundle bundle = new Bundle();
         bundle.putString("time", time);
         bundle.putString("type", type);
@@ -234,17 +226,6 @@ implements  StoreEditContract.View{
         timePickerFragment.setArguments(bundle);
         timePickerFragment.setPresenter(getPresenter());
         timePickerFragment.show(getSupportFragmentManager(), "timepicker");
-    }
-
-    public void setAddress(String address, double latitude, double longitude) {
-        getDataBinding().getStoreDetail().setAddress(address);
-
-        String name = getDataBinding().getStoreDetail().getName();
-        setMapView(latitude, longitude, name);
-    }
-
-    public void detachMapView() {
-        mapViewContainer.removeView(mapView);
     }
 
 }

@@ -49,18 +49,19 @@
                     android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/activity_store_edit_store_name_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/x_large_margin"
-                    android:layout_marginRight="@dimen/x_large_margin"
                     android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginRight="@dimen/x_large_margin"
+                    android:background="@drawable/edit_text_round"
+                    android:hint="가게이름을 적어주세요."
                     android:lineSpacingExtra="5dp"
-                    android:text="@{storeDetail.name}"
+                    android:maxLines="3"
                     android:paddingLeft="@dimen/x_large_margin"
                     android:paddingRight="@dimen/x_large_margin"
-                    android:hint="가게이름을 적어주세요."
-                    android:maxLines="3"
-                    android:background="@drawable/edit_text_round"/>
+                    android:text="@{storeDetail.name}" />
 
 
                 <LinearLayout
@@ -86,8 +87,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/two_x_large_margin"
-                        android:textSize="@dimen/x_large_text"
-                        android:text="@{storeDetail.opentime ?? @string/activity_store_edit_default_starttime}"/>
+                        android:text="@{storeDetail.opentime ?? @string/activity_store_edit_default_starttime}"
+                        android:textSize="@dimen/x_large_text" />
 
                 </LinearLayout>
 
@@ -115,8 +116,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/two_x_large_margin"
-                        android:textSize="@dimen/x_large_text"
-                        android:text="@{storeDetail.closetime ?? @string/activity_store_edit_default_endtime}"/>
+                        android:text="@{storeDetail.closetime ?? @string/activity_store_edit_default_endtime}"
+                        android:textSize="@dimen/x_large_text" />
 
                 </LinearLayout>
 
@@ -268,17 +269,18 @@
                     android:textSize="@dimen/large_text"/>
 
                 <EditText
+                    android:id="@+id/activity_store_edit_description_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/middle_text"
-                    android:hint="상점에 대한 소개를 남겨주세요!"
-                    android:padding="@dimen/x_large_margin"
                     android:layout_margin="@dimen/x_large_margin"
                     android:background="@drawable/edit_text_round"
-                    android:minLines="5"
+                    android:gravity="start"
+                    android:hint="상점에 대한 소개를 남겨주세요!"
                     android:maxLines="10"
+                    android:minLines="5"
+                    android:padding="@dimen/x_large_margin"
                     android:text="@{storeDetail.description}"
-                    android:gravity="start" />
+                    android:textSize="@dimen/middle_text" />
 
             </LinearLayout>
 

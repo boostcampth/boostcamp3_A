@@ -4,43 +4,66 @@ import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseContract;
 
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public interface StoreEditContract {
     interface View extends BaseContract.View {
 
+        void showStoreDetailInfo(@NonNull StoreDetail storeDetail);
+
         void moveToMenuEditPage(MenuDetail menuDetail);
 
         void moveToLocationSearchPage();
 
-        void setStartTimePickerDialog(String startTime);
+        void showStartTimePickerDialog(@NonNull String startTime);
 
-        void setEndTimePickerDialog(String endTime);
+        void showEndTimePickerDialog(@NonNull String endTime);
 
-        void showOpentimeChanged(String hour, String minute);
+        void showChangedOpenTime(@NonNull String openTime);
 
-        void showClosetimeChanged(String hour, String minute);
+        void showChangedCloseTime(@NonNull String closeTime);
 
         void setMenuDetailToDataBinding(@NonNull MenuDetail menuDetail);
+
+        @NonNull
+        String getInputtedStoreName();
+
+        @NonNull
+        String getInputtedDescription();
+
+        void moveCenterToMap(@NonNull MapPoint centerPoint);
+
+        void showStoreMakerToMap(@NonNull MapPOIItem marker);
+
+        void setMapAddress(@NonNull String address);
 
     }
 
     interface Presenter extends BaseContract.Presenter<StoreEditContract.View> {
 
+        void handlingReceivedStoreDetail(@Nullable StoreDetail storeDetail);
+
         void onStartTimeSetClick(String time);
 
         void onEndTimeSetClick(String time);
 
-        void onTimeSet(String type, String hour, String minute);
+        void onTimeSet(@NonNull String type, @NonNull String hour, @NonNull String minute);
 
         void onLocationSearchClick();
 
         void onMenuEditClick(MenuDetail menuDetail);
 
-        void saveStoreDetail(StoreDetail storeDetail);
+        void saveStoreDetail(@Nullable StoreDetail storeDetail);
 
         void handlingReceivedMenuDetailData(@Nullable MenuDetail menuDetail);
+
+        void handlingReceivedMapInfo(@NonNull String address, double latitude, double longitude);
 
     }
 }
