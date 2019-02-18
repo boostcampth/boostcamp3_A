@@ -25,7 +25,9 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
         if(storeDetail != null) {
             if(isAttachView()) {
                 getView().showStoreDetailInfo(storeDetail);
-                handlingReceivedMapInfo(storeDetail.getAddress(), storeDetail.getLatitude(), storeDetail.getLongitude());
+                handlingReceivedMapInfo(storeDetail.getAddress(),
+                        storeDetail.getLatitude(),
+                        storeDetail.getLongitude());
             }
         } else {
 

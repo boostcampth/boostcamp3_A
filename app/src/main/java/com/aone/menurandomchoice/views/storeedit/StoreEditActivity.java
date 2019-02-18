@@ -27,7 +27,7 @@ import androidx.annotation.NonNull;
 public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, StoreEditContract.View, StoreEditContract.Presenter>
 implements  StoreEditContract.View{
 
-    public static final int REQUEST_CODE_LOCATIONSEARCH = 10;
+    public static final int REQUEST_CODE_LOCATION_SEARCH = 10;
     public static final String EXTRA_MENU_DETAIL_INFO = "EXTRA_MENU_DETAIL_INFO";
     private static final int REQUEST_CODE_MENU_REGISTER = 1;
 
@@ -40,14 +40,14 @@ implements  StoreEditContract.View{
 
         setUpPresenterToDataBinding();
         setUpMapView();
+        passedGetIntentToPresenter();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        attachMapView();
-        passedGetIntentToPresenter();
+        setUpMapView();
     }
 
     @Override
@@ -103,7 +103,7 @@ implements  StoreEditContract.View{
                     MenuDetail menuDetail = data.getParcelableExtra(MenuRegisterActivity.EXTRA_MENU_DETAIL_ITEM);
                     getPresenter().handlingReceivedMenuDetailData(menuDetail);
                     break;
-                case REQUEST_CODE_LOCATIONSEARCH:
+                case REQUEST_CODE_LOCATION_SEARCH:
                     attachViewToPresenter();
                     String address = data.getStringExtra("address");
                     Double longitude = data.getDoubleExtra("longitude", 0);
@@ -122,15 +122,18 @@ implements  StoreEditContract.View{
 
     @SuppressLint("ClickableViewAccessibility")
     private void setUpMapView() {
-        mapViewContainer = getDataBinding().mapView;
-        mapView = new MapView(this);
+        if(mapView == null) {
+            mapViewContainer = getDataBinding().mapView;
+            mapView = new MapView(this);
+            mapViewContainer.addView(mapView);
 
-        mapView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+            mapView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
+        }
     }
 
     @Override
@@ -148,7 +151,7 @@ implements  StoreEditContract.View{
     @Override
     public void moveToLocationSearchPage() {
         Intent locationSearchIntent = new Intent(StoreEditActivity.this, LocationSearchActivity.class);
-        startActivityForResult(locationSearchIntent, REQUEST_CODE_LOCATIONSEARCH);
+        startActivityForResult(locationSearchIntent, REQUEST_CODE_LOCATION_SEARCH);
     }
 
     @Override
@@ -209,12 +212,9 @@ implements  StoreEditContract.View{
         getPresenter().handlingReceivedStoreDetail(storeDetail);
     }
 
-    private void attachMapView() {
-        mapViewContainer.addView(mapView);
-    }
-
     private void detachMapView() {
         mapViewContainer.removeView(mapView);
+        mapView = null;
     }
 
     private void showTimePicker(String time, String type) {
