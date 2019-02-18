@@ -76,13 +76,7 @@ public class MenuSelectActivity
     }
 
     private void passedGetIntentInfoToPresenter() {
-        MenuSearchRequest menuSearchRequest = new MenuSearchRequest();
-
-        //menuSearchRequest는 getIntent를 통해 얻게된 객체를 넘겨줘야 하지만
-        //아직 전 화면의 기능이 완성되지 않았기 때문에 테스트를 위해 빈 객체를
-        //넘겨줌
-        //MenuSearchRequest menuSearchRequest = getIntent().getParcelableExtra(EXTRA_MENU_SEARCH_REQUEST);
-
+        MenuSearchRequest menuSearchRequest = new MenuSearchRequest(37.498041, 127.027690, 400, "");
         getPresenter().requestMenuList(menuSearchRequest);
     }
 

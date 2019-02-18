@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 
 public class OverlapView extends FrameLayout {
 
-    private static final int CREATE_LIMIT_COUNT = 3;
+    private static final int CREATE_LIMIT_COUNT = 5;
 
     private OverlapViewAdapter overlapViewAdapter;
 
