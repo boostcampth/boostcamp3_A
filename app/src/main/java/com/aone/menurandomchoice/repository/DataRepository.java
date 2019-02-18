@@ -161,6 +161,11 @@ public class DataRepository implements Repository {
     }
 
     @Override
+    public void requestSaveStoreDetail(@NonNull StoreDetail storeDetail, @NonNull NetworkResponseListener<EmptyObject> networkResponseListener) {
+        apiHelper.requestSaveStoreDetail(storeDetail, networkResponseListener);
+    }
+
+    @Override
     public void cancelAll() {
         // do cancel request
     }

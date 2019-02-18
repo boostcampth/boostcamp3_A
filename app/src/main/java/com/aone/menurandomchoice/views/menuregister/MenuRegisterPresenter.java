@@ -7,6 +7,7 @@ import android.net.Uri;
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.utils.DateUtil;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
@@ -225,7 +226,13 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         final float Y_RATIO = 4;
         int[] viewSize = getView().getRegisterTargetImageSize();
 
-        return uCropCreateHelper.createUCop(uri, X_RATIO, Y_RATIO, viewSize[0], viewSize[1]);
+        return uCropCreateHelper.createUCop(createSaveFileName(), uri, X_RATIO, Y_RATIO, viewSize[0], viewSize[1]);
+    }
+
+    private String createSaveFileName() {
+        MenuDetail menuDetail = getView().getMenuDetailFromDataBinding();
+        return menuDetail.getStoreIdx() + "_" + menuDetail.getSequence() + "_" +
+                DateUtil.getNowDate() + ".jpg";
     }
 
     private void sendRegisteredImageUriToView(String imagePath) {

@@ -36,6 +36,9 @@ public interface APIHelper {
                        @NonNull NetworkResponseListener<LoginData> networkResponseListener);
 
     void requestMenuList(@NonNull MenuSearchRequest menuSearchRequest,
-                                          @NonNull NetworkResponseListener<List<MenuDetail>> networkResponseListener);
+                         @NonNull NetworkResponseListener<List<MenuDetail>> networkResponseListener);
+
+    void requestSaveStoreDetail(@NonNull StoreDetail storeDetail,
+                                @NonNull NetworkResponseListener<EmptyObject> networkResponseListener);
 
 }

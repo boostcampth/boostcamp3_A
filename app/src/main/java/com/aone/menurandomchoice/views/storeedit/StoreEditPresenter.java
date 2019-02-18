@@ -1,7 +1,10 @@
 package com.aone.menurandomchoice.views.storeedit;
 
+import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
+import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
+import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,6 +38,17 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
             if(isAttachView()) {
                 storeDetail.setName(getView().getInputtedStoreName());
                 storeDetail.setDescription(getView().getInputtedDescription());
+                getRepository().requestSaveStoreDetail(storeDetail, new NetworkResponseListener<EmptyObject>() {
+                    @Override
+                    public void onReceived(@NonNull EmptyObject response) {
+
+                    }
+
+                    @Override
+                    public void onError(JMTErrorCode errorCode) {
+
+                    }
+                });
             }
         } else {
 
