@@ -19,6 +19,8 @@ public interface MenuCategoryAdapterContract {
 
         void setSelectedPositionOfMenuCategories(int position);
 
+        void setCategory(@NonNull String category);
+
         @NonNull
         String getSelectedCategory();
 

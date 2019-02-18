@@ -3,7 +3,6 @@ package com.aone.menurandomchoice.views.storeedit;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,12 +22,9 @@ import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 
-import static com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity.EXTRA_MENU_DETAIL_ITEM;
 import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.DEFAULT_LATITUDE;
 import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.DEFAULT_LONGITUDE;
-import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.EXTRA_MENU;
 import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.EXTRA_STORE;
 
 
@@ -39,6 +35,8 @@ implements  StoreEditContract.View{
     ViewGroup mapViewContainer;
 
     public static final int REQUEST_CODE_LOCATIONSEARCH = 10;
+    public static final String EXTRA_MENU_DETAIL_INFO = "EXTRA_MENU_DETAIL_INFO";
+    private static final int REQUEST_CODE_MENU_REGISTER = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,9 +114,9 @@ implements  StoreEditContract.View{
     @Override
     public void moveToMenuEditPage(MenuDetail menuDetail) {
         Intent menuRegisterIntent = new Intent(StoreEditActivity.this, MenuRegisterActivity.class);
-        menuRegisterIntent.putExtra(EXTRA_MENU, menuDetail);
+        menuRegisterIntent.putExtra(EXTRA_MENU_DETAIL_INFO, menuDetail);
 
-        startActivityForResult(menuRegisterIntent, menuDetail.getSequence());
+        startActivityForResult(menuRegisterIntent, REQUEST_CODE_MENU_REGISTER);
     }
 
     @Override
@@ -158,19 +156,11 @@ implements  StoreEditContract.View{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            MenuDetail menuDetail;
             switch (requestCode) {
-                case 1:
-                    menuDetail = data.getParcelableExtra(EXTRA_MENU_DETAIL_ITEM);
-                    getDataBinding().getStoreDetail().getMenuList().set(0, menuDetail);
-                    break;
-                case 2:
-                    menuDetail = data.getParcelableExtra(EXTRA_MENU_DETAIL_ITEM);
-                    getDataBinding().getStoreDetail().getMenuList().set(1, menuDetail);
-                    break;
-                case 3:
-                    menuDetail = data.getParcelableExtra(EXTRA_MENU_DETAIL_ITEM);
-                    getDataBinding().getStoreDetail().getMenuList().set(2, menuDetail);
+                case REQUEST_CODE_MENU_REGISTER:
+                    attachViewToPresenter();
+                    MenuDetail menuDetail = data.getParcelableExtra(MenuRegisterActivity.EXTRA_MENU_DETAIL_ITEM);
+                    getPresenter().handlingReceivedMenuDetailData(menuDetail);
                     break;
                 case REQUEST_CODE_LOCATIONSEARCH:
                     String address = data.getStringExtra("address");
@@ -229,6 +219,12 @@ implements  StoreEditContract.View{
         });
     }
 
+    @Override
+    public void setMenuDetailToDataBinding(@NonNull MenuDetail menuDetail) {
+        int menuDetailIndex = menuDetail.getSequence() - 1;
+        getDataBinding().getStoreDetail().getMenuList().set(menuDetailIndex, menuDetail);
+    }
+
     public void showTimePicker(String time, String type) {
         Bundle bundle = new Bundle();
         bundle.putString("time", time);
@@ -238,9 +234,7 @@ implements  StoreEditContract.View{
         timePickerFragment.setArguments(bundle);
         timePickerFragment.setPresenter(getPresenter());
         timePickerFragment.show(getSupportFragmentManager(), "timepicker");
-
     }
-
 
     public void setAddress(String address, double latitude, double longitude) {
         getDataBinding().getStoreDetail().setAddress(address);
@@ -252,4 +246,5 @@ implements  StoreEditContract.View{
     public void detachMapView() {
         mapViewContainer.removeView(mapView);
     }
+
 }

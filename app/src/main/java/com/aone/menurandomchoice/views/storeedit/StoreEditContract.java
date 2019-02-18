@@ -4,8 +4,12 @@ import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseContract;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public interface StoreEditContract {
     interface View extends BaseContract.View {
+
         void moveToMenuEditPage(MenuDetail menuDetail);
 
         void moveToLocationSearchPage();
@@ -17,6 +21,9 @@ public interface StoreEditContract {
         void showOpentimeChanged(String hour, String minute);
 
         void showClosetimeChanged(String hour, String minute);
+
+        void setMenuDetailToDataBinding(@NonNull MenuDetail menuDetail);
+
     }
 
     interface Presenter extends BaseContract.Presenter<StoreEditContract.View> {
@@ -32,6 +39,8 @@ public interface StoreEditContract {
         void onMenuEditClick(MenuDetail menuDetail);
 
         void saveStoreDetail(StoreDetail storeDetail);
+
+        void handlingReceivedMenuDetailData(@Nullable MenuDetail menuDetail);
 
     }
 }

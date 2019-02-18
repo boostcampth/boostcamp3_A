@@ -120,19 +120,8 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void saveRegisteredImageLocalPath(@NonNull String path) {
-        preferencesHelper.saveRegisteredImageLocalPath(path);
-    }
-
-    @NonNull
-    @Override
-    public String getSavedRegisterImageLoadPath() {
-        return preferencesHelper.getSavedRegisterImageLoadPath();
-    }
-
-    @Override
-    public void clearRegisteredImageLocalPath() {
-        preferencesHelper.clearRegisteredImageLocalPath();
+    public void saveRegisterMenuInfo(@NonNull MenuDetail menuDetail) {
+        preferencesHelper.saveRegisterMenuInfo(menuDetail);
     }
 
     @Override

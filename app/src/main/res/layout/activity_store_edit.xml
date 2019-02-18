@@ -218,20 +218,20 @@
                     android:textSize="@dimen/middle_text"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:text="@string/activity_owner_detail_location" />
+                    android:text="@string/activity_owner_detail_location"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="위치검색"
-                    android:padding="@dimen/x_large_margin"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/edit_text_round"
-                    android:text="@{storeDetail.address}"
-                    android:onClick="@{() -> presenter.onLocationSearchClick()}"/>
+                    android:hint="위치검색"
+                    android:onClick="@{() -> presenter.onLocationSearchClick()}"
+                    android:padding="@dimen/x_large_margin"
+                    android:text="@{storeDetail.address}" />
 
                 <RelativeLayout
                     android:id="@+id/map_view"

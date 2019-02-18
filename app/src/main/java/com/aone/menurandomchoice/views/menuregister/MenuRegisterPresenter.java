@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.views.base.BasePresenter;
@@ -29,6 +30,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     private UCropCreateHelper uCropCreateHelper;
 
     private enum RegisterState {
+
         SUCCESS(R.string.register_success),
         NO_IMAGE(R.string.register_no_image),
         NO_NAME(R.string.register_no_name),
@@ -64,6 +66,15 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     }
 
     @Override
+    public void handlingPassedMenuDetailInfo(@Nullable MenuDetail menuDetail) {
+        if(menuDetail != null) {
+            handlingMenuDetailInfo(menuDetail);
+        } else {
+            sendErrorMessage(R.string.activity_menu_register_menu_passed_fail);
+        }
+    }
+
+    @Override
     public void handlingMenuCategoryItemClick(int position) {
         menuCategoryAdapterModel.setSelectedPositionOfMenuCategories(position);
     }
@@ -94,12 +105,12 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     @Override
     public void handlingPreviewButtonClick() {
         if(isAttachView()) {
-            MenuDetail menuDetail = createMenuDetailItem();
+            MenuDetail menuDetail = getNowMenuDetailItem();
             RegisterState registerState = checkMenuDetailItem(menuDetail);
             if(registerState == RegisterState.SUCCESS) {
                 getView().moveToPreviewActivityWithItem(menuDetail);
             } else {
-                sendRegisterErrorMessage(registerState);
+                sendErrorMessage(registerState.getMessageResourceId());
             }
         }
     }
@@ -107,20 +118,18 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     @Override
     public void handlingRegisterOkButtonClick() {
         if(isAttachView()) {
-            MenuDetail menuDetail = createMenuDetailItem();
-            getRepository().clearRegisteredImageLocalPath();
+            MenuDetail menuDetail = getNowMenuDetailItem();
             RegisterState registerState = checkMenuDetailItem(menuDetail);
             if(registerState == RegisterState.SUCCESS) {
                 getView().moveToPreviousActivityWithItem(menuDetail);
             } else {
-                sendRegisterErrorMessage(registerState);
+                sendErrorMessage(registerState.getMessageResourceId());
             }
         }
     }
 
     @Override
     public void handlingBackKeyClick() {
-        getRepository().clearRegisteredImageLocalPath();
         if(isAttachView()) {
             getView().finishView();
         }
@@ -178,7 +187,6 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
             if(uri != null) {
                 String imagePath = uri.getPath();
                 if (imagePath != null) {
-                    saveRegisteredImageLocalPath(imagePath);
                     sendRegisteredImageUriToView(imagePath);
                 } else {
                     sendPhotoFailMessageToView();
@@ -220,18 +228,14 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         return uCropCreateHelper.createUCop(uri, X_RATIO, Y_RATIO, viewSize[0], viewSize[1]);
     }
 
-    private void saveRegisteredImageLocalPath(String imagePath) {
-        getRepository().saveRegisteredImageLocalPath(imagePath);
-    }
-
     private void sendRegisteredImageUriToView(String imagePath) {
-        getView().showRegisteredImage(imagePath);
+        if(isAttachView()) {
+            getView().setRegisteredImage(imagePath);
+        }
     }
 
-    private MenuDetail createMenuDetailItem() {
-        MenuDetail menuDetail = new MenuDetail();
-
-        menuDetail.setPhotoUrl(getRepository().getSavedRegisterImageLoadPath());
+    private MenuDetail getNowMenuDetailItem() {
+        MenuDetail menuDetail = getView().getMenuDetailFromDataBinding();
         menuDetail.setName(getView().getInputtedMenuName());
         menuDetail.setDescription(getView().getInputtedMenuDescription());
 
@@ -273,11 +277,24 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         return RegisterState.SUCCESS;
     }
 
-    private void sendRegisterErrorMessage(RegisterState registerState) {
+    private void sendErrorMessage(int resourceId) {
         if(isAttachView()) {
-            int errorMessageId = registerState.getMessageResourceId();
-            String message = getView().getAppContext().getResources().getString(errorMessageId);
+            String message = GlobalApplication
+                    .getGlobalApplicationContext()
+                    .getResources()
+                    .getString(resourceId);
+
             getView().showToastMessage(message);
+        }
+    }
+
+    private void handlingMenuDetailInfo(MenuDetail menuDetail) {
+        if(isAttachView()) {
+            getView().setMenuDetailToDataBinding(menuDetail);
+
+            if(menuCategoryAdapterModel != null) {
+                menuDetail.setCategory(menuDetail.getCategory());
+            }
         }
     }
 

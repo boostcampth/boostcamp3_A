@@ -20,6 +20,11 @@ public class BindingUtil {
                 .into(imageView);
     }
 
+    @BindingAdapter({"bind:photoUrl"})
+    public static void loadImage(ImageView imageView, String url) {
+        GlideUtil.loadImageWithSkipCache(imageView, url);
+    }
+
     @BindingAdapter({"bind:opentime", "bind:closetime"})
     public static void setStoreTime(TextView textView, String opentime, String closetime) {
         if(opentime == null)

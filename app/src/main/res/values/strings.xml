@@ -77,6 +77,7 @@
     <string name="activity_menu_register_guide_hint">메뉴 설명을 입력하세요</string>
     <string name="activity_menu_register_price_hint">메뉴 가격을 입력하세요</string>
     <string name="activity_menu_register_photo_fail">사진을 불러오는데 실패하였습니다</string>
+    <string name="activity_menu_register_menu_passed_fail">등록되어 있던 메뉴 정보를 불러오는데 실패하였습니다</string>
 
     <!-- category arrays -->
     <string name="arrays_category_all_food">전체</string>

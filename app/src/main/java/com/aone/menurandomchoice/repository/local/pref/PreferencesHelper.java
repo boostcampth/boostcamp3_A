@@ -1,14 +1,11 @@
 package com.aone.menurandomchoice.repository.local.pref;
 
+import com.aone.menurandomchoice.repository.model.MenuDetail;
+
 import androidx.annotation.NonNull;
 
 public interface PreferencesHelper {
 
-    void saveRegisteredImageLocalPath(@NonNull String path);
-
-    @NonNull
-    String getSavedRegisterImageLoadPath();
-
-    void clearRegisteredImageLocalPath();
+    void saveRegisterMenuInfo(@NonNull MenuDetail menuDetail);
 
 }

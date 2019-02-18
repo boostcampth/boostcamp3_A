@@ -19,13 +19,18 @@ public interface MenuRegisterContract {
 
         void startToUCropLibrary(@NonNull UCrop uCrop);
 
-        void showRegisteredImage(@NonNull String imagePath);
+        void setMenuDetailToDataBinding(@NonNull MenuDetail menuDetail);
+
+        void setRegisteredImage(@NonNull String imagePath);
 
         void moveToPreviewActivityWithItem(@NonNull MenuDetail menuDetail);
 
         void moveToPreviousActivityWithItem(@NonNull MenuDetail menuDetail);
 
         void finishView();
+
+        @NonNull
+        MenuDetail getMenuDetailFromDataBinding();
 
         @NonNull
         int[] getRegisterTargetImageSize();
@@ -44,6 +49,8 @@ public interface MenuRegisterContract {
     interface Presenter extends BaseContract.Presenter<MenuRegisterContract.View> {
 
         void setAdapterModel(@NonNull MenuCategoryAdapterContract.Model<MenuCategoryItem> menuCategoryAdapterModel);
+
+        void handlingPassedMenuDetailInfo(@Nullable MenuDetail menuDetail);
 
         void handlingMenuCategoryItemClick(int position);
 

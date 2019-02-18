@@ -17,6 +17,7 @@ import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.viewholder.OnMenuCategoryClickListener;
+import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
 import com.yalantis.ucrop.UCrop;
 
 import androidx.annotation.NonNull;
@@ -27,8 +28,8 @@ public class MenuRegisterActivity
         extends BaseActivity<ActivityMenuRegisterBinding, MenuRegisterContract.View, MenuRegisterContract.Presenter>
         implements MenuRegisterContract.View {
 
+    public static final String EXTRA_MENU_DETAIL_ITEM = "EXTRA_MENU_DETAIL_ITEM";
     private static final int REQUEST_CODE_OPEN_ALBUM = 1;
-    private static final String EXTRA_MENU_DETAIL_ITEM = "EXTRA_MENU_DETAIL_ITEM";
 
     private MenuCategoryAdapterContract.View menuCategoryAdapterView;
 
@@ -38,6 +39,7 @@ public class MenuRegisterActivity
 
         setUpPresenterToDataBinding();
         setUpCategoryRecyclerView();
+        passedGetIntentToPresenter();
     }
 
     @Override
@@ -128,6 +130,12 @@ public class MenuRegisterActivity
         });
     }
 
+    private void passedGetIntentToPresenter() {
+        Intent passedIntent = getIntent();
+        MenuDetail menuDetail = passedIntent.getParcelableExtra(StoreEditActivity.EXTRA_MENU_DETAIL_INFO);
+        getPresenter().handlingPassedMenuDetailInfo(menuDetail);
+    }
+
     @Override
     public void executePickPhotoFromAlbum() {
         openAlbumOfDevice();
@@ -139,8 +147,13 @@ public class MenuRegisterActivity
     }
 
     @Override
-    public void showRegisteredImage(@NonNull String imagePath) {
-        GlideUtil.loadImageWithSkipCache(getDataBinding().activityMenuRegisterIv, imagePath);
+    public void setMenuDetailToDataBinding(@NonNull MenuDetail menuDetail) {
+        getDataBinding().setMenuDetail(menuDetail);
+    }
+
+    @Override
+    public void setRegisteredImage(@NonNull String imagePath) {
+        getDataBinding().getMenuDetail().setPhotoUrl(imagePath);
     }
 
     @Override
@@ -157,6 +170,12 @@ public class MenuRegisterActivity
         setResult(RESULT_OK, resultIntent);
 
         finish();
+    }
+
+    @NonNull
+    @Override
+    public MenuDetail getMenuDetailFromDataBinding() {
+        return getDataBinding().getMenuDetail();
     }
 
     @NonNull

@@ -2,9 +2,11 @@ package com.aone.menurandomchoice.views.menuregister.helper;
 
 import android.content.res.Resources;
 import android.net.Uri;
+import android.text.format.DateUtils;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.utils.DateUtil;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -26,7 +28,7 @@ public class UCropCreateHelper {
     }
 
     private String createFileName() {
-        return DateFormat.getDateInstance().format(new Date()) + ".jpg";
+        return DateUtil.getNowDate() + ".jpg";
     }
 
     private UCrop createBasicUCrop(Uri uri,
