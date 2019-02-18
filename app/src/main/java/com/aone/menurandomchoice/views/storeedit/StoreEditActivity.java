@@ -249,6 +249,8 @@ implements  StoreEditContract.View{
 
     public void setAddress(String address, double latitude, double longitude) {
         getDataBinding().getStoreDetail().setAddress(address);
+        getDataBinding().getStoreDetail().setLatitude(latitude);
+        getDataBinding().getStoreDetail().setLongitude(longitude);
 
         String name = getDataBinding().getStoreDetail().getName();
         setMapView(latitude, longitude, name);

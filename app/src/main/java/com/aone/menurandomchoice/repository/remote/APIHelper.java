@@ -1,9 +1,12 @@
 package com.aone.menurandomchoice.repository.remote;
 
+import com.aone.menurandomchoice.repository.model.UpdateTime;
+import com.aone.menurandomchoice.repository.model.LoginData;
+import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
-import com.aone.menurandomchoice.repository.model.EmptyObject;
 
 import java.util.List;
 import java.util.Map;
@@ -16,20 +19,22 @@ public interface APIHelper {
                                @NonNull NetworkResponseListener<KakaoAddressResult> networkResponseListener);
 
     void requestMenuLocation(@NonNull Map<String, String> queryMap,
-                              @NonNull NetworkResponseListener<List<MenuLocation>> networkResponseListener);
+                             @NonNull NetworkResponseListener<List<MenuLocation>> networkResponseListener);
 
     void requestStoreDetail(int storeIdx,
                             @NonNull NetworkResponseListener<StoreDetail> networkResponseListener);
 
     void checkStoreUpdated(int storeIdx,
-                           @NonNull String updateTime,
-                           @NonNull NetworkResponseListener<EmptyObject> networkResponseListener);
+                           @NonNull NetworkResponseListener<UpdateTime> networkResponseListener);
 
     void requestSignedUpCheck(long userId,
-                              @NonNull OnSignedUpCheckListener onSignedUpCheckListener);
+                              @NonNull NetworkResponseListener<LoginData> networkResponseListener);
 
     void requestSignUp(long userId,
                        @NonNull String accessKey,
-                       @NonNull OnSignUpRequestListener onSignUpRequestListener);
+                       @NonNull NetworkResponseListener<LoginData> networkResponseListener);
+
+    void requestMenuList(@NonNull MenuSearchRequest menuSearchRequest,
+                                          @NonNull NetworkResponseListener<List<MenuDetail>> networkResponseListener);
 
 }
