@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
-import com.aone.menurandomchoice.repository.model.EmptyObject;
+import com.aone.menurandomchoice.repository.model.UpdateTime;
 import com.aone.menurandomchoice.repository.model.KakaoAddress;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.LoginData;
@@ -129,11 +129,10 @@ public class APIRepository implements APIHelper {
 
     @Override
     public void checkStoreUpdated(int storeIdx,
-                                  @NonNull String updateTime,
-                                  @NonNull NetworkResponseListener<EmptyObject> listener) {
+                                  @NonNull NetworkResponseListener<UpdateTime> listener) {
         if(NetworkUtil.isNetworkConnecting()) {
             apiCreator.getApiInstance()
-                    .checkStoreUpdated(storeIdx, updateTime)
+                    .checkStoreUpdated(storeIdx)
                     .enqueue(new JMTCallback<>(listener));
         } else {
             listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
