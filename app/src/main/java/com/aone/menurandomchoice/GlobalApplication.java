@@ -9,6 +9,7 @@ import com.kakao.auth.KakaoSDK;
 import androidx.multidex.MultiDex;
 
 public class GlobalApplication extends Application {
+
     private static volatile GlobalApplication instance = null;
 
     public static GlobalApplication getGlobalApplicationContext() {

@@ -114,11 +114,6 @@ implements  StoreEditContract.View{
 
 
     @Override
-    public void setStoreLocation() {
-
-    }
-
-    @Override
     public void moveToMenuEditPage(MenuDetail menuDetail) {
         Intent menuRegisterIntent = new Intent(StoreEditActivity.this, MenuRegisterActivity.class);
         menuRegisterIntent.putExtra(EXTRA_MENU, menuDetail);

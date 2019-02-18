@@ -1,6 +1,5 @@
 package com.aone.menurandomchoice.utils;
 
-import android.net.Uri;
 import android.widget.ImageView;
 
 import com.aone.menurandomchoice.GlobalApplication;
@@ -9,14 +8,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 
 public class GlideUtil {
 
     public static void loadImage(ImageView imageView, int resourceId) {
         Glide.with(imageView.getContext())
                 .load(resourceId)
-                .thumbnail(0.1f)
                 .into(imageView);
     }
 

@@ -1,22 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:clipChildren="false"
-    tools:context=".views.menuselect.MenuSelectActivity">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView
-        android:id="@+id/test_overlapView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/two_x_large_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <data>
 
-    </com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <variable
+            name="presenter"
+            type="com.aone.menurandomchoice.views.menuselect.MenuSelectContract.Presenter"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:clipToPadding="false"
+        android:clipChildren="false">
+
+        <ImageButton
+            android:id="@+id/activity_menu_select_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="@dimen/middle_margin"
+            android:layout_weight="0"
+            android:background="@drawable/item_menu_select_ok_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> presenter.handlingMenuSelectButtonClick()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView
+            android:id="@+id/activity_menu_select_overlap_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/middle_margin"
+            android:layout_marginTop="@dimen/middle_margin"
+            android:layout_marginRight="@dimen/middle_margin"
+            android:layout_marginBottom="@dimen/middle_margin"
+            app:layout_constraintBottom_toTopOf="@+id/activity_menu_select_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -131,6 +131,8 @@
     <!-- JMT response code -->
     <string name="JMT_response_success">요청에 성공했습니다</string>
     <string name="JMT_response_no_result">요청된 결과가 없습니다</string>
+    <string name="JMT_response_no_singed_up_info">존재하는 ID가 없습니다. 회원가입을 진행합니다</string>
+    <string name="JMT_response_fail_sign_up">인증키가 유효하지 않습니다</string>
     <string name="JMT_response_wrong_request_error">앱 시스템에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
     <string name="JMT_response_not_found_error">서버 시스템에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
     <string name="JMT_response_server_system_error">서버 시스템에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
@@ -142,4 +144,5 @@
     <string name="custom_progress_dialog_message">로딩 중</string>
     <string name="activity_owner_store_logout">로그아웃 되었습니다.</string>
     <string name="activity_store_edit_location_search">위치검색</string>
+
 </resources>

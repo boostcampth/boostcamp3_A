@@ -21,32 +21,12 @@ public class KakaoAddressResult {
         return totalCount;
     }
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-    }
-
     public int getPageableCount() {
         return pageableCount;
     }
 
-    public void setPageableCount(int pageableCount) {
-        this.pageableCount = pageableCount;
-    }
-
-    public boolean isEnd() {
-        return isEnd;
-    }
-
-    public void setEnd(boolean end) {
-        isEnd = end;
-    }
-
     public List<KakaoAddress> getDocuments() {
         return documents;
-    }
-
-    public void setDocuments(List<KakaoAddress> documents) {
-        this.documents = documents;
     }
 
 }

@@ -22,7 +22,7 @@ public class KakaoCallback<T> implements Callback<T> {
         if(response.isSuccessful() && response.body() != null) {
             listener.onReceived(response.body());
         } else {
-            listener.onError();
+            listener.onError(JMTErrorCode.UNKNOWN_ERROR);
         }
     }
 
@@ -32,6 +32,7 @@ public class KakaoCallback<T> implements Callback<T> {
         if(!call.isCanceled()) {
             call.cancel();
         }
-        listener.onError();
+
+        listener.onError(JMTErrorCode.UNKNOWN_ERROR);
     }
 }

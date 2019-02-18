@@ -31,6 +31,7 @@ public class OwnerStoreActivity
 
     public static final String EXTRA_MENU = "EXTRA_MENU";
     public static final String EXTRA_STORE = "EXTRA_STORE";
+    public static final String EXTRA_USER_ACCESS_INFO = "EXTRA_USER_ACCESS_INFO";
 
     public static final double DEFAULT_LATITUDE = 37.5514579595;
     public static final double DEFAULT_LONGITUDE = 126.951949155;
@@ -70,7 +71,6 @@ public class OwnerStoreActivity
         super.onStop();
 
         getPresenter().stopNetwork();
-
     }
 
     @Override

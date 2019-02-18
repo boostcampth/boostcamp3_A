@@ -1,53 +1,48 @@
 package com.aone.menurandomchoice.views.main;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
-import android.view.View;
-
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
+import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.customermain.CustomerMainActivity;
 import com.aone.menurandomchoice.databinding.ActivityMainBinding;
 import com.aone.menurandomchoice.utils.GlideUtil;
-import com.aone.menurandomchoice.views.menuregister.MenuRegisterActivity;
-import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
 import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
-import com.aone.menurandomchoice.views.ownersignup.OwnerSignUpActivity;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MainActivity extends AppCompatActivity {
-
-    private ActivityMainBinding activityMainBinding;
+public class MainActivity
+        extends BaseActivity<ActivityMainBinding, MainContract.View, MainContract.Presenter>
+        implements MainContract.View {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setUpDataBinding();
+        setUpPresenterToDataBinding();
+    }
 
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.aone.menurandomchoice", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @NonNull
+    @Override
+    protected MainContract.Presenter setUpPresenter() {
+        return new MainPresenter();
+    }
+
+    @NonNull
+    @Override
+    protected MainContract.View getView() {
+        return this;
     }
 
     @Override
@@ -57,34 +52,39 @@ public class MainActivity extends AppCompatActivity {
         loadScreenIcon();
     }
 
-    private void setUpDataBinding() {
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        activityMainBinding.setActivity(this);
+    private void setUpPresenterToDataBinding() {
+        getDataBinding().setPresenter(getPresenter());
+    }
+
+    @Override
+    public void moveToCustomerMainActivity() {
+        Intent customerMainIntent = new Intent(MainActivity.this, CustomerMainActivity.class);
+        startActivity(customerMainIntent);
+    }
+
+
+
+    @Override
+    public void moveToOwnerLoginActivity() {
+        Intent ownerLoginIntent = new Intent(this, OwnerLoginActivity.class);
+        startActivity(ownerLoginIntent);
+    }
+
+    @Override
+    public void moveToOwnerStoreActivity(UserAccessInfo userAccessInfo) {
+        Intent ownerStoreIntent = new Intent(this, OwnerStoreActivity.class);
+        ownerStoreIntent.putExtra(OwnerStoreActivity.EXTRA_USER_ACCESS_INFO, userAccessInfo);
+        startActivity(ownerStoreIntent);
     }
 
     private void loadScreenIcon() {
-        GlideUtil.loadImage(activityMainBinding.activityMainCustomerTobaccoIv, R.drawable.customer_tobacco_icon);
-        GlideUtil.loadImage(activityMainBinding.activityMainCustomerHamburgerIv, R.drawable.customer_hamburger_icon);
-        GlideUtil.loadImage(activityMainBinding.activityMainCustomerPopcornIv, R.drawable.customer_popcorn_icon);
-        GlideUtil.loadImage(activityMainBinding.activityMainCustomerSalmonIv, R.drawable.customer_salmon_icon);
-        GlideUtil.loadImage(activityMainBinding.activityMainCustomerDoughnutIv, R.drawable.customer_doughnut_icon);
-        GlideUtil.loadImage(activityMainBinding.activityMainCustomerSandwichIv, R.drawable.customer_sandwich_icon);
-        GlideUtil.loadImage(activityMainBinding.activityMainOwnerIv, R.drawable.owner_icon);
-    }
-
-    public void moveToMenuSelectActivity(View view) {
-        Intent menuSelectIntent = new Intent(MainActivity.this, CustomerMainActivity.class);
-        startActivity(menuSelectIntent);
-    }
-
-    public void moveToOwnerLoginActivity(View view) {
-        /*
-          Intent ownerLoginIntent = new Intent(this, OwnerLoginActivity.class);
-        startActivity(ownerLoginIntent);
-        */
-        
-        Intent intent = new Intent(this, OwnerStoreActivity.class);
-        startActivity(intent);
+        GlideUtil.loadImage(getDataBinding().activityMainCustomerTobaccoIv, R.drawable.customer_tobacco_icon);
+        GlideUtil.loadImage(getDataBinding().activityMainCustomerHamburgerIv, R.drawable.customer_hamburger_icon);
+        GlideUtil.loadImage(getDataBinding().activityMainCustomerPopcornIv, R.drawable.customer_popcorn_icon);
+        GlideUtil.loadImage(getDataBinding().activityMainCustomerSalmonIv, R.drawable.customer_salmon_icon);
+        GlideUtil.loadImage(getDataBinding().activityMainCustomerDoughnutIv, R.drawable.customer_doughnut_icon);
+        GlideUtil.loadImage(getDataBinding().activityMainCustomerSandwichIv, R.drawable.customer_sandwich_icon);
+        GlideUtil.loadImage(getDataBinding().activityMainOwnerIv, R.drawable.owner_icon);
     }
 
 }

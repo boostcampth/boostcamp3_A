@@ -1,7 +1,5 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
-import android.util.Log;
-
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
@@ -49,6 +47,7 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
         getRepository().cancelAll();
     }
 
+
     @Override
     public void onLogoutClick() {
         getRepository().executeKakaoAccountLogout(onKakaoLogoutListener);
@@ -74,4 +73,5 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
             getView().finishOwnerStorePage();
         }
     };
+
 }
