@@ -1,5 +1,7 @@
 package com.aone.menurandomchoice.views.storeedit;
 
+import com.aone.menurandomchoice.GlobalApplication;
+import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
@@ -23,14 +25,13 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
     @Override
     public void handlingReceivedStoreDetail(@Nullable StoreDetail storeDetail) {
         if(storeDetail != null) {
-            if(isAttachView()) {
-                getView().showStoreDetailInfo(storeDetail);
-                handlingReceivedMapInfo(storeDetail.getAddress(),
-                        storeDetail.getLatitude(),
-                        storeDetail.getLongitude());
-            }
+            sendStoreDetailToView(storeDetail);
+            handlingReceivedMapInfo(storeDetail.getAddress(),
+                    storeDetail.getLatitude(),
+                    storeDetail.getLongitude());
         } else {
-
+            sendMessageToView(R.string.activity_store_edit_store_info_received_fail);
+            viewFinish();
         }
     }
 
@@ -48,12 +49,13 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
 
                     @Override
                     public void onError(JMTErrorCode errorCode) {
-
+                        sendMessageToView(errorCode.getStringResourceId());
                     }
                 });
             }
         } else {
-
+            sendMessageToView(R.string.activity_store_edit_store_info_received_fail);
+            viewFinish();
         }
     }
 
@@ -114,6 +116,12 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
         }
     }
 
+    private void sendStoreDetailToView(StoreDetail storeDetail) {
+        if(isAttachView()) {
+            getView().showStoreDetailInfo(storeDetail);
+        }
+    }
+
     private MapPoint createMapPoint(double latitude, double longitude) {
         final double DEFAULT_LATITUDE = 37.5514579595;
         final double DEFAULT_LONGITUDE = 126.951949155;
@@ -134,5 +142,21 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
         marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
 
         return marker;
+    }
+
+    private void sendMessageToView(int resourceId) {
+        if(isAttachView()) {
+            String message = GlobalApplication
+                    .getGlobalApplicationContext()
+                    .getString(resourceId);
+
+            getView().showToastMessage(message);
+        }
+    }
+
+    private void viewFinish() {
+        if(isAttachView()) {
+            getView().viewFinish();
+        }
     }
 }

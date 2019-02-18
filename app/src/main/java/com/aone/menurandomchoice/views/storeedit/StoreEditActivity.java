@@ -207,6 +207,11 @@ implements  StoreEditContract.View{
         getDataBinding().getStoreDetail().setAddress(address);
     }
 
+    @Override
+    public void viewFinish() {
+        finish();
+    }
+
     private void passedGetIntentToPresenter() {
         StoreDetail storeDetail = getIntent().getParcelableExtra(OwnerStoreActivity.EXTRA_STORE);
         getPresenter().handlingReceivedStoreDetail(storeDetail);

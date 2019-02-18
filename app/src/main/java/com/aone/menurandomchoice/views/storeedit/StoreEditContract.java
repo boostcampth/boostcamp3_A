@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public interface StoreEditContract {
+
     interface View extends BaseContract.View {
 
         void showStoreDetailInfo(@NonNull StoreDetail storeDetail);
@@ -42,6 +43,8 @@ public interface StoreEditContract {
         void showStoreMakerToMap(@NonNull MapPOIItem marker);
 
         void setMapAddress(@NonNull String address);
+
+        void viewFinish();
 
     }
 

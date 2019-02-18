@@ -58,6 +58,7 @@
     <string name="activity_store_edit_endtime_label">영업 종료시간</string>
     <string name="activity_store_edit_default_starttime">10:00</string>
     <string name="activity_store_edit_default_endtime">18:00</string>
+    <string name="activity_store_edit_store_info_received_fail">앱에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>
