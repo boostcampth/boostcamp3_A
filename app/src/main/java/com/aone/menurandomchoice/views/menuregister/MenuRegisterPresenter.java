@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.menuregister;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -71,8 +73,9 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     public void handlingPassedMenuDetailInfo(@Nullable MenuDetail menuDetail) {
         if(menuDetail != null) {
             handlingMenuDetailInfo(menuDetail);
+            handlingImageRegisterButton(menuDetail.getPhotoUrl());
         } else {
-            sendErrorMessage(R.string.activity_menu_register_menu_passed_fail);
+            sendMessageToView(R.string.activity_menu_register_menu_passed_fail);
         }
     }
 
@@ -84,6 +87,14 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     @Override
     public void handlingImageRegisterButtonClick() {
         checkPermissionWithTedPermission();
+    }
+
+    @Override
+    public void handlingImageDeleteButtonClick() {
+        if(isAttachView()) {
+            getView().setRegisteredImage("");
+            handlingImageRegisterButton("");
+        }
     }
 
     @Override
@@ -107,34 +118,37 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     @Override
     public void handlingPreviewButtonClick() {
         if(isAttachView()) {
-            MenuDetail menuDetail = getNowMenuDetailItem();
+            MenuDetail menuDetail = getView().getInputtedMenuDetail();
             RegisterState registerState = checkMenuDetailItem(menuDetail);
             if(registerState == RegisterState.SUCCESS) {
-                getView().moveToPreviewActivityWithItem(menuDetail);
+                getView().moveToPreviewActivityWithItem();
             } else {
-                sendErrorMessage(registerState.getMessageResourceId());
+                sendMessageToView(registerState.getMessageResourceId());
             }
         }
     }
 
     @Override
+    public void handlingMenuDeleteButtonClick() {
+        showMenuDeleteCheckDialog();
+    }
+
+    @Override
     public void handlingRegisterOkButtonClick() {
         if(isAttachView()) {
-            MenuDetail menuDetail = getNowMenuDetailItem();
+            MenuDetail menuDetail = getView().getInputtedMenuDetail();
             RegisterState registerState = checkMenuDetailItem(menuDetail);
-            if(registerState == RegisterState.SUCCESS) {
-                getView().moveToPreviousActivityWithItem(menuDetail);
+            if (registerState == RegisterState.SUCCESS) {
+                getView().moveToPreviousActivityWithItem();
             } else {
-                sendErrorMessage(registerState.getMessageResourceId());
+                sendMessageToView(registerState.getMessageResourceId());
             }
         }
     }
 
     @Override
     public void handlingBackKeyClick() {
-        if(isAttachView()) {
-            getView().finishView();
-        }
+        viewFinish();
     }
 
     private void checkPermissionWithTedPermission() {
@@ -161,8 +175,14 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         ArrayList<MenuCategoryItem> menuCategoryItems = new ArrayList<>();
         String[] categories = getView().getAppContext().getResources().getStringArray(R.array.category);
 
+        String removeWord = GlobalApplication
+                .getGlobalApplicationContext()
+                .getString(R.string.arrays_category_all_food);
+
         for(String category : categories) {
-            menuCategoryItems.add(new MenuCategoryItem(category));
+            if(!category.equals(removeWord)) {
+                menuCategoryItems.add(new MenuCategoryItem(category));
+            }
         }
 
         return menuCategoryItems;
@@ -231,7 +251,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     }
 
     private String createSaveFileName() {
-        MenuDetail menuDetail = getView().getMenuDetailFromDataBinding();
+        MenuDetail menuDetail = getView().getInputtedMenuDetail();
         return menuDetail.getStoreIdx() + "_" + menuDetail.getSequence() + "_" +
                 DateUtil.getNowDate() + ".jpg";
     }
@@ -240,25 +260,6 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         if(isAttachView()) {
             getView().setRegisteredImage(imagePath);
         }
-    }
-
-    private MenuDetail getNowMenuDetailItem() {
-        MenuDetail menuDetail = getView().getMenuDetailFromDataBinding();
-        menuDetail.setName(getView().getInputtedMenuName());
-        menuDetail.setDescription(getView().getInputtedMenuDescription());
-
-        String price = getView().getInputtedMenuPrice();
-        if(price.length() < 1) {
-            menuDetail.setPrice(0);
-        } else {
-            menuDetail.setPrice(Integer.parseInt(price));
-        }
-
-        if(menuCategoryAdapterModel != null) {
-            menuDetail.setCategory(menuCategoryAdapterModel.getSelectedCategory());
-        }
-
-        return menuDetail;
     }
 
     private RegisterState checkMenuDetailItem(MenuDetail menuDetail) {
@@ -278,6 +279,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
             return RegisterState.NO_PRICE;
         }
 
+        menuDetail.setCategory(menuCategoryAdapterModel.getSelectedCategory());
         if(TextUtils.isEmpty(menuDetail.getCategory())) {
             return RegisterState.NO_CATEGORY;
         }
@@ -285,7 +287,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         return RegisterState.SUCCESS;
     }
 
-    private void sendErrorMessage(int resourceId) {
+    private void sendMessageToView(int resourceId) {
         if(isAttachView()) {
             String message = GlobalApplication
                     .getGlobalApplicationContext()
@@ -305,15 +307,73 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         }
     }
 
-//    private void handlingImageRegisterButton(String photoUrl) {
-//        if(isAttachView()) {
-//
-//            String photoUrl = menuDetail.getPhotoUrl();
-//            if (photoUrl != null && photoUrl.length() != 0) {
-//                getView().showMenuAddButton();
-//            } else {
-//                getView().showMenuDeleteButton();
-//            }
-//        }
-//    }
+    private void handlingImageRegisterButton(String photoUrl) {
+        if(isAttachView()) {
+            if(TextUtils.isEmpty(photoUrl)) {
+                getView().showMenuAddButton();
+            } else {
+                getView().showMenuDeleteButton();
+            }
+        }
+    }
+
+    private void showMenuDeleteCheckDialog(){
+        if(isAttachView()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getView().getActivityContext());
+
+            String guideMessage = getView()
+                    .getActivityContext()
+                    .getString(R.string.activity_menu_register_menu_delete_guide);
+
+            builder.setMessage(guideMessage);
+
+            String yesMessage = getView()
+                    .getActivityContext()
+                    .getString(R.string.activity_menu_register_menu_delete_yes);
+
+            builder.setPositiveButton(yesMessage,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            initializeRegisteredMenu();
+                            sendMessageToView(R.string.activity_menu_register_menu_delete_success);
+                            getView().moveToPreviousActivityWithItem();
+
+                        }
+                    });
+
+            String noMessage = getView()
+                    .getActivityContext()
+                    .getString(R.string.activity_menu_register_menu_delete_no);
+            builder.setNegativeButton(noMessage,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sendMessageToView(R.string.activity_menu_register_menu_delete_success);
+                        }
+                    });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+    }
+
+    private void initializeRegisteredMenu() {
+        if(isAttachView()) {
+            MenuDetail menuDetail = getView().getInputtedMenuDetail();
+            menuDetail.setName("");
+            menuDetail.setDescription("");
+            menuDetail.setPrice(0);
+            menuDetail.setPhotoUrl("");
+            menuDetail.setCategory("");
+
+            getView().setMenuDetailToDataBinding(menuDetail);
+        }
+    }
+
+    private void viewFinish() {
+        if(isAttachView()) {
+            getView().finishView();
+        }
+    }
 }

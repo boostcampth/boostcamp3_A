@@ -27,26 +27,17 @@ public interface MenuRegisterContract {
 
         void showMenuDeleteButton();
 
-        void moveToPreviewActivityWithItem(@NonNull MenuDetail menuDetail);
+        void moveToPreviewActivityWithItem();
 
-        void moveToPreviousActivityWithItem(@NonNull MenuDetail menuDetail);
+        void moveToPreviousActivityWithItem();
 
         void finishView();
 
         @NonNull
-        MenuDetail getMenuDetailFromDataBinding();
+        MenuDetail getInputtedMenuDetail();
 
         @NonNull
         int[] getRegisterTargetImageSize();
-
-        @NonNull
-        String getInputtedMenuName();
-
-        @NonNull
-        String getInputtedMenuDescription();
-
-        @NonNull
-        String getInputtedMenuPrice();
 
     }
 
@@ -58,7 +49,11 @@ public interface MenuRegisterContract {
 
         void handlingMenuCategoryItemClick(int position);
 
+        void handlingMenuDeleteButtonClick();
+
         void handlingImageRegisterButtonClick();
+
+        void handlingImageDeleteButtonClick();
 
         void handlingPickPhotoResult(int resultCode, @Nullable Intent data);
 

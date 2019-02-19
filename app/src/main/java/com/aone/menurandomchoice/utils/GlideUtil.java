@@ -41,6 +41,14 @@ public class GlideUtil {
         }
     }
 
+    public static void loadRegisterImageWithSkipCache(ImageView imageView, String uri, Drawable defaultDrawable) {
+        if(!TextUtils.isEmpty(uri)) {
+            loadImageWithSkipCache(imageView, uri);
+        } else {
+            imageView.setImageDrawable(defaultDrawable);
+        }
+    }
+
     public static void loadImageWithSkipCache(final ImageView imageView, String uri, final ProgressBar progressBar) {
         if(!TextUtils.isEmpty(uri)) {
             progressBar.setVisibility(View.VISIBLE);

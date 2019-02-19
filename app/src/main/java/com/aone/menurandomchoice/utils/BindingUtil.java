@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import androidx.databinding.BindingAdapter;
+import retrofit2.http.Body;
 
 public class BindingUtil {
 
@@ -18,6 +19,11 @@ public class BindingUtil {
                 .load(url)
                 .apply(new RequestOptions().placeholder(errorDrawable).error(errorDrawable).centerCrop())
                 .into(imageView);
+    }
+
+    @BindingAdapter({"bind:url", "bind:defaultDrawable"})
+    public static void loadRegisterImage(ImageView imageView, String url, Drawable defaultDrawable) {
+        GlideUtil.loadRegisterImageWithSkipCache(imageView, url, defaultDrawable);
     }
 
     @BindingAdapter({"bind:photoUrl"})

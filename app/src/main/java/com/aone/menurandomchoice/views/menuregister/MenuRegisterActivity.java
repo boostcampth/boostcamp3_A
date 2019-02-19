@@ -4,6 +4,8 @@ package com.aone.menurandomchoice.views.menuregister;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.View;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.views.base.widget.RappingTextWatcher;
 import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
@@ -35,10 +38,10 @@ public class MenuRegisterActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setUpPresenterToDataBinding();
         setUpCategoryRecyclerView();
-        passedGetIntentToPresenter();
+        setUpEditTextChangeListener();
+        passedIntentToPresenter();
     }
 
     @Override
@@ -67,6 +70,9 @@ public class MenuRegisterActivity
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                return true;
+            case R.id.item_menu_owner_delete:
+                getPresenter().handlingMenuDeleteButtonClick();
                 return true;
             case R.id.item_menu_owner_register_preview:
                 getPresenter().handlingPreviewButtonClick();
@@ -129,7 +135,45 @@ public class MenuRegisterActivity
         });
     }
 
-    private void passedGetIntentToPresenter() {
+    private void setUpEditTextChangeListener() {
+        getDataBinding().activityMenuRegisterNameEt.addTextChangedListener(new RappingTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                MenuDetail menuDetail = getDataBinding().getMenuDetail();
+                if(menuDetail != null) {
+                    menuDetail.setName(editable.toString());
+                }
+            }
+        });
+
+        getDataBinding().activityMenuRegisterDescriptionEt.addTextChangedListener(new RappingTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                MenuDetail menuDetail = getDataBinding().getMenuDetail();
+                if(menuDetail != null) {
+                    menuDetail.setDescription(editable.toString());
+                }
+            }
+        });
+
+        getDataBinding().activityMenuRegisterPriceEt.addTextChangedListener(new RappingTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                MenuDetail menuDetail = getDataBinding().getMenuDetail();
+                if(menuDetail != null) {
+                    String price = editable.toString();
+                    if(price.length() < 1) {
+                        menuDetail.setPrice(0);
+                    } else {
+                        menuDetail.setPrice(Integer.parseInt(price));
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void passedIntentToPresenter() {
         Intent passedIntent = getIntent();
         MenuDetail menuDetail = passedIntent.getParcelableExtra(StoreEditActivity.EXTRA_MENU_DETAIL_INFO);
         getPresenter().handlingPassedMenuDetailInfo(menuDetail);
@@ -169,16 +213,16 @@ public class MenuRegisterActivity
     }
 
     @Override
-    public void moveToPreviewActivityWithItem(@NonNull MenuDetail menuDetail) {
+    public void moveToPreviewActivityWithItem() {
         Intent menuPreviewIntent = new Intent(this, MenuPreviewActivity.class);
-        menuPreviewIntent.putExtra(MenuPreviewActivity.EXTRA_MENU_DETAIL_ITEM, menuDetail);
+        menuPreviewIntent.putExtra(MenuPreviewActivity.EXTRA_MENU_DETAIL_ITEM, getDataBinding().getMenuDetail());
         startActivity(menuPreviewIntent);
     }
 
     @Override
-    public void moveToPreviousActivityWithItem(@NonNull MenuDetail menuDetail) {
+    public void moveToPreviousActivityWithItem() {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(EXTRA_MENU_DETAIL_ITEM, menuDetail);
+        resultIntent.putExtra(EXTRA_MENU_DETAIL_ITEM, getDataBinding().getMenuDetail());
         setResult(RESULT_OK, resultIntent);
 
         finish();
@@ -186,8 +230,12 @@ public class MenuRegisterActivity
 
     @NonNull
     @Override
-    public MenuDetail getMenuDetailFromDataBinding() {
-        return getDataBinding().getMenuDetail();
+    public MenuDetail getInputtedMenuDetail() {
+        MenuDetail menuDetail = getDataBinding().getMenuDetail();
+        if(menuDetail == null) {
+            menuDetail = new MenuDetail();
+        }
+        return menuDetail;
     }
 
     @NonNull
@@ -195,24 +243,6 @@ public class MenuRegisterActivity
     public int[] getRegisterTargetImageSize() {
         return new int[]{getDataBinding().activityMenuRegisterIv.getWidth(),
                 getDataBinding().activityMenuRegisterIv.getHeight()};
-    }
-
-    @NonNull
-    @Override
-    public String getInputtedMenuName() {
-        return getDataBinding().activityMenuRegisterNameEt.getText().toString();
-    }
-
-    @NonNull
-    @Override
-    public String getInputtedMenuDescription() {
-        return getDataBinding().activityMenuRegisterDescriptionEt.getText().toString();
-    }
-
-    @NonNull
-    @Override
-    public String getInputtedMenuPrice() {
-        return getDataBinding().activityMenuRegisterPriceEt.getText().toString();
     }
 
     @Override

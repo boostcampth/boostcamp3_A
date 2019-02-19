@@ -3,8 +3,11 @@ package com.aone.menurandomchoice.repository.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.aone.menurandomchoice.BR;
+import com.aone.menurandomchoice.GlobalApplication;
+import com.aone.menurandomchoice.R;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -70,7 +73,15 @@ public class MenuDetail extends BaseObservable implements Parcelable {
     }
 
     @Bindable
-    public String getName() { return name; }
+    public String getName() {
+        if(TextUtils.isEmpty(name)) {
+            name = GlobalApplication
+                    .getGlobalApplicationContext()
+                    .getString(R.string.layout_menu_detail_not_menu);
+        }
+
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;

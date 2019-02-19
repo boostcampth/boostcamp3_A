@@ -1,18 +1,14 @@
 package com.aone.menurandomchoice.views.storeedit;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TimePicker;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityStoreEditBinding;
@@ -21,6 +17,7 @@ import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
 import com.aone.menurandomchoice.views.menuregister.MenuRegisterActivity;
+import com.aone.menurandomchoice.views.base.widget.RappingTextWatcher;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 
 import net.daum.mf.map.api.MapPOIItem;
@@ -147,15 +144,7 @@ public class StoreEditActivity
     }
 
     private void setUpEditTextChangeListener() {
-        getDataBinding().activityStoreEditNameEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
+        getDataBinding().activityStoreEditNameEt.addTextChangedListener(new RappingTextWatcher(){
             @Override
             public void afterTextChanged(Editable editable) {
                 StoreDetail storeDetail = getDataBinding().getStoreDetail();
@@ -165,16 +154,7 @@ public class StoreEditActivity
             }
         });
 
-        getDataBinding().activityStoreEditDescriptionEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
+        getDataBinding().activityStoreEditDescriptionEt.addTextChangedListener(new RappingTextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
                 StoreDetail storeDetail = getDataBinding().getStoreDetail();
@@ -218,7 +198,6 @@ public class StoreEditActivity
         StoreDetail storeDetail = getDataBinding().getStoreDetail();
         if(storeDetail != null) {
             storeDetail.setOpentime(openTime);
-            getDataBinding().setStoreDetail(storeDetail);
         }
     }
 
@@ -227,7 +206,6 @@ public class StoreEditActivity
         StoreDetail storeDetail = getDataBinding().getStoreDetail();
         if(storeDetail != null) {
             storeDetail.setClosetime(closeTime);
-            getDataBinding().setStoreDetail(storeDetail);
         }
     }
 

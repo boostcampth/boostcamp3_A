@@ -77,8 +77,10 @@ public class StoreDetail extends BaseObservable implements Parcelable {
     @NonNull
     @Bindable
     public String getName() {
-        if(name == null) {
-            name = "";
+        if(TextUtils.isEmpty(name)) {
+            name = GlobalApplication
+                    .getGlobalApplicationContext()
+                    .getString(R.string.activity_owner_detail_not_name);
         }
 
         return name;
@@ -140,8 +142,10 @@ public class StoreDetail extends BaseObservable implements Parcelable {
 
     @Bindable
     public String getDescription() {
-        if(description == null) {
-            description = "";
+        if(TextUtils.isEmpty(description)) {
+            description = GlobalApplication
+                    .getGlobalApplicationContext()
+                    .getString(R.string.activity_owner_store_not_description);
         }
 
         return description;
