@@ -4,8 +4,6 @@ import android.content.Intent;
 
 import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseHelper;
 import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseRepository;
-import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
-import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.UpdateTime;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
@@ -35,7 +33,6 @@ public class DataRepository implements Repository {
     private KakaoLoginHelper kakaoLoginHelper;
     private APIHelper apiHelper;
     private SQLiteDatabaseHelper SQLiteDatabaseHelper;
-    private PreferencesHelper preferencesHelper;
 
     @NonNull
     public static Repository getInstance() {
@@ -49,7 +46,6 @@ public class DataRepository implements Repository {
         kakaoLoginHelper = KakaoLoginRepository.getInstance();
         apiHelper = APIRepository.getInstance();
         SQLiteDatabaseHelper = SQLiteDatabaseRepository.getInstance();
-        preferencesHelper = new PreferencesRepository();
     }
 
     @Override
@@ -117,11 +113,6 @@ public class DataRepository implements Repository {
     public void requestMenuList(@NonNull MenuSearchRequest menuSearchRequest,
                                                  @NonNull NetworkResponseListener<List<MenuDetail>> networkResponseListener) {
         apiHelper.requestMenuList(menuSearchRequest, networkResponseListener);
-    }
-
-    @Override
-    public void saveRegisterMenuInfo(@NonNull MenuDetail menuDetail) {
-        preferencesHelper.saveRegisterMenuInfo(menuDetail);
     }
 
     @Override
