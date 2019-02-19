@@ -25,8 +25,14 @@ public class MenuMapper {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(QUERY_STRING_LATITUDE, menuSearchRequest.getLatitude() + "");
         queryMap.put(QUERY_STRING_LONGITUDE, menuSearchRequest.getLongitude() + "");
-        queryMap.put(QUERY_RADIUS, menuSearchRequest.getRadius() + "");
-        queryMap.put(QUERY_CATEGORY, menuSearchRequest.getCategory());
+
+        if(menuSearchRequest.getRadius() != 0) {
+            queryMap.put(QUERY_RADIUS, menuSearchRequest.getRadius() + "");
+        }
+
+        if(menuSearchRequest.getCategory() != null && menuSearchRequest.getCategory().length() != 0) {
+            queryMap.put(QUERY_CATEGORY, menuSearchRequest.getCategory());
+        }
 
         return queryMap;
     }

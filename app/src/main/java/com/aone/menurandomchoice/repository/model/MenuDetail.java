@@ -19,13 +19,6 @@ public class MenuDetail extends BaseObservable implements Parcelable {
     private int sequence;
     private int storeIdx;
 
-    //로컬에서 테스트를 하기 위해, 로컬의 이미지 id를 담기 위한 임시 코드
-    //삭제 예정
-    int url;
-    public int getUrl() {
-        return url;
-    }
-
     protected MenuDetail(Parcel in) {
         name = in.readString();
         price = in.readInt();
@@ -34,7 +27,6 @@ public class MenuDetail extends BaseObservable implements Parcelable {
         category = in.readString();
         sequence = in.readInt();
         storeIdx = in.readInt();
-        url = in.readInt();
     }
 
     @Override
@@ -46,7 +38,6 @@ public class MenuDetail extends BaseObservable implements Parcelable {
         dest.writeString(category);
         dest.writeInt(sequence);
         dest.writeInt(storeIdx);
-        dest.writeInt(url);
     }
 
     @Override
@@ -72,7 +63,6 @@ public class MenuDetail extends BaseObservable implements Parcelable {
     public MenuDetail(String name, int price, int photoUrl, String description, String category, int sequence) {
         this.name = name;
         this.price = price;
-        this.url = photoUrl;
         this.description = description;
         this.category = category;
         this.sequence = sequence;
@@ -137,4 +127,5 @@ public class MenuDetail extends BaseObservable implements Parcelable {
     public String getPriceStr() {
         return price + "";
     }
+
 }
