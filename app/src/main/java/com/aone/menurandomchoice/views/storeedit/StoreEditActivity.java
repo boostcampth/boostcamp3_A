@@ -30,8 +30,8 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
         implements  StoreEditContract.View, MapView.MapViewEventListener {
 
     public static final String EXTRA_MENU_DETAIL_INFO = "EXTRA_MENU_DETAIL_INFO";
-    private MapView mMapView;
-    public static final int REQUEST_CODE_LOCATION_SEARCH = 10;
+    public static final String REQUEST_LOCATION_SEARCH = "REQUEST_LOCATION_SEARCH";
+    public static final String ACTIVITY_DESCRIPTOR = "STORE_EDIT";
     private static final int REQUEST_CODE_MENU_REGISTER = 1;
 
     private MapView mapView;
@@ -50,32 +50,14 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
     protected void onStart() {
         super.onStart();
 
-       /* mMapView = new MapView(this);
-        getDataBinding().mapView.addView(mMapView);
-
-        mMapView.setMapViewEventListener(this);
-        mMapView.setMapType(MapView.MapType.Standard);
-
-        MapPOIItem mDefaultMarker = new MapPOIItem();
-        mDefaultMarker.setItemName("");
-        mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-
-        Bundle posXY = getIntent().getBundleExtra("posXY");
-        MapPoint DEFAULT_MARKER_POINT;
-        if( posXY != null ) {
-            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(posXY.getDouble("latitude")
-                                                                , posXY.getDouble("longitude"));
-        } else {
-            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.4980854357918
-                                                                , 127.028000275071);
-        }
-
-        mDefaultMarker.setMapPoint(DEFAULT_MARKER_POINT);
-        mMapView.addPOIItem(mDefaultMarker);
-        mMapView.setMapCenterPoint(DEFAULT_MARKER_POINT, true);*/
-
-
         setUpMapView();
+
+        Bundle locationData = getIntent().getBundleExtra("poxXY");
+        if(locationData != null) {
+            getPresenter().handlingReceivedMapInfo(locationData.getString("address")
+                                                    , locationData.getDouble("latitude")
+                                                    , locationData.getDouble("longitude"));
+        }
     }
 
     @Override
@@ -83,7 +65,6 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
         super.onNewIntent(intent);
         setIntent(intent);
     }
-
 
     @Override
     protected void onPause() {
@@ -169,15 +150,6 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
                     MenuDetail menuDetail = data.getParcelableExtra(MenuRegisterActivity.EXTRA_MENU_DETAIL_ITEM);
                     getPresenter().handlingReceivedMenuDetailData(menuDetail);
                     break;
-                case REQUEST_CODE_LOCATION_SEARCH:
-                    attachViewToPresenter();
-
-                    //Todo  위치 검색 기능 후 하드로 박혀있는 문자열 들 상수 처리 해야함
-                    String address = data.getStringExtra("address");
-                    Double longitude = data.getDoubleExtra("longitude", 0);
-                    Double latitude = data.getDoubleExtra("latitude", 0);
-                    getPresenter().handlingReceivedMapInfo(address, longitude, latitude);
-                    break;
                 default:
                     super.onActivityResult(requestCode, resultCode, data);
             }
@@ -241,7 +213,8 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
     @Override
     public void moveToLocationSearchPage() {
         Intent locationSearchIntent = new Intent(StoreEditActivity.this, LocationSearchActivity.class);
-        startActivityForResult(locationSearchIntent, REQUEST_CODE_LOCATION_SEARCH);
+        locationSearchIntent.putExtra(REQUEST_LOCATION_SEARCH, ACTIVITY_DESCRIPTOR);
+        startActivity(locationSearchIntent);
     }
 
     @Override
@@ -291,6 +264,12 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
     @Override
     public void setMapAddress(@NonNull String address) {
         getDataBinding().getStoreDetail().setAddress(address);
+    }
+
+    @Override
+    public void setMapLatLon(@NonNull double latitude, double longitude) {
+        getDataBinding().getStoreDetail().setLatitude(latitude);
+        getDataBinding().getStoreDetail().setLongitude(longitude);
     }
 
     @Override

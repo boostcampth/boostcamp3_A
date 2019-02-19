@@ -123,6 +123,7 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
             MapPOIItem marker = createMaker(mapPoint);
 
             getView().setMapAddress(address);
+            getView().setMapLatLon(latitude, longitude);
             getView().moveCenterToMap(mapPoint);
             getView().showStoreMakerToMap(marker);
         }
