@@ -11,7 +11,6 @@ import android.view.View;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
-import com.aone.menurandomchoice.utils.GlideUtil;
 import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
@@ -154,6 +153,19 @@ public class MenuRegisterActivity
     @Override
     public void setRegisteredImage(@NonNull String imagePath) {
         getDataBinding().getMenuDetail().setPhotoUrl(imagePath);
+    }
+
+
+    @Override
+    public void showMenuAddButton() {
+        getDataBinding().activityMenuRegisterAddBtn.setVisibility(View.VISIBLE);
+        getDataBinding().activityMenuRegisterDeleteBtn.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showMenuDeleteButton() {
+        getDataBinding().activityMenuRegisterDeleteBtn.setVisibility(View.VISIBLE);
+        getDataBinding().activityMenuRegisterAddBtn.setVisibility(View.GONE);
     }
 
     @Override

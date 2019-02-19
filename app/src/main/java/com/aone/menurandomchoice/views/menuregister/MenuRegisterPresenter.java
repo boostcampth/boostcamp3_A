@@ -298,11 +298,21 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     private void handlingMenuDetailInfo(MenuDetail menuDetail) {
         if(isAttachView()) {
             getView().setMenuDetailToDataBinding(menuDetail);
-
             if(menuCategoryAdapterModel != null) {
                 menuDetail.setCategory(menuDetail.getCategory());
             }
         }
     }
 
+//    private void handlingImageRegisterButton(String photoUrl) {
+//        if(isAttachView()) {
+//
+//            String photoUrl = menuDetail.getPhotoUrl();
+//            if (photoUrl != null && photoUrl.length() != 0) {
+//                getView().showMenuAddButton();
+//            } else {
+//                getView().showMenuDeleteButton();
+//            }
+//        }
+//    }
 }

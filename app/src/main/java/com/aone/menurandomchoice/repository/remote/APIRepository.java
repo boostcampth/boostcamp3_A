@@ -213,11 +213,11 @@ public class APIRepository implements APIHelper {
     }
 
     @Override
-    public void requestSaveStoreDetail(@NonNull StoreDetail storeDetail,
-                                       @NonNull NetworkResponseListener<EmptyObject> listener) {
+    public void requestSaveStoreDetail(@NonNull StoreDetail storeInfo,
+                                       @NonNull NetworkResponseListener<EmptyObject> files) {
         apiCreator.getApiInstance()
-                .createStoreDetailSaveRequestCall(storeDetail, MenuMapper.createRegisteredImageList(storeDetail))
-                .enqueue(new JMTCallback<>(listener));
+                .createStoreDetailSaveRequestCall(storeInfo, MenuMapper.createRegisteredImageList(storeInfo))
+                .enqueue(new JMTCallback<>(files));
     }
 
 }

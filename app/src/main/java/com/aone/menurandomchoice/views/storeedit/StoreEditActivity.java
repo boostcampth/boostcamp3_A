@@ -22,6 +22,8 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.util.List;
+
 import androidx.annotation.NonNull;
 
 public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, StoreEditContract.View, StoreEditContract.Presenter>
@@ -177,7 +179,11 @@ implements  StoreEditContract.View{
     @Override
     public void setMenuDetailToDataBinding(@NonNull MenuDetail menuDetail) {
         int menuDetailIndex = menuDetail.getSequence() - 1;
-        getDataBinding().getStoreDetail().getMenuList().set(menuDetailIndex, menuDetail);
+        StoreDetail storeDetail = getDataBinding().getStoreDetail();
+        List<MenuDetail> menuDetailList = storeDetail.getMenuList();
+        menuDetailList.set(menuDetailIndex, menuDetail);
+        storeDetail.setMenuList(menuDetailList);
+        getDataBinding().setStoreDetail(storeDetail);
     }
 
     @NonNull

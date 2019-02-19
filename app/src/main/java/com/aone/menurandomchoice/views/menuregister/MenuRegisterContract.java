@@ -23,6 +23,10 @@ public interface MenuRegisterContract {
 
         void setRegisteredImage(@NonNull String imagePath);
 
+        void showMenuAddButton();
+
+        void showMenuDeleteButton();
+
         void moveToPreviewActivityWithItem(@NonNull MenuDetail menuDetail);
 
         void moveToPreviousActivityWithItem(@NonNull MenuDetail menuDetail);

@@ -38,16 +38,29 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/activity_menu_register_btn"
+            android:id="@+id/activity_menu_register_add_btn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginRight="@dimen/large_margin"
             android:layout_marginBottom="@dimen/large_margin"
+            android:visibility="visible"
             android:background="@drawable/add_icon"
             android:onClick="@{()->presenter.handlingImageRegisterButtonClick()}"
             app:layout_constraintBottom_toBottomOf="@+id/activity_menu_register_iv"
             app:layout_constraintEnd_toEndOf="@+id/activity_menu_register_iv" />
 
+        <Button
+            android:id="@+id/activity_menu_register_delete_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:visibility="gone"
+            android:background="@drawable/delete_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_menu_register_iv"
+            app:layout_constraintEnd_toEndOf="@+id/activity_menu_register_iv" />
+
+        <!--android:onClick="@{()->presenter.handlingImageRegisterButtonClick()}"-->
         <EditText
             android:id="@+id/activity_menu_register_name_et"
             android:layout_width="0dp"

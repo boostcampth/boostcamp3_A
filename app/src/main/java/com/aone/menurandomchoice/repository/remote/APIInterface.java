@@ -58,7 +58,7 @@ public interface APIInterface {
     Call<JMTResponseBody<List<MenuDetail>>> createMenuListRequestCall(@QueryMap Map<String, String> searchRequest);
 
     @Multipart
-    @POST("stores")
-    Call<JMTResponseBody<EmptyObject>> createStoreDetailSaveRequestCall(@Part("storeDetail") StoreDetail storeDetail,
-                                                                        @Part List<MultipartBody.Part> images);
+    @PUT("stores")
+    Call<JMTResponseBody<EmptyObject>> createStoreDetailSaveRequestCall(@Part("storeInfo") StoreDetail storeInfo,
+                                                                        @Part List<MultipartBody.Part> files);
 }
