@@ -38,6 +38,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="end|bottom"
+                android:onClick="@{ () -> presenter.onMenuEditClick(menuDetail)}"
                 android:background="@drawable/menu_edit" />
         </FrameLayout>
 
