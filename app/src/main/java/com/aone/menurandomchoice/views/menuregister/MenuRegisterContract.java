@@ -19,25 +19,25 @@ public interface MenuRegisterContract {
 
         void startToUCropLibrary(@NonNull UCrop uCrop);
 
-        void showRegisteredImage(@NonNull String imagePath);
+        void setMenuDetailToDataBinding(@NonNull MenuDetail menuDetail);
 
-        void moveToPreviewActivityWithItem(@NonNull MenuDetail menuDetail);
+        void setRegisteredImage(@NonNull String imagePath);
 
-        void moveToPreviousActivityWithItem(@NonNull MenuDetail menuDetail);
+        void showMenuAddButton();
+
+        void showMenuDeleteButton();
+
+        void moveToPreviewActivityWithItem();
+
+        void moveToPreviousActivityWithItem();
 
         void finishView();
 
         @NonNull
+        MenuDetail getInputtedMenuDetail();
+
+        @NonNull
         int[] getRegisterTargetImageSize();
-
-        @NonNull
-        String getInputtedMenuName();
-
-        @NonNull
-        String getInputtedMenuDescription();
-
-        @NonNull
-        String getInputtedMenuPrice();
 
     }
 
@@ -45,9 +45,15 @@ public interface MenuRegisterContract {
 
         void setAdapterModel(@NonNull MenuCategoryAdapterContract.Model<MenuCategoryItem> menuCategoryAdapterModel);
 
+        void handlingPassedMenuDetailInfo(@Nullable MenuDetail menuDetail);
+
         void handlingMenuCategoryItemClick(int position);
 
+        void handlingMenuDeleteButtonClick();
+
         void handlingImageRegisterButtonClick();
+
+        void handlingImageDeleteButtonClick();
 
         void handlingPickPhotoResult(int resultCode, @Nullable Intent data);
 

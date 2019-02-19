@@ -12,12 +12,12 @@
 
     <!-- activity_owner_login -->
     <string name="activity_owner_login_label">업주 로그인</string>
-    <string name="activity_owner_store_label">업주 가게상세화면</string>
+    <string name="activity_owner_store_label">업주 가게 상세 화면</string>
     <string name="activity_owner_button_kakao_talk_account_login">카카오톡으로 로그인</string>
     <string name="activity_owner_button_kakao_other_account_login">다른 계정으로 로그인</string>
     <string name="activity_owner_image_kakao_talk_login_tts">카카오 로그인 이미지</string>
     <string name="activity_owner_button_kakao_talk_login_tts">카카오 로그인, 버튼</string>
-    <string name="activity_owner_textview_login_guide">아직 머먹노 업주님이 아니세요?\n최초 로그인 시 인증번호가 필요합니다</string>
+    <string name="activity_owner_textview_login_guide">아직 JMT 업주님이 아니세요?\n최초 로그인 시 인증번호가 필요합니다</string>
     <string name="activity_owner_textview_phonenumber_guide">고객센터\n0000 - 0000</string>
     <string name="activity_owner_toast_server_error">카카오 서버에서 발생된 오류로 인해 인증에 실패했습니다</string>
     <string name="activity_owner_toast_exceed_request_count_error">허용된 인증 횟수가 초과하여 인증에 실패했습니다</string>
@@ -45,9 +45,9 @@
     <string name="activity_owner_detail_menu_label">등록메뉴</string>
     <string name="activity_owner_detail_location">위치</string>
     <string name="activity_owner_detail_description">소개</string>
-    <string name="activity_owner_detail_not_name">상세화면 정보가 없습니다</string>
-    <string name="activity_owner_store_not_description">아직 상점소개가 없습니다.</string>
-    <string name="layout_menu_detail_not_menu">menu</string>
+    <string name="activity_owner_detail_not_name">등록된 이름 없음</string>
+    <string name="activity_owner_store_not_description">등록된 소개 없음</string>
+    <string name="layout_menu_detail_not_menu">이름 없음</string>
     <string name="activity_owner_store_tv_time">운영시간 : </string>
     <string name="activity_owner_detail_name_label">가게이름</string>
     <string name="activity_owner_detail_time_label">운영시간</string>
@@ -57,13 +57,16 @@
     <string name="activity_store_edit_label">가게 편집</string>
     <string name="activity_store_edit_starttime_label">영업 시작시간</string>
     <string name="activity_store_edit_endtime_label">영업 종료시간</string>
-    <string name="activity_store_edit_default_starttime">10:00</string>
-    <string name="activity_store_edit_default_endtime">18:00</string>
+    <string name="activity_store_edit_default_starttime">00:00</string>
+    <string name="activity_store_edit_default_endtime">00:00</string>
+    <string name="activity_store_edit_store_info_received_fail">앱에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
+    <string name="activity_store_edit_save_success">저장에 성공했습니다</string>
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>
     <string name="item_menu_owner_register_preview">미리보기</string>
     <string name="item_menu_owner_register_ok">완료</string>
+    <string name="item_menu_owner_delete">삭제</string>
     <string name="item_menu_store_edit_save">저장</string>
 
     <!-- item_menu_select_view -->
@@ -78,6 +81,11 @@
     <string name="activity_menu_register_guide_hint">메뉴 설명을 입력하세요</string>
     <string name="activity_menu_register_price_hint">메뉴 가격을 입력하세요</string>
     <string name="activity_menu_register_photo_fail">사진을 불러오는데 실패하였습니다</string>
+    <string name="activity_menu_register_menu_passed_fail">등록되어 있던 메뉴 정보를 불러오는데 실패하였습니다</string>
+    <string name="activity_menu_register_menu_delete_guide">메뉴를 삭제할까요?</string>
+    <string name="activity_menu_register_menu_delete_yes">예</string>
+    <string name="activity_menu_register_menu_delete_no">아니오</string>
+    <string name="activity_menu_register_menu_delete_success">메뉴를 삭제했습니다</string>
 
     <!-- category arrays -->
     <string name="arrays_category_all_food">전체</string>
@@ -141,7 +149,10 @@
     <string name="JMT_response_network_not_connect_error">인터넷 연결을 확인해주세요</string>
 
     <!-- custom dialog progress -->
-    <string name="custom_progress_dialog_message">로딩 중</string>
+    <string name="activity_logout_guide">정말 로그아웃 하시겠습니까?</string>
+    <string name="activity_logout_yes">예</string>
+    <string name="activity_logout_no">아니오</string>
+    <string name="activity_logout_no_guide">로그아웃을 취소했습니다</string>
     <string name="activity_owner_store_logout">로그아웃 되었습니다.</string>
     <string name="activity_store_edit_location_search">위치검색</string>
 

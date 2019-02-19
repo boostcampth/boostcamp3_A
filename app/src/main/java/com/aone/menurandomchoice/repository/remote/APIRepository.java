@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.UpdateTime;
 import com.aone.menurandomchoice.repository.model.KakaoAddress;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
@@ -17,18 +18,25 @@ import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.remote.mapper.MenuMapper;
 import com.aone.menurandomchoice.repository.remote.response.JMTCallback;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
+import com.aone.menurandomchoice.repository.remote.response.JMTResponseBody;
 import com.aone.menurandomchoice.repository.remote.response.KakaoCallback;
 import com.aone.menurandomchoice.utils.NetworkUtil;
+import com.google.gson.Gson;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 import retrofit2.internal.EverythingIsNonNull;
 
 public class APIRepository implements APIHelper {
@@ -175,6 +183,14 @@ public class APIRepository implements APIHelper {
         } else {
             listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
         }
+    }
+
+    @Override
+    public void requestSaveStoreDetail(@NonNull StoreDetail storeInfo,
+                                       @NonNull NetworkResponseListener<EmptyObject> listener) {
+        apiCreator.getApiInstance()
+                .createStoreDetailSaveRequestCall(storeInfo, MenuMapper.createRegisteredImageList(storeInfo))
+                .enqueue(new JMTCallback<>(listener));
     }
 
 }

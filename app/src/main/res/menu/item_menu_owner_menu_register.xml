@@ -4,13 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/item_menu_owner_delete"
+        android:title="@string/item_menu_owner_delete"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/item_menu_owner_register_preview"
         android:title="@string/item_menu_owner_register_preview"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/item_menu_owner_register_ok"
         android:title="@string/item_menu_owner_register_ok"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
 </menu>
