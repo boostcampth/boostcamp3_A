@@ -13,6 +13,7 @@ import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.main.MainActivity;
 import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
@@ -21,6 +22,8 @@ import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 
@@ -50,8 +53,10 @@ public class OwnerStoreActivity
         super.onStart();
 
         initMapView();
+
+        UserAccessInfo userAccessInfo = getIntent().getParcelableExtra(EXTRA_USER_ACCESS_INFO);
         int storeIdx = getIntent().getIntExtra("EXTRA_STORE_IDX", 0);
-        getPresenter().loadStoreDetail(storeIdx);
+        getPresenter().loadStoreDetail(userAccessInfo.getAccessStoreIndex());
     }
 
 
@@ -144,6 +149,16 @@ public class OwnerStoreActivity
 
     @Override
     public void showStoreDetail(StoreDetail storeDetail) {
+        UserAccessInfo userAccessInfo = getIntent().getParcelableExtra(EXTRA_USER_ACCESS_INFO);
+
+        storeDetail.setStoreIdx(userAccessInfo.getAccessStoreIndex());
+
+        List<MenuDetail> list = storeDetail.getMenuList();
+        for(int i=0; i<list.size(); i++) {
+            list.get(i).setStoreIdx(userAccessInfo.getAccessStoreIndex());
+        }
+
+        storeDetail.setMenuList(list);
 
         getDataBinding().setStoreDetail(storeDetail);
 

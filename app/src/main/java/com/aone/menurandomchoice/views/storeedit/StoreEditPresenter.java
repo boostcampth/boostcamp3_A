@@ -71,12 +71,14 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
 
     @Override
     public void onStartTimeSetClick(String openTime) {
-         getView().showStartTimePickerDialog(openTime);
+        openTime = "09:00";
+        getView().showStartTimePickerDialog(openTime);
 
     }
 
     @Override
     public void onEndTimeSetClick(String closeTime) {
+        closeTime = "10:00";
         getView().showEndTimePickerDialog(closeTime);
     }
 

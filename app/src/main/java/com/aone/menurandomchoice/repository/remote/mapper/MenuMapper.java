@@ -1,5 +1,7 @@
 package com.aone.menurandomchoice.repository.remote.mapper;
 
+import android.text.TextUtils;
+
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
@@ -46,10 +48,12 @@ public class MenuMapper {
         List<MenuDetail> menuDetailList = storeDetail.getMenuList();
         for(int i=0; i<menuDetailList.size(); i++) {
             String photoUrl = menuDetailList.get(i).getPhotoUrl();
-            if(!photoUrl.contains("http")) {
-                File file = new File(menuDetailList.get(i).getPhotoUrl());
-                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                images.add(MultipartBody.Part.createFormData("photo", file.getName(), requestFile));
+            if(!TextUtils.isEmpty(photoUrl)) {
+                if (!photoUrl.contains("http")) {
+                    File file = new File(photoUrl);
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                    images.add(MultipartBody.Part.createFormData("photo", file.getName(), requestFile));
+                }
             }
         }
 
