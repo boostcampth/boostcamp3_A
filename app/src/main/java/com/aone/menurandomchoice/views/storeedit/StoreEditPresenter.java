@@ -34,10 +34,12 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
     public void saveStoreDetail(@Nullable StoreDetail storeDetail) {
         if(storeDetail != null) {
             if(isAttachView()) {
+                showProgressBarOfView();
                 getRepository().requestSaveStoreDetail(storeDetail, new NetworkResponseListener<EmptyObject>() {
                     @Override
                     public void onReceived(@NonNull EmptyObject response) {
                         if(isAttachView()) {
+                            hideProgressBarOfView();
                             sendMessageToView(R.string.activity_store_edit_save_success);
                             viewFinish();
                         }
@@ -45,11 +47,13 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
 
                     @Override
                     public void onError(JMTErrorCode errorCode) {
+                        hideProgressBarOfView();
                         sendMessageToView(errorCode.getStringResourceId());
                     }
                 });
             }
         } else {
+            hideProgressBarOfView();
             sendMessageToView(R.string.activity_store_edit_store_info_received_fail);
             viewFinish();
         }
