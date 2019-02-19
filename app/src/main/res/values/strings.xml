@@ -132,4 +132,7 @@
 
     <!-- custom dialog progress -->
     <string name="custom_progress_dialog_message">로딩 중</string>
+
+    <!-- store location -->
+    <string name="confirm_btn_hint">이 위치로 확정하기</string>
 </resources>

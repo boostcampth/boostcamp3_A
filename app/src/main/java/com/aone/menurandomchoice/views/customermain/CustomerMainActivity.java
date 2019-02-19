@@ -51,13 +51,8 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     private MapView mMapView;
     private MapPOIItem mCustomMarker;
-    private MapPoint CUSTOM_MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.4980854357918, 127.028000275071);
-    private MapCircle circle = new MapCircle(
-            MapPoint.mapPointWithGeoCoord(CUSTOM_MARKER_POINT.getMapPointGeoCoord().latitude, CUSTOM_MARKER_POINT.getMapPointGeoCoord().longitude), // center
-            50, // radius
-            Color.argb(0, 255, 120, 120), // strokeColor
-            Color.argb(128, 255, 120, 120) // fillColor
-    );
+    private MapPoint CUSTOM_MARKER_POINT;
+    private MapCircle circle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,26 +65,66 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         setRadiusButtonList();
         setUpCategoryRecyclerView();
 
-        mMapView = getDataBinding().activityCustomerMainMvDaum;
-        mMapView.setMapViewEventListener(this);
-        createCustomMarker(mMapView);
     }
 
-    private void createCustomMarker(MapView mapView) {
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mMapView = new MapView(this);
+
+        mMapView.setMapViewEventListener(this);
+        mMapView.setMapType(MapView.MapType.Standard);
+
+        getDataBinding().activityCustomerMainMvDaum.addView(mMapView);
+
+        Intent intent = getIntent();
+        Bundle posXY = intent.getBundleExtra("posXY");
+
+        MapPoint mapPoint;
+        if( posXY != null ) {
+            mapPoint = MapPoint.mapPointWithGeoCoord(posXY.getDouble("latitude"), posXY.getDouble("longitude"));
+        } else {
+            mapPoint = MapPoint.mapPointWithGeoCoord(37.4980854357918, 127.028000275071);
+        }
+        createCustomMarker(mapPoint);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getDataBinding().activityCustomerMainMvDaum.removeView(mMapView);
+    }
+
+    private void createCustomMarker(MapPoint mapPoint) {
         mCustomMarker = new MapPOIItem();
         String name = "JMT";
         mCustomMarker.setItemName(name);
         mCustomMarker.setTag(1);
-        mCustomMarker.setMapPoint(CUSTOM_MARKER_POINT);
+        mCustomMarker.setMapPoint(mapPoint);
 
         mCustomMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
         mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_chicken);
         mCustomMarker.setCustomImageAutoscale(false);
         mCustomMarker.setCustomImageAnchor(0.5f, 1.0f);
 
-        mapView.addPOIItem(mCustomMarker);
-        mapView.selectPOIItem(mCustomMarker, true);
-        mapView.setMapCenterPoint(CUSTOM_MARKER_POINT, false);
+        mMapView.addPOIItem(mCustomMarker);
+        mMapView.selectPOIItem(mCustomMarker, true);
+        mMapView.setMapCenterPoint(mapPoint, false);
+
+        circle = new MapCircle(
+                MapPoint.mapPointWithGeoCoord(mapPoint.getMapPointGeoCoord().latitude, mapPoint.getMapPointGeoCoord().longitude), // center
+                50, // radius
+                Color.argb(0, 255, 120, 120), // strokeColor
+                Color.argb(128, 255, 120, 120) // fillColor
+        );
+
+        CUSTOM_MARKER_POINT = mapPoint;
     }
 
     private void setUpActivityToDataBinding() {
@@ -231,6 +266,10 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         if(closerDistanceList != null) {
             len = closerDistanceList.size();
         }
+        mCustomMarker.setItemName(len+"");
+        mCustomMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lon));
+        mMapView.addPOIItem(mCustomMarker);
+        mMapView.selectPOIItem(mCustomMarker, true);
 
         MapPOIItem closerMenu;
         for(int i = 0; i < len; i++) {
@@ -245,10 +284,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
             closerMenu.setShowCalloutBalloonOnTouch(false);
             mMapView.addPOIItem(closerMenu);
         }
-        mCustomMarker.setItemName(len+"");
-        mCustomMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lon));
-        mMapView.addPOIItem(mCustomMarker);
-        mMapView.selectPOIItem(mCustomMarker, true);
+
     }
 
     @Override
@@ -306,7 +342,9 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     public void moveToLocationSearchPage() {
         mMapView.removeAllCircles();
+
         Intent locationSearchIntent = new Intent(CustomerMainActivity.this, LocationSearchActivity.class);
+        locationSearchIntent.putExtra("ActivityID", "CustomerMain");
         startActivityForResult(locationSearchIntent,3000);
     }
 
@@ -338,6 +376,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         if(resultCode == RESULT_OK){
             switch (requestCode){
                 case 3000:
+                    setIntent(data);
                     Bundle posXY = data.getBundleExtra("posXY");
                     if( posXY == null ) {
                         showToastMessage("좌표 값이 없습니다.");

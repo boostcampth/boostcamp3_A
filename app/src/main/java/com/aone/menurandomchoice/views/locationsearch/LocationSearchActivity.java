@@ -15,6 +15,7 @@ import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.adapter.LocationSearchAdapterView;
 import com.aone.menurandomchoice.views.locationsearch.adapter.OnViewHolderClickListener;
 import com.aone.menurandomchoice.views.locationsearch.adapter.LocationSearchAdapter;
+import com.aone.menurandomchoice.views.storelocation.StoreLocationActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static android.content.Intent.FLAG_ACTIVITY_FORWARD_RESULT;
 
 public class LocationSearchActivity
         extends BaseActivity<ActivityLocationSearchBinding, LocationSearchContract.View, LocationSearchContract.Presenter>
@@ -62,19 +65,39 @@ public class LocationSearchActivity
         recyclerView.setAdapter(adapter);
         getPresenter().setAdapter(adapter);
         adapterView = adapter;
-        adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                viewHolderClicked(position);
+
+        Intent intent = this.getIntent();
+
+
+        String callerActivity = intent.getStringExtra("ActivityID");
+            if(callerActivity.equals("StoreEdit")) {
+                adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        viewHolderClickedforOwneStoreEdit(position);
+                    }
+                });
+            } else if(callerActivity.equals("CustomerMain")) {
+                adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        viewHolderClickedForCustomerMain(position);
+                    }
+                });
             }
-        });
+
    }
 
-    private void viewHolderClicked(int position) {
+   private void viewHolderClickedforOwneStoreEdit(int position) {
+       Intent resultIntent = new Intent(LocationSearchActivity.this, StoreLocationActivity.class);
+       resultIntent.putExtra("posXY", getPresenter().getMenuData(position));
+       startActivity(resultIntent);
+   }
+
+    private void viewHolderClickedForCustomerMain(int position) {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("posXY", getPresenter().getMenuData(position));
         setResult(RESULT_OK,resultIntent);
-
         finish();
     }
 
@@ -84,7 +107,6 @@ public class LocationSearchActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setTitle("");
-
         getDataBinding().searchBox.etSearch.setOnEditorActionListener(
                 new TextView.OnEditorActionListener() {
                     @Override
