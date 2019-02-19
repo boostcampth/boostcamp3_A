@@ -84,6 +84,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/activity_store_edit_open_time_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/two_x_large_margin"
@@ -112,6 +113,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/activity_store_edit_close_time_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/two_x_large_margin"

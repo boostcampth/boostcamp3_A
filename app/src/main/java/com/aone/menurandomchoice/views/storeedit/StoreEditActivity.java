@@ -195,6 +195,7 @@ public class StoreEditActivity
 
     @Override
     public void showChangedOpenTime(@NonNull String openTime) {
+        getDataBinding().activityStoreEditOpenTimeTv.setText(openTime);
         StoreDetail storeDetail = getDataBinding().getStoreDetail();
         if(storeDetail != null) {
             storeDetail.setOpentime(openTime);
@@ -203,6 +204,7 @@ public class StoreEditActivity
 
     @Override
     public void showChangedCloseTime(@NonNull String closeTime) {
+        getDataBinding().activityStoreEditCloseTimeTv.setText(closeTime);
         StoreDetail storeDetail = getDataBinding().getStoreDetail();
         if(storeDetail != null) {
             storeDetail.setClosetime(closeTime);
