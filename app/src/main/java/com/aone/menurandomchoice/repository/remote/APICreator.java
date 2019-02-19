@@ -7,8 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APICreator {
 
-    private static final String BASE_URL = "http://172.20.10.2:8080/";
-//    private static final String BASE_URL = "http://ec2-54-180-49-154.ap-northeast-2.compute.amazonaws.com:8080/";
+    private static final String BASE_URL = "http://ec2-54-180-49-154.ap-northeast-2.compute.amazonaws.com:8080/";
     private APIInterface apiInstance;
 
     public APIInterface getApiInstance() {
