@@ -125,6 +125,10 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         );
 
         CUSTOM_MARKER_POINT = mapPoint;
+
+        circle.setCenter(mapPoint);
+        circle.setRadius((int)getRadius());
+        mMapView.addCircle(circle);
     }
 
     private void setUpActivityToDataBinding() {

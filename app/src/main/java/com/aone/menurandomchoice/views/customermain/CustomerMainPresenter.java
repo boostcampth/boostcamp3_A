@@ -39,7 +39,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
 
                     @Override
                     public void onError(JMTErrorCode errorCode) {
-
+                        getMenuCountFiltered(latitude, longitude, radius);
                     }
         });
     }
@@ -50,11 +50,16 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
 
     public void getMenuCountFiltered(double centerLat, double centerLon, double radius) {
 
-        String category = menuCategoryAdapterModel.getSelectedCategory();
-        int len = menuList.size();
+        String category = "";
+        int len = 0;
         double distance;
         List<MenuLocation> closerDistanceList = new ArrayList<>();
         MenuLocation menuLocation;
+
+        if(menuList != null) {
+            len = menuList.size();
+            category = menuCategoryAdapterModel.getSelectedCategory();
+        }
 
         for (int i = 0; i < len; i++) {
             menuLocation = menuList.get(i);
