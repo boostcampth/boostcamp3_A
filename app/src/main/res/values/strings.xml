@@ -51,6 +51,7 @@
     <string name="activity_owner_store_tv_time">운영시간 : </string>
     <string name="activity_owner_detail_name_label">가게이름</string>
     <string name="activity_owner_detail_time_label">운영시간</string>
+    <string name="activity_owner_detail_logout_label">로그아웃</string>
 
     <!-- activity_store_edit-->
     <string name="activity_store_edit_label">가게 편집</string>
@@ -141,4 +142,7 @@
 
     <!-- custom dialog progress -->
     <string name="custom_progress_dialog_message">로딩 중</string>
+    <string name="activity_owner_store_logout">로그아웃 되었습니다.</string>
+    <string name="activity_store_edit_location_search">위치검색</string>
+
 </resources>

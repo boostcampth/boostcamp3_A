@@ -13,6 +13,7 @@ import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.main.MainActivity;
 import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
@@ -35,14 +36,17 @@ public class OwnerStoreActivity
     public static final double DEFAULT_LATITUDE = 37.5514579595;
     public static final double DEFAULT_LONGITUDE = 126.951949155;
 
-    ViewGroup mapViewContainer;
-    MapView mapView;
+    private ViewGroup mapViewContainer;
+    private MapView mapView;
+    private boolean isOwner;
+    private int storeIdx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setUpPresenterToDataBinding();
+        getParcelData();
     }
 
     @Override
@@ -50,7 +54,6 @@ public class OwnerStoreActivity
         super.onStart();
 
         initMapView();
-        int storeIdx = getIntent().getIntExtra("EXTRA_STORE_IDX", 0);
         getPresenter().loadStoreDetail(storeIdx);
     }
 
@@ -73,6 +76,16 @@ public class OwnerStoreActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.item_action_bar, menu);
+
+        MenuItem edit = menu.findItem(R.id.item_action_bar_edit);
+        if(isOwner) {
+             setLogoutVisible(true);
+             edit.setVisible(true);
+        } else {
+            setLogoutVisible(false);
+             edit.setVisible(false);
+        }
+
         return true;
     }
 
@@ -130,6 +143,11 @@ public class OwnerStoreActivity
         Intent menuPreviewIntent = new Intent(this, MenuPreviewActivity.class);
         menuPreviewIntent.putExtra(MenuPreviewActivity.EXTRA_MENU_DETAIL_ITEM, menuDetail);
         startActivity(menuPreviewIntent);
+    }
+
+    @Override
+    public void finishOwnerStorePage() {
+        finish();
     }
 
     @Override
@@ -200,7 +218,23 @@ public class OwnerStoreActivity
         });
     }
 
+
     public void detachMapView() {
         mapViewContainer.removeView(mapView);
+    }
+
+    public void getParcelData() {
+        UserAccessInfo userAccessInfo = getIntent().getParcelableExtra(EXTRA_USER_ACCESS_INFO);
+
+        storeIdx = userAccessInfo.getAccessStoreIndex();
+        isOwner = userAccessInfo.isOwner();
+    }
+
+    public void setLogoutVisible(boolean isOwner) {
+        if(isOwner == true) {
+            getDataBinding().activityOwnerStoreLogout.setVisibility(View.VISIBLE);
+        } else {
+            getDataBinding().activityOwnerStoreLogout.setVisibility(View.GONE);
+        }
     }
 }

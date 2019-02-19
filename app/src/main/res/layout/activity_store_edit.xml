@@ -208,30 +208,43 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_store_edit_ll_menu">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:gravity="start"
-                    android:textSize="@dimen/middle_text"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/activity_owner_detail_location" />
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/large_padding"
+                    android:gravity="start">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:textSize="@dimen/middle_text"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:text="@string/activity_owner_detail_location" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/large_margin"
+                        android:textColor="@color/white"
+                        android:text="@string/activity_store_edit_location_search"
+                        android:padding="@dimen/middle_padding"
+                        android:background="@drawable/activity_owner_store_location_search_button"
+                        android:onClick="@{() -> presenter.onLocationSearchClick()}"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="위치검색"
-                    android:padding="@dimen/x_large_margin"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/edit_text_round"
-                    android:text="@{storeDetail.address}"
-                    android:onClick="@{() -> presenter.onLocationSearchClick()}"/>
+                    android:text="@{storeDetail.address}" />
 
                 <RelativeLayout
                     android:id="@+id/map_view"

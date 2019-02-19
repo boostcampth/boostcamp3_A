@@ -28,6 +28,9 @@
     <!-- activity_owner_sign_up -->
     <dimen name="activity_owner_sign_up_button_editText">18sp</dimen>
 
+    <!-- activity_owner_store -->
+    <dimen name="activity_owner_store_exit_button">20dp</dimen>
+
     <!-- menu_select_item_view -->
     <dimen name="item_view_menu_title">30sp</dimen>
     <dimen name="item_view_menu_guide">20sp</dimen>
@@ -36,4 +39,5 @@
 
     <!-- activity_menu_register -->
     <dimen name="activity_menu_register_text">16sp</dimen>
+    <dimen name="activity_owner_store_location_button">25dp</dimen>
 </resources>
