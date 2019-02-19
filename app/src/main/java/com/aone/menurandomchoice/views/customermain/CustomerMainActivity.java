@@ -42,6 +42,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBinding, CustomerMainContract.View, CustomerMainContract.Presenter>
         implements CustomerMainContract.View, MapView.MapViewEventListener {
 
+    public static final String EXTRA_MENU_DATA = "EXTRA_MENU_DATA";
     private static final String LOG_TAG = "CustomMainActivity";
     private LocationManager locationManager;
 
@@ -316,8 +317,13 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         Intent menuSelectIntent = new Intent(CustomerMainActivity.this, MenuSelectActivity.class);
         int radius = (int)getRadius();
         String category = getPresenter().getSelectedCategory();
+
+        // 이 부분 수정 부탁드립니다
+        if(category.equals("전체")) {
+            category = "";
+        }
         MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
-        menuSelectIntent.putExtra("MenuData",new MenuSearchRequest(mapPointGeo.latitude
+        menuSelectIntent.putExtra(EXTRA_MENU_DATA, new MenuSearchRequest(mapPointGeo.latitude
                 , mapPointGeo.longitude
                 , radius
                 , category));

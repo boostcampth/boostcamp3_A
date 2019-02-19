@@ -12,15 +12,14 @@ import com.aone.menurandomchoice.databinding.ActivityMenuSelectBinding;
 import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.customermain.CustomerMainActivity;
 import com.aone.menurandomchoice.views.menuselect.adapter.MenuSelectOverlapViewAdapter;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 
 public class MenuSelectActivity
         extends BaseActivity<ActivityMenuSelectBinding, MenuSelectContract.View, MenuSelectContract.Presenter>
         implements MenuSelectContract.View {
-
-    public static final String EXTRA_MENU_SEARCH_REQUEST = "EXTRA_MENU_SEARCH_REQUEST";
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +75,7 @@ public class MenuSelectActivity
     }
 
     private void passedGetIntentInfoToPresenter() {
-        MenuSearchRequest menuSearchRequest = new MenuSearchRequest(37.498041, 127.027690, 400, "");
+        MenuSearchRequest menuSearchRequest = getIntent().getParcelableExtra(CustomerMainActivity.EXTRA_MENU_DATA);
         getPresenter().requestMenuList(menuSearchRequest);
     }
 

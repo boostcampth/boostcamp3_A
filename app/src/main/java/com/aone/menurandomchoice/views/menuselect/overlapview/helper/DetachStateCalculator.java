@@ -23,7 +23,6 @@ public class DetachStateCalculator {
         NONE, LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN
     }
 
-
     @NonNull
     DetachState calculateDetachState(@NonNull RectF oldViewRect, @NonNull RectF newViewRect, float xSpeedWithBasedPX, float ySpeedWithBasedPX) {
         recordViewRect(oldViewRect, newViewRect);
