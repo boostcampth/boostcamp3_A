@@ -164,6 +164,7 @@ public class OwnerStoreActivity
     public void showStoreDetail(StoreDetail storeDetail) {
 
         getDataBinding().setStoreDetail(storeDetail);
+        getDataBinding().getStoreDetail().setStoreIdx(storeIdx);
 
         setMapView(storeDetail.getLatitude(), storeDetail.getLongitude(), storeDetail.getName());
     }

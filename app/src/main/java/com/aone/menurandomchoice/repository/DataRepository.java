@@ -143,12 +143,12 @@ public class DataRepository implements Repository {
             @Override
             public void onReceived(@NonNull UpdateTime response) {
                 String serverTime = response.getUpdateTime();
-                /*
+
               if(serverTime == cachedStoreDetail.getUpdateTime()) {
-                  onLoadStoreDetailListener.onStoreDetailLoaded(cachedStoreDetail);
-              } else{ */
-                    requestStoreDetail(storeIdx, networkResponseListener);
-               // }
+                  networkResponseListener.onReceived(cachedStoreDetail);
+              } else{
+                  requestStoreDetail(storeIdx, networkResponseListener);
+               }
 
             }
 
