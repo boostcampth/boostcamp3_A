@@ -66,6 +66,7 @@ public class MainActivity
 
     @Override
     public void moveToOwnerLoginActivity() {
+
         Intent ownerLoginIntent = new Intent(this, OwnerLoginActivity.class);
         startActivity(ownerLoginIntent);
     }

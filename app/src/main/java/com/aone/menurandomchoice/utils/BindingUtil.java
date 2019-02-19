@@ -29,6 +29,6 @@ public class BindingUtil {
             closetime = " ";
         }
 
-        textView.setText(opentime + "-" + closetime);
+        textView.setText(String.format("%s-%s", opentime, closetime));
     }
 }
