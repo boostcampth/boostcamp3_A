@@ -51,6 +51,17 @@ public class MenuCategoryAdapter extends BaseRecyclerViewAdapter<MenuCategoryIte
         getItems().get(0).setSelect(true);
     }
 
+    @Override
+    public void setCategory(@NonNull String category) {
+        for(int i=0; i<getItemCount(); i++) {
+            MenuCategoryItem menuCategoryItem = getItem(i);
+            if(menuCategoryItem.getCategoryName().equals(category)) {
+                handlingCategorySelection(i);
+                break;
+            }
+        }
+    }
+
     @NonNull
     public String getSelectedCategory() {
         for(MenuCategoryItem item : getItems()) {

@@ -19,20 +19,35 @@
         android:layout_marginLeft="8dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="@drawable/layout_menu_detail_border">
+        android:background="@drawable/layout_menu_detail_border"
+        android:onClick="@{ () -> presenter.onMenuEditClick(menuDetail)}" >
 
-        <ImageView
+        <FrameLayout
             android:layout_width="100dp"
-            android:layout_height="130dp"
-            android:scaleType="centerCrop"
-            app:error="@{@drawable/no_photo}"
-            app:photoUrl="@{menuDetail.photoUrl}"/>
+            android:layout_height="130dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:error="@{@drawable/dot_line_rect}"
+                app:photoUrl="@{menuDetail.photoUrl}" />
+
+            <Button
+                android:id="@+id/activity_menu_register_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|bottom"
+                android:onClick="@{ () -> presenter.onMenuEditClick(menuDetail)}"
+                android:background="@drawable/menu_edit" />
+        </FrameLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/middle_margin"
-            android:text="@{menuDetail.name ?? @string/layout_menu_detail_not_menu}"
+            android:text="@{menuDetail.getName()}"
             android:textSize="@dimen/small_text" />
 
         <LinearLayout

@@ -4,9 +4,8 @@ import android.content.Intent;
 
 import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseHelper;
 import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseRepository;
-import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
-import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
+import com.aone.menurandomchoice.repository.model.UpdateTime;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.LoginData;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
@@ -34,7 +33,6 @@ public class DataRepository implements Repository {
     private KakaoLoginHelper kakaoLoginHelper;
     private APIHelper apiHelper;
     private SQLiteDatabaseHelper SQLiteDatabaseHelper;
-    private PreferencesHelper preferencesHelper;
 
     @NonNull
     public static Repository getInstance() {
@@ -48,7 +46,6 @@ public class DataRepository implements Repository {
         kakaoLoginHelper = KakaoLoginRepository.getInstance();
         apiHelper = APIRepository.getInstance();
         SQLiteDatabaseHelper = SQLiteDatabaseRepository.getInstance();
-        preferencesHelper = new PreferencesRepository();
     }
 
     @Override
@@ -108,9 +105,8 @@ public class DataRepository implements Repository {
 
     @Override
     public void checkStoreUpdated(int storeIdx,
-                                  @NonNull String updateTime,
-                                  @NonNull NetworkResponseListener<EmptyObject> networkResponseListener) {
-        apiHelper.checkStoreUpdated(storeIdx, updateTime, networkResponseListener);
+                                  @NonNull NetworkResponseListener<UpdateTime> networkResponseListener) {
+        apiHelper.checkStoreUpdated(storeIdx, networkResponseListener);
     }
 
     @Override
@@ -120,36 +116,21 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void saveRegisteredImageLocalPath(@NonNull String path) {
-        preferencesHelper.saveRegisteredImageLocalPath(path);
-    }
-
-    @NonNull
-    @Override
-    public String getSavedRegisterImageLoadPath() {
-        return preferencesHelper.getSavedRegisterImageLoadPath();
-    }
-
-    @Override
-    public void clearRegisteredImageLocalPath() {
-        preferencesHelper.clearRegisteredImageLocalPath();
-    }
-
-    @Override
     public void loadStoreDetail(final int storeIdx,
                                 final @NonNull NetworkResponseListener<StoreDetail> networkResponseListener) {
-        final StoreDetail cachedStoreDetail = getStoreDetail();
-        checkStoreUpdated(storeIdx, cachedStoreDetail.getUpdateTime(), new NetworkResponseListener<EmptyObject>() {
-            @Override
-            public void onReceived(@NonNull EmptyObject response) {
-                // 서버에서 시각을 보내줘야 하지만, 아직 그 부분이 안되있어서 일단 EmptyObject로만 정의
-                // 서버에서 받은 시각과 로컬 시각을 확인해서 어떤 데이터를 보내줄지 처리해야함
-                // 현재 코드는, 일단 시각이 동일하지 않다는 전제로 처리했음
 
-//              if(serverTime == cachedStoreDetail.getUpdateTime() {
-//                  onLoadStoreDetailListener.onStoreDetailLoaded(cachedStoreDetail);
-//              } else
-                requestStoreDetail(storeIdx, networkResponseListener);
+        final StoreDetail cachedStoreDetail = getStoreDetail();
+        checkStoreUpdated(storeIdx, new NetworkResponseListener<UpdateTime>() {
+            @Override
+            public void onReceived(@NonNull UpdateTime response) {
+                String serverTime = response.getUpdateTime();
+                /*
+              if(serverTime == cachedStoreDetail.getUpdateTime()) {
+                  onLoadStoreDetailListener.onStoreDetailLoaded(cachedStoreDetail);
+              } else{ */
+                    requestStoreDetail(storeIdx, networkResponseListener);
+               // }
+
             }
 
             @Override
@@ -172,6 +153,11 @@ public class DataRepository implements Repository {
     @Override
     public void updateStoreDetail(@NonNull final StoreDetail storeDetail) {
         SQLiteDatabaseHelper.updateStoreDetail(storeDetail);
+    }
+
+    @Override
+    public void requestSaveStoreDetail(@NonNull StoreDetail storeDetail, @NonNull NetworkResponseListener<EmptyObject> networkResponseListener) {
+        apiHelper.requestSaveStoreDetail(storeDetail, networkResponseListener);
     }
 
     @Override

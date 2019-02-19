@@ -42,4 +42,9 @@
         <item name="android:textColor">@drawable/item_menu_category_text_color_selector</item>
     </style>
 
+    <style name="TimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/reddish</item>
+        <item name="colorControlActivated">@color/reddish</item>
+    </style>
+
 </resources>

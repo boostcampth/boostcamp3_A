@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.repository.oauth;
 
 import android.content.Intent;
+import android.os.Handler;
 
 import com.aone.menurandomchoice.utils.NetworkUtil;
 import com.kakao.auth.AuthType;
@@ -14,12 +15,14 @@ import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.response.MeV2Response;
 import com.kakao.util.exception.KakaoException;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class KakaoLoginRepository implements KakaoLoginHelper {
 
     private static KakaoLoginRepository ourInstance;
+    private Handler handler;
 
     public static KakaoLoginRepository getInstance() {
         if(ourInstance == null) {
@@ -30,6 +33,7 @@ public class KakaoLoginRepository implements KakaoLoginHelper {
     }
 
     private KakaoLoginRepository() {
+        handler = new Handler();
     }
 
     @Override
@@ -120,9 +124,14 @@ public class KakaoLoginRepository implements KakaoLoginHelper {
         }
     }
 
-    private void sendLogoutToListener(OnKakaoLogoutListener onKakaoLogoutListener) {
+    private void sendLogoutToListener(final OnKakaoLogoutListener onKakaoLogoutListener) {
         if(onKakaoLogoutListener != null) {
-            onKakaoLogoutListener.onKakaoLogoutSuccess();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    onKakaoLogoutListener.onKakaoLogoutSuccess();
+                }
+            });
         }
     }
 

@@ -1,9 +1,11 @@
 package com.aone.menurandomchoice.views.base;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
@@ -63,6 +65,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     }
 
     private void setUp() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         dataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         presenter = setUpPresenter();
 
@@ -87,8 +90,14 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
         return getApplicationContext();
     }
 
+    @NonNull
     @Override
-    public void showToastMessage(@NonNull String message) {
+    public Context getActivityContext() {
+        return this;
+    }
+
+    @Override
+    public void showToastMessage(@NonNull final String message) {
         Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();
     }
 

@@ -1,11 +1,15 @@
 package com.aone.menurandomchoice.views.menuregister;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 
+import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.utils.DateUtil;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
@@ -19,6 +23,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -29,6 +34,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     private UCropCreateHelper uCropCreateHelper;
 
     private enum RegisterState {
+
         SUCCESS(R.string.register_success),
         NO_IMAGE(R.string.register_no_image),
         NO_NAME(R.string.register_no_name),
@@ -64,6 +70,16 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     }
 
     @Override
+    public void handlingPassedMenuDetailInfo(@Nullable MenuDetail menuDetail) {
+        if(menuDetail != null) {
+            handlingMenuDetailInfo(menuDetail);
+            handlingImageRegisterButton(menuDetail.getPhotoUrl());
+        } else {
+            sendMessageToView(R.string.activity_menu_register_menu_passed_fail);
+        }
+    }
+
+    @Override
     public void handlingMenuCategoryItemClick(int position) {
         menuCategoryAdapterModel.setSelectedPositionOfMenuCategories(position);
     }
@@ -71,6 +87,14 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     @Override
     public void handlingImageRegisterButtonClick() {
         checkPermissionWithTedPermission();
+    }
+
+    @Override
+    public void handlingImageDeleteButtonClick() {
+        if(isAttachView()) {
+            getView().setRegisteredImage("");
+            handlingImageRegisterButton("");
+        }
     }
 
     @Override
@@ -94,36 +118,37 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     @Override
     public void handlingPreviewButtonClick() {
         if(isAttachView()) {
-            MenuDetail menuDetail = createMenuDetailItem();
+            MenuDetail menuDetail = getView().getInputtedMenuDetail();
             RegisterState registerState = checkMenuDetailItem(menuDetail);
             if(registerState == RegisterState.SUCCESS) {
-                getView().moveToPreviewActivityWithItem(menuDetail);
+                getView().moveToPreviewActivityWithItem();
             } else {
-                sendRegisterErrorMessage(registerState);
+                sendMessageToView(registerState.getMessageResourceId());
             }
         }
     }
 
     @Override
+    public void handlingMenuDeleteButtonClick() {
+        showMenuDeleteCheckDialog();
+    }
+
+    @Override
     public void handlingRegisterOkButtonClick() {
         if(isAttachView()) {
-            MenuDetail menuDetail = createMenuDetailItem();
-            getRepository().clearRegisteredImageLocalPath();
+            MenuDetail menuDetail = getView().getInputtedMenuDetail();
             RegisterState registerState = checkMenuDetailItem(menuDetail);
-            if(registerState == RegisterState.SUCCESS) {
-                getView().moveToPreviousActivityWithItem(menuDetail);
+            if (registerState == RegisterState.SUCCESS) {
+                getView().moveToPreviousActivityWithItem();
             } else {
-                sendRegisterErrorMessage(registerState);
+                sendMessageToView(registerState.getMessageResourceId());
             }
         }
     }
 
     @Override
     public void handlingBackKeyClick() {
-        getRepository().clearRegisteredImageLocalPath();
-        if(isAttachView()) {
-            getView().finishView();
-        }
+        viewFinish();
     }
 
     private void checkPermissionWithTedPermission() {
@@ -150,8 +175,14 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         ArrayList<MenuCategoryItem> menuCategoryItems = new ArrayList<>();
         String[] categories = getView().getAppContext().getResources().getStringArray(R.array.category);
 
+        String removeWord = GlobalApplication
+                .getGlobalApplicationContext()
+                .getString(R.string.arrays_category_all_food);
+
         for(String category : categories) {
-            menuCategoryItems.add(new MenuCategoryItem(category));
+            if(!category.equals(removeWord)) {
+                menuCategoryItems.add(new MenuCategoryItem(category));
+            }
         }
 
         return menuCategoryItems;
@@ -178,7 +209,6 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
             if(uri != null) {
                 String imagePath = uri.getPath();
                 if (imagePath != null) {
-                    saveRegisteredImageLocalPath(imagePath);
                     sendRegisteredImageUriToView(imagePath);
                 } else {
                     sendPhotoFailMessageToView();
@@ -217,48 +247,31 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         final float Y_RATIO = 4;
         int[] viewSize = getView().getRegisterTargetImageSize();
 
-        return uCropCreateHelper.createUCop(uri, X_RATIO, Y_RATIO, viewSize[0], viewSize[1]);
+        return uCropCreateHelper.createUCop(createSaveFileName(), uri, X_RATIO, Y_RATIO, viewSize[0], viewSize[1]);
     }
 
-    private void saveRegisteredImageLocalPath(String imagePath) {
-        getRepository().saveRegisteredImageLocalPath(imagePath);
+    private String createSaveFileName() {
+        MenuDetail menuDetail = getView().getInputtedMenuDetail();
+        return menuDetail.getStoreIdx() + "_" + menuDetail.getSequence() + "_" +
+                DateUtil.getNowDate() + ".jpg";
     }
 
     private void sendRegisteredImageUriToView(String imagePath) {
-        getView().showRegisteredImage(imagePath);
-    }
-
-    private MenuDetail createMenuDetailItem() {
-        MenuDetail menuDetail = new MenuDetail();
-
-        menuDetail.setPhotoUrl(getRepository().getSavedRegisterImageLoadPath());
-        menuDetail.setName(getView().getInputtedMenuName());
-        menuDetail.setDescription(getView().getInputtedMenuDescription());
-
-        String price = getView().getInputtedMenuPrice();
-        if(price.length() < 1) {
-            menuDetail.setPrice(0);
-        } else {
-            menuDetail.setPrice(Integer.parseInt(price));
+        if(isAttachView()) {
+            getView().setRegisteredImage(imagePath);
         }
-
-        if(menuCategoryAdapterModel != null) {
-            menuDetail.setCategory(menuCategoryAdapterModel.getSelectedCategory());
-        }
-
-        return menuDetail;
     }
 
     private RegisterState checkMenuDetailItem(MenuDetail menuDetail) {
-        if(menuDetail.getPhotoUrl().length() < 1) {
+        if(TextUtils.isEmpty(menuDetail.getPhotoUrl())) {
             return RegisterState.NO_IMAGE;
         }
 
-        if(menuDetail.getName().length() < 1) {
+        if(TextUtils.isEmpty(menuDetail.getName())) {
             return RegisterState.NO_NAME;
         }
 
-        if(menuDetail.getDescription().length() < 1) {
+        if(TextUtils.isEmpty(menuDetail.getDescription())) {
             return RegisterState.NO_DESCRIPTION;
         }
 
@@ -266,19 +279,101 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
             return RegisterState.NO_PRICE;
         }
 
-        if(menuDetail.getCategory().length() < 1) {
+        menuDetail.setCategory(menuCategoryAdapterModel.getSelectedCategory());
+        if(TextUtils.isEmpty(menuDetail.getCategory())) {
             return RegisterState.NO_CATEGORY;
         }
 
         return RegisterState.SUCCESS;
     }
 
-    private void sendRegisterErrorMessage(RegisterState registerState) {
+    private void sendMessageToView(int resourceId) {
         if(isAttachView()) {
-            int errorMessageId = registerState.getMessageResourceId();
-            String message = getView().getAppContext().getResources().getString(errorMessageId);
+            String message = GlobalApplication
+                    .getGlobalApplicationContext()
+                    .getResources()
+                    .getString(resourceId);
+
             getView().showToastMessage(message);
         }
     }
 
+    private void handlingMenuDetailInfo(MenuDetail menuDetail) {
+        if(isAttachView()) {
+            getView().setMenuDetailToDataBinding(menuDetail);
+            if(menuCategoryAdapterModel != null) {
+                menuDetail.setCategory(menuDetail.getCategory());
+            }
+        }
+    }
+
+    private void handlingImageRegisterButton(String photoUrl) {
+        if(isAttachView()) {
+            if(TextUtils.isEmpty(photoUrl)) {
+                getView().showMenuAddButton();
+            } else {
+                getView().showMenuDeleteButton();
+            }
+        }
+    }
+
+    private void showMenuDeleteCheckDialog(){
+        if(isAttachView()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getView().getActivityContext());
+
+            String guideMessage = getView()
+                    .getActivityContext()
+                    .getString(R.string.activity_menu_register_menu_delete_guide);
+
+            builder.setMessage(guideMessage);
+
+            String yesMessage = getView()
+                    .getActivityContext()
+                    .getString(R.string.activity_menu_register_menu_delete_yes);
+
+            builder.setPositiveButton(yesMessage,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            initializeRegisteredMenu();
+                            sendMessageToView(R.string.activity_menu_register_menu_delete_success);
+                            getView().moveToPreviousActivityWithItem();
+
+                        }
+                    });
+
+            String noMessage = getView()
+                    .getActivityContext()
+                    .getString(R.string.activity_menu_register_menu_delete_no);
+            builder.setNegativeButton(noMessage,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sendMessageToView(R.string.activity_menu_register_menu_delete_success);
+                        }
+                    });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+    }
+
+    private void initializeRegisteredMenu() {
+        if(isAttachView()) {
+            MenuDetail menuDetail = getView().getInputtedMenuDetail();
+            menuDetail.setName("");
+            menuDetail.setDescription("");
+            menuDetail.setPrice(0);
+            menuDetail.setPhotoUrl("");
+            menuDetail.setCategory("");
+
+            getView().setMenuDetailToDataBinding(menuDetail);
+        }
+    }
+
+    private void viewFinish() {
+        if(isAttachView()) {
+            getView().finishView();
+        }
+    }
 }

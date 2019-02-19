@@ -1,9 +1,21 @@
 package com.aone.menurandomchoice.repository.remote.mapper;
 
-import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
+import android.text.TextUtils;
 
+import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
+import com.aone.menurandomchoice.repository.model.StoreDetail;
+
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class MenuMapper {
 
@@ -25,10 +37,33 @@ public class MenuMapper {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(QUERY_STRING_LATITUDE, menuSearchRequest.getLatitude() + "");
         queryMap.put(QUERY_STRING_LONGITUDE, menuSearchRequest.getLongitude() + "");
-        queryMap.put(QUERY_RADIUS, menuSearchRequest.getRadius() + "");
-        queryMap.put(QUERY_CATEGORY, menuSearchRequest.getCategory());
+
+        if(menuSearchRequest.getRadius() != 0) {
+            queryMap.put(QUERY_RADIUS, menuSearchRequest.getRadius() + "");
+        }
+
+        if(menuSearchRequest.getCategory() != null && menuSearchRequest.getCategory().length() != 0) {
+            queryMap.put(QUERY_CATEGORY, menuSearchRequest.getCategory());
+        }
 
         return queryMap;
+    }
+
+    public static List<MultipartBody.Part> createRegisteredImageList(@NonNull StoreDetail storeDetail) {
+        List<MultipartBody.Part> images = new ArrayList<>();
+        List<MenuDetail> menuDetailList = storeDetail.getMenuList();
+        for(int i=0; i<menuDetailList.size(); i++) {
+            String photoUrl = menuDetailList.get(i).getPhotoUrl();
+            if(!TextUtils.isEmpty(photoUrl)) {
+                if (!photoUrl.contains("http")) {
+                    File file = new File(photoUrl);
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                    images.add(MultipartBody.Part.createFormData("photo", file.getName(), requestFile));
+                }
+            }
+        }
+
+        return images;
     }
 
 }

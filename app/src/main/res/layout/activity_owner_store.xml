@@ -18,33 +18,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gray">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray">
+
+            <LinearLayout
+                android:id="@+id/activity_owner_store_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:paddingTop="@dimen/large_padding"
+                android:paddingRight="@dimen/large_padding"
+                android:onClick="@{() -> presenter.onLogoutClick()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/activity_owner_store_ll_name_time"
+                app:layout_constraintVertical_chainStyle="spread_inside">
+
+                <ImageView
+                    android:layout_width="@dimen/activity_owner_store_exit_button"
+                    android:layout_height="@dimen/activity_owner_store_exit_button"
+                    android:src="@drawable/owner_exit_button" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activity_owner_detail_logout_label"
+                    android:layout_marginLeft="@dimen/small_margin" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/activity_owner_store_ll_name_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/activity_owner_store_ll_menu"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_chainStyle="spread_inside">
+                app:layout_constraintTop_toBottomOf="@+id/activity_owner_store_logout">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/two_x_large_margin"
                     android:lineSpacingExtra="5dp"
-                    android:text="@{storeDetail.name ?? @string/activity_owner_detail_not_name}"
+                    android:text="@{storeDetail.getName()}"
+                    android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/very_large_text"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:fontFamily="@font/youth"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -65,7 +92,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:textSize="@dimen/x_large_text"
-                        android:text="@{storeDetail.time}" />
+                        app:opentime="@{storeDetail.opentime}"
+                        app:closetime="@{storeDetail.closetime}" />
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -173,20 +202,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginTop="15dp"
                     android:layout_marginBottom="20dp"
-                    android:text="@{storeDetail.address}" />
+                    android:text="@{storeDetail.address}"/>
 
-                 <RelativeLayout
-                     android:id="@+id/map_view"
-                     android:layout_width="match_parent"
-                     android:layout_height="150dp"
-                     android:layout_marginLeft="@dimen/x_large_margin"
-                     android:layout_marginRight="@dimen/x_large_margin"
-                     android:layout_marginBottom="@dimen/x_large_margin"
-                     android:background="@color/gray"
-                     android:onClick="@{() -> presenter.onMapClick()}">
-                 </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/map_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="@dimen/x_large_margin"
+                    android:layout_marginRight="@dimen/x_large_margin"
+                    android:layout_marginBottom="@dimen/x_large_margin"
+                    android:onClick="@{() -> presenter.onMapClick(storeDetail.latitude, storeDetail.longitude)}"/>
 
             </LinearLayout>
 

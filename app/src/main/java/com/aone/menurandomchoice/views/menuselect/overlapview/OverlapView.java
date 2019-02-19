@@ -16,9 +16,10 @@ import androidx.annotation.Nullable;
 
 public class OverlapView extends FrameLayout {
 
-    private static final int CREATE_LIMIT_COUNT = 3;
+    private static final int CREATE_LIMIT_COUNT = 5;
 
     private OverlapViewAdapter overlapViewAdapter;
+    private OverlapViewTurnHelper overlapViewTurnHelper;
 
     public OverlapView(@NonNull Context context) {
         super(context);
@@ -33,7 +34,7 @@ public class OverlapView extends FrameLayout {
     }
 
     private void setUpViewTurnHelper() {
-        OverlapViewTurnHelper overlapViewTurnHelper = new OverlapViewTurnHelper();
+        overlapViewTurnHelper = new OverlapViewTurnHelper();
         overlapViewTurnHelper.setOverlapView(this);
         overlapViewTurnHelper.setonTopViewDetachListener(new OnTopViewDetachListener() {
             @Override
@@ -53,6 +54,10 @@ public class OverlapView extends FrameLayout {
         });
 
         initializeOverlapView();
+    }
+
+    public void next() {
+        overlapViewTurnHelper.executeDetachView();
     }
 
     private void initializeOverlapView() {
