@@ -6,6 +6,9 @@
         <variable
             name="activity"
             type="com.aone.menurandomchoice.views.customermain.CustomerMainContract.View"/>
+        <variable
+            name="presenter"
+            type="com.aone.menurandomchoice.views.customermain.CustomerMainContract.Presenter"/>
     </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,7 +82,7 @@
                 android:layout_marginBottom="@dimen/two_x_large_margin"
                 android:src="@drawable/custom_gps_fixed"
                 android:contentDescription="@string/activity_customer_main_map_gps"
-                android:onClick="@{() -> activity.onGPSButtonClicked()}"
+                android:onClick="@{() -> presenter.handlingGPSButtonClicked()}"
                 app:layout_constraintBottom_toTopOf="@+id/activity_customer_main_mapview_guide_line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"

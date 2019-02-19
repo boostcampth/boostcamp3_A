@@ -34,6 +34,8 @@ public class LocationSearchActivity
         implements LocationSearchContract.View {
 
     private LocationSearchAdapterView adapterView;
+    private static final String XY_TAG = "posXY";
+    private static final String NEED_INPUT = "값을 입력해주세요";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,13 +92,13 @@ public class LocationSearchActivity
 
    private void viewHolderClickedforOwneStoreEdit(int position) {
        Intent resultIntent = new Intent(LocationSearchActivity.this, StoreLocationActivity.class);
-       resultIntent.putExtra("posXY", getPresenter().getMenuData(position));
+       resultIntent.putExtra(XY_TAG, getPresenter().getMenuData(position));
        startActivity(resultIntent);
    }
 
     private void viewHolderClickedForCustomerMain(int position) {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("posXY", getPresenter().getMenuData(position));
+        resultIntent.putExtra(XY_TAG, getPresenter().getMenuData(position));
         setResult(RESULT_OK,resultIntent);
         finish();
     }
@@ -157,8 +159,9 @@ public class LocationSearchActivity
         String inputAddress = getDataBinding().searchBox.etSearch.getText().toString();
 
         if(inputAddress.trim().length() == 0) {
-            showToastMessage("값을 입력해주세요");
+            showToastMessage(NEED_INPUT);
         } else {
+            showProgressDialog();
             getPresenter().requestLocationSearch(inputAddress);
         }
     }

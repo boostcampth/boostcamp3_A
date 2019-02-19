@@ -20,6 +20,9 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
         implements LocationSearchContract.Presenter {
 
     private BaseRecyclerViewAdapterModel<KakaoAddress> adapterModel;
+    private static final String LAT = "latitude";
+    private static final String LON = "longitude";
+    private static final String EMPTY_RESULT = "결과값이 없습니다";
 
     public void setAdapter(@NonNull BaseRecyclerViewAdapterModel<KakaoAddress> adapterModel) {
         this.adapterModel = adapterModel;
@@ -37,7 +40,7 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
                     if(response.getDocuments().size() > 0) {
                         updateList(response.getDocuments());
                     } else {
-                        getView().showToastMessage("결과값이 없습니다");
+                        getView().showToastMessage(EMPTY_RESULT);
                     }
                 }
             }
@@ -52,8 +55,8 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
     @Override
     public Parcelable getMenuData(int position) {
         Bundle posXY = new Bundle();
-        posXY.putDouble("longitude", adapterModel.getItem(position).getX());
-        posXY.putDouble("latitude", adapterModel.getItem(position).getY());
+        posXY.putDouble(LAT, adapterModel.getItem(position).getX());
+        posXY.putDouble(LON, adapterModel.getItem(position).getY());
         return posXY;
     }
 

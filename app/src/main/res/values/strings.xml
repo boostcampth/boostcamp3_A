@@ -105,6 +105,8 @@
     <!-- permission -->
     <string name="permission_request_guide">사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.</string>
     <string name="permission_denied_guide">[설정] > [권한] 에서 권한을 허용할 수 있습니다.</string>
+    <string name="permission_GPS_request_guide">위치 정보 접근 권한이 필요합니다.</string>
+    <string name="permission_GPS_denied_guide">[설정] > [권한] 에서 권한을 허용할 수 있습니다.</string>
 
     <!-- UCop -->
     <string name="uCrop_toolbar_title">사진 편집</string>

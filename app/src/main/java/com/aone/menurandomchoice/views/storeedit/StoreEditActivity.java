@@ -24,51 +24,6 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
     private MapView mMapView;
 
     @Override
-    public void onMapViewInitialized(MapView mapView) {
-
-    }
-
-    @Override
-    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewZoomLevelChanged(MapView mapView, int i) {
-
-    }
-
-    @Override
-    public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -84,7 +39,8 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
         getDataBinding().activityStoreEditLlMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sampleIntent = new Intent(StoreEditActivity.this, MenuRegisterActivity.class);
+                Intent sampleIntent = new Intent(StoreEditActivity.this
+                                                , MenuRegisterActivity.class);
                 startActivity(sampleIntent);
             }
         });
@@ -92,7 +48,8 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
         getDataBinding().tv3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sampleIntent = new Intent(StoreEditActivity.this, LocationSearchActivity.class);
+                Intent sampleIntent = new Intent(StoreEditActivity.this
+                                                , LocationSearchActivity.class);
                 sampleIntent.putExtra("ActivityID","StoreEdit");
                 startActivity(sampleIntent);
             }
@@ -116,9 +73,11 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
         Bundle posXY = getIntent().getBundleExtra("posXY");
         MapPoint DEFAULT_MARKER_POINT;
         if( posXY != null ) {
-            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(posXY.getDouble("latitude"), posXY.getDouble("longitude"));
+            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(posXY.getDouble("latitude")
+                                                                , posXY.getDouble("longitude"));
         } else {
-            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.4980854357918, 127.028000275071);
+            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.4980854357918
+                                                                , 127.028000275071);
         }
 
         mDefaultMarker.setMapPoint(DEFAULT_MARKER_POINT);
@@ -171,5 +130,32 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
     private void setUpPresenterToDataBinding() {
         getDataBinding().setPresenter(getPresenter());
     }
+
+    @Override
+    public void onMapViewInitialized(MapView mapView) { }
+
+    @Override
+    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewZoomLevelChanged(MapView mapView, int i) { }
+
+    @Override
+    public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) { }
 
 }

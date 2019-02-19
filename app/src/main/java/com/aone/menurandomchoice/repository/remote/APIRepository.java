@@ -67,51 +67,13 @@ public class APIRepository implements APIHelper {
     @EverythingIsNonNull
     public void requestMenuLocation(@NonNull Map<String, String> queryMap,
                                     @NonNull final NetworkResponseListener<List<MenuLocation>> listener) {
-        // test with mock data
-        Map<String, String> queryMapFD6 = new HashMap<>();
-        queryMapFD6.put("category_group_code", "FD6");
-        queryMapFD6.put("x", queryMap.get("longitude"));
-        queryMapFD6.put("y", queryMap.get("latitude"));
-        queryMapFD6.put("radius", "1000");
-        queryMapFD6.put("sort","distance");
-
-        final String category[] = {"한식", "일식", "중식", "양식"};
-        final List<MenuLocation> mockData = new ArrayList<>();
-        apiCreator
-                .getApiInstance()
-                .getMenuFD6(GlobalApplication.getGlobalApplicationContext().getString(R.string.KAKAO_REST_API_KEY), queryMapFD6)
-                .enqueue(new Callback<KakaoAddressResult>() {
-                    @Override
-                    public void onResponse(Call<KakaoAddressResult> call, Response<KakaoAddressResult> response) {
-                        if(response.isSuccessful()) {
-                                List<KakaoAddress> mock = response.body().getDocuments();
-                                int len = mock.size();
-                                for (int i = 0; i < len; i++) {
-                                    mockData.add(new MenuLocation(mock.get(i).getY(), mock.get(i).getX(), category[i%4]));
-                                }
-                                listener.onReceived(mockData);
-                        } else {
-                            Log.d("Mock", "response success but fail");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<KakaoAddressResult> call, Throwable t) {
-                        if(call.isCanceled()) {
-
-                        } else {
-
-                        }
-                    }
-                });
-
-/*        if(NetworkUtil.isNetworkConnecting()) {
+        if(NetworkUtil.isNetworkConnecting()) {
             apiCreator.getApiInstance()
                     .getMenuLocation(queryMap)
                     .enqueue(new JMTCallback<>(listener));
         } else {
             listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
-        }*/
+        }
     }
 
     @Override
