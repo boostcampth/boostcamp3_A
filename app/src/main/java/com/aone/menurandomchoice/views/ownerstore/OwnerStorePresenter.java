@@ -66,11 +66,13 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
     private OnKakaoLogoutListener onKakaoLogoutListener = new OnKakaoLogoutListener() {
         @Override
         public void onKakaoLogoutSuccess() {
-            String logoutMessage = GlobalApplication
-                    .getGlobalApplicationContext()
-                    .getString(R.string.activity_owner_store_logout);
-            getView().showToastMessage(logoutMessage);
-            getView().finishOwnerStorePage();
+            if(isAttachView()) {
+                String logoutMessage = GlobalApplication
+                        .getGlobalApplicationContext()
+                        .getString(R.string.activity_owner_store_logout);
+                getView().showToastMessage(logoutMessage);
+                getView().finishOwnerStorePage();
+            }
         }
     };
 

@@ -189,7 +189,6 @@ public class OwnerStoreActivity
 
     @SuppressLint("ClickableViewAccessibility")
     public void setMapView(double latitude, double longitude, String name) {
-
         if(latitude == 0 && longitude == 0) {
             latitude = DEFAULT_LATITUDE;
             longitude = DEFAULT_LONGITUDE;
@@ -231,7 +230,7 @@ public class OwnerStoreActivity
     }
 
     public void setLogoutVisible(boolean isOwner) {
-        if(isOwner == true) {
+        if(isOwner) {
             getDataBinding().activityOwnerStoreLogout.setVisibility(View.VISIBLE);
         } else {
             getDataBinding().activityOwnerStoreLogout.setVisibility(View.GONE);
