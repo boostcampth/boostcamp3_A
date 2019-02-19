@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:clipToPadding="false"
+        android:background="@color/white"
         android:clipChildren="false">
 
         <ImageButton

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
 
@@ -19,9 +20,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         Bundle timeArgs = getArguments();
-        final String time = timeArgs.getString("time");
+        final String time = timeArgs.getString("time", "00:00");
         final String type = timeArgs.getString("type");
 
         int idx = time.indexOf(":");
@@ -31,7 +31,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         return new TimePickerDialog(getActivity(), R.style.TimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
                 String formatHour = "";
                 String formatMinute = "";
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

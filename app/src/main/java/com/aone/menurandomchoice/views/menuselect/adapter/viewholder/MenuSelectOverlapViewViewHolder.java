@@ -22,7 +22,8 @@ public class MenuSelectOverlapViewViewHolder extends OverlapView.ViewHolder {
 
     public void setItem(MenuDetail menuDetail) {
         itemMenuSelectViewBinding.setMenuDetail(menuDetail);
-        GlideUtil.loadImageWithSkipCache(itemMenuSelectViewBinding.itemMenuSelectIv, menuDetail.getUrl());
+        GlideUtil.loadImageWithSkipCache(itemMenuSelectViewBinding.itemMenuSelectIv,
+                menuDetail.getPhotoUrl(), itemMenuSelectViewBinding.itemMenuSelectViewProgressBar);
     }
 
 }

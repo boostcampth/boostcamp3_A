@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
@@ -90,7 +91,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
     }
 
     @Override
-    public void showToastMessage(@NonNull String message) {
+    public void showToastMessage(@NonNull final String message) {
         Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();
     }
 

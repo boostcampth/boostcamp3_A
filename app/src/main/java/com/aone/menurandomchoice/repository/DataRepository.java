@@ -7,6 +7,7 @@ import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseRepository;
 import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
 import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
+import com.aone.menurandomchoice.repository.model.UpdateTime;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.LoginData;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
@@ -108,9 +109,8 @@ public class DataRepository implements Repository {
 
     @Override
     public void checkStoreUpdated(int storeIdx,
-                                  @NonNull String updateTime,
-                                  @NonNull NetworkResponseListener<EmptyObject> networkResponseListener) {
-        apiHelper.checkStoreUpdated(storeIdx, updateTime, networkResponseListener);
+                                  @NonNull NetworkResponseListener<UpdateTime> networkResponseListener) {
+        apiHelper.checkStoreUpdated(storeIdx, networkResponseListener);
     }
 
     @Override
@@ -129,13 +129,17 @@ public class DataRepository implements Repository {
                                 final @NonNull NetworkResponseListener<StoreDetail> networkResponseListener) {
 
         final StoreDetail cachedStoreDetail = getStoreDetail();
-        checkStoreUpdated(storeIdx, cachedStoreDetail.getUpdateTime(), new NetworkResponseListener<EmptyObject>() {
+        checkStoreUpdated(storeIdx, new NetworkResponseListener<UpdateTime>() {
             @Override
-            public void onReceived(@NonNull EmptyObject response) {
-//              if(serverTime == cachedStoreDetail.getUpdateTime() {
-//                  onLoadStoreDetailListener.onStoreDetailLoaded(cachedStoreDetail);
-//              } else
-                requestStoreDetail(storeIdx, networkResponseListener);
+            public void onReceived(@NonNull UpdateTime response) {
+                String serverTime = response.getUpdateTime();
+                /*
+              if(serverTime == cachedStoreDetail.getUpdateTime()) {
+                  onLoadStoreDetailListener.onStoreDetailLoaded(cachedStoreDetail);
+              } else{ */
+                    requestStoreDetail(storeIdx, networkResponseListener);
+               // }
+
             }
 
             @Override

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aone.menurandomchoice.R;
@@ -32,10 +33,11 @@ public class MenuPreviewActivity extends AppCompatActivity {
         TextView guide = view.findViewById(R.id.item_menu_select_description_tv);
         TextView price = view.findViewById(R.id.item_menu_select_price_tv);
         TextView category = view.findViewById(R.id.item_menu_select_category_tv);
+        ProgressBar progressBar = view.findViewById(R.id.item_menu_select_view_progress_bar);
 
         Intent intent = getIntent();
         MenuDetail menuDetail = intent.getParcelableExtra(EXTRA_MENU_DETAIL_ITEM);
-        GlideUtil.loadImageWithSkipCache(iv, menuDetail.getPhotoUrl());
+        GlideUtil.loadImageWithSkipCache(iv, menuDetail.getPhotoUrl(), progressBar);
         title.setText(menuDetail.getName());
         guide.setText(menuDetail.getDescription());
         price.setText(menuDetail.getPrice()+"");

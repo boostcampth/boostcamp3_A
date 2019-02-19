@@ -5,6 +5,7 @@ import android.util.Log;
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
+import com.aone.menurandomchoice.repository.model.UpdateTime;
 import com.aone.menurandomchoice.repository.model.KakaoAddress;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.LoginData;
@@ -137,11 +138,10 @@ public class APIRepository implements APIHelper {
 
     @Override
     public void checkStoreUpdated(int storeIdx,
-                                  @NonNull String updateTime,
-                                  @NonNull NetworkResponseListener<EmptyObject> listener) {
+                                  @NonNull NetworkResponseListener<UpdateTime> listener) {
         if(NetworkUtil.isNetworkConnecting()) {
             apiCreator.getApiInstance()
-                    .checkStoreUpdated(storeIdx, updateTime)
+                    .checkStoreUpdated(storeIdx)
                     .enqueue(new JMTCallback<>(listener));
         } else {
             listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
@@ -176,15 +176,21 @@ public class APIRepository implements APIHelper {
     @Override
     public void requestMenuList(@NonNull MenuSearchRequest menuSearchRequest,
                                                  @NonNull NetworkResponseListener<List<MenuDetail>> listener) {
-
+        if(NetworkUtil.isNetworkConnecting()) {
+            apiCreator.getApiInstance()
+                    .createMenuListRequestCall(MenuMapper.createMenuListSearchQueryMap(menuSearchRequest))
+                    .enqueue(new JMTCallback<>(listener));
+        } else {
+            listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
+        }
     }
 
     @Override
     public void requestSaveStoreDetail(@NonNull StoreDetail storeInfo,
-                                       @NonNull NetworkResponseListener<EmptyObject> files) {
+                                       @NonNull NetworkResponseListener<EmptyObject> listener) {
         apiCreator.getApiInstance()
                 .createStoreDetailSaveRequestCall(storeInfo, MenuMapper.createRegisteredImageList(storeInfo))
-                .enqueue(new JMTCallback<>(files));
+                .enqueue(new JMTCallback<>(listener));
     }
 
 }

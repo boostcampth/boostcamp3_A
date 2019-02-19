@@ -8,17 +8,12 @@ import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.DEFAULT_LATITUDE;
-import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.DEFAULT_LONGITUDE;
 
 public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> implements StoreEditContract.Presenter {
 
@@ -73,7 +68,6 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
     public void onStartTimeSetClick(String openTime) {
         openTime = "09:00";
         getView().showStartTimePickerDialog(openTime);
-
     }
 
     @Override

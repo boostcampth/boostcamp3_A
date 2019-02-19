@@ -3,6 +3,7 @@ package com.aone.menurandomchoice.views.menuregister;
 import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
@@ -261,15 +262,15 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     }
 
     private RegisterState checkMenuDetailItem(MenuDetail menuDetail) {
-        if(menuDetail.getPhotoUrl().length() < 1) {
+        if(TextUtils.isEmpty(menuDetail.getPhotoUrl())) {
             return RegisterState.NO_IMAGE;
         }
 
-        if(menuDetail.getName().length() < 1) {
+        if(TextUtils.isEmpty(menuDetail.getName())) {
             return RegisterState.NO_NAME;
         }
 
-        if(menuDetail.getDescription().length() < 1) {
+        if(TextUtils.isEmpty(menuDetail.getDescription())) {
             return RegisterState.NO_DESCRIPTION;
         }
 
@@ -277,7 +278,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
             return RegisterState.NO_PRICE;
         }
 
-        if(menuDetail.getCategory().length() < 1) {
+        if(TextUtils.isEmpty(menuDetail.getCategory())) {
             return RegisterState.NO_CATEGORY;
         }
 

@@ -189,7 +189,7 @@ implements  StoreEditContract.View{
     @NonNull
     @Override
     public String getInputtedStoreName() {
-        return getDataBinding().activityStoreEditStoreNameEt.getText().toString();
+        return getDataBinding().activityStoreEditNameEt.getText().toString();
     }
 
     @NonNull
@@ -238,5 +238,5 @@ implements  StoreEditContract.View{
         timePickerFragment.setPresenter(getPresenter());
         timePickerFragment.show(getSupportFragmentManager(), "timepicker");
     }
-
+    
 }

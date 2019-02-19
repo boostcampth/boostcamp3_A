@@ -27,10 +27,12 @@ public class BindingUtil {
 
     @BindingAdapter({"bind:opentime", "bind:closetime"})
     public static void setStoreTime(TextView textView, String opentime, String closetime) {
-        if(opentime == null)
+        if(opentime == null) {
             opentime = " ";
-        if(closetime == null)
+        }
+        if(closetime == null) {
             closetime = " ";
+        }
 
         textView.setText(opentime + "-" + closetime);
     }
