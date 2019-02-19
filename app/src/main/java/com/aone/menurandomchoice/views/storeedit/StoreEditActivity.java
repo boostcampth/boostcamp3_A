@@ -43,31 +43,8 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setUpPresenterToDataBinding();
-
-    /*    getDataBinding().activityStoreEditLlMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sampleIntent = new Intent(StoreEditActivity.this
-                        , MenuRegisterActivity.class);
-                startActivity(sampleIntent);
-            }
-        });
-
-        getDataBinding().tv3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sampleIntent = new Intent(StoreEditActivity.this
-                        , LocationSearchActivity.class);
-                sampleIntent.putExtra("ActivityID","StoreEdit");
-                startActivity(sampleIntent);
-            }
-        });*/
-
     }
-
-
 
     @Override
     protected void onStart() {
@@ -97,6 +74,16 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
         mMapView.addPOIItem(mDefaultMarker);
         mMapView.setMapCenterPoint(DEFAULT_MARKER_POINT, true);*/
 
+        Bundle posXY = getIntent().getBundleExtra("posXY");
+        MapPoint DEFAULT_MARKER_POINT;
+        if( posXY != null ) {
+            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(posXY.getDouble("latitude")
+                    , posXY.getDouble("longitude"));
+        } else {
+            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(DEFAULT_LATITUDE
+                    , DEFAULT_LONGITUDE);
+        }
+
         initMapView();
 
         StoreDetail storeDetail = getIntent().getParcelableExtra(EXTRA_STORE);
@@ -121,7 +108,6 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
         super.onPause();
 
         detachMapView();
-        //getDataBinding().mapView.removeView(mMapView);
     }
 
     @Override
@@ -215,7 +201,8 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
     @Override
     public void moveToLocationSearchPage() {
         Intent locationSearchIntent = new Intent(StoreEditActivity.this, LocationSearchActivity.class);
-        startActivityForResult(locationSearchIntent, REQUEST_CODE_LOCATIONSEARCH);
+        locationSearchIntent.putExtra("ActivityID","StoreEdit");
+        startActivity(locationSearchIntent);
     }
 
     @Override
@@ -262,12 +249,6 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
                 case 3:
                     menuDetail = data.getParcelableExtra(EXTRA_MENU_DETAIL_ITEM);
                     getDataBinding().getStoreDetail().getMenuList().set(2, menuDetail);
-                    break;
-                case REQUEST_CODE_LOCATIONSEARCH:
-                    String address = data.getStringExtra("address");
-                    Double longitude = data.getDoubleExtra("longitude", 0);
-                    Double latitude = data.getDoubleExtra("latitude", 0);
-                    setAddress(address, longitude, latitude);
                     break;
                 default:
                     super.onActivityResult(requestCode, resultCode, data);

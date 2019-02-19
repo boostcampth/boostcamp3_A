@@ -11,7 +11,6 @@ import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.base.adapter.BaseRecyclerViewAdapterModel;
 
-
 import java.util.List;
 
 import androidx.annotation.NonNull;
