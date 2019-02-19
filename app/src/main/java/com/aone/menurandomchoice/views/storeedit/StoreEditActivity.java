@@ -1,13 +1,18 @@
 package com.aone.menurandomchoice.views.storeedit;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TimePicker;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityStoreEditBinding;
@@ -22,15 +27,15 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-import java.util.List;
-
 import androidx.annotation.NonNull;
 
-public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, StoreEditContract.View, StoreEditContract.Presenter>
-implements  StoreEditContract.View{
+public class StoreEditActivity
+        extends BaseActivity<ActivityStoreEditBinding, StoreEditContract.View, StoreEditContract.Presenter>
+        implements StoreEditContract.View {
+
+    public static final String EXTRA_MENU_DETAIL_INFO = "EXTRA_MENU_DETAIL_INFO";
 
     public static final int REQUEST_CODE_LOCATION_SEARCH = 10;
-    public static final String EXTRA_MENU_DETAIL_INFO = "EXTRA_MENU_DETAIL_INFO";
     private static final int REQUEST_CODE_MENU_REGISTER = 1;
 
     private MapView mapView;
@@ -42,6 +47,7 @@ implements  StoreEditContract.View{
 
         setUpPresenterToDataBinding();
         setUpMapView();
+        setUpEditTextChangeListener();
         passedGetIntentToPresenter();
     }
 
@@ -107,6 +113,8 @@ implements  StoreEditContract.View{
                     break;
                 case REQUEST_CODE_LOCATION_SEARCH:
                     attachViewToPresenter();
+
+                     //Todo  위치 검색 기능 후 하드로 박혀있는 문자열 들 상수 처리 해야함
                     String address = data.getStringExtra("address");
                     Double longitude = data.getDoubleExtra("longitude", 0);
                     Double latitude = data.getDoubleExtra("latitude", 0);
@@ -138,6 +146,45 @@ implements  StoreEditContract.View{
         }
     }
 
+    private void setUpEditTextChangeListener() {
+        getDataBinding().activityStoreEditNameEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                StoreDetail storeDetail = getDataBinding().getStoreDetail();
+                if(storeDetail != null) {
+                    storeDetail.setName(editable.toString());
+                }
+            }
+        });
+
+        getDataBinding().activityStoreEditDescriptionEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                StoreDetail storeDetail = getDataBinding().getStoreDetail();
+                if(storeDetail != null) {
+                    storeDetail.setDescription(editable.toString());
+                }
+            }
+        });
+    }
+
     @Override
     public void showStoreDetailInfo(@NonNull StoreDetail storeDetail) {
         getDataBinding().setStoreDetail(storeDetail);
@@ -158,44 +205,36 @@ implements  StoreEditContract.View{
 
     @Override
     public void showStartTimePickerDialog(@NonNull String openTime) {
-        showTimePicker(openTime, "opentime");
+        showTimePicker(openTime, TimePickerFragment.OPEN);
     }
 
     @Override
     public void showEndTimePickerDialog(@NonNull String closeTime) {
-        showTimePicker(closeTime, "closetime");
+        showTimePicker(closeTime, TimePickerFragment.CLOSE);
     }
 
     @Override
     public void showChangedOpenTime(@NonNull String openTime) {
-        getDataBinding().getStoreDetail().setOpentime(openTime);
+        StoreDetail storeDetail = getDataBinding().getStoreDetail();
+        if(storeDetail != null) {
+            storeDetail.setOpentime(openTime);
+            getDataBinding().setStoreDetail(storeDetail);
+        }
     }
 
     @Override
     public void showChangedCloseTime(@NonNull String closeTime) {
-        getDataBinding().getStoreDetail().setClosetime(closeTime);
-    }
-
-    @Override
-    public void setMenuDetailToDataBinding(@NonNull MenuDetail menuDetail) {
-        int menuDetailIndex = menuDetail.getSequence() - 1;
         StoreDetail storeDetail = getDataBinding().getStoreDetail();
-        List<MenuDetail> menuDetailList = storeDetail.getMenuList();
-        menuDetailList.set(menuDetailIndex, menuDetail);
-        storeDetail.setMenuList(menuDetailList);
-        getDataBinding().setStoreDetail(storeDetail);
+        if(storeDetail != null) {
+            storeDetail.setClosetime(closeTime);
+            getDataBinding().setStoreDetail(storeDetail);
+        }
     }
 
     @NonNull
     @Override
-    public String getInputtedStoreName() {
-        return getDataBinding().activityStoreEditNameEt.getText().toString();
-    }
-
-    @NonNull
-    @Override
-    public String getInputtedDescription() {
-        return getDataBinding().activityStoreEditDescriptionEt.getText().toString();
+    public StoreDetail getInputtedStoreDetail() {
+        return getDataBinding().getStoreDetail();
     }
 
     @Override
@@ -228,15 +267,15 @@ implements  StoreEditContract.View{
         mapView = null;
     }
 
-    private void showTimePicker(String time, String type) {
+    private void showTimePicker(String time, int type) {
         Bundle bundle = new Bundle();
-        bundle.putString("time", time);
-        bundle.putString("type", type);
+        bundle.putString(TimePickerFragment.BUNDLE_PICKER_TIME, time);
+        bundle.putInt(TimePickerFragment.BUNDLE_PICKER_TYPE, type);
 
         TimePickerFragment timePickerFragment = new TimePickerFragment();
         timePickerFragment.setArguments(bundle);
         timePickerFragment.setPresenter(getPresenter());
         timePickerFragment.show(getSupportFragmentManager(), "timepicker");
     }
-    
+
 }

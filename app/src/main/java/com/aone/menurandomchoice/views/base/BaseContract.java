@@ -9,7 +9,11 @@ public interface BaseContract {
 
     interface View {
 
+        @NonNull
         Context getAppContext();
+
+        @NonNull
+        Context getActivityContext();
 
         void showToastMessage(@NonNull String message);
 

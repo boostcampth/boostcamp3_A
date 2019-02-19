@@ -1,5 +1,7 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
+import android.content.DialogInterface;
+
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
@@ -10,6 +12,7 @@ import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> implements  OwnerStoreContract.Presenter {
 
@@ -25,7 +28,7 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
             @Override
             public void onError(JMTErrorCode errorCode) {
-                handlingJMTError(errorCode);
+                sendMessageToView(errorCode.getStringResourceId());
             }
         });
     }
@@ -50,17 +53,7 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
     @Override
     public void onLogoutClick() {
-        getRepository().executeKakaoAccountLogout(onKakaoLogoutListener);
-    }
-
-    private void handlingJMTError(JMTErrorCode errorCode) {
-        if(isAttachView()) {
-            String errorMessage = GlobalApplication
-                    .getGlobalApplicationContext()
-                    .getString(errorCode.getStringResourceId());
-
-            getView().showToastMessage(errorMessage);
-        }
+        showLogoutCheckDialog();
     }
 
     private OnKakaoLogoutListener onKakaoLogoutListener = new OnKakaoLogoutListener() {
@@ -75,5 +68,41 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
             }
         }
     };
+
+    private void showLogoutCheckDialog(){
+        if(isAttachView()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getView().getActivityContext());
+            builder.setMessage(getView().getActivityContext().getString(R.string.activity_logout_guide));
+
+            builder.setPositiveButton(getView().getActivityContext().getString(R.string.activity_logout_yes),
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    getRepository().executeKakaoAccountLogout(onKakaoLogoutListener);
+                }
+            });
+
+            builder.setNegativeButton(getView().getActivityContext().getString(R.string.activity_logout_no),
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    sendMessageToView(R.string.activity_logout_no_guide);
+                }
+            });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+    }
+
+    private void sendMessageToView(int resourceId) {
+        if(isAttachView()) {
+            String errorMessage = GlobalApplication
+                    .getGlobalApplicationContext()
+                    .getString(resourceId);
+
+            getView().showToastMessage(errorMessage);
+        }
+    }
 
 }

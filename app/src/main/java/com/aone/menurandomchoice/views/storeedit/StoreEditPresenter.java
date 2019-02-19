@@ -34,12 +34,13 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
     public void saveStoreDetail(@Nullable StoreDetail storeDetail) {
         if(storeDetail != null) {
             if(isAttachView()) {
-                storeDetail.setName(getView().getInputtedStoreName());
-                storeDetail.setDescription(getView().getInputtedDescription());
                 getRepository().requestSaveStoreDetail(storeDetail, new NetworkResponseListener<EmptyObject>() {
                     @Override
                     public void onReceived(@NonNull EmptyObject response) {
-
+                        if(isAttachView()) {
+                            sendMessageToView(R.string.activity_store_edit_save_success);
+                            viewFinish();
+                        }
                     }
 
                     @Override
@@ -56,31 +57,37 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
 
     @Override
     public void onLocationSearchClick() {
-        getView().moveToLocationSearchPage();
+        if(isAttachView()) {
+            getView().moveToLocationSearchPage();
+        }
     }
 
     @Override
     public void onMenuEditClick(MenuDetail menuDetail) {
-        getView().moveToMenuEditPage(menuDetail);
+        if(isAttachView()) {
+            getView().moveToMenuEditPage(menuDetail);
+        }
     }
 
     @Override
     public void onStartTimeSetClick(String openTime) {
-        openTime = "09:00";
-        getView().showStartTimePickerDialog(openTime);
+        if(isAttachView()) {
+            getView().showStartTimePickerDialog(openTime);
+        }
     }
 
     @Override
     public void onEndTimeSetClick(String closeTime) {
-        closeTime = "10:00";
-        getView().showEndTimePickerDialog(closeTime);
+        if(isAttachView()) {
+            getView().showEndTimePickerDialog(closeTime);
+        }
     }
 
     @Override
-    public void onTimeSet(@NonNull String type, @NonNull String hour, @NonNull String minute) {
+    public void onTimeSet(int type, @NonNull String hour, @NonNull String minute) {
         if(isAttachView()) {
-            if (type.equals("opentime")) {
-                getView().showChangedOpenTime(hour + ":" +minute);
+            if (type == TimePickerFragment.OPEN) {
+                getView().showChangedOpenTime(hour + ":" + minute);
             } else {
                 getView().showChangedCloseTime(hour + ":" + minute);
             }
@@ -89,12 +96,17 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
 
     @Override
     public void handlingReceivedMenuDetailData(@Nullable MenuDetail menuDetail) {
-        if(menuDetail != null) {
-            if(isAttachView()) {
-                getView().setMenuDetailToDataBinding(menuDetail);
-            }
-        } else {
-            if(isAttachView()) {
+        if(isAttachView()) {
+            if(menuDetail != null) {
+                int menuDetailIndex = menuDetail.getSequence() - 1;
+                StoreDetail storeDetail = getView().getInputtedStoreDetail();
+                if(storeDetail != null) {
+                    storeDetail.getMenuList().set(menuDetailIndex, menuDetail);
+                    getView().showStoreDetailInfo(storeDetail);
+                } else {
+                    //todo error handling
+                }
+            } else {
                 //todo error handling
             }
         }
@@ -155,4 +167,5 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
             getView().viewFinish();
         }
     }
+
 }

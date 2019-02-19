@@ -30,13 +30,8 @@ public interface StoreEditContract {
 
         void showChangedCloseTime(@NonNull String closeTime);
 
-        void setMenuDetailToDataBinding(@NonNull MenuDetail menuDetail);
-
-        @NonNull
-        String getInputtedStoreName();
-
-        @NonNull
-        String getInputtedDescription();
+        @Nullable
+        StoreDetail getInputtedStoreDetail();
 
         void moveCenterToMap(@NonNull MapPoint centerPoint);
 
@@ -56,7 +51,7 @@ public interface StoreEditContract {
 
         void onEndTimeSetClick(String time);
 
-        void onTimeSet(@NonNull String type, @NonNull String hour, @NonNull String minute);
+        void onTimeSet(int type, @NonNull String hour, @NonNull String minute);
 
         void onLocationSearchClick();
 
