@@ -27,7 +27,7 @@ import net.daum.mf.map.api.MapView;
 import androidx.annotation.NonNull;
 
 public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, StoreEditContract.View, StoreEditContract.Presenter>
-implements  StoreEditContract.View, MapView.MapViewEventListener {
+        implements  StoreEditContract.View, MapView.MapViewEventListener {
 
     public static final String EXTRA_MENU_DETAIL_INFO = "EXTRA_MENU_DETAIL_INFO";
     private MapView mMapView;
@@ -76,7 +76,7 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
 
 
         setUpMapView();
-  }
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -172,7 +172,7 @@ implements  StoreEditContract.View, MapView.MapViewEventListener {
                 case REQUEST_CODE_LOCATION_SEARCH:
                     attachViewToPresenter();
 
-                     //Todo  위치 검색 기능 후 하드로 박혀있는 문자열 들 상수 처리 해야함
+                    //Todo  위치 검색 기능 후 하드로 박혀있는 문자열 들 상수 처리 해야함
                     String address = data.getStringExtra("address");
                     Double longitude = data.getDoubleExtra("longitude", 0);
                     Double latitude = data.getDoubleExtra("latitude", 0);

@@ -9,6 +9,7 @@ import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.utils.GlideUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.customermain.CustomerMainActivity;
+import com.aone.menurandomchoice.views.ownerlogin.OwnerLoginActivity;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
 
@@ -64,7 +65,7 @@ public class MainActivity
 
     @Override
     public void moveToOwnerLoginActivity() {
-        Intent ownerLoginIntent = new Intent(this, StoreEditActivity.class);
+        Intent ownerLoginIntent = new Intent(this, OwnerLoginActivity.class);
         startActivity(ownerLoginIntent);
     }
 
