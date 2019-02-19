@@ -46,17 +46,25 @@
     <string name="activity_owner_detail_location">위치</string>
     <string name="activity_owner_detail_description">소개</string>
     <string name="activity_owner_detail_not_name">상세화면 정보가 없습니다</string>
-    <string name="activity_owner_store_not_description">가게소개를 적어주세요</string>
+    <string name="activity_owner_store_not_description">아직 상점소개가 없습니다.</string>
     <string name="layout_menu_detail_not_menu">menu</string>
     <string name="activity_owner_store_tv_time">운영시간 : </string>
+    <string name="activity_owner_detail_name_label">가게이름</string>
+    <string name="activity_owner_detail_time_label">운영시간</string>
+    <string name="activity_owner_detail_logout_label">로그아웃</string>
 
     <!-- activity_store_edit-->
     <string name="activity_store_edit_label">가게 편집</string>
+    <string name="activity_store_edit_starttime_label">영업 시작시간</string>
+    <string name="activity_store_edit_endtime_label">영업 종료시간</string>
+    <string name="activity_store_edit_default_starttime">10:00</string>
+    <string name="activity_store_edit_default_endtime">18:00</string>
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>
     <string name="item_menu_owner_register_preview">미리보기</string>
     <string name="item_menu_owner_register_ok">완료</string>
+    <string name="item_menu_store_edit_save">저장</string>
 
     <!-- item_menu_select_view -->
     <string name="item_menu_select_label">메뉴 선택</string>
@@ -125,6 +133,8 @@
     <!-- JMT response code -->
     <string name="JMT_response_success">요청에 성공했습니다</string>
     <string name="JMT_response_no_result">요청된 결과가 없습니다</string>
+    <string name="JMT_response_no_singed_up_info">존재하는 ID가 없습니다. 회원가입을 진행합니다</string>
+    <string name="JMT_response_fail_sign_up">인증키가 유효하지 않습니다</string>
     <string name="JMT_response_wrong_request_error">앱 시스템에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
     <string name="JMT_response_not_found_error">서버 시스템에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
     <string name="JMT_response_server_system_error">서버 시스템에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
@@ -137,4 +147,7 @@
 
     <!-- store location -->
     <string name="confirm_btn_hint">이 위치로 확정하기</string>
+    <string name="activity_owner_store_logout">로그아웃 되었습니다.</string>
+    <string name="activity_store_edit_location_search">위치검색</string>
+
 </resources>

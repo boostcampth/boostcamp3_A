@@ -57,6 +57,10 @@ public class OverlapViewTurnHelper {
         detachStateCalculator = new DetachStateCalculator();
     }
 
+    public void setonTopViewDetachListener(@NonNull OnTopViewDetachListener onTopViewDetachListener) {
+        this.onTopViewDetachListener = onTopViewDetachListener;
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     public void setOverlapView(@NonNull OverlapView overlapView) {
         this.overlapView = overlapView;
@@ -75,8 +79,10 @@ public class OverlapViewTurnHelper {
         });
     }
 
-    public void setonTopViewDetachListener(@NonNull OnTopViewDetachListener onTopViewDetachListener) {
-        this.onTopViewDetachListener = onTopViewDetachListener;
+    public void executeDetachView() {
+        recordCoordinatesOfOldTopView(getTopView());
+        recordCoordinatesOfNewTopView(getTopView());
+        requestDetachAnimationToHelper(getTopView(), new DetachState(true, 1, 0));
     }
 
     private View getTopView() {

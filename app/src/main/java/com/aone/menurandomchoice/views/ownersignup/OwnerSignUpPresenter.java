@@ -52,7 +52,7 @@ public class OwnerSignUpPresenter extends BasePresenter<OwnerSignUpContract.View
     private void moveToOwnerDetailActivity(LoginData loginData) {
         if (isAttachView()) {
             getView().hideProgressDialog();
-            getView().moveToOwnerStoreActivity(new UserAccessInfo(loginData.getStoreIdx(), false));
+            getView().moveToOwnerStoreActivity(new UserAccessInfo(loginData.getStoreIdx(), true));
         }
     }
 

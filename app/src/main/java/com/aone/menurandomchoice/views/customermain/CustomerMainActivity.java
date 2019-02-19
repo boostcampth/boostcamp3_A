@@ -49,6 +49,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     private static final String EMPTY_RESULT = "좌표값이 없습니다";
     private static final String DEFAULT_MSG = "JMT";
     private static final int LOCATION_DATA = 3000;
+    public static final String EXTRA_MENU_DATA = "EXTRA_MENU_DATA";
     private LocationManager locationManager;
     private List<View> radiusButton = new ArrayList<>();
     private MenuCategoryAdapterContract.View menuCategoryAdapterView;
@@ -395,11 +396,16 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
                                             , MenuSelectActivity.class);
         int radius = (int)getRadius();
         String category = getPresenter().getSelectedCategory();
+
+        // 이 부분 수정 부탁드립니다
+        if(category.equals("전체")) {
+            category = "";
+        }
         MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
-        menuSelectIntent.putExtra("MenuData",new MenuSearchRequest(mapPointGeo.latitude
-                                                    , mapPointGeo.longitude
-                                                    , radius
-                                                    , category));
+        menuSelectIntent.putExtra(EXTRA_MENU_DATA, new MenuSearchRequest(mapPointGeo.latitude
+                , mapPointGeo.longitude
+                , radius
+                , category));
 
         startActivity(menuSelectIntent);
     }

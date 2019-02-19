@@ -12,7 +12,8 @@ import androidx.databinding.Bindable;
 public class StoreDetail extends BaseObservable implements Parcelable {
 
     private String name;
-    private String time;
+    private String opentime;
+    private String closetime;
     private String address;
     private String description;
     private double latitude;
@@ -25,7 +26,8 @@ public class StoreDetail extends BaseObservable implements Parcelable {
 
     protected StoreDetail(Parcel in) {
         name = in.readString();
-        time = in.readString();
+        opentime = in.readString();
+        closetime = in.readString();
         address = in.readString();
         description = in.readString();
         latitude = in.readDouble();
@@ -37,7 +39,8 @@ public class StoreDetail extends BaseObservable implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeString(time);
+        dest.writeString(opentime);
+        dest.writeString(closetime);
         dest.writeString(address);
         dest.writeString(description);
         dest.writeDouble(latitude);
@@ -74,13 +77,23 @@ public class StoreDetail extends BaseObservable implements Parcelable {
     }
 
     @Bindable
-    public String getTime() {
-        return time;
+    public String getOpentime() {
+        return opentime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-        notifyPropertyChanged(BR.time);
+    public void setOpentime(String opentime) {
+        this.opentime = opentime;
+        notifyPropertyChanged(BR.opentime);
+    }
+
+    @Bindable
+    public String getClosetime() {
+        return closetime;
+    }
+
+    public void setClosetime(String closetime) {
+        this.closetime = closetime;
+        notifyPropertyChanged(BR.closetime);
     }
 
     @Bindable

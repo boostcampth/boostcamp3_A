@@ -36,7 +36,8 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
             StoreTable.TABLE_NAME.getColumnName() + " (" +
             StoreTable.STORES_IDX.getColumnName() + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             StoreTable.STORES_NAME.getColumnName() + " TEXT NULL, " +
-            StoreTable.STORES_TIME.getColumnName() + " TEXT NULL, " +
+            StoreTable.STORES_OPENTIME.getColumnName() + " TEXT NULL, " +
+            StoreTable.STORES_CLOSETIME.getColumnName() + " TEXT NULL, " +
             StoreTable.STORES_ADDRESS.getColumnName() + " TEXT NULL, " +
             StoreTable.STORES_DESCRIPTION.getColumnName() + " TEXT NULL, " +
             StoreTable.STORES_LATITUDE.getColumnName() + " REAL NOT NULL DEFAULT 0, " +
@@ -82,7 +83,8 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
         try {
             ContentValues values = new ContentValues();
             values.putNull(StoreTable.STORES_NAME.getColumnName());
-            values.putNull(StoreTable.STORES_TIME.getColumnName());
+            values.putNull(StoreTable.STORES_OPENTIME.getColumnName());
+            values.putNull(StoreTable.STORES_CLOSETIME.getColumnName());
             values.putNull(StoreTable.STORES_ADDRESS.getColumnName());
             values.putNull(StoreTable.STORES_DESCRIPTION.getColumnName());
 
@@ -127,7 +129,8 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
         try {
             while(cursor.moveToNext()) {
                 storeDetail.setName(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_NAME.getColumnName())));
-                storeDetail.setTime(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_TIME.getColumnName())));
+                storeDetail.setOpentime(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_OPENTIME.getColumnName())));
+                storeDetail.setClosetime(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_CLOSETIME.getColumnName())));
                 storeDetail.setAddress(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_ADDRESS.getColumnName())));
                 storeDetail.setDescription(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_DESCRIPTION.getColumnName())));
                 storeDetail.setLatitude(cursor.getDouble(cursor.getColumnIndex(StoreTable.STORES_LATITUDE.getColumnName())));
@@ -184,7 +187,8 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
         try {
             ContentValues values = new ContentValues();
             values.put(StoreTable.STORES_NAME.getColumnName(), storeDetail.getName());
-            values.put(StoreTable.STORES_TIME.getColumnName(), storeDetail.getTime());
+            values.put(StoreTable.STORES_OPENTIME.getColumnName(), storeDetail.getOpentime());
+            values.put(StoreTable.STORES_CLOSETIME.getColumnName(), storeDetail.getClosetime());
             values.put(StoreTable.STORES_ADDRESS.getColumnName(), storeDetail.getAddress());
             values.put(StoreTable.STORES_DESCRIPTION.getColumnName(), storeDetail.getDescription());
             values.put(StoreTable.STORES_LATITUDE.getColumnName(), storeDetail.getLatitude());

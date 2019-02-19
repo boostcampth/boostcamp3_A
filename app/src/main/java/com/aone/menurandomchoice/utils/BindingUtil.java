@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aone.menurandomchoice.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -19,4 +20,15 @@ public class BindingUtil {
                 .into(imageView);
     }
 
+    @BindingAdapter({"bind:opentime", "bind:closetime"})
+    public static void setStoreTime(TextView textView, String opentime, String closetime) {
+        if(opentime == null) {
+            opentime = " ";
+        }
+        if(closetime == null) {
+            closetime = " ";
+        }
+
+        textView.setText(opentime + "-" + closetime);
+    }
 }

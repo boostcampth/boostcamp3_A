@@ -3,7 +3,7 @@ package com.aone.menurandomchoice.repository.remote;
 import com.aone.menurandomchoice.repository.model.LoginData;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
-import com.aone.menurandomchoice.repository.model.EmptyObject;
+import com.aone.menurandomchoice.repository.model.UpdateTime;
 import com.aone.menurandomchoice.repository.model.OwnerInfo;
 import com.aone.menurandomchoice.repository.model.SignUpData;
 import com.aone.menurandomchoice.repository.remote.response.JMTResponseBody;
@@ -35,8 +35,7 @@ public interface APIInterface {
     Call<JMTResponseBody<StoreDetail>> getStoreDetail(@Path("storeIdx") final int storeIdx);
 
     @GET("stores/{storeIdx}/updates")
-    Call<JMTResponseBody<EmptyObject>> checkStoreUpdated(@Path("storeIdx") final int storeIdx,
-                                                         @Query("updateTime") String updateTime);
+    Call<JMTResponseBody<UpdateTime>> checkStoreUpdated(@Path("storeIdx") final int storeIdx);
 
     @POST("login")
     Call<JMTResponseBody<LoginData>> getSignedUpCheckRequest(@Body OwnerInfo ownerInfo);

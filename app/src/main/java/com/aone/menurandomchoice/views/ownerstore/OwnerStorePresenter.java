@@ -1,8 +1,10 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
 import com.aone.menurandomchoice.GlobalApplication;
+import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
+import com.aone.menurandomchoice.repository.oauth.OnKakaoLogoutListener;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
@@ -13,7 +15,7 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
     @Override
     public void loadStoreDetail(int storeIdx) {
-        getRepository().loadStoreDetail(50, new NetworkResponseListener<StoreDetail>() {
+        getRepository().loadStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
             @Override
             public void onReceived(@NonNull StoreDetail storeDetail) {
                 if (isAttachView()) {
@@ -30,17 +32,25 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
     @Override
     public void onMenuDetailClick(MenuDetail menuDetail) {
+        if(menuDetail.getPhotoUrl() == null)
+            return;
         getView().moveToMenuPreviewPage(menuDetail);
     }
 
     @Override
-    public void onMapClick() {
-        //Todo. map 페이지로 이동
+    public void onMapClick(double latitude, double longitude) {
+        getView().moveToMapDetailPage(latitude, longitude);
     }
 
     @Override
     public void stopNetwork() {
         getRepository().cancelAll();
+    }
+
+
+    @Override
+    public void onLogoutClick() {
+        getRepository().executeKakaoAccountLogout(onKakaoLogoutListener);
     }
 
     private void handlingJMTError(JMTErrorCode errorCode) {
@@ -52,5 +62,18 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
             getView().showToastMessage(errorMessage);
         }
     }
+
+    private OnKakaoLogoutListener onKakaoLogoutListener = new OnKakaoLogoutListener() {
+        @Override
+        public void onKakaoLogoutSuccess() {
+            if(isAttachView()) {
+                String logoutMessage = GlobalApplication
+                        .getGlobalApplicationContext()
+                        .getString(R.string.activity_owner_store_logout);
+                getView().showToastMessage(logoutMessage);
+                getView().finishOwnerStorePage();
+            }
+        }
+    };
 
 }
