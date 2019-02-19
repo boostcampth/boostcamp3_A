@@ -19,4 +19,5 @@
         android:color="#eaeaea"/>
 
     <corners android:radius="10dp"/>
+
 </shape>

@@ -49,13 +49,14 @@
                     android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/activity_store_edit_name_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/x_large_margin"
                     android:layout_marginRight="@dimen/x_large_margin"
                     android:layout_marginTop="@dimen/small_margin"
                     android:lineSpacingExtra="5dp"
-                    android:text="@{storeDetail.name}"
+                    android:text="@{storeDetail.getName()}"
                     android:paddingLeft="@dimen/x_large_margin"
                     android:paddingRight="@dimen/x_large_margin"
                     android:hint="가게이름을 적어주세요."
@@ -71,7 +72,7 @@
                     android:layout_marginStart="@dimen/x_large_margin"
                     android:orientation="horizontal"
                     android:gravity="start"
-                    android:onClick="@{() -> presenter.onStartTimeSetClick(storeDetail.opentime)}">
+                    android:onClick="@{() -> presenter.onStartTimeSetClick(storeDetail.getOpentime())}">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -83,14 +84,14 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/activity_store_edit_open_time_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/two_x_large_margin"
                         android:textSize="@dimen/x_large_text"
-                        android:text="@{storeDetail.opentime ?? @string/activity_store_edit_default_starttime}"/>
+                        android:text="@{storeDetail.getOpentime()}"/>
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -100,7 +101,7 @@
                     android:layout_marginLeft="@dimen/x_large_margin"
                     android:orientation="horizontal"
                     android:gravity="left"
-                    android:onClick="@{() -> presenter.onEndTimeSetClick(storeDetail.closetime)}">
+                    android:onClick="@{() -> presenter.onEndTimeSetClick(storeDetail.getClosetime())}">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -112,11 +113,12 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/activity_store_edit_close_time_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/two_x_large_margin"
                         android:textSize="@dimen/x_large_text"
-                        android:text="@{storeDetail.closetime ?? @string/activity_store_edit_default_endtime}"/>
+                        android:text="@{storeDetail.getClosetime()}"/>
 
                 </LinearLayout>
 
@@ -244,7 +246,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    android:text="@{storeDetail.address}" />
+                    android:text="@{storeDetail.getAddress()}" />
 
                 <RelativeLayout
                     android:id="@+id/map_view"
@@ -281,6 +283,7 @@
                     android:textSize="@dimen/large_text"/>
 
                 <EditText
+                    android:id="@+id/activityStoreEditDescriptionEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/middle_text"
@@ -290,13 +293,12 @@
                     android:background="@drawable/edit_text_round"
                     android:minLines="5"
                     android:maxLines="10"
-                    android:text="@{storeDetail.description}"
+                    android:text="@{storeDetail.getDescription()}"
                     android:gravity="start" />
 
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </ScrollView>
 </layout>

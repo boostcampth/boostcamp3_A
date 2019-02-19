@@ -4,8 +4,7 @@ import android.content.Intent;
 
 import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseHelper;
 import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseRepository;
-import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
-import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
+import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.UpdateTime;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.LoginData;
@@ -34,7 +33,6 @@ public class DataRepository implements Repository {
     private KakaoLoginHelper kakaoLoginHelper;
     private APIHelper apiHelper;
     private SQLiteDatabaseHelper SQLiteDatabaseHelper;
-    private PreferencesHelper preferencesHelper;
 
     @NonNull
     public static Repository getInstance() {
@@ -48,7 +46,6 @@ public class DataRepository implements Repository {
         kakaoLoginHelper = KakaoLoginRepository.getInstance();
         apiHelper = APIRepository.getInstance();
         SQLiteDatabaseHelper = SQLiteDatabaseRepository.getInstance();
-        preferencesHelper = new PreferencesRepository();
     }
 
     @Override
@@ -119,22 +116,6 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void saveRegisteredImageLocalPath(@NonNull String path) {
-        preferencesHelper.saveRegisteredImageLocalPath(path);
-    }
-
-    @NonNull
-    @Override
-    public String getSavedRegisterImageLoadPath() {
-        return preferencesHelper.getSavedRegisterImageLoadPath();
-    }
-
-    @Override
-    public void clearRegisteredImageLocalPath() {
-        preferencesHelper.clearRegisteredImageLocalPath();
-    }
-
-    @Override
     public void loadStoreDetail(final int storeIdx,
                                 final @NonNull NetworkResponseListener<StoreDetail> networkResponseListener) {
 
@@ -172,6 +153,11 @@ public class DataRepository implements Repository {
     @Override
     public void updateStoreDetail(@NonNull final StoreDetail storeDetail) {
         SQLiteDatabaseHelper.updateStoreDetail(storeDetail);
+    }
+
+    @Override
+    public void requestSaveStoreDetail(@NonNull StoreDetail storeDetail, @NonNull NetworkResponseListener<EmptyObject> networkResponseListener) {
+        apiHelper.requestSaveStoreDetail(storeDetail, networkResponseListener);
     }
 
     @Override

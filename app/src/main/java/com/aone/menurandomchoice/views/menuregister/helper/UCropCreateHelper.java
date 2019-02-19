@@ -5,28 +5,26 @@ import android.net.Uri;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.utils.DateUtil;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.util.Date;
 
 import androidx.annotation.NonNull;
 
 public class UCropCreateHelper {
 
-    public UCrop createUCop(@NonNull Uri uri, float xRatio, float yRatio, int resizeWidth, int resizeHeight) {
-        String fileName = createFileName();
-
+    public UCrop createUCop(@NonNull String fileName,
+                            @NonNull Uri uri,
+                            float xRatio,
+                            float yRatio,
+                            int resizeWidth,
+                            int resizeHeight) {
         UCrop uCrop = createBasicUCrop(uri, fileName, xRatio, yRatio, resizeWidth, resizeHeight);
         UCrop.Options options = createUCropOptions();
         uCrop.withOptions(options);
 
         return uCrop;
-    }
-
-    private String createFileName() {
-        return DateFormat.getDateInstance().format(new Date()) + ".jpg";
     }
 
     private UCrop createBasicUCrop(Uri uri,
