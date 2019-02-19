@@ -19,7 +19,7 @@ import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 public class MenuSelectActivity
         extends BaseActivity<ActivityMenuSelectBinding, MenuSelectContract.View, MenuSelectContract.Presenter>
         implements MenuSelectContract.View {
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
