@@ -61,6 +61,10 @@
     <string name="activity_store_edit_default_endtime">00:00</string>
     <string name="activity_store_edit_store_info_received_fail">앱에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
     <string name="activity_store_edit_save_success">저장에 성공했습니다</string>
+    <string name="activity_store_edit_extra_menu_detail_info">EXTRA_MENU_DETAIL_INFO</string>
+    <string name="activity_store_edit_request_location_search">REQUEST_LOCATION_SEARCH</string>
+    <string name="activity_store_edit_descriptor">STORE_EDIT</string>
+    <string name="activity_store_edit_timepicker">timepicker</string>
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>
@@ -118,9 +122,22 @@
     <string name="activity_customer_main_category_label">카테고리 선택</string>
     <string name="activity_customer_main_swipe_start">메뉴 랜덤 스와이프 시작!</string>
     <string name="activity_customer_main_map_gps">gps</string>
+    <string name="activity_customer_main_empty_result">결과값이 없습니다</string>
+    <string name="activity_customer_main_response_error">주변에 등록된 메뉴가 없습니다</string>
+    <string name="activity_customer_main_request_error">스와이프 가능한 메뉴가 없습니다</string>
+    <string name="activity_customer_main_all_category">전체</string>
+    <string name="activity_customer_main_xy">posXY</string>
+    <string name="activity_customer_main_latitude">latitude</string>
+    <string name="activity_customer_main_longitude">longitude</string>
+    <string name="activity_customer_main_address">address</string>
+    <string name="activity_customer_main_descriptor">CUSTOMER_MAIN</string>
+    <string name="activity_customer_main_extra_menu_data">EXTRA_MENU_DATA</string>
+    <string name="presenter_customer_main_fail_geo">주소를 찾을 수 없는 지역입니다</string>
     <!-- permission -->
     <string name="permission_request_guide">사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.</string>
     <string name="permission_denied_guide">[설정] > [권한] 에서 권한을 허용할 수 있습니다.</string>
+    <string name="permission_GPS_request_guide">위치 정보 접근 권한이 필요합니다.</string>
+    <string name="permission_GPS_denied_guide">[설정] > [권한] 에서 권한을 허용할 수 있습니다.</string>
 
     <!-- UCop -->
     <string name="uCrop_toolbar_title">사진 편집</string>
@@ -149,11 +166,18 @@
     <string name="JMT_response_network_not_connect_error">인터넷 연결을 확인해주세요</string>
 
     <!-- custom dialog progress -->
+    <string name="custom_progress_dialog_message">로딩 중</string>
+
+    <!-- store location -->
+    <string name="confirm_btn_hint">이 위치로 확정하기</string>
     <string name="activity_logout_guide">정말 로그아웃 하시겠습니까?</string>
     <string name="activity_logout_yes">예</string>
     <string name="activity_logout_no">아니오</string>
     <string name="activity_logout_no_guide">로그아웃을 취소했습니다</string>
     <string name="activity_owner_store_logout">로그아웃 되었습니다.</string>
     <string name="activity_store_edit_location_search">위치검색</string>
+
+    <!-- location search -->
+    <string name="activity_location_search_need_input">값을 입력해주세요</string>
 
 </resources>

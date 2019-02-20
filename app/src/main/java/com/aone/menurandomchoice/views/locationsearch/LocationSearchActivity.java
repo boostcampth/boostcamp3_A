@@ -12,12 +12,10 @@ import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityLocationSearchBinding;
 import com.aone.menurandomchoice.utils.KeyboardUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
+import com.aone.menurandomchoice.views.locationsearch.adapter.LocationSearchAdapter;
 import com.aone.menurandomchoice.views.locationsearch.adapter.LocationSearchAdapterView;
 import com.aone.menurandomchoice.views.locationsearch.adapter.OnViewHolderClickListener;
-import com.aone.menurandomchoice.views.locationsearch.adapter.LocationSearchAdapter;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.aone.menurandomchoice.views.storelocation.StoreLocationActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,19 +60,41 @@ public class LocationSearchActivity
         recyclerView.setAdapter(adapter);
         getPresenter().setAdapter(adapter);
         adapterView = adapter;
-        adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                viewHolderClicked(position);
+
+        Intent intent = this.getIntent();
+
+
+        String callerActivity = intent.getStringExtra(getView().getActivityContext().getString(R.string.activity_store_edit_request_location_search));
+            if(("STORE_EDIT").equals(callerActivity)) {
+                adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        viewHolderClickedforOwneStoreEdit(position);
+                    }
+                });
+            } else if(("CUSTOMER_MAIN").equals(callerActivity)) {
+                adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        viewHolderClickedForCustomerMain(position);
+                    }
+                });
             }
-        });
+
    }
 
-    private void viewHolderClicked(int position) {
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("posXY", getPresenter().getMenuData(position));
-        setResult(RESULT_OK,resultIntent);
+   private void viewHolderClickedforOwneStoreEdit(int position) {
+       Intent resultIntent = new Intent(LocationSearchActivity.this, StoreLocationActivity.class);
+       resultIntent.putExtra(getView().getActivityContext().getString(R.string.activity_customer_main_xy)
+                            , getPresenter().getMenuData(position));
+       startActivity(resultIntent);
+   }
 
+    private void viewHolderClickedForCustomerMain(int position) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(getView().getActivityContext().getString(R.string.activity_customer_main_xy)
+                            , getPresenter().getMenuData(position));
+        setResult(RESULT_OK,resultIntent);
         finish();
     }
 
@@ -84,7 +104,6 @@ public class LocationSearchActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setTitle("");
-
         getDataBinding().searchBox.etSearch.setOnEditorActionListener(
                 new TextView.OnEditorActionListener() {
                     @Override
@@ -135,8 +154,9 @@ public class LocationSearchActivity
         String inputAddress = getDataBinding().searchBox.etSearch.getText().toString();
 
         if(inputAddress.trim().length() == 0) {
-            showToastMessage("값을 입력해주세요");
+            showToastMessage(getView().getActivityContext().getString(R.string.activity_location_search_need_input));
         } else {
+            showProgressDialog();
             getPresenter().requestLocationSearch(inputAddress);
         }
     }

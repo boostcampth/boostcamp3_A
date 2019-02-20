@@ -24,6 +24,7 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
     public void requestMenuList(@Nullable MenuSearchRequest menuSearchRequest) {
         if(menuSearchRequest != null) {
             showProgressBarOfView();
+            filteringCategoryOfRequest(menuSearchRequest);
             requestMenuDetailListToRepository(menuSearchRequest);
         } else {
             hideProgressBarOfView();
@@ -98,4 +99,13 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
         }
     }
 
+    private void filteringCategoryOfRequest(MenuSearchRequest menuSearchRequest) {
+        String removeWord = GlobalApplication
+                .getGlobalApplicationContext()
+                .getString(R.string.arrays_category_all_food);
+
+        if(removeWord.equals(menuSearchRequest.getCategory())) {
+            menuSearchRequest.removeCategory();
+        }
+    }
 }

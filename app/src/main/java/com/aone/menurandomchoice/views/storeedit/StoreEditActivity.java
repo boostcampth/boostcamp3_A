@@ -26,13 +26,9 @@ import net.daum.mf.map.api.MapView;
 
 import androidx.annotation.NonNull;
 
-public class StoreEditActivity
-        extends BaseActivity<ActivityStoreEditBinding, StoreEditContract.View, StoreEditContract.Presenter>
-        implements StoreEditContract.View {
+public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, StoreEditContract.View, StoreEditContract.Presenter>
+        implements  StoreEditContract.View, MapView.MapViewEventListener {
 
-    public static final String EXTRA_MENU_DETAIL_INFO = "EXTRA_MENU_DETAIL_INFO";
-
-    public static final int REQUEST_CODE_LOCATION_SEARCH = 10;
     private static final int REQUEST_CODE_MENU_REGISTER = 1;
 
     private MapView mapView;
@@ -53,6 +49,29 @@ public class StoreEditActivity
         super.onStart();
 
         setUpMapView();
+
+        Bundle locationData = getIntent().getBundleExtra(getView().getActivityContext().getString(R.string.activity_customer_main_xy));
+        if(locationData != null) {
+            getPresenter().handlingReceivedMapInfo(locationData.getString(getView().getActivityContext().getString(R.string.activity_customer_main_address))
+                                                    , locationData.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_latitude))
+                                                    , locationData.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_longitude)));
+            getDataBinding()
+                    .activityStoreEditTvAddress
+                    .setText(locationData.getString("address"));
+        } else {
+            getPresenter().handlingReceivedMapInfo(getDataBinding().getStoreDetail().getAddress()
+                                                    , getDataBinding().getStoreDetail().getLatitude()
+                                                    , getDataBinding().getStoreDetail().getLongitude());
+            getDataBinding()
+                    .activityStoreEditTvAddress
+                    .setText(getDataBinding().getStoreDetail().getAddress());
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
     @Override
@@ -62,11 +81,10 @@ public class StoreEditActivity
         detachMapView();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    
+    protected void onStop() {
+        super.onStop();
 
-        finish();
     }
 
     @Override
@@ -87,6 +105,32 @@ public class StoreEditActivity
     }
 
     @Override
+    public void onMapViewInitialized(MapView mapView) { }
+
+    @Override
+    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewZoomLevelChanged(MapView mapView, int i) { }
+
+    @Override
+    public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) { }
+
+    @Override
+    public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) { }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.item_menu_store_edit_save, menu);
         return true;
@@ -114,15 +158,6 @@ public class StoreEditActivity
                     attachViewToPresenter();
                     MenuDetail menuDetail = data.getParcelableExtra(MenuRegisterActivity.EXTRA_MENU_DETAIL_ITEM);
                     getPresenter().handlingReceivedMenuDetailData(menuDetail);
-                    break;
-                case REQUEST_CODE_LOCATION_SEARCH:
-                    attachViewToPresenter();
-
-                     //Todo  위치 검색 기능 후 하드로 박혀있는 문자열 들 상수 처리 해야함
-                    String address = data.getStringExtra("address");
-                    Double longitude = data.getDoubleExtra("longitude", 0);
-                    Double latitude = data.getDoubleExtra("latitude", 0);
-                    getPresenter().handlingReceivedMapInfo(address, longitude, latitude);
                     break;
                 default:
                     super.onActivityResult(requestCode, resultCode, data);
@@ -180,14 +215,16 @@ public class StoreEditActivity
     @Override
     public void moveToMenuEditPage(MenuDetail menuDetail) {
         Intent menuRegisterIntent = new Intent(StoreEditActivity.this, MenuRegisterActivity.class);
-        menuRegisterIntent.putExtra(EXTRA_MENU_DETAIL_INFO, menuDetail);
+        menuRegisterIntent.putExtra(getView().getActivityContext().getString(R.string.activity_store_edit_extra_menu_detail_info), menuDetail);
         startActivityForResult(menuRegisterIntent, REQUEST_CODE_MENU_REGISTER);
     }
 
     @Override
     public void moveToLocationSearchPage() {
         Intent locationSearchIntent = new Intent(StoreEditActivity.this, LocationSearchActivity.class);
-        startActivityForResult(locationSearchIntent, REQUEST_CODE_LOCATION_SEARCH);
+        locationSearchIntent.putExtra(getView().getActivityContext().getString(R.string.activity_store_edit_request_location_search)
+                                    , getView().getActivityContext().getString(R.string.activity_store_edit_descriptor));
+        startActivity(locationSearchIntent);
     }
 
     @Override
@@ -224,9 +261,9 @@ public class StoreEditActivity
         return getDataBinding().getStoreDetail();
     }
 
-    @Override
+
     public void moveCenterToMap(@NonNull MapPoint centerPoint) {
-        mapView.setMapCenterPoint(centerPoint, false);
+        mapView.setMapCenterPointAndZoomLevel(centerPoint, 1, false);
     }
 
     @Override
@@ -237,6 +274,12 @@ public class StoreEditActivity
     @Override
     public void setMapAddress(@NonNull String address) {
         getDataBinding().getStoreDetail().setAddress(address);
+    }
+
+    @Override
+    public void setMapLatLon(@NonNull double latitude, double longitude) {
+        getDataBinding().getStoreDetail().setLatitude(latitude);
+        getDataBinding().getStoreDetail().setLongitude(longitude);
     }
 
     @Override
@@ -262,7 +305,7 @@ public class StoreEditActivity
         TimePickerFragment timePickerFragment = new TimePickerFragment();
         timePickerFragment.setArguments(bundle);
         timePickerFragment.setPresenter(getPresenter());
-        timePickerFragment.show(getSupportFragmentManager(), "timepicker");
+        timePickerFragment.show(getSupportFragmentManager(), getView().getAppContext().getString(R.string.activity_store_edit_timepicker));
     }
 
 }

@@ -68,6 +68,9 @@
         <activity
             android:name=".views.menupreview.MenuPreviewActivity"
             android:label="@string/menu_preview_label"/>
+        <activity
+            android:name=".views.storelocation.StoreLocationActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

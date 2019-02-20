@@ -25,6 +25,8 @@ public class MenuMapper {
     private static final String QUERY_RADIUS = "radius";
     private static final String QUERY_CATEGORY = "category";
 
+    private static final String TAG_IMAGE_REGISTER_REQUEST = "photo";
+
     public static Map<String, String> createRequestLocationQueryMap(double latitude, double longitude){
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(QUERY_STRING_LATITUDE, latitude+"");
@@ -38,12 +40,14 @@ public class MenuMapper {
         queryMap.put(QUERY_STRING_LATITUDE, menuSearchRequest.getLatitude() + "");
         queryMap.put(QUERY_STRING_LONGITUDE, menuSearchRequest.getLongitude() + "");
 
-        if(menuSearchRequest.getRadius() != 0) {
-            queryMap.put(QUERY_RADIUS, menuSearchRequest.getRadius() + "");
+        int radius = menuSearchRequest.getRadius();
+        if(radius != 0) {
+            queryMap.put(QUERY_RADIUS, radius + "");
         }
 
-        if(menuSearchRequest.getCategory() != null && menuSearchRequest.getCategory().length() != 0) {
-            queryMap.put(QUERY_CATEGORY, menuSearchRequest.getCategory());
+        String category = menuSearchRequest.getCategory();
+        if(!TextUtils.isEmpty(category)) {
+            queryMap.put(QUERY_CATEGORY, category);
         }
 
         return queryMap;
@@ -58,7 +62,7 @@ public class MenuMapper {
                 if (!photoUrl.contains("http")) {
                     File file = new File(photoUrl);
                     RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                    images.add(MultipartBody.Part.createFormData("photo", file.getName(), requestFile));
+                    images.add(MultipartBody.Part.createFormData(TAG_IMAGE_REGISTER_REQUEST, file.getName(), requestFile));
                 }
             }
         }
