@@ -180,7 +180,6 @@ public class OwnerStoreActivity
     }
 
 
-
     @SuppressLint("ClickableViewAccessibility")
     public void initMapView() {
         mapViewContainer = getDataBinding().mapView;
