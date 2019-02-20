@@ -151,6 +151,32 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         viewFinish();
     }
 
+    @Override
+    public void handlingInputtedMenuName(@NonNull String menuName) {
+        if(isAttachView()) {
+            getView().showChangedMenuName(menuName);
+        }
+    }
+
+    @Override
+    public void handlingInputtedDescription(@NonNull String description) {
+        if(isAttachView()) {
+            getView().showChangedDescription(description);
+        }
+    }
+
+    @Override
+    public void handlingInputtedPrice(@NonNull String priceStr) {
+        if(isAttachView()) {
+            if(priceStr.length() < 1) {
+                getView().showChangedPrice(0);
+            } else {
+                getView().showChangedPrice(Integer.parseInt(priceStr));
+            }
+
+        }
+    }
+
     private void checkPermissionWithTedPermission() {
         if(isAttachView()) {
             TedPermission.with(getView().getAppContext())
