@@ -20,6 +20,7 @@ public class StoreLocationActivity
         extends BaseActivity<ActivityStoreLocationBinding, StoreLocationContract.View, StoreLocationContract.Presenter>
         implements StoreLocationContract.View , MapView.MapViewEventListener, MapReverseGeoCoder.ReverseGeoCodingResultListener{
 
+    static final private String FAIL_GEO = "주소를 찾을 수 없는 지역입니다";
     private MapPOIItem mDefaultMarker;
     private MapPoint DEFAULT_MARKER_POINT;
     private MapView mMapView;
@@ -32,7 +33,7 @@ public class StoreLocationActivity
 
     @Override
     public void onReverseGeoCoderFailedToFindAddress(MapReverseGeoCoder mapReverseGeoCoder) {
-        onFinishReverseGeoCoding("Fail");
+        onFinishReverseGeoCoding(FAIL_GEO);
     }
 
     private void onFinishReverseGeoCoding(String result) {
@@ -52,7 +53,6 @@ public class StoreLocationActivity
     }
 
     public void onConfirmButtonClicked() {
-        Log.v("confirm","clicked");
         Intent resultIntent = new Intent(this, StoreEditActivity.class);
         Bundle posXY = new Bundle();
         posXY.putDouble("longitude", mMapView.getMapCenterPoint().getMapPointGeoCoord().longitude);

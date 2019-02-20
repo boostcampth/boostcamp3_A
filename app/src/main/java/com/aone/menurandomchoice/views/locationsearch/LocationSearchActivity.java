@@ -73,14 +73,14 @@ public class LocationSearchActivity
 
 
         String callerActivity = intent.getStringExtra(REQUEST_LOCATION_SEARCH);
-            if(callerActivity.equals("STORE_EDIT")) {
+            if(("STORE_EDIT").equals(callerActivity)) {
                 adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         viewHolderClickedforOwneStoreEdit(position);
                     }
                 });
-            } else if(callerActivity.equals("CustomerMain")) {
+            } else if(("CUSTOMER_MAIN").equals(callerActivity)) {
                 adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {

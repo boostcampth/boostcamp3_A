@@ -52,11 +52,21 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
 
         setUpMapView();
 
-        Bundle locationData = getIntent().getBundleExtra("poxXY");
+        Bundle locationData = getIntent().getBundleExtra("posXY");
         if(locationData != null) {
             getPresenter().handlingReceivedMapInfo(locationData.getString("address")
                                                     , locationData.getDouble("latitude")
                                                     , locationData.getDouble("longitude"));
+            getDataBinding()
+                    .activityStoreEditTvAddress
+                    .setText(locationData.getString("address"));
+        } else {
+            getPresenter().handlingReceivedMapInfo(getDataBinding().getStoreDetail().getAddress()
+                                                    , getDataBinding().getStoreDetail().getLatitude()
+                                                    , getDataBinding().getStoreDetail().getLongitude());
+            getDataBinding()
+                    .activityStoreEditTvAddress
+                    .setText(getDataBinding().getStoreDetail().getAddress());
         }
     }
 
@@ -253,7 +263,7 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
 
 
     public void moveCenterToMap(@NonNull MapPoint centerPoint) {
-        mapView.setMapCenterPoint(centerPoint, false);
+        mapView.setMapCenterPointAndZoomLevel(centerPoint, 1, false);
     }
 
     @Override

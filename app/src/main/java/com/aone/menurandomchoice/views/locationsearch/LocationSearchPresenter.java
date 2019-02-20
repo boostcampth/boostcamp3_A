@@ -41,12 +41,13 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
                     } else {
                         getView().showToastMessage(EMPTY_RESULT);
                     }
+                    hideProgressBarOfView();
                 }
             }
 
             @Override
             public void onError(JMTErrorCode errorCode) {
-
+                hideProgressBarOfView();
             }
         });
     }
@@ -54,8 +55,8 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
     @Override
     public Parcelable getMenuData(int position) {
         Bundle posXY = new Bundle();
-        posXY.putDouble(LAT, adapterModel.getItem(position).getX());
-        posXY.putDouble(LON, adapterModel.getItem(position).getY());
+        posXY.putDouble(LAT, adapterModel.getItem(position).getY());
+        posXY.putDouble(LON, adapterModel.getItem(position).getX());
         return posXY;
     }
 

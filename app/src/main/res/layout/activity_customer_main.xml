@@ -9,6 +9,9 @@
         <variable
             name="presenter"
             type="com.aone.menurandomchoice.views.customermain.CustomerMainContract.Presenter"/>
+        <variable
+            name="menuLocationCamera"
+            type="com.aone.menurandomchoice.repository.model.MenuLocationCamera"/>
     </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
