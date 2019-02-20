@@ -175,7 +175,7 @@ public class MenuRegisterActivity
 
     private void passedIntentToPresenter() {
         Intent passedIntent = getIntent();
-        MenuDetail menuDetail = passedIntent.getParcelableExtra(StoreEditActivity.EXTRA_MENU_DETAIL_INFO);
+        MenuDetail menuDetail = passedIntent.getParcelableExtra(getView().getAppContext().getString(R.string.activity_store_edit_extra_menu_detail_info));
         getPresenter().handlingPassedMenuDetailInfo(menuDetail);
     }
 

@@ -20,7 +20,6 @@ public class StoreLocationActivity
         extends BaseActivity<ActivityStoreLocationBinding, StoreLocationContract.View, StoreLocationContract.Presenter>
         implements StoreLocationContract.View , MapView.MapViewEventListener, MapReverseGeoCoder.ReverseGeoCodingResultListener{
 
-    static final private String FAIL_GEO = "주소를 찾을 수 없는 지역입니다";
     private MapPOIItem mDefaultMarker;
     private MapPoint DEFAULT_MARKER_POINT;
     private MapView mMapView;
@@ -33,7 +32,7 @@ public class StoreLocationActivity
 
     @Override
     public void onReverseGeoCoderFailedToFindAddress(MapReverseGeoCoder mapReverseGeoCoder) {
-        onFinishReverseGeoCoding(FAIL_GEO);
+        onFinishReverseGeoCoding(getView().getAppContext().getString(R.string.presenter_customer_main_fail_geo));
     }
 
     private void onFinishReverseGeoCoding(String result) {
@@ -55,10 +54,14 @@ public class StoreLocationActivity
     public void onConfirmButtonClicked() {
         Intent resultIntent = new Intent(this, StoreEditActivity.class);
         Bundle posXY = new Bundle();
-        posXY.putDouble("longitude", mMapView.getMapCenterPoint().getMapPointGeoCoord().longitude);
-        posXY.putDouble("latitude", mMapView.getMapCenterPoint().getMapPointGeoCoord().latitude);
-        posXY.putString("address", address);
-        resultIntent.putExtra("posXY", posXY);
+        posXY.putDouble(getView().getAppContext().getString(R.string.activity_customer_main_longitude)
+                                                            , mMapView.getMapCenterPoint().getMapPointGeoCoord().longitude);
+        posXY.putDouble(getView().getAppContext().getString(R.string.activity_customer_main_latitude)
+                                                            , mMapView.getMapCenterPoint().getMapPointGeoCoord().latitude);
+        posXY.putString(getView().getAppContext().getString(R.string.activity_customer_main_address)
+                                                            , address);
+        resultIntent.putExtra(getView().getAppContext().getString(R.string.activity_customer_main_xy)
+                                                                , posXY);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         startActivity(resultIntent);
@@ -84,11 +87,11 @@ public class StoreLocationActivity
         getDataBinding().mapView.addView(mMapView);
 
         Intent intent = getIntent();
-        Bundle posXY = intent.getBundleExtra("posXY");
+        Bundle posXY = intent.getBundleExtra(getView().getAppContext().getString(R.string.activity_customer_main_xy));
 
         if(posXY != null) {
-            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(posXY.getDouble("latitude")
-                    , posXY.getDouble("longitude"));
+            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(posXY.getDouble(getView().getAppContext().getString(R.string.activity_customer_main_latitude))
+                    , posXY.getDouble(getView().getAppContext().getString(R.string.activity_customer_main_longitude)));
         } else {
             DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.4980854357918, 127.028000275071);
         }

@@ -40,21 +40,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import static com.aone.menurandomchoice.views.storeedit.StoreEditActivity.REQUEST_LOCATION_SEARCH;
-
 public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBinding, CustomerMainContract.View, CustomerMainContract.Presenter>
         implements CustomerMainContract.View, MapView.MapViewEventListener {
 
     private static final String LOG_TAG ="CustomerMainActivity";
-    private static final String XY_TAG = "posXY";
-    private static final String LAT = "latitude";
-    private static final String LON = "longitude";
-    private static final String EMPTY_RESULT = "좌표값이 없습니다";
-    private static final String REQUEST_ERROR = "스와이프 가능한 메뉴가 없습니다";
-    private static final String DEFAULT_MSG = "JMT";
-    private static final int LOCATION_DATA = 3000;
-    public static final String ACTIVITY_DESCRIPTOR = "CUSTOMER_MAIN";
-    public static final String EXTRA_MENU_DATA = "EXTRA_MENU_DATA";
+    private final int LOCATION_DATA = 3000;
+
     private LocationManager locationManager;
     private List<View> radiusButton = new ArrayList<>();
     private MenuCategoryAdapterContract.View menuCategoryAdapterView;
@@ -88,18 +79,19 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         super.onResume();
 
         mMapView = new MapView(this);
-
         mMapView.setMapViewEventListener(this);
         mMapView.setMapType(MapView.MapType.Standard);
 
         getDataBinding().activityCustomerMainMvDaum.addView(mMapView);
 
         Intent intent = getIntent();
-        Bundle posXY = intent.getBundleExtra(XY_TAG);
+        Bundle posXY = intent.getBundleExtra(getView().getActivityContext().getString(R.string.activity_customer_main_xy));
 
         MapPoint mapPoint;
         if( posXY != null ) {
-            mapPoint = MapPoint.mapPointWithGeoCoord(posXY.getDouble(LAT), posXY.getDouble(LON));
+            mapPoint = MapPoint.mapPointWithGeoCoord(
+                    posXY.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_latitude))
+                    , posXY.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_longitude)));
         } else {
             MenuLocationCamera menuLocationCamera = getDataBinding().getMenuLocationCamera();
             mapPoint = MapPoint.mapPointWithGeoCoord(menuLocationCamera.getLatitude()
@@ -124,7 +116,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     private void createCustomMarker(MapPoint mapPoint) {
         mCustomMarker = new MapPOIItem();
-        mCustomMarker.setItemName(DEFAULT_MSG);
+        mCustomMarker.setItemName(getView().getActivityContext().getString(R.string.app_name));
         mCustomMarker.setMapPoint(mapPoint);
 
         mCustomMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
@@ -272,9 +264,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     }
 
     @Override
-    public void onMapViewInitialized(MapView mapView) {
-       // mapView.setMapCenterPointAndZoomLevel(CUSTOM_MARKER_POINT, 2, true);
-    }
+    public void onMapViewInitialized(MapView mapView) { }
 
     @Override
     public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapCenterPoint) {
@@ -400,12 +390,13 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
         Intent locationSearchIntent = new Intent(CustomerMainActivity.this
                                                 , LocationSearchActivity.class);
-        locationSearchIntent.putExtra(REQUEST_LOCATION_SEARCH, ACTIVITY_DESCRIPTOR);
-        startActivityForResult(locationSearchIntent,3000);
+        locationSearchIntent.putExtra(getView().getActivityContext().getString(R.string.activity_store_edit_request_location_search)
+                , getView().getActivityContext().getString(R.string.activity_customer_main_descriptor));
+        startActivityForResult(locationSearchIntent,LOCATION_DATA);
     }
 
     public void moveToMenuSelectPage() {
-        if(mMapView.getPOIItems().length > 2) {
+        if(mMapView.getPOIItems().length > 1) {
             mMapView.removeAllCircles();
             Intent menuSelectIntent = new Intent(CustomerMainActivity.this
                     , MenuSelectActivity.class);
@@ -413,14 +404,15 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
             String category = getPresenter().getSelectedCategory();
 
             MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
-            menuSelectIntent.putExtra(EXTRA_MENU_DATA, new MenuSearchRequest(mapPointGeo.latitude
-                    , mapPointGeo.longitude
-                    , radius
-                    , category));
+            menuSelectIntent.putExtra(getView().getActivityContext().getString(R.string.activity_customer_main_extra_menu_data)
+                                    , new MenuSearchRequest(mapPointGeo.latitude
+                                    , mapPointGeo.longitude
+                                    , radius
+                                    , category));
 
             startActivity(menuSelectIntent);
         } else {
-            showToastMessage(REQUEST_ERROR);
+            showToastMessage(getView().getActivityContext().getString(R.string.activity_customer_main_request_error));
         }
     }
 
@@ -429,14 +421,14 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
             switch (requestCode){
                 case LOCATION_DATA:
                     setIntent(data);
-                    Bundle posXY = data.getBundleExtra(XY_TAG);
+                    Bundle posXY = data.getBundleExtra(getView().getActivityContext().getString(R.string.activity_customer_main_xy));
                     if( posXY == null ) {
-                        showToastMessage(EMPTY_RESULT);
+                        showToastMessage(getView().getActivityContext().getString(R.string.activity_customer_main_empty_result));
                         return;
                     }
                     mMapView.setMapCenterPointAndZoomLevel(
-                            MapPoint.mapPointWithGeoCoord(posXY.getDouble(LAT)
-                                                        , posXY.getDouble(LON))
+                            MapPoint.mapPointWithGeoCoord(posXY.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_latitude))
+                                                        , posXY.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_longitude)))
                                                         ,1
                                                         ,true);
             }

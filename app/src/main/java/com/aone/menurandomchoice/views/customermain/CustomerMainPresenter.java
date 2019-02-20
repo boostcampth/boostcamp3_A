@@ -23,10 +23,6 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
     implements CustomerMainContract.Presenter {
 
     private static final String LOG_TAG = "CustomerMainPresenter";
-    private static final String EMPTY_RESULT = "결과값이 없습니다";
-    private static final String RESPONSE_ERROR = "주변에 등록된 메뉴가 없습니다";
-    private static final String DISTANCE_UNIT = "meter";
-    private static final String ALL_CATEGORY = "전체";
 
     private MenuCategoryAdapterContract.Model<MenuCategoryItem> menuCategoryAdapterModel;
     private List<MenuLocation> menuList;
@@ -43,7 +39,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
                                 getMenuCountFiltered(latitude, longitude, radius);
                             } else {
                                 getView().setMarkerAtNewLocation(latitude, longitude, null);
-                                getView().showToastMessage(EMPTY_RESULT);
+                                getView().showToastMessage(getView().getAppContext().getString(R.string.activity_customer_main_empty_result));
                             }
                         }
                     }
@@ -51,7 +47,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
                     @Override
                     public void onError(JMTErrorCode errorCode) {
                         getMenuCountFiltered(latitude, longitude, radius);
-                        Log.d(LOG_TAG, RESPONSE_ERROR);
+                        Log.d(LOG_TAG, getView().getAppContext().getString(R.string.activity_customer_main_response_error));
                     }
         });
     }
@@ -75,12 +71,12 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
 
         for (int i = 0; i < len; i++) {
             menuLocation = menuList.get(i);
-            if((ALL_CATEGORY).equals(category) || (menuLocation.getCategory()).equals(category)) {
+            if((getView().getAppContext().getString(R.string.activity_customer_main_all_category)).equals(category) || (menuLocation.getCategory()).equals(category)) {
                 distance = LocationDistance.distance(centerLat
                                                         , centerLon
                                                         , menuLocation.getLatitude()
                                                         , menuLocation.getLongitude()
-                                                        , DISTANCE_UNIT);
+                                                        , 1);
                 if (radius >= distance) {
                     closerDistanceList.add(menuLocation);
                 }
