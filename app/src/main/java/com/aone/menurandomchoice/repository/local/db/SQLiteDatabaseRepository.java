@@ -35,24 +35,24 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
     private final String SQL_CREATE_STORES_TABLE = "CREATE TABLE " +
             StoreTable.TABLE_NAME.getColumnName() + " (" +
             StoreTable.STORES_IDX.getColumnName() + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            StoreTable.STORES_NAME.getColumnName() + " TEXT NULL, " +
-            StoreTable.STORES_OPENTIME.getColumnName() + " TEXT NULL, " +
-            StoreTable.STORES_CLOSETIME.getColumnName() + " TEXT NULL, " +
-            StoreTable.STORES_ADDRESS.getColumnName() + " TEXT NULL, " +
-            StoreTable.STORES_DESCRIPTION.getColumnName() + " TEXT NULL, " +
+            StoreTable.STORES_NAME.getColumnName() + " TEXT NOT NULL DEFAULT '', " +
+            StoreTable.STORES_OPENTIME.getColumnName() + " TEXT NOT NULL DEFAULT '', " +
+            StoreTable.STORES_CLOSETIME.getColumnName() + " TEXT NOT NULL DEFAULT '', " +
+            StoreTable.STORES_ADDRESS.getColumnName() + " TEXT NOT NULL DEFAULT '', " +
+            StoreTable.STORES_DESCRIPTION.getColumnName() + " TEXT NULL DEFAULT '', " +
             StoreTable.STORES_LATITUDE.getColumnName() + " REAL NOT NULL DEFAULT 0, " +
             StoreTable.STORES_LONGITUDE.getColumnName() + " REAL NOT NULL DEFAULT 0, " +
-            StoreTable.STORES_UPDATETIME.getColumnName() + " TEXT NOT NULL DEFAULT (datetime('now', '+9 hours')))";
+            StoreTable.STORES_UPDATETIME.getColumnName() + " TEXT NOT NULL DEFAULT '')";
 
 
     private final String SQL_CREATE_MENU_TABLE = "CREATE TABLE " +
             MenuTable.TABLE_NAME.getColumnName() + " (" +
             MenuTable.MENU_IDX.getColumnName() + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            MenuTable.MENU_NAME.getColumnName() + " TEXT NULL, " +
-            MenuTable.MENU_PHOTO_URL.getColumnName() + " TEXT NULL, " +
+            MenuTable.MENU_NAME.getColumnName() + " TEXT NOT NULL DEFAULT '', " +
+            MenuTable.MENU_PHOTO_URL.getColumnName() + " TEXT NOT NULL DEFAULT '', " +
             MenuTable.MENU_PRICE.getColumnName() + " INTEGER NOT NULL DEFAULT 0, " +
-            MenuTable.MENU_DESCRIPTION.getColumnName() + " TEXT NULL, " +
-            MenuTable.MENU_CATEGORY.getColumnName() + " TEXT NULL, " +
+            MenuTable.MENU_DESCRIPTION.getColumnName() + " TEXT NULL DEFAULT '', " +
+            MenuTable.MENU_CATEGORY.getColumnName() + " TEXT NOT NULL DEFAULT '', " +
             MenuTable.MENU_SEQUENCE.getColumnName() + " INTEGER NOT NULL)" ;
 
 
@@ -81,12 +81,9 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
 
         db.beginTransaction();
         try {
+
             ContentValues values = new ContentValues();
-            values.putNull(StoreTable.STORES_NAME.getColumnName());
-            values.putNull(StoreTable.STORES_OPENTIME.getColumnName());
-            values.putNull(StoreTable.STORES_CLOSETIME.getColumnName());
-            values.putNull(StoreTable.STORES_ADDRESS.getColumnName());
-            values.putNull(StoreTable.STORES_DESCRIPTION.getColumnName());
+            values.put(StoreTable.STORES_DESCRIPTION.getColumnName(), "");
 
             db.insertOrThrow(StoreTable.TABLE_NAME.getColumnName(), null, values);
 
@@ -104,10 +101,6 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
     private void addMenuDetail(@NonNull SQLiteDatabase db, final int sequence) {
         try {
             ContentValues values = new ContentValues();
-            values.putNull(MenuTable.MENU_NAME.getColumnName());
-            values.putNull(MenuTable.MENU_PHOTO_URL.getColumnName());
-            values.putNull(MenuTable.MENU_DESCRIPTION.getColumnName());
-            values.putNull(MenuTable.MENU_CATEGORY.getColumnName());
             values.put(MenuTable.MENU_SEQUENCE.getColumnName(), sequence);
 
             db.insertOrThrow(MenuTable.TABLE_NAME.getColumnName(), null, values);
@@ -193,7 +186,8 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
             values.put(StoreTable.STORES_DESCRIPTION.getColumnName(), storeDetail.getDescription());
             values.put(StoreTable.STORES_LATITUDE.getColumnName(), storeDetail.getLatitude());
             values.put(StoreTable.STORES_LONGITUDE.getColumnName(), storeDetail.getLongitude());
-            values.put(StoreTable.STORES_UPDATETIME.getColumnName(), getNowTime());
+            values.put(StoreTable.STORES_UPDATETIME.getColumnName(), storeDetail.getUpdateTime());
+
 
             for(int i = 0; i < storeDetail.getMenuList().size(); i++) {
                 updateMenuDetail(db, storeDetail.getMenuList().get(i));
@@ -226,18 +220,4 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
         }
     }
 
-    public String getNowTime() {
-
-        String query = "SELECT datetime('now', '+9 hours');";
-
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToFirst();
-        String now = cursor.getString(0);
-
-        cursor.close();
-
-        return now;
-    }
 }

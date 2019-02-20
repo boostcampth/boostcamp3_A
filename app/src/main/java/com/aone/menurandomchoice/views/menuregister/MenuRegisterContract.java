@@ -27,6 +27,12 @@ public interface MenuRegisterContract {
 
         void showMenuDeleteButton();
 
+        void showChangedMenuName(@NonNull String menuName);
+
+        void showChangedDescription(@NonNull String description);
+
+        void showChangedPrice(int price);
+
         void moveToPreviewActivityWithItem();
 
         void moveToPreviousActivityWithItem();
@@ -64,6 +70,12 @@ public interface MenuRegisterContract {
         void handlingRegisterOkButtonClick();
 
         void handlingBackKeyClick();
+
+        void handlingInputtedMenuName(@NonNull String menuName);
+
+        void handlingInputtedDescription(@NonNull String description);
+
+        void handlingInputtedPrice(@NonNull String price);
 
     }
 

@@ -33,7 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/middle_margin"
-            android:text="@{menuDetail.name ?? @string/layout_menu_detail_not_menu}"
+            android:hint="@string/layout_menu_detail_not_menu"
+            android:text="@{menuDetail.name}"
             android:textSize="@dimen/small_text" />
 
         <LinearLayout

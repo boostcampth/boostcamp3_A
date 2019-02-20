@@ -17,14 +17,14 @@ import androidx.databinding.Bindable;
 public class StoreDetail extends BaseObservable implements Parcelable {
 
     private int storeIdx;
-    private String name;
-    private String opentime;
-    private String closetime;
-    private String address;
-    private String description;
+    private String name = "";
+    private String opentime = "";
+    private String closetime = "";
+    private String address = "";
+    private String description = "";
     private double latitude;
     private double longitude;
-    private String updateTime;
+    private String updateTime = "";
     private List<MenuDetail> menuList;
 
     public StoreDetail() {
@@ -74,15 +74,18 @@ public class StoreDetail extends BaseObservable implements Parcelable {
         }
     };
 
+    public int getStoreIdx() {
+        return storeIdx;
+    }
+
+    public void setStoreIdx(int storeIdx) {
+        this.storeIdx = storeIdx;
+    }
+
+
     @NonNull
     @Bindable
     public String getName() {
-        if(TextUtils.isEmpty(name)) {
-            name = GlobalApplication
-                    .getGlobalApplicationContext()
-                    .getString(R.string.activity_owner_detail_not_name);
-        }
-
         return name;
     }
 
@@ -94,12 +97,6 @@ public class StoreDetail extends BaseObservable implements Parcelable {
     @NonNull
     @Bindable
     public String getOpentime() {
-        if(TextUtils.isEmpty(opentime)) {
-            opentime = GlobalApplication
-                    .getGlobalApplicationContext()
-                    .getString(R.string.activity_store_edit_default_starttime);
-        }
-
         return opentime;
     }
 
@@ -111,12 +108,6 @@ public class StoreDetail extends BaseObservable implements Parcelable {
     @NonNull
     @Bindable
     public String getClosetime() {
-        if(TextUtils.isEmpty(closetime)) {
-            closetime = GlobalApplication
-                    .getGlobalApplicationContext()
-                    .getString(R.string.activity_store_edit_default_endtime);
-        }
-
         return closetime;
     }
 
@@ -128,10 +119,6 @@ public class StoreDetail extends BaseObservable implements Parcelable {
     @NonNull
     @Bindable
     public String getAddress() {
-        if(address == null) {
-            address = "";
-        }
-
         return address;
     }
 
@@ -142,26 +129,12 @@ public class StoreDetail extends BaseObservable implements Parcelable {
 
     @Bindable
     public String getDescription() {
-        if(TextUtils.isEmpty(description)) {
-            description = GlobalApplication
-                    .getGlobalApplicationContext()
-                    .getString(R.string.activity_owner_store_not_description);
-        }
-
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
         notifyPropertyChanged(BR.description);
-    }
-
-    public int getStoreIdx() {
-        return storeIdx;
-    }
-
-    public void setStoreIdx(int storeIdx) {
-        this.storeIdx = storeIdx;
     }
 
     public double getLatitude() {
