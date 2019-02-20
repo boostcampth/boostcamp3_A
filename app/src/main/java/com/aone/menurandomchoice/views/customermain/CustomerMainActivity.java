@@ -403,10 +403,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
             int radius = (int) getRadius();
             String category = getPresenter().getSelectedCategory();
 
-            if(getView().getActivityContext().getString(R.string.activity_customer_main_all_category).equals(category)) {
-                category = "";
-            }
-
             MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
             menuSelectIntent.putExtra(getView().getActivityContext().getString(R.string.activity_customer_main_extra_menu_data)
                                     , new MenuSearchRequest(mapPointGeo.latitude
