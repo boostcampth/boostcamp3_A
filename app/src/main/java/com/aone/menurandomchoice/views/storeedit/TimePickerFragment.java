@@ -32,8 +32,13 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         String time = timeArgs.getString(BUNDLE_PICKER_TIME);
         final int type = timeArgs.getInt(BUNDLE_PICKER_TYPE);
         int idx = time.indexOf(":");
-        final int hour = Integer.parseInt(time.substring(0, idx));
-        int minute = Integer.parseInt(time.substring(idx + 1));
+
+        int hour = 0;
+        int minute = 0;
+        if(idx != -1) {
+            hour = Integer.parseInt(time.substring(0, idx));
+            minute = Integer.parseInt(time.substring(idx + 1));
+        }
 
         return new TimePickerDialog(getActivity(), R.style.TimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
             @Override
