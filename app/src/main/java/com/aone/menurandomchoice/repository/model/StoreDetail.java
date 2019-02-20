@@ -74,6 +74,15 @@ public class StoreDetail extends BaseObservable implements Parcelable {
         }
     };
 
+    public int getStoreIdx() {
+        return storeIdx;
+    }
+
+    public void setStoreIdx(int storeIdx) {
+        this.storeIdx = storeIdx;
+    }
+
+
     @NonNull
     @Bindable
     public String getName() {
@@ -154,14 +163,6 @@ public class StoreDetail extends BaseObservable implements Parcelable {
     public void setDescription(String description) {
         this.description = description;
         notifyPropertyChanged(BR.description);
-    }
-
-    public int getStoreIdx() {
-        return storeIdx;
-    }
-
-    public void setStoreIdx(int storeIdx) {
-        this.storeIdx = storeIdx;
     }
 
     public double getLatitude() {

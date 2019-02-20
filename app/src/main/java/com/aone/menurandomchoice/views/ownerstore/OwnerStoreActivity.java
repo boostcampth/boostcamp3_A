@@ -176,6 +176,7 @@ public class OwnerStoreActivity
         storeDetail.setMenuList(list);
 
         getDataBinding().setStoreDetail(storeDetail);
+        getDataBinding().getStoreDetail().setStoreIdx(storeIdx);
 
         setMapView(storeDetail.getLatitude(), storeDetail.getLongitude(), storeDetail.getName());
     }
