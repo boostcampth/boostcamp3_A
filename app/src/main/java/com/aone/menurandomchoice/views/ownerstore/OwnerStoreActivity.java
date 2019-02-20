@@ -56,7 +56,7 @@ public class OwnerStoreActivity
         super.onStart();
 
         initMapView();
-        getPresenter().loadStoreDetail(storeIdx);
+        getPresenter().loadStoreDetail(storeIdx, isOwner);
     }
 
 

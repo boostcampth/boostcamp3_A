@@ -17,20 +17,13 @@ import androidx.appcompat.app.AlertDialog;
 public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> implements  OwnerStoreContract.Presenter {
 
     @Override
-    public void loadStoreDetail(int storeIdx) {
-        getRepository().loadStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
-            @Override
-            public void onReceived(@NonNull StoreDetail storeDetail) {
-                if (isAttachView()) {
-                    getView().showStoreDetail(storeDetail);
-                }
-            }
+    public void loadStoreDetail(int storeIdx, boolean isOwner) {
+        if(isOwner) {
+            loadStoreDetailToOwner(storeIdx);
+        } else {
+            loadStoreDetailToCustomer(storeIdx);
+        }
 
-            @Override
-            public void onError(JMTErrorCode errorCode) {
-                sendMessageToView(errorCode.getStringResourceId());
-            }
-        });
     }
 
     @Override
@@ -105,4 +98,35 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
         }
     }
 
+    public void loadStoreDetailToOwner(int storeIdx) {
+        getRepository().loadStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
+            @Override
+            public void onReceived(@NonNull StoreDetail storeDetail) {
+                if (isAttachView()) {
+                    getView().showStoreDetail(storeDetail);
+                }
+            }
+
+            @Override
+            public void onError(JMTErrorCode errorCode) {
+                sendMessageToView(errorCode.getStringResourceId());
+            }
+        });
+    }
+
+    public void loadStoreDetailToCustomer(int storeIdx) {
+        getRepository().requestStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
+            @Override
+            public void onReceived(@NonNull StoreDetail response) {
+                if(isAttachView()) {
+                    getView().showStoreDetail(response);
+                }
+            }
+
+            @Override
+            public void onError(JMTErrorCode errorCode) {
+                sendMessageToView(errorCode.getStringResourceId());
+            }
+        });
+    }
 }
