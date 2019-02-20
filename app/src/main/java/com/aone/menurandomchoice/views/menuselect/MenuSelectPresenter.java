@@ -100,11 +100,11 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
     }
 
     private void filteringCategoryOfRequest(MenuSearchRequest menuSearchRequest) {
-        String allCategory = GlobalApplication
+        String removeWord = GlobalApplication
                 .getGlobalApplicationContext()
                 .getString(R.string.arrays_category_all_food);
 
-        if(allCategory.equals(menuSearchRequest.getCategory())) {
+        if(removeWord.equals(menuSearchRequest.getCategory())) {
             menuSearchRequest.removeCategory();
         }
     }
