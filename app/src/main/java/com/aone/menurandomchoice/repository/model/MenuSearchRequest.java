@@ -49,6 +49,10 @@ public class MenuSearchRequest implements Parcelable {
         }
     };
 
+    public void removeCategory() {
+        category = "";
+    }
+
     public double getLatitude() {
         return latitude;
     }
