@@ -6,22 +6,27 @@
         <variable
             name="activity"
             type="com.aone.menurandomchoice.views.customermain.CustomerMainContract.View"/>
+        <variable
+            name="presenter"
+            type="com.aone.menurandomchoice.views.customermain.CustomerMainContract.Presenter"/>
+        <variable
+            name="menuLocationCamera"
+            type="com.aone.menurandomchoice.repository.model.MenuLocationCamera"/>
     </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            >
+            android:background="@color/white">
 
-            <net.daum.mf.map.api.MapView
+            <RelativeLayout
                 android:id="@+id/activity_customer_main_mv_daum"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toTopOf="@+id/activity_customer_main_mapview_guide_line"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
@@ -80,7 +85,7 @@
                 android:layout_marginBottom="@dimen/two_x_large_margin"
                 android:src="@drawable/custom_gps_fixed"
                 android:contentDescription="@string/activity_customer_main_map_gps"
-                android:onClick="@{() -> activity.onGPSButtonClicked()}"
+                android:onClick="@{() -> presenter.handlingGPSButtonClicked()}"
                 app:layout_constraintBottom_toTopOf="@+id/activity_customer_main_mapview_guide_line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"

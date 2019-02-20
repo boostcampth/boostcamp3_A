@@ -39,6 +39,8 @@ public interface StoreEditContract {
 
         void setMapAddress(@NonNull String address);
 
+        void setMapLatLon(@NonNull double latitude, double longitude);
+
         void viewFinish();
 
     }

@@ -32,6 +32,8 @@ public interface CustomerMainContract {
 
         String getSelectedCategory();
 
+        void handlingGPSButtonClicked();
+
         void stopNetwork();
 
         void getMenuCountFiltered(double centerLat, double centerLon, double radius);

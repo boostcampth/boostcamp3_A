@@ -15,6 +15,7 @@ import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.adapter.LocationSearchAdapterView;
 import com.aone.menurandomchoice.views.locationsearch.adapter.OnViewHolderClickListener;
 import com.aone.menurandomchoice.views.locationsearch.adapter.LocationSearchAdapter;
+import com.aone.menurandomchoice.views.storelocation.StoreLocationActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,11 +27,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static android.content.Intent.FLAG_ACTIVITY_FORWARD_RESULT;
+import static com.aone.menurandomchoice.views.storeedit.StoreEditActivity.REQUEST_LOCATION_SEARCH;
+
 public class LocationSearchActivity
         extends BaseActivity<ActivityLocationSearchBinding, LocationSearchContract.View, LocationSearchContract.Presenter>
         implements LocationSearchContract.View {
 
     private LocationSearchAdapterView adapterView;
+    private static final String XY_TAG = "posXY";
+    private static final String NEED_INPUT = "값을 입력해주세요";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,19 +68,39 @@ public class LocationSearchActivity
         recyclerView.setAdapter(adapter);
         getPresenter().setAdapter(adapter);
         adapterView = adapter;
-        adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                viewHolderClicked(position);
+
+        Intent intent = this.getIntent();
+
+
+        String callerActivity = intent.getStringExtra(REQUEST_LOCATION_SEARCH);
+            if(("STORE_EDIT").equals(callerActivity)) {
+                adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        viewHolderClickedforOwneStoreEdit(position);
+                    }
+                });
+            } else if(("CUSTOMER_MAIN").equals(callerActivity)) {
+                adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        viewHolderClickedForCustomerMain(position);
+                    }
+                });
             }
-        });
+
    }
 
-    private void viewHolderClicked(int position) {
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("posXY", getPresenter().getMenuData(position));
-        setResult(RESULT_OK,resultIntent);
+   private void viewHolderClickedforOwneStoreEdit(int position) {
+       Intent resultIntent = new Intent(LocationSearchActivity.this, StoreLocationActivity.class);
+       resultIntent.putExtra(XY_TAG, getPresenter().getMenuData(position));
+       startActivity(resultIntent);
+   }
 
+    private void viewHolderClickedForCustomerMain(int position) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(XY_TAG, getPresenter().getMenuData(position));
+        setResult(RESULT_OK,resultIntent);
         finish();
     }
 
@@ -84,7 +110,6 @@ public class LocationSearchActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setTitle("");
-
         getDataBinding().searchBox.etSearch.setOnEditorActionListener(
                 new TextView.OnEditorActionListener() {
                     @Override
@@ -135,8 +160,9 @@ public class LocationSearchActivity
         String inputAddress = getDataBinding().searchBox.etSearch.getText().toString();
 
         if(inputAddress.trim().length() == 0) {
-            showToastMessage("값을 입력해주세요");
+            showToastMessage(NEED_INPUT);
         } else {
+            showProgressDialog();
             getPresenter().requestLocationSearch(inputAddress);
         }
     }
