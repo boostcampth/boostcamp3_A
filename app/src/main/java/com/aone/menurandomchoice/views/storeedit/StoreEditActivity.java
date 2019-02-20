@@ -29,9 +29,6 @@ import androidx.annotation.NonNull;
 public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, StoreEditContract.View, StoreEditContract.Presenter>
         implements  StoreEditContract.View, MapView.MapViewEventListener {
 
-    public static final String EXTRA_MENU_DETAIL_INFO = "EXTRA_MENU_DETAIL_INFO";
-    public static final String REQUEST_LOCATION_SEARCH = "REQUEST_LOCATION_SEARCH";
-    public static final String ACTIVITY_DESCRIPTOR = "STORE_EDIT";
     private static final int REQUEST_CODE_MENU_REGISTER = 1;
 
     private MapView mapView;
@@ -52,11 +49,11 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
 
         setUpMapView();
 
-        Bundle locationData = getIntent().getBundleExtra("posXY");
+        Bundle locationData = getIntent().getBundleExtra(getView().getActivityContext().getString(R.string.activity_customer_main_xy));
         if(locationData != null) {
-            getPresenter().handlingReceivedMapInfo(locationData.getString("address")
-                                                    , locationData.getDouble("latitude")
-                                                    , locationData.getDouble("longitude"));
+            getPresenter().handlingReceivedMapInfo(locationData.getString(getView().getActivityContext().getString(R.string.activity_customer_main_address))
+                                                    , locationData.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_latitude))
+                                                    , locationData.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_longitude)));
             getDataBinding()
                     .activityStoreEditTvAddress
                     .setText(locationData.getString("address"));
@@ -216,14 +213,15 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
     @Override
     public void moveToMenuEditPage(MenuDetail menuDetail) {
         Intent menuRegisterIntent = new Intent(StoreEditActivity.this, MenuRegisterActivity.class);
-        menuRegisterIntent.putExtra(EXTRA_MENU_DETAIL_INFO, menuDetail);
+        menuRegisterIntent.putExtra(getView().getActivityContext().getString(R.string.activity_store_edit_extra_menu_detail_info), menuDetail);
         startActivityForResult(menuRegisterIntent, REQUEST_CODE_MENU_REGISTER);
     }
 
     @Override
     public void moveToLocationSearchPage() {
         Intent locationSearchIntent = new Intent(StoreEditActivity.this, LocationSearchActivity.class);
-        locationSearchIntent.putExtra(REQUEST_LOCATION_SEARCH, ACTIVITY_DESCRIPTOR);
+        locationSearchIntent.putExtra(getView().getActivityContext().getString(R.string.activity_store_edit_request_location_search)
+                                    , getView().getActivityContext().getString(R.string.activity_store_edit_descriptor));
         startActivity(locationSearchIntent);
     }
 
@@ -305,7 +303,7 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
         TimePickerFragment timePickerFragment = new TimePickerFragment();
         timePickerFragment.setArguments(bundle);
         timePickerFragment.setPresenter(getPresenter());
-        timePickerFragment.show(getSupportFragmentManager(), "timepicker");
+        timePickerFragment.show(getSupportFragmentManager(), getView().getAppContext().getString(R.string.activity_store_edit_timepicker));
     }
 
 }

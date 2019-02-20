@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 
 
+import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.KakaoAddress;
@@ -19,9 +20,6 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
         implements LocationSearchContract.Presenter {
 
     private BaseRecyclerViewAdapterModel<KakaoAddress> adapterModel;
-    private static final String LAT = "latitude";
-    private static final String LON = "longitude";
-    private static final String EMPTY_RESULT = "결과값이 없습니다";
 
     public void setAdapter(@NonNull BaseRecyclerViewAdapterModel<KakaoAddress> adapterModel) {
         this.adapterModel = adapterModel;
@@ -39,7 +37,7 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
                     if(response.getDocuments().size() > 0) {
                         updateList(response.getDocuments());
                     } else {
-                        getView().showToastMessage(EMPTY_RESULT);
+                        getView().showToastMessage(getView().getAppContext().getString(R.string.activity_customer_main_empty_result));
                     }
                     hideProgressBarOfView();
                 }
@@ -55,8 +53,10 @@ public class LocationSearchPresenter extends BasePresenter<LocationSearchContrac
     @Override
     public Parcelable getMenuData(int position) {
         Bundle posXY = new Bundle();
-        posXY.putDouble(LAT, adapterModel.getItem(position).getY());
-        posXY.putDouble(LON, adapterModel.getItem(position).getX());
+        posXY.putDouble(getView().getAppContext().getString(R.string.activity_customer_main_latitude)
+                , adapterModel.getItem(position).getY());
+        posXY.putDouble(getView().getAppContext().getString(R.string.activity_customer_main_longitude)
+                , adapterModel.getItem(position).getX());
         return posXY;
     }
 
