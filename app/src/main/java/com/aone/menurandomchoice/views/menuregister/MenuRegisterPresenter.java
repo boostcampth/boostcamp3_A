@@ -302,7 +302,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         if(isAttachView()) {
             getView().setMenuDetailToDataBinding(menuDetail);
             if(menuCategoryAdapterModel != null) {
-                menuDetail.setCategory(menuDetail.getCategory());
+                menuCategoryAdapterModel.setCategory(menuDetail.getCategory());
             }
         }
     }
