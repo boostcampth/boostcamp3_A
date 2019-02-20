@@ -1,5 +1,7 @@
 package com.aone.menurandomchoice.views.menuselect;
 
+import android.text.TextUtils;
+
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
@@ -55,11 +57,11 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
             public void onReceived(@NonNull List<MenuDetail> menuDetailList) {
                 hideProgressBarOfView();
                 if(adapterModel != null) {
-                    if(menuDetailList.size() > 0 && menuDetailList.get(0).getCategory() == null) { // null means both of "전체", "no data"
+                    if(menuDetailList.size() > 0 && TextUtils.isEmpty(menuDetailList.get(0).getCategory())) { // "" means both of '전체', 'no data'
                         Iterator<MenuDetail> it = menuDetailList.iterator();
                         while (it.hasNext()) {
                             MenuDetail value = it.next();
-                            if (("").equals(value.getPhotoUrl())) { // remove "no data" by checking photoUrl
+                            if (TextUtils.isEmpty(value.getPhotoUrl())) { // remove 'no data' by checking photoUrl
                                 it.remove();
                             }
                         }

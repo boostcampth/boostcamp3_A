@@ -40,7 +40,9 @@ public class OwnerLoginActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(!getPresenter().isNeedKakaoSDKLoginScreen(requestCode, resultCode, data)) {
+        if(getPresenter().isNeedKakaoSDKLoginScreen(requestCode, resultCode, data)) {
+            attachViewToPresenter();
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
