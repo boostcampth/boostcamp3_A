@@ -1,11 +1,11 @@
 package com.aone.menurandomchoice.repository;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseHelper;
 import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseRepository;
-import com.aone.menurandomchoice.repository.local.pref.PreferencesHelper;
-import com.aone.menurandomchoice.repository.local.pref.PreferencesRepository;
+import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.UpdateTime;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.LoginData;
@@ -22,6 +22,7 @@ import com.aone.menurandomchoice.repository.remote.APIRepository;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +35,8 @@ public class DataRepository implements Repository {
     private KakaoLoginHelper kakaoLoginHelper;
     private APIHelper apiHelper;
     private SQLiteDatabaseHelper SQLiteDatabaseHelper;
-    private PreferencesHelper preferencesHelper;
+
+    private boolean isUpdated = false;
 
     @NonNull
     public static Repository getInstance() {
@@ -48,7 +50,6 @@ public class DataRepository implements Repository {
         kakaoLoginHelper = KakaoLoginRepository.getInstance();
         apiHelper = APIRepository.getInstance();
         SQLiteDatabaseHelper = SQLiteDatabaseRepository.getInstance();
-        preferencesHelper = new PreferencesRepository();
     }
 
     @Override
@@ -119,44 +120,49 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void saveRegisteredImageLocalPath(@NonNull String path) {
-        preferencesHelper.saveRegisteredImageLocalPath(path);
-    }
-
-    @NonNull
-    @Override
-    public String getSavedRegisterImageLoadPath() {
-        return preferencesHelper.getSavedRegisterImageLoadPath();
-    }
-
-    @Override
-    public void clearRegisteredImageLocalPath() {
-        preferencesHelper.clearRegisteredImageLocalPath();
-    }
-
-    @Override
     public void loadStoreDetail(final int storeIdx,
                                 final @NonNull NetworkResponseListener<StoreDetail> networkResponseListener) {
 
-        final StoreDetail cachedStoreDetail = getStoreDetail();
-        checkStoreUpdated(storeIdx, new NetworkResponseListener<UpdateTime>() {
-            @Override
-            public void onReceived(@NonNull UpdateTime response) {
-                String serverTime = response.getUpdateTime();
+        final StoreDetail SQLiteStoreDetail = getStoreDetail();
+        final String SQLiteUpdateTime = SQLiteStoreDetail.getUpdateTime();
 
-              if(serverTime == cachedStoreDetail.getUpdateTime()) {
-                  networkResponseListener.onReceived(cachedStoreDetail);
-              } else{
-                  requestStoreDetail(storeIdx, networkResponseListener);
-               }
+        if(isUpdated) {
+            networkResponseListener.onReceived(SQLiteStoreDetail);
+        } else {
+            checkStoreUpdated(storeIdx, new NetworkResponseListener<UpdateTime>() {
 
-            }
+                @Override
+                public void onReceived(@NonNull UpdateTime response) {
+                    String ServerUpdateTime = response.getUpdateTime();
 
-            @Override
-            public void onError(JMTErrorCode errorCode) {
-                networkResponseListener.onError(errorCode);
-            }
-        });
+                    if (ServerUpdateTime.equals(SQLiteUpdateTime)) {
+                        networkResponseListener.onReceived(SQLiteStoreDetail);
+                    } else {
+                        requestStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
+                            @Override
+                            public void onReceived(@NonNull StoreDetail response) {
+                                updateStoreDetail(response);
+                                networkResponseListener.onReceived(response);
+                            }
+
+                            @Override
+                            public void onError(JMTErrorCode errorCode) {
+                                isUpdated = false;
+                                networkResponseListener.onError(errorCode);
+                            }
+                        });
+                    }
+
+                    isUpdated = true;
+                }
+
+                @Override
+                public void onError(JMTErrorCode errorCode) {
+                    networkResponseListener.onError(errorCode);
+                }
+            });
+        }
+
     }
 
     @Override
@@ -172,6 +178,15 @@ public class DataRepository implements Repository {
     @Override
     public void updateStoreDetail(@NonNull final StoreDetail storeDetail) {
         SQLiteDatabaseHelper.updateStoreDetail(storeDetail);
+    }
+
+    @Override
+    public void requestSaveStoreDetail(@NonNull StoreDetail storeDetail, @NonNull NetworkResponseListener<EmptyObject> networkResponseListener) {
+        String nowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+        storeDetail.setUpdateTime(nowTime);
+        isUpdated = false;
+
+        apiHelper.requestSaveStoreDetail(storeDetail, networkResponseListener);
     }
 
     @Override

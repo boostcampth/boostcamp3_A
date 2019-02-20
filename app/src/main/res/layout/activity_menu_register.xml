@@ -9,6 +9,10 @@
             name="presenter"
             type="com.aone.menurandomchoice.views.menuregister.MenuRegisterContract.Presenter"/>
 
+        <variable
+            name="menuDetail"
+            type="com.aone.menurandomchoice.repository.model.MenuDetail"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +30,8 @@
             android:layout_marginTop="@dimen/x_large_margin"
             android:layout_marginBottom="@dimen/x_large_margin"
             android:src="@drawable/dot_line_rect"
+            app:defaultDrawable="@{@drawable/dot_line_rect}"
+            app:url="@{menuDetail.photoUrl}"
             app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_name_et"
             app:layout_constraintDimensionRatio="3:4"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,16 +39,30 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/activity_menu_register_btn"
+            android:id="@+id/activity_menu_register_add_btn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginRight="@dimen/large_margin"
             android:layout_marginBottom="@dimen/large_margin"
+            android:visibility="visible"
             android:background="@drawable/add_icon"
             android:onClick="@{()->presenter.handlingImageRegisterButtonClick()}"
             app:layout_constraintBottom_toBottomOf="@+id/activity_menu_register_iv"
             app:layout_constraintEnd_toEndOf="@+id/activity_menu_register_iv" />
 
+        <Button
+            android:id="@+id/activity_menu_register_delete_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:visibility="gone"
+            android:background="@drawable/delete_icon"
+            android:onClick="@{()->presenter.handlingImageDeleteButtonClick()}"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_menu_register_iv"
+            app:layout_constraintEnd_toEndOf="@+id/activity_menu_register_iv" />
+
+        <!--android:onClick="@{()->presenter.handlingImageRegisterButtonClick()}"-->
         <EditText
             android:id="@+id/activity_menu_register_name_et"
             android:layout_width="0dp"
@@ -54,6 +74,7 @@
             android:inputType="text"
             android:textColor="@color/black"
             android:textSize="@dimen/activity_menu_register_text"
+            android:text="@{menuDetail.name}"
             app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_description_et"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -69,6 +90,7 @@
             android:inputType="text"
             android:textColor="@color/black"
             android:textSize="@dimen/activity_menu_register_text"
+            android:text="@{menuDetail.description}"
             app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_price_et"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -85,6 +107,7 @@
             android:maxLength="15"
             android:textColor="@color/black"
             android:textSize="@dimen/activity_menu_register_text"
+            android:text="@{menuDetail.getPriceStr()}"
             app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_recyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -100,6 +123,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

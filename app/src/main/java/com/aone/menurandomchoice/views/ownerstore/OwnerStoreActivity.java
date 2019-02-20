@@ -23,6 +23,8 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.util.List;
+
 import androidx.annotation.NonNull;
 
 public class OwnerStoreActivity
@@ -50,8 +52,8 @@ public class OwnerStoreActivity
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
         initMapView();
         getPresenter().loadStoreDetail(storeIdx);
@@ -162,6 +164,16 @@ public class OwnerStoreActivity
 
     @Override
     public void showStoreDetail(StoreDetail storeDetail) {
+        UserAccessInfo userAccessInfo = getIntent().getParcelableExtra(EXTRA_USER_ACCESS_INFO);
+
+        storeDetail.setStoreIdx(userAccessInfo.getAccessStoreIndex());
+
+        List<MenuDetail> list = storeDetail.getMenuList();
+        for(int i=0; i<list.size(); i++) {
+            list.get(i).setStoreIdx(userAccessInfo.getAccessStoreIndex());
+        }
+
+        storeDetail.setMenuList(list);
 
         getDataBinding().setStoreDetail(storeDetail);
         getDataBinding().getStoreDetail().setStoreIdx(storeIdx);

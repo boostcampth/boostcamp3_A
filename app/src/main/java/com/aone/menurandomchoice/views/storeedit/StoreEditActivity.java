@@ -3,7 +3,7 @@ package com.aone.menurandomchoice.views.storeedit;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -17,44 +17,42 @@ import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
 import com.aone.menurandomchoice.views.menuregister.MenuRegisterActivity;
+import com.aone.menurandomchoice.views.base.widget.RappingTextWatcher;
+import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 
-import static com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity.EXTRA_MENU_DETAIL_ITEM;
-import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.DEFAULT_LATITUDE;
-import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.DEFAULT_LONGITUDE;
-import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.EXTRA_MENU;
-import static com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity.EXTRA_STORE;
+public class StoreEditActivity
+        extends BaseActivity<ActivityStoreEditBinding, StoreEditContract.View, StoreEditContract.Presenter>
+        implements StoreEditContract.View {
 
+    public static final String EXTRA_MENU_DETAIL_INFO = "EXTRA_MENU_DETAIL_INFO";
 
-public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, StoreEditContract.View, StoreEditContract.Presenter>
-implements  StoreEditContract.View{
+    public static final int REQUEST_CODE_LOCATION_SEARCH = 10;
+    private static final int REQUEST_CODE_MENU_REGISTER = 1;
 
-    MapView mapView;
-    ViewGroup mapViewContainer;
-
-    public static final int REQUEST_CODE_LOCATIONSEARCH = 10;
+    private MapView mapView;
+    private ViewGroup mapViewContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setUpPresenterToDataBinding();
+        setUpMapView();
+        setUpEditTextChangeListener();
+        passedGetIntentToPresenter();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        initMapView();
-
-        StoreDetail storeDetail = getIntent().getParcelableExtra(EXTRA_STORE);
-        getDataBinding().setStoreDetail(storeDetail);
+        setUpMapView();
     }
 
     @Override
@@ -62,6 +60,13 @@ implements  StoreEditContract.View{
         super.onPause();
 
         detachMapView();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
     }
 
     @Override
@@ -79,10 +84,6 @@ implements  StoreEditContract.View{
     @Override
     protected StoreEditContract.Presenter setUpPresenter() {
         return new StoreEditPresenter();
-    }
-
-    private void setUpPresenterToDataBinding() {
-        getDataBinding().setPresenter(getPresenter());
     }
 
     @Override
@@ -106,77 +107,22 @@ implements  StoreEditContract.View{
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        finish();
-    }
-
-
-    @Override
-    public void moveToMenuEditPage(MenuDetail menuDetail) {
-        Intent menuRegisterIntent = new Intent(StoreEditActivity.this, MenuRegisterActivity.class);
-        menuRegisterIntent.putExtra(EXTRA_MENU, menuDetail);
-
-        startActivityForResult(menuRegisterIntent, menuDetail.getSequence());
-    }
-
-    @Override
-    public void moveToLocationSearchPage() {
-        Intent locationSearchIntent = new Intent(StoreEditActivity.this, LocationSearchActivity.class);
-        startActivityForResult(locationSearchIntent, REQUEST_CODE_LOCATIONSEARCH);
-    }
-
-    @Override
-    public void setStartTimePickerDialog(String openTime) {
-        if(openTime == null) {
-            openTime = getResources().getString(R.string.activity_store_edit_default_starttime);
-        }
-
-        showTimePicker(openTime, "opentime");
-    }
-
-    @Override
-    public void setEndTimePickerDialog(String closeTime) {
-        if(closeTime == null) {
-            closeTime = getResources().getString(R.string.activity_store_edit_default_endtime);
-        }
-
-        showTimePicker(closeTime, "closetime");
-    }
-
-    @Override
-    public void showOpentimeChanged(String hour, String minute) {
-        getDataBinding().getStoreDetail().setOpentime(hour + ":" + minute);
-    }
-
-    @Override
-    public void showClosetimeChanged(String hour, String minute) {
-        getDataBinding().getStoreDetail().setClosetime(hour + ":" + minute);
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            MenuDetail menuDetail;
             switch (requestCode) {
-                case 1:
-                    menuDetail = data.getParcelableExtra(EXTRA_MENU_DETAIL_ITEM);
-                    getDataBinding().getStoreDetail().getMenuList().set(0, menuDetail);
+                case REQUEST_CODE_MENU_REGISTER:
+                    attachViewToPresenter();
+                    MenuDetail menuDetail = data.getParcelableExtra(MenuRegisterActivity.EXTRA_MENU_DETAIL_ITEM);
+                    getPresenter().handlingReceivedMenuDetailData(menuDetail);
                     break;
-                case 2:
-                    menuDetail = data.getParcelableExtra(EXTRA_MENU_DETAIL_ITEM);
-                    getDataBinding().getStoreDetail().getMenuList().set(1, menuDetail);
-                    break;
-                case 3:
-                    menuDetail = data.getParcelableExtra(EXTRA_MENU_DETAIL_ITEM);
-                    getDataBinding().getStoreDetail().getMenuList().set(2, menuDetail);
-                    break;
-                case REQUEST_CODE_LOCATIONSEARCH:
+                case REQUEST_CODE_LOCATION_SEARCH:
+                    attachViewToPresenter();
+
+                     //Todo  위치 검색 기능 후 하드로 박혀있는 문자열 들 상수 처리 해야함
                     String address = data.getStringExtra("address");
                     Double longitude = data.getDoubleExtra("longitude", 0);
                     Double latitude = data.getDoubleExtra("latitude", 0);
-                    setAddress(address, longitude, latitude);
+                    getPresenter().handlingReceivedMapInfo(address, longitude, latitude);
                     break;
                 default:
                     super.onActivityResult(requestCode, resultCode, data);
@@ -184,74 +130,139 @@ implements  StoreEditContract.View{
         }
     }
 
-
-    @SuppressLint("ClickableViewAccessibility")
-    public void initMapView() {
-        mapViewContainer = getDataBinding().mapView;
-        mapView = new MapView(this);
-
-        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
-        mapView.setMapCenterPoint(mapPoint, false);
-        mapViewContainer.addView(mapView);
-
-        mapView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+    private void setUpPresenterToDataBinding() {
+        getDataBinding().setPresenter(getPresenter());
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    public void setMapView(double latitude, double longitude, String name) {
+    private void setUpMapView() {
+        if(mapView == null) {
+            mapViewContainer = getDataBinding().mapView;
+            mapView = new MapView(this);
+            mapViewContainer.addView(mapView);
 
-        if(latitude == 0 && longitude == 0) {
-            latitude = DEFAULT_LATITUDE;
-            longitude = DEFAULT_LONGITUDE;
+            mapView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
         }
-        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude);
-        mapView.setMapCenterPoint(mapPoint, false);
+    }
 
-        MapPOIItem marker = new MapPOIItem();
-        marker.setItemName(name);
-        marker.setTag(0);
-        marker.setMapPoint(mapPoint);
-        marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
-        mapView.addPOIItem(marker);
-
-        final double finalLatitude = latitude;
-        final double finalLongitude = longitude;
-        mapView.setOnTouchListener(new View.OnTouchListener() {
+    private void setUpEditTextChangeListener() {
+        getDataBinding().activityStoreEditNameEt.addTextChangedListener(new RappingTextWatcher(){
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
+            public void afterTextChanged(Editable editable) {
+                StoreDetail storeDetail = getDataBinding().getStoreDetail();
+                if(storeDetail != null) {
+                    storeDetail.setName(editable.toString());
+                }
+            }
+        });
+
+        getDataBinding().activityStoreEditDescriptionEt.addTextChangedListener(new RappingTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                StoreDetail storeDetail = getDataBinding().getStoreDetail();
+                if(storeDetail != null) {
+                    storeDetail.setDescription(editable.toString());
+                }
             }
         });
     }
 
-    public void showTimePicker(String time, String type) {
+    @Override
+    public void showStoreDetailInfo(@NonNull StoreDetail storeDetail) {
+        getDataBinding().setStoreDetail(storeDetail);
+    }
+
+    @Override
+    public void moveToMenuEditPage(MenuDetail menuDetail) {
+        Intent menuRegisterIntent = new Intent(StoreEditActivity.this, MenuRegisterActivity.class);
+        menuRegisterIntent.putExtra(EXTRA_MENU_DETAIL_INFO, menuDetail);
+        startActivityForResult(menuRegisterIntent, REQUEST_CODE_MENU_REGISTER);
+    }
+
+    @Override
+    public void moveToLocationSearchPage() {
+        Intent locationSearchIntent = new Intent(StoreEditActivity.this, LocationSearchActivity.class);
+        startActivityForResult(locationSearchIntent, REQUEST_CODE_LOCATION_SEARCH);
+    }
+
+    @Override
+    public void showStartTimePickerDialog(@NonNull String openTime) {
+        showTimePicker(openTime, TimePickerFragment.OPEN);
+    }
+
+    @Override
+    public void showEndTimePickerDialog(@NonNull String closeTime) {
+        showTimePicker(closeTime, TimePickerFragment.CLOSE);
+    }
+
+    @Override
+    public void showChangedOpenTime(@NonNull String openTime) {
+        getDataBinding().activityStoreEditOpenTimeTv.setText(openTime);
+        StoreDetail storeDetail = getDataBinding().getStoreDetail();
+        if(storeDetail != null) {
+            storeDetail.setOpentime(openTime);
+        }
+    }
+
+    @Override
+    public void showChangedCloseTime(@NonNull String closeTime) {
+        getDataBinding().activityStoreEditCloseTimeTv.setText(closeTime);
+        StoreDetail storeDetail = getDataBinding().getStoreDetail();
+        if(storeDetail != null) {
+            storeDetail.setClosetime(closeTime);
+        }
+    }
+
+    @NonNull
+    @Override
+    public StoreDetail getInputtedStoreDetail() {
+        return getDataBinding().getStoreDetail();
+    }
+
+    @Override
+    public void moveCenterToMap(@NonNull MapPoint centerPoint) {
+        mapView.setMapCenterPoint(centerPoint, false);
+    }
+
+    @Override
+    public void showStoreMakerToMap(@NonNull MapPOIItem marker) {
+        mapView.addPOIItem(marker);
+    }
+
+    @Override
+    public void setMapAddress(@NonNull String address) {
+        getDataBinding().getStoreDetail().setAddress(address);
+    }
+
+    @Override
+    public void viewFinish() {
+        finish();
+    }
+
+    private void passedGetIntentToPresenter() {
+        StoreDetail storeDetail = getIntent().getParcelableExtra(OwnerStoreActivity.EXTRA_STORE);
+        getPresenter().handlingReceivedStoreDetail(storeDetail);
+    }
+
+    private void detachMapView() {
+        mapViewContainer.removeView(mapView);
+        mapView = null;
+    }
+
+    private void showTimePicker(String time, int type) {
         Bundle bundle = new Bundle();
-        bundle.putString("time", time);
-        bundle.putString("type", type);
+        bundle.putString(TimePickerFragment.BUNDLE_PICKER_TIME, time);
+        bundle.putInt(TimePickerFragment.BUNDLE_PICKER_TYPE, type);
 
         TimePickerFragment timePickerFragment = new TimePickerFragment();
         timePickerFragment.setArguments(bundle);
         timePickerFragment.setPresenter(getPresenter());
         timePickerFragment.show(getSupportFragmentManager(), "timepicker");
-
     }
 
-
-    public void setAddress(String address, double latitude, double longitude) {
-        getDataBinding().getStoreDetail().setAddress(address);
-        getDataBinding().getStoreDetail().setLatitude(latitude);
-        getDataBinding().getStoreDetail().setLongitude(longitude);
-
-        String name = getDataBinding().getStoreDetail().getName();
-        setMapView(latitude, longitude, name);
-    }
-
-    public void detachMapView() {
-        mapViewContainer.removeView(mapView);
-    }
 }

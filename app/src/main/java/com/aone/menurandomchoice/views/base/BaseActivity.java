@@ -90,6 +90,12 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseCont
         return getApplicationContext();
     }
 
+    @NonNull
+    @Override
+    public Context getActivityContext() {
+        return this;
+    }
+
     @Override
     public void showToastMessage(@NonNull final String message) {
         Toast.makeText(getAppContext(), message, Toast.LENGTH_SHORT).show();

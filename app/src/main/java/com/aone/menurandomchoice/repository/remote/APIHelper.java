@@ -1,5 +1,6 @@
 package com.aone.menurandomchoice.repository.remote;
 
+import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.UpdateTime;
 import com.aone.menurandomchoice.repository.model.LoginData;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
@@ -35,6 +36,9 @@ public interface APIHelper {
                        @NonNull NetworkResponseListener<LoginData> networkResponseListener);
 
     void requestMenuList(@NonNull MenuSearchRequest menuSearchRequest,
-                                          @NonNull NetworkResponseListener<List<MenuDetail>> networkResponseListener);
+                         @NonNull NetworkResponseListener<List<MenuDetail>> networkResponseListener);
+
+    void requestSaveStoreDetail(@NonNull StoreDetail storeDetail,
+                                @NonNull NetworkResponseListener<EmptyObject> networkResponseListener);
 
 }
