@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
 import android.content.DialogInterface;
+import android.text.TextUtils;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
@@ -35,14 +36,18 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
     @Override
     public void onMenuDetailClick(MenuDetail menuDetail) {
-        if(menuDetail.getPhotoUrl() == null)
-            return;
-        getView().moveToMenuPreviewPage(menuDetail);
+        if(TextUtils.isEmpty(menuDetail.getPhotoUrl())) {
+            sendMessageToView(R.string.activity_owner_detail_not_menu_page);
+        } else {
+            getView().moveToMenuPreviewPage(menuDetail);
+        }
     }
 
     @Override
     public void onMapClick(double latitude, double longitude) {
-        getView().moveToMapDetailPage(latitude, longitude);
+        if(isAttachView()) {
+            getView().moveToMapDetailPage(latitude, longitude);
+        }
     }
 
     @Override
