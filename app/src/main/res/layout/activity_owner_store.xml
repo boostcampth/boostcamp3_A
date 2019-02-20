@@ -202,9 +202,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="@dimen/large_margin"
                     android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="@{storeDetail.address}"/>
+                    android:layout_marginBottom="@dimen/large_margin"
+                    android:hint="@string/activity_store_edit_search_guide"
+                    android:text="@{storeDetail.address}" />
 
                 <RelativeLayout
                     android:id="@+id/map_view"
