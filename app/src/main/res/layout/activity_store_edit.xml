@@ -245,10 +245,11 @@
                     android:id="@+id/activity_store_edit_tv_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/activity_store_edit_search_guide"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="@string/activity_store_edit_search_guide"
                     android:text="@{storeDetail.address}" />
 
                 <RelativeLayout
