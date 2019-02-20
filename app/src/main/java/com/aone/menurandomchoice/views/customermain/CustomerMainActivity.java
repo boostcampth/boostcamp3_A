@@ -267,9 +267,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     public void onMapViewInitialized(MapView mapView) { }
 
     @Override
-    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapCenterPoint) {
-        mapView.removeAllCircles();
-    }
+    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapCenterPoint) { }
 
     @Override
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
@@ -391,7 +389,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         Intent locationSearchIntent = new Intent(CustomerMainActivity.this
                                                 , LocationSearchActivity.class);
         locationSearchIntent.putExtra(getView().getActivityContext().getString(R.string.activity_store_edit_request_location_search)
-                , getView().getActivityContext().getString(R.string.activity_customer_main_descriptor));
+                                    , getView().getActivityContext().getString(R.string.activity_customer_main_descriptor));
         startActivityForResult(locationSearchIntent,LOCATION_DATA);
     }
 
@@ -399,7 +397,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         if(mMapView.getPOIItems().length > 1) {
             mMapView.removeAllCircles();
             Intent menuSelectIntent = new Intent(CustomerMainActivity.this
-                    , MenuSelectActivity.class);
+                                                , MenuSelectActivity.class);
             int radius = (int) getRadius();
             String category = getPresenter().getSelectedCategory();
 

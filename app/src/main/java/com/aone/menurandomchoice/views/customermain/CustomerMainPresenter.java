@@ -71,7 +71,9 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
 
         for (int i = 0; i < len; i++) {
             menuLocation = menuList.get(i);
-            if((getView().getAppContext().getString(R.string.activity_customer_main_all_category)).equals(category) || (menuLocation.getCategory()).equals(category)) {
+            if(((getView().getAppContext().getString(R.string.activity_customer_main_all_category)).equals(category)
+                    && !((menuLocation.getCategory()).equals("")) )
+                    || (menuLocation.getCategory()).equals(category)) {
                 distance = LocationDistance.distance(centerLat
                                                         , centerLon
                                                         , menuLocation.getLatitude()
