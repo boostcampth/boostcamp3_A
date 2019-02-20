@@ -135,6 +135,9 @@ public class DataRepository implements Repository {
                 public void onReceived(@NonNull UpdateTime response) {
                     String ServerUpdateTime = response.getUpdateTime();
 
+                    requestStoreDetail(storeIdx, networkResponseListener);
+                    //Todo 회원가입 후 앱을 삭제하고 다시 실행할때 sqlite가 null이여서 np오류가 남 -> 수정예정
+                    /*
                     if (ServerUpdateTime.equals(SQLiteUpdateTime)) {
                         networkResponseListener.onReceived(SQLiteStoreDetail);
                     } else {
@@ -153,7 +156,7 @@ public class DataRepository implements Repository {
                         });
                     }
 
-                    isUpdated = true;
+                    isUpdated = true;*/
                 }
 
                 @Override

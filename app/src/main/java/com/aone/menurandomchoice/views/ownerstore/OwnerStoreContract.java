@@ -21,7 +21,7 @@ public interface OwnerStoreContract {
 
     interface Presenter extends BaseContract.Presenter<OwnerStoreContract.View> {
 
-        void loadStoreDetail(int storeIdx);
+        void loadStoreDetail(int storeIdx, boolean isOwner);
 
         void onMenuDetailClick(MenuDetail menuDetail);
 
