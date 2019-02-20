@@ -1,5 +1,7 @@
 package com.aone.menurandomchoice.views.menuselect;
 
+import android.text.TextUtils;
+
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
@@ -10,6 +12,7 @@ import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.menuselect.adapter.MenuSelectOverlapViewAdapterContract;
 
+import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -54,6 +57,15 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
             public void onReceived(@NonNull List<MenuDetail> menuDetailList) {
                 hideProgressBarOfView();
                 if(adapterModel != null) {
+                    if(menuDetailList.size() > 0 && TextUtils.isEmpty(menuDetailList.get(0).getCategory())) { // "" means both of '전체', 'no data'
+                        Iterator<MenuDetail> it = menuDetailList.iterator();
+                        while (it.hasNext()) {
+                            MenuDetail value = it.next();
+                            if (TextUtils.isEmpty(value.getPhotoUrl())) { // remove 'no data' by checking photoUrl
+                                it.remove();
+                            }
+                        }
+                    }
                     adapterModel.setItemList(menuDetailList);
                 }
             }

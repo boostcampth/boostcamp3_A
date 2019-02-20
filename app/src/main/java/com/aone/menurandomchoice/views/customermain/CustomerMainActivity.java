@@ -84,20 +84,8 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
         getDataBinding().activityCustomerMainMvDaum.addView(mMapView);
 
-        Intent intent = getIntent();
-        Bundle posXY = intent.getBundleExtra(getView().getActivityContext().getString(R.string.activity_customer_main_xy));
+        createCustomMarker();
 
-        MapPoint mapPoint;
-        if( posXY != null ) {
-            mapPoint = MapPoint.mapPointWithGeoCoord(
-                    posXY.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_latitude))
-                    , posXY.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_longitude)));
-        } else {
-            MenuLocationCamera menuLocationCamera = getDataBinding().getMenuLocationCamera();
-            mapPoint = MapPoint.mapPointWithGeoCoord(menuLocationCamera.getLatitude()
-                                                    , menuLocationCamera.getLongitude());
-        }
-        createCustomMarker(mapPoint);
     }
 
     @Override
@@ -114,7 +102,12 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         getDataBinding().activityCustomerMainMvDaum.removeView(mMapView);
     }
 
-    private void createCustomMarker(MapPoint mapPoint) {
+    private void createCustomMarker() {
+
+        MenuLocationCamera menuLocationCamera = getDataBinding().getMenuLocationCamera();
+        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(menuLocationCamera.getLatitude()
+                , menuLocationCamera.getLongitude());
+
         mCustomMarker = new MapPOIItem();
         mCustomMarker.setItemName(getView().getActivityContext().getString(R.string.app_name));
         mCustomMarker.setMapPoint(mapPoint);
@@ -123,9 +116,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_chicken);
         mCustomMarker.setCustomImageAutoscale(false);
         mCustomMarker.setCustomImageAnchor(0.5f, 1.0f);
-
-        mMapView.addPOIItem(mCustomMarker);
-        mMapView.selectPOIItem(mCustomMarker, true);
 
         circle = new MapCircle(
                 MapPoint.mapPointWithGeoCoord(mapPoint.getMapPointGeoCoord().latitude
@@ -280,9 +270,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mMapView.addCircle(circle);
         mMapView.removeAllPOIItems();
 
-        mCustomMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(mapPoint.getMapPointGeoCoord().latitude
-                                                                , mapPoint.getMapPointGeoCoord().longitude));
-        mMapView.addPOIItem(mCustomMarker);
         double radius = getRadius();
         getPresenter().requestMenuList(mapPoint.getMapPointGeoCoord().latitude
                                         , mapPoint.getMapPointGeoCoord().longitude
@@ -404,9 +391,9 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
             MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
             menuSelectIntent.putExtra(getView().getActivityContext().getString(R.string.activity_customer_main_extra_menu_data)
                                     , new MenuSearchRequest(mapPointGeo.latitude
-                                    , mapPointGeo.longitude
-                                    , radius
-                                    , category));
+                                                            , mapPointGeo.longitude
+                                                            , radius
+                                                            , category));
 
             startActivity(menuSelectIntent);
         } else {
@@ -424,11 +411,8 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
                         showToastMessage(getView().getActivityContext().getString(R.string.activity_customer_main_empty_result));
                         return;
                     }
-                    mMapView.setMapCenterPointAndZoomLevel(
-                            MapPoint.mapPointWithGeoCoord(posXY.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_latitude))
-                                                        , posXY.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_longitude)))
-                                                        ,1
-                                                        ,true);
+                    getDataBinding().getMenuLocationCamera().setLatitude(posXY.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_latitude)));
+                    getDataBinding().getMenuLocationCamera().setLongitude(posXY.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_longitude)));
             }
         }
     }
