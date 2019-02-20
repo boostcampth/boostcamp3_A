@@ -18,7 +18,6 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
     @Override
     public void loadStoreDetail(int storeIdx) {
-
         getRepository().loadStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
             @Override
             public void onReceived(@NonNull StoreDetail storeDetail) {

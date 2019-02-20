@@ -52,8 +52,8 @@ public class OwnerStoreActivity
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
 
         initMapView();
         getPresenter().loadStoreDetail(storeIdx);

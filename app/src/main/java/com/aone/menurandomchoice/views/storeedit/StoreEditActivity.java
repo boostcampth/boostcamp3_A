@@ -37,7 +37,6 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setUpPresenterToDataBinding();
         setUpMapView();
         setUpEditTextChangeListener();
@@ -81,10 +80,9 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
         detachMapView();
     }
 
-    
+    @Override
     protected void onStop() {
         super.onStop();
-
     }
 
     @Override

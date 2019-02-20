@@ -40,5 +40,4 @@
     <!-- activity_menu_register -->
     <dimen name="activity_menu_register_text">16sp</dimen>
     <dimen name="activity_owner_store_location_button">25dp</dimen>
-
 </resources>
