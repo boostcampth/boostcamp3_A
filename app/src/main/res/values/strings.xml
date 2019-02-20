@@ -57,14 +57,17 @@
     <string name="activity_store_edit_label">가게 편집</string>
     <string name="activity_store_edit_starttime_label">영업 시작시간</string>
     <string name="activity_store_edit_endtime_label">영업 종료시간</string>
-    <string name="activity_store_edit_default_starttime">00:00</string>
-    <string name="activity_store_edit_default_endtime">00:00</string>
+    <string name="activity_store_edit_default_starttime">시작시간을 입력하세요</string>
+    <string name="activity_store_edit_default_endtime">종료시간을 입력하세요</string>
+    <string name="activity_store_edit_store_name_hint">가게 이름을 입력해주세요</string>
     <string name="activity_store_edit_store_info_received_fail">앱에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
     <string name="activity_store_edit_save_success">저장에 성공했습니다</string>
     <string name="activity_store_edit_extra_menu_detail_info">EXTRA_MENU_DETAIL_INFO</string>
     <string name="activity_store_edit_request_location_search">REQUEST_LOCATION_SEARCH</string>
     <string name="activity_store_edit_descriptor">STORE_EDIT</string>
     <string name="activity_store_edit_timepicker">timepicker</string>
+    <string name="activity_store_edit_search_guide">위치검색</string>
+    <string name="activity_store_edit_description_guide">가게에 대한 소개를 입력해주세요</string>
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>
