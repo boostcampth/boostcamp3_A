@@ -40,6 +40,6 @@ public class BindingUtil {
             closetime = " ";
         }
 
-        textView.setText(opentime + "-" + closetime);
+        textView.setText(opentime + " - " + closetime);
     }
 }
