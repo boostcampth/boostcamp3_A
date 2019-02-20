@@ -52,6 +52,7 @@
     <string name="activity_owner_detail_name_label">가게이름</string>
     <string name="activity_owner_detail_time_label">운영시간</string>
     <string name="activity_owner_detail_logout_label">로그아웃</string>
+    <string name="activity_owner_detail_not_menu_page">메뉴가 존재하지 않습니다</string>
 
     <!-- activity_store_edit-->
     <string name="activity_store_edit_label">가게 편집</string>
