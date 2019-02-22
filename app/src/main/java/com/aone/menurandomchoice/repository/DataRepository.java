@@ -120,19 +120,30 @@ public class DataRepository implements Repository {
     @Override
     public void loadStoreDetail(final int storeIdx,
                                  @NonNull final NetworkResponseListener<StoreDetail> networkResponseListener) {
+
         requestUpdateTimeFromServer(storeIdx, new NetworkResponseListener<UpdateTime>() {
             @Override
             public void onReceived(@NonNull UpdateTime response) {
                 String serverUpdateTime = response.getUpdateTime();
 
-                if(isSameLocalUpdateTime(serverUpdateTime)) {
+                if (isSameLocalUpdateTime(serverUpdateTime)) {
                     StoreDetail SQLiteStoreDetail = getStoreDetail();
                     networkResponseListener.onReceived(SQLiteStoreDetail);
                 } else {
-                    requestStoreDetail(storeIdx, networkResponseListener);
+                    requestStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
+                        @Override
+                        public void onReceived(@NonNull StoreDetail response) {
+                            updateStoreDetail(response);
+                            networkResponseListener.onReceived(response);
+                        }
+
+                        @Override
+                        public void onError(JMTErrorCode errorCode) {
+                            networkResponseListener.onError(errorCode);
+                        }
+                    });
                 }
             }
-
             @Override
             public void onError(JMTErrorCode errorCode) {
                 networkResponseListener.onError(errorCode);
