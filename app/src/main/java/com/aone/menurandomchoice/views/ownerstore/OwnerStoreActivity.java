@@ -56,6 +56,7 @@ public class OwnerStoreActivity
         super.onStart();
 
         initMapView();
+        getDataBinding().activityOwnerStoreScroll.scrollTo(0, 0);
         getPresenter().loadStoreDetail(storeIdx, isOwner);
     }
 

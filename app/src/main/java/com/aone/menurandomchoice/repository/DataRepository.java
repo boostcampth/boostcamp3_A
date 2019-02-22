@@ -36,8 +36,6 @@ public class DataRepository implements Repository {
     private APIHelper apiHelper;
     private SQLiteDatabaseHelper SQLiteDatabaseHelper;
 
-    private boolean isUpdated = false;
-
     @NonNull
     public static Repository getInstance() {
         if (repository == null) {
@@ -108,9 +106,9 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void checkStoreUpdated(int storeIdx,
+    public void getUpdateTimeFromServer(int storeIdx,
                                   @NonNull NetworkResponseListener<UpdateTime> networkResponseListener) {
-        apiHelper.checkStoreUpdated(storeIdx, networkResponseListener);
+        apiHelper.getUpdateTimeFromServer(storeIdx, networkResponseListener);
     }
 
     @Override
@@ -121,51 +119,30 @@ public class DataRepository implements Repository {
 
     @Override
     public void loadStoreDetail(final int storeIdx,
-                                final @NonNull NetworkResponseListener<StoreDetail> networkResponseListener) {
+                                 @NonNull final NetworkResponseListener<StoreDetail> networkResponseListener) {
+        getUpdateTimeFromServer(storeIdx, new NetworkResponseListener<UpdateTime>() {
+            @Override
+            public void onReceived(@NonNull UpdateTime response) {
+                String serverUpdateTime = response.getUpdateTime();
 
-        final StoreDetail SQLiteStoreDetail = getStoreDetail();
-        final String SQLiteUpdateTime = SQLiteStoreDetail.getUpdateTime();
-
-        if(isUpdated) {
-            networkResponseListener.onReceived(SQLiteStoreDetail);
-        } else {
-            checkStoreUpdated(storeIdx, new NetworkResponseListener<UpdateTime>() {
-
-                @Override
-                public void onReceived(@NonNull UpdateTime response) {
-                    String ServerUpdateTime = response.getUpdateTime();
-
+                if(isSameLocalUpdateTime(serverUpdateTime)) {
+                    StoreDetail SQLiteStoreDetail = getStoreDetail();
+                    networkResponseListener.onReceived(SQLiteStoreDetail);
+                } else {
                     requestStoreDetail(storeIdx, networkResponseListener);
-                    //Todo 회원가입 후 앱을 삭제하고 다시 실행할때 sqlite가 null이여서 np오류가 남 -> 수정예정
-                    /*
-                    if (ServerUpdateTime.equals(SQLiteUpdateTime)) {
-                        networkResponseListener.onReceived(SQLiteStoreDetail);
-                    } else {
-                        requestStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
-                            @Override
-                            public void onReceived(@NonNull StoreDetail response) {
-                                updateStoreDetail(response);
-                                networkResponseListener.onReceived(response);
-                            }
-
-                            @Override
-                            public void onError(JMTErrorCode errorCode) {
-                                isUpdated = false;
-                                networkResponseListener.onError(errorCode);
-                            }
-                        });
-                    }
-
-                    isUpdated = true;*/
                 }
+            }
 
-                @Override
-                public void onError(JMTErrorCode errorCode) {
-                    networkResponseListener.onError(errorCode);
-                }
-            });
-        }
+            @Override
+            public void onError(JMTErrorCode errorCode) {
+                networkResponseListener.onError(errorCode);
+            }
+        });
+    }
 
+    private boolean isSameLocalUpdateTime(String serverUpdateTime) {
+        String localUpdateTime = getUpdateTimeFromSQLite();
+        return serverUpdateTime.equals(localUpdateTime);
     }
 
     @Override
@@ -184,11 +161,16 @@ public class DataRepository implements Repository {
     }
 
     @Override
+    public String getUpdateTimeFromSQLite() {
+        return SQLiteDatabaseHelper.getUpdateTimeFromSQLite();
+    }
+
+    @Override
     public void requestSaveStoreDetail(@NonNull StoreDetail storeDetail, @NonNull NetworkResponseListener<EmptyObject> networkResponseListener) {
         String nowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
         storeDetail.setUpdateTime(nowTime);
-        isUpdated = false;
 
+        updateStoreDetail(storeDetail);
         apiHelper.requestSaveStoreDetail(storeDetail, networkResponseListener);
     }
 

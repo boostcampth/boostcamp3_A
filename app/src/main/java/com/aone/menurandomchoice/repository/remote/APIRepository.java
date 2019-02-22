@@ -100,7 +100,7 @@ public class APIRepository implements APIHelper {
     }
 
     @Override
-    public void checkStoreUpdated(int storeIdx,
+    public void getUpdateTimeFromServer(int storeIdx,
                                   @NonNull NetworkResponseListener<UpdateTime> listener) {
         if(NetworkUtil.isNetworkConnecting()) {
             apiCreator.getApiInstance()

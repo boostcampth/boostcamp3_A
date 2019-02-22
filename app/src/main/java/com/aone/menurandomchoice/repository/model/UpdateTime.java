@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.repository.model;
 
 public class UpdateTime {
+
     private String updateTime;
 
     public UpdateTime(String updateTime) {
@@ -14,4 +15,5 @@ public class UpdateTime {
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
+
 }

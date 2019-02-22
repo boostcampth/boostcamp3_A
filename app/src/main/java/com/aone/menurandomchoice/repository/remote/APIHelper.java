@@ -25,7 +25,7 @@ public interface APIHelper {
     void requestStoreDetail(int storeIdx,
                             @NonNull NetworkResponseListener<StoreDetail> networkResponseListener);
 
-    void checkStoreUpdated(int storeIdx,
+    void getUpdateTimeFromServer(int storeIdx,
                            @NonNull NetworkResponseListener<UpdateTime> networkResponseListener);
 
     void requestSignedUpCheck(long userId,

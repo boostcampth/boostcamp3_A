@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
 import android.content.DialogInterface;
+import android.util.Log;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
@@ -18,6 +19,7 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
     @Override
     public void loadStoreDetail(int storeIdx, boolean isOwner) {
+
         if(isOwner) {
             loadStoreDetailToOwner(storeIdx);
         } else {
