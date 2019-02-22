@@ -106,9 +106,9 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void getUpdateTimeFromServer(int storeIdx,
+    public void requestUpdateTimeFromServer(int storeIdx,
                                   @NonNull NetworkResponseListener<UpdateTime> networkResponseListener) {
-        apiHelper.getUpdateTimeFromServer(storeIdx, networkResponseListener);
+        apiHelper.requestUpdateTimeFromServer(storeIdx, networkResponseListener);
     }
 
     @Override
@@ -120,7 +120,7 @@ public class DataRepository implements Repository {
     @Override
     public void loadStoreDetail(final int storeIdx,
                                  @NonNull final NetworkResponseListener<StoreDetail> networkResponseListener) {
-        getUpdateTimeFromServer(storeIdx, new NetworkResponseListener<UpdateTime>() {
+        requestUpdateTimeFromServer(storeIdx, new NetworkResponseListener<UpdateTime>() {
             @Override
             public void onReceived(@NonNull UpdateTime response) {
                 String serverUpdateTime = response.getUpdateTime();
