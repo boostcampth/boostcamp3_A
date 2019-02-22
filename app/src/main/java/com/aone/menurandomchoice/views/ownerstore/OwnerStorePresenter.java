@@ -19,6 +19,7 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
     @Override
     public void loadStoreDetail(int storeIdx, boolean isOwner) {
+
         if(isOwner) {
             loadStoreDetailToOwner(storeIdx);
         } else {

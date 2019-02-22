@@ -15,6 +15,7 @@
     </data>
 
     <ScrollView
+        android:id="@+id/activity_owner_store_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

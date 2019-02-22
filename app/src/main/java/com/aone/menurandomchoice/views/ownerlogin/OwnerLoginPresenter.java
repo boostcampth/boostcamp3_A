@@ -2,6 +2,7 @@ package com.aone.menurandomchoice.views.ownerlogin;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.util.Log;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
@@ -40,6 +41,9 @@ public class OwnerLoginPresenter extends BasePresenter<OwnerLoginContract.View>
         getRepository().requestSignedUpCheck(userId, new NetworkResponseListener<LoginData>() {
             @Override
             public void onReceived(@NonNull LoginData loginData) {
+                if(getRepository().getStoreDetail() == null) {
+                    getRepository().addDefaultStoreDetail();
+                }
                 moveToOwnerStoreActivity(loginData);
             }
 

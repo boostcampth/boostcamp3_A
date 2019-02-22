@@ -12,4 +12,5 @@ public interface SQLiteDatabaseHelper {
 
     void updateStoreDetail(@NonNull final StoreDetail storeDetail);
 
+    String getUpdateTimeFromSQLite();
 }
