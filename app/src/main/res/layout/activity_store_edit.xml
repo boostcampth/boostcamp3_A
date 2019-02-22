@@ -56,10 +56,10 @@
                     android:layout_marginRight="@dimen/x_large_margin"
                     android:layout_marginTop="@dimen/small_margin"
                     android:lineSpacingExtra="5dp"
-                    android:text="@{storeDetail.getName()}"
+                    android:text="@{storeDetail.name}"
                     android:paddingLeft="@dimen/x_large_margin"
                     android:paddingRight="@dimen/x_large_margin"
-                    android:hint="가게이름을 적어주세요."
+                    android:hint="@string/activity_store_edit_store_name_hint"
                     android:maxLines="3"
                     android:background="@drawable/edit_text_round"/>
 
@@ -72,7 +72,7 @@
                     android:layout_marginStart="@dimen/x_large_margin"
                     android:orientation="horizontal"
                     android:gravity="start"
-                    android:onClick="@{() -> presenter.onStartTimeSetClick(storeDetail.getOpentime())}">
+                    android:onClick="@{() -> presenter.onStartTimeSetClick(storeDetail.opentime)}">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -89,7 +89,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/two_x_large_margin"
                         android:textSize="@dimen/x_large_text"
-                        android:text="@{storeDetail.getOpentime()}"/>
+                        android:hint="@string/activity_store_edit_default_starttime"
+                        android:text="@{storeDetail.opentime}"/>
 
                 </LinearLayout>
 
@@ -101,7 +102,7 @@
                     android:layout_marginLeft="@dimen/x_large_margin"
                     android:orientation="horizontal"
                     android:gravity="left"
-                    android:onClick="@{() -> presenter.onEndTimeSetClick(storeDetail.getClosetime())}">
+                    android:onClick="@{() -> presenter.onEndTimeSetClick(storeDetail.closetime)}">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -118,7 +119,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/two_x_large_margin"
                         android:textSize="@dimen/x_large_text"
-                        android:text="@{storeDetail.getClosetime()}"/>
+                        android:hint="@string/activity_store_edit_default_endtime"
+                        android:text="@{storeDetail.closetime}"/>
 
                 </LinearLayout>
 
@@ -244,9 +246,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    android:text="@{storeDetail.getAddress()}" />
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="@string/activity_store_edit_search_guide"
+                    android:text="@{storeDetail.address}" />
 
                 <RelativeLayout
                     android:id="@+id/map_view"
@@ -287,13 +291,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/middle_text"
-                    android:hint="상점에 대한 소개를 남겨주세요!"
+                    android:hint="@string/activity_store_edit_description_guide"
                     android:padding="@dimen/x_large_margin"
                     android:layout_margin="@dimen/x_large_margin"
                     android:background="@drawable/edit_text_round"
                     android:minLines="5"
                     android:maxLines="10"
-                    android:text="@{storeDetail.getDescription()}"
+                    android:text="@{storeDetail.description}"
                     android:gravity="start" />
 
             </LinearLayout>

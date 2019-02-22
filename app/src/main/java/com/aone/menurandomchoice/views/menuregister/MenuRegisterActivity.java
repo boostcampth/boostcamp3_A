@@ -139,35 +139,21 @@ public class MenuRegisterActivity
         getDataBinding().activityMenuRegisterNameEt.addTextChangedListener(new RappingTextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
-                MenuDetail menuDetail = getDataBinding().getMenuDetail();
-                if(menuDetail != null) {
-                    menuDetail.setName(editable.toString());
-                }
+                getPresenter().handlingInputtedMenuName(editable.toString());
             }
         });
 
         getDataBinding().activityMenuRegisterDescriptionEt.addTextChangedListener(new RappingTextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
-                MenuDetail menuDetail = getDataBinding().getMenuDetail();
-                if(menuDetail != null) {
-                    menuDetail.setDescription(editable.toString());
-                }
+                getPresenter().handlingInputtedDescription(editable.toString());
             }
         });
 
         getDataBinding().activityMenuRegisterPriceEt.addTextChangedListener(new RappingTextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
-                MenuDetail menuDetail = getDataBinding().getMenuDetail();
-                if(menuDetail != null) {
-                    String price = editable.toString();
-                    if(price.length() < 1) {
-                        menuDetail.setPrice(0);
-                    } else {
-                        menuDetail.setPrice(Integer.parseInt(price));
-                    }
-                }
+                getPresenter().handlingInputtedPrice(editable.toString());
             }
         });
 
@@ -210,6 +196,34 @@ public class MenuRegisterActivity
     public void showMenuDeleteButton() {
         getDataBinding().activityMenuRegisterDeleteBtn.setVisibility(View.VISIBLE);
         getDataBinding().activityMenuRegisterAddBtn.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showChangedMenuName(@NonNull String menuName) {
+        MenuDetail menuDetail = getDataBinding().getMenuDetail();
+        if(menuDetail != null) {
+            menuDetail.setName(menuName);
+        }
+    }
+
+    @Override
+    public void showChangedDescription(@NonNull String description) {
+        MenuDetail menuDetail = getDataBinding().getMenuDetail();
+        if(menuDetail != null) {
+            menuDetail.setDescription(description);
+        }
+    }
+
+    @Override
+    public void showChangedPrice(int price) {
+        MenuDetail menuDetail = getDataBinding().getMenuDetail();
+        if(menuDetail != null) {
+            menuDetail.setPrice(price);
+            if(price < 10) {
+                String inputtedText = getDataBinding().activityMenuRegisterPriceEt.getText().toString();
+                getDataBinding().activityMenuRegisterPriceEt.setSelection(inputtedText.length());
+            }
+        }
     }
 
     @Override

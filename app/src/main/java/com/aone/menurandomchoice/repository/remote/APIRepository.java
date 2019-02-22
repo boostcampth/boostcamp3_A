@@ -151,9 +151,13 @@ public class APIRepository implements APIHelper {
     @Override
     public void requestSaveStoreDetail(@NonNull StoreDetail storeInfo,
                                        @NonNull NetworkResponseListener<EmptyObject> listener) {
-        apiCreator.getApiInstance()
-                .createStoreDetailSaveRequestCall(storeInfo, MenuMapper.createRegisteredImageList(storeInfo))
-                .enqueue(new JMTCallback<>(listener));
+        if(NetworkUtil.isNetworkConnecting()) {
+            apiCreator.getApiInstance()
+                    .createStoreDetailSaveRequestCall(storeInfo, MenuMapper.createRegisteredImageList(storeInfo))
+                    .enqueue(new JMTCallback<>(listener));
+        } else {
+            listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
+        }
     }
 
 }

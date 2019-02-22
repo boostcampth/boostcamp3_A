@@ -62,7 +62,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/activity_menu_register_iv"
             app:layout_constraintEnd_toEndOf="@+id/activity_menu_register_iv" />
 
-        <!--android:onClick="@{()->presenter.handlingImageRegisterButtonClick()}"-->
         <EditText
             android:id="@+id/activity_menu_register_name_et"
             android:layout_width="0dp"
@@ -88,9 +87,9 @@
             android:layout_marginBottom="@dimen/middle_margin"
             android:hint="@string/activity_menu_register_guide_hint"
             android:inputType="text"
+            android:text="@{menuDetail.description}"
             android:textColor="@color/black"
             android:textSize="@dimen/activity_menu_register_text"
-            android:text="@{menuDetail.description}"
             app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_price_et"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -100,16 +99,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/middle_margin"
-            android:layout_marginRight="@dimen/middle_margin"
+            android:layout_marginRight="@dimen/small_margin"
             android:layout_marginBottom="@dimen/middle_margin"
             android:hint="@string/activity_menu_register_price_hint"
             android:inputType="number"
-            android:maxLength="15"
+            android:maxLength="9"
+            android:text="@{String.valueOf(menuDetail.price)}"
             android:textColor="@color/black"
             android:textSize="@dimen/activity_menu_register_text"
-            android:text="@{menuDetail.getPriceStr()}"
             app:layout_constraintBottom_toTopOf="@+id/activity_menu_register_recyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -123,6 +122,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/middle_margin"
+            android:text="@string/item_menu_select_price_tv"
+
+            android:textColor="@color/black"
+            android:textSize="@dimen/activity_menu_register_text"
+            app:fontFamily="@font/youth"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_menu_register_price_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/activity_menu_register_price_et" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
