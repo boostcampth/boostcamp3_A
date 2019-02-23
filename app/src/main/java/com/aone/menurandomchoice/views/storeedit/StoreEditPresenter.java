@@ -1,11 +1,14 @@
 package com.aone.menurandomchoice.views.storeedit;
 
+import android.view.View;
+
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
+import com.aone.menurandomchoice.utils.ClickUtil;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 
 import net.daum.mf.map.api.MapPOIItem;
@@ -66,7 +69,9 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
     }
 
     @Override
-    public void onMenuEditClick(MenuDetail menuDetail) {
+    public void onMenuEditClick(View view, MenuDetail menuDetail) {
+        ClickUtil.preventDuplicateClick(view);
+
         if(isAttachView()) {
             getView().moveToMenuEditPage(menuDetail);
         }

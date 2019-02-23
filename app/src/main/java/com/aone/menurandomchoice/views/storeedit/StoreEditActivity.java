@@ -14,6 +14,7 @@ import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityStoreEditBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
+import com.aone.menurandomchoice.utils.ClickUtil;
 import com.aone.menurandomchoice.utils.StringUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
@@ -142,6 +143,7 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
                 onBackPressed();
                 return true;
             case R.id.item_menu_store_edit_save:
+                ClickUtil.preventDuplicateClick(item);
                 getPresenter().saveStoreDetail(getDataBinding().getStoreDetail());
                 return true;
             default:

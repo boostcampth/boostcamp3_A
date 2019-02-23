@@ -57,7 +57,7 @@ public interface StoreEditContract {
 
         void onLocationSearchClick();
 
-        void onMenuEditClick(MenuDetail menuDetail);
+        void onMenuEditClick(android.view.View view, MenuDetail menuDetail);
 
         void saveStoreDetail(@Nullable StoreDetail storeDetail);
 
