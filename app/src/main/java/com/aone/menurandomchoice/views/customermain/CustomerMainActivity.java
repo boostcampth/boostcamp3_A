@@ -18,6 +18,7 @@ import com.aone.menurandomchoice.databinding.ActivityCustomerMainBinding;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.model.MenuLocationCamera;
 import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
+import com.aone.menurandomchoice.utils.ClickUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
@@ -370,7 +371,9 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     @Override
     protected CustomerMainContract.View getView() { return this; }
 
-    public void moveToLocationSearchPage() {
+    public void moveToLocationSearchPage(View view) {
+        ClickUtil.preventDuplicateClick(view);
+
         mMapView.removeAllCircles();
 
         Intent locationSearchIntent = new Intent(CustomerMainActivity.this
@@ -380,7 +383,8 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         startActivityForResult(locationSearchIntent,LOCATION_DATA);
     }
 
-    public void moveToMenuSelectPage() {
+    public void moveToMenuSelectPage(View view) {
+        ClickUtil.preventDuplicateClick(view);
         if(mMapView.getPOIItems().length > 1) {
             mMapView.removeAllCircles();
             Intent menuSelectIntent = new Intent(CustomerMainActivity.this

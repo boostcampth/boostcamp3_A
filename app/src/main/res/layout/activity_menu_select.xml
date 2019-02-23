@@ -28,7 +28,7 @@
             android:background="@drawable/item_menu_select_ok_selector"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{() -> presenter.handlingMenuSelectButtonClick()}"
+            android:onClick="@{(view) -> presenter.handlingMenuSelectButtonClick(view)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

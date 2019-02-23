@@ -22,7 +22,7 @@ public class MenuSelectActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setUpPresenterToDataBinding();
+        setUpActivityToDataBinding();
         setUpOverlapView();
         passedGetIntentInfoToPresenter();
     }
@@ -44,7 +44,7 @@ public class MenuSelectActivity
         return this;
     }
 
-    private void setUpPresenterToDataBinding() {
+    private void setUpActivityToDataBinding() {
         getDataBinding().setPresenter(getPresenter());
     }
 

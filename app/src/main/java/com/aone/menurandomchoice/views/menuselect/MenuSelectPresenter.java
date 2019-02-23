@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.menuselect;
 
 import android.text.TextUtils;
+import android.view.View;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
@@ -42,7 +43,9 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
     }
 
     @Override
-    public void handlingMenuSelectButtonClick() {
+    public void handlingMenuSelectButtonClick(View view) {
+        preventDuplicateClick(view);
+
         UserAccessInfo userAccessInfo = getUserAccessInfo();
         if(userAccessInfo != null) {
             moveToOwnerStoreActivity(userAccessInfo);
