@@ -116,7 +116,7 @@ public class DataRepository implements Repository {
                                                  @NonNull NetworkResponseListener<List<MenuDetail>> networkResponseListener) {
         apiHelper.requestMenuList(menuSearchRequest, networkResponseListener);
     }
-    
+
     @Override
     public void loadStoreDetail(final int storeIdx,
                                  @NonNull final NetworkResponseListener<StoreDetail> networkResponseListener) {
