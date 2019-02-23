@@ -73,7 +73,7 @@ public class MenuSelectActivity
     }
 
     private void passedGetIntentInfoToPresenter() {
-        MenuSearchRequest menuSearchRequest = getIntent().getParcelableExtra(getView().getAppContext().getString(R.string.activity_customer_main_extra_menu_data));
+        MenuSearchRequest menuSearchRequest = getIntent().getParcelableExtra(getString(R.string.activity_customer_main_extra_menu_data));
         getPresenter().requestMenuList(menuSearchRequest);
     }
 

@@ -1,6 +1,5 @@
 package com.aone.menurandomchoice.views.storeedit;
 
-import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
@@ -155,16 +154,6 @@ public class StoreEditPresenter extends BasePresenter<StoreEditContract.View> im
         marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
 
         return marker;
-    }
-
-    private void sendMessageToView(int resourceId) {
-        if(isAttachView()) {
-            String message = GlobalApplication
-                    .getGlobalApplicationContext()
-                    .getString(resourceId);
-
-            getView().showToastMessage(message);
-        }
     }
 
     private void viewFinish() {

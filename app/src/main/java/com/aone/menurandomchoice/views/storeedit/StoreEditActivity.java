@@ -14,6 +14,7 @@ import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityStoreEditBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
+import com.aone.menurandomchoice.utils.StringUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
 import com.aone.menurandomchoice.views.menuregister.MenuRegisterActivity;
@@ -49,11 +50,11 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
 
         setUpMapView();
 
-        Bundle locationData = getIntent().getBundleExtra(getView().getActivityContext().getString(R.string.activity_customer_main_xy));
+        Bundle locationData = getIntent().getBundleExtra(StringUtil.getString(R.string.activity_customer_main_xy));
         if(locationData != null) {
-            getPresenter().handlingReceivedMapInfo(locationData.getString(getView().getActivityContext().getString(R.string.activity_customer_main_address))
-                                                    , locationData.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_latitude))
-                                                    , locationData.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_longitude)));
+            getPresenter().handlingReceivedMapInfo(locationData.getString(getString(R.string.activity_customer_main_address))
+                                                    , locationData.getDouble(getString(R.string.activity_customer_main_latitude))
+                                                    , locationData.getDouble(getString(R.string.activity_customer_main_longitude)));
             getDataBinding()
                     .activityStoreEditTvAddress
                     .setText(locationData.getString("address"));
@@ -213,15 +214,15 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
     @Override
     public void moveToMenuEditPage(MenuDetail menuDetail) {
         Intent menuRegisterIntent = new Intent(StoreEditActivity.this, MenuRegisterActivity.class);
-        menuRegisterIntent.putExtra(getView().getActivityContext().getString(R.string.activity_store_edit_extra_menu_detail_info), menuDetail);
+        menuRegisterIntent.putExtra(getString(R.string.activity_store_edit_extra_menu_detail_info), menuDetail);
         startActivityForResult(menuRegisterIntent, REQUEST_CODE_MENU_REGISTER);
     }
 
     @Override
     public void moveToLocationSearchPage() {
         Intent locationSearchIntent = new Intent(StoreEditActivity.this, LocationSearchActivity.class);
-        locationSearchIntent.putExtra(getView().getActivityContext().getString(R.string.activity_store_edit_request_location_search)
-                                    , getView().getActivityContext().getString(R.string.activity_store_edit_descriptor));
+        locationSearchIntent.putExtra(getString(R.string.activity_store_edit_request_location_search),
+                getString(R.string.activity_store_edit_descriptor));
         startActivity(locationSearchIntent);
     }
 
@@ -303,7 +304,7 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
         TimePickerFragment timePickerFragment = new TimePickerFragment();
         timePickerFragment.setArguments(bundle);
         timePickerFragment.setPresenter(getPresenter());
-        timePickerFragment.show(getSupportFragmentManager(), getView().getAppContext().getString(R.string.activity_store_edit_timepicker));
+        timePickerFragment.show(getSupportFragmentManager(), getString(R.string.activity_store_edit_timepicker));
     }
 
 }

@@ -110,7 +110,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
                 , menuLocationCamera.getLongitude());
 
         mCustomMarker = new MapPOIItem();
-        mCustomMarker.setItemName(getView().getActivityContext().getString(R.string.app_name));
+        mCustomMarker.setItemName(getString(R.string.app_name));
         mCustomMarker.setMapPoint(mapPoint);
 
         mCustomMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
@@ -378,8 +378,8 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
         Intent locationSearchIntent = new Intent(CustomerMainActivity.this
                                                 , LocationSearchActivity.class);
-        locationSearchIntent.putExtra(getView().getActivityContext().getString(R.string.activity_store_edit_request_location_search)
-                                    , getView().getActivityContext().getString(R.string.activity_customer_main_descriptor));
+        locationSearchIntent.putExtra(getString(R.string.activity_store_edit_request_location_search)
+                                    , getString(R.string.activity_customer_main_descriptor));
         startActivityForResult(locationSearchIntent,LOCATION_DATA);
     }
 
@@ -393,7 +393,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
             String category = getPresenter().getSelectedCategory();
 
             MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
-            menuSelectIntent.putExtra(getView().getActivityContext().getString(R.string.activity_customer_main_extra_menu_data)
+            menuSelectIntent.putExtra(getString(R.string.activity_customer_main_extra_menu_data)
                                     , new MenuSearchRequest(mapPointGeo.latitude
                                                             , mapPointGeo.longitude
                                                             , radius
@@ -401,7 +401,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
             startActivity(menuSelectIntent);
         } else {
-            showToastMessage(getView().getActivityContext().getString(R.string.activity_customer_main_request_error));
+            showToastMessage(getString(R.string.activity_customer_main_request_error));
         }
     }
 

@@ -1,20 +1,15 @@
 package com.aone.menurandomchoice.views.base;
 
-import android.os.Handler;
-import android.view.View;
-
 import com.aone.menurandomchoice.repository.DataRepository;
 import com.aone.menurandomchoice.repository.Repository;
+import com.aone.menurandomchoice.utils.StringUtil;
 
 import androidx.annotation.NonNull;
 
 public class BasePresenter<V extends BaseContract.View> implements BaseContract.Presenter<V> {
 
-    private static final int PREVENT_DUPLICATE_DELAY = 200;
-
     private V view;
     private Repository repository;
-    protected Handler handler;
 
     protected BasePresenter() {
         setUp();
@@ -22,7 +17,6 @@ public class BasePresenter<V extends BaseContract.View> implements BaseContract.
 
     private void setUp() {
         repository = DataRepository.getInstance();
-        handler = new Handler();
     }
 
     @Override
@@ -61,14 +55,11 @@ public class BasePresenter<V extends BaseContract.View> implements BaseContract.
         }
     }
 
-    protected void preventDuplicateClick(final View view) {
-        view.setEnabled(false);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                view.setEnabled(true);
-            }
-        }, PREVENT_DUPLICATE_DELAY);
+    protected void sendMessageToView(int resourceId) {
+        if(isAttachView()) {
+            String errorMessage = StringUtil.getString(resourceId);
+            getView().showToastMessage(errorMessage);
+        }
     }
 
 }

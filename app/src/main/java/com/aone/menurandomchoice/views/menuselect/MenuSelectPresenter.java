@@ -10,6 +10,8 @@ import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
+import com.aone.menurandomchoice.utils.ClickUtil;
+import com.aone.menurandomchoice.utils.StringUtil;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.menuselect.adapter.MenuSelectOverlapViewAdapterContract;
 
@@ -32,7 +34,7 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
             requestMenuDetailListToRepository(menuSearchRequest);
         } else {
             hideProgressBarOfView();
-            sendErrorMessageToView(R.string.item_menu_select_system_error);
+            sendMessageToView(R.string.item_menu_select_system_error);
             finishView();
         }
     }
@@ -44,13 +46,13 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
 
     @Override
     public void handlingMenuSelectButtonClick(View view) {
-        preventDuplicateClick(view);
+        ClickUtil.preventDuplicateClick(view);
 
         UserAccessInfo userAccessInfo = getUserAccessInfo();
         if(userAccessInfo != null) {
             moveToOwnerStoreActivity(userAccessInfo);
         } else {
-            sendErrorMessageToView(R.string.item_menu_select_error);
+            sendMessageToView(R.string.item_menu_select_error);
         }
     }
 
@@ -76,7 +78,7 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
             @Override
             public void onError(JMTErrorCode errorCode) {
                 hideProgressBarOfView();
-                sendErrorMessageToView(errorCode.getStringResourceId());
+                sendMessageToView(errorCode.getStringResourceId());
                 finishView();
             }
         });
@@ -101,13 +103,6 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
         }
     }
 
-    private void sendErrorMessageToView(int resourceId) {
-        if(isAttachView()) {
-            String errorMessage = GlobalApplication.getGlobalApplicationContext().getString(resourceId);
-            getView().showToastMessage(errorMessage);
-        }
-    }
-
     private void finishView() {
         if(isAttachView()) {
             getView().finish();
@@ -115,9 +110,7 @@ public class MenuSelectPresenter extends BasePresenter<MenuSelectContract.View>
     }
 
     private void filteringCategoryOfRequest(MenuSearchRequest menuSearchRequest) {
-        String removeWord = GlobalApplication
-                .getGlobalApplicationContext()
-                .getString(R.string.arrays_category_all_food);
+        String removeWord = StringUtil.getString(R.string.arrays_category_all_food);
 
         if(removeWord.equals(menuSearchRequest.getCategory())) {
             menuSearchRequest.removeCategory();

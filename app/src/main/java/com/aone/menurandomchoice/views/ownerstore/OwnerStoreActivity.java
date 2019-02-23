@@ -14,6 +14,7 @@ import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.model.UserAccessInfo;
+import com.aone.menurandomchoice.utils.ClickUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
@@ -59,14 +60,12 @@ public class OwnerStoreActivity
         getPresenter().loadStoreDetail(storeIdx, isOwner);
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
 
         detachMapView();
     }
-
 
     @Override
     protected void onStop() {
@@ -80,6 +79,7 @@ public class OwnerStoreActivity
         getMenuInflater().inflate(R.menu.item_action_bar, menu);
 
         MenuItem edit = menu.findItem(R.id.item_action_bar_edit);
+
         if(isOwner) {
              setLogoutVisible(true);
              edit.setVisible(true);
@@ -98,6 +98,7 @@ public class OwnerStoreActivity
                 onBackPressed();
                 return true;
             case R.id.item_action_bar_edit:
+                ClickUtil.preventDuplicateClick(item);
                 moveToOwnerEditPage(getDataBinding().getStoreDetail());
                 return true;
             default:

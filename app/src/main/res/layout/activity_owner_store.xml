@@ -33,7 +33,7 @@
                 android:background="@color/white"
                 android:paddingTop="@dimen/large_padding"
                 android:paddingRight="@dimen/large_padding"
-                android:onClick="@{() -> presenter.onLogoutClick()}"
+                android:onClick="@{(view) -> presenter.onLogoutClick(view)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/activity_owner_store_ll_name_time"
