@@ -111,7 +111,7 @@
         </LinearLayout>
 
         <ProgressBar
-            android:id="@+id/item_menu_select_view_progress_bar"
+            android:id="@+id/item_menu_select_progress_bar"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
