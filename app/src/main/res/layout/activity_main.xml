@@ -16,6 +16,20 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
+        <View
+            android:id="@+id/customer_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:background="@color/white"
+            android:onClick="@{() -> presenter.handlingCustomerEnterButtonClick()}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_main_center_guide_line"
+            app:layout_constraintVertical_bias="0.0" />
+
         <TextView
             android:id="@+id/activity_main_customer_title_tv"
             android:layout_width="wrap_content"
@@ -49,7 +63,6 @@
             android:text="@string/activity_main_button_start"
             android:textColor="@android:color/white"
             android:textSize="@dimen/activity_main_button"
-            android:onClick="@{() -> presenter.handlingCustomerEnterButtonClick()}"
             android:textStyle="bold"
             app:fontFamily="@font/youth"
             app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +160,9 @@
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:background="@color/reddish"
+            android:onClick="@{() -> presenter.handlingOwnerLoginButtonClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -189,7 +204,6 @@
             android:textColor="@color/reddish"
             android:textSize="@dimen/activity_main_button"
             android:textStyle="bold"
-            android:onClick="@{() -> presenter.handlingOwnerLoginButtonClick()}"
             app:fontFamily="@font/youth"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

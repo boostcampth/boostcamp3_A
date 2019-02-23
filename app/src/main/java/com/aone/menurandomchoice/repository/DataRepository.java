@@ -36,8 +36,6 @@ public class DataRepository implements Repository {
     private APIHelper apiHelper;
     private SQLiteDatabaseHelper SQLiteDatabaseHelper;
 
-    private boolean isUpdated = false;
-
     @NonNull
     public static Repository getInstance() {
         if (repository == null) {
@@ -108,9 +106,9 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void checkStoreUpdated(int storeIdx,
+    public void requestUpdateTime(int storeIdx,
                                   @NonNull NetworkResponseListener<UpdateTime> networkResponseListener) {
-        apiHelper.checkStoreUpdated(storeIdx, networkResponseListener);
+        apiHelper.requestUpdateTime(storeIdx, networkResponseListener);
     }
 
     @Override
@@ -119,50 +117,45 @@ public class DataRepository implements Repository {
         apiHelper.requestMenuList(menuSearchRequest, networkResponseListener);
     }
 
+
+    //loadStoredetail에 업주랑 사용자 정보 다 갖고와서 requeststoredetail에서 처리
     @Override
     public void loadStoreDetail(final int storeIdx,
-                                final @NonNull NetworkResponseListener<StoreDetail> networkResponseListener) {
+                                 @NonNull final NetworkResponseListener<StoreDetail> networkResponseListener) {
 
-        final StoreDetail SQLiteStoreDetail = getStoreDetail();
-        final String SQLiteUpdateTime = SQLiteStoreDetail.getUpdateTime();
+        requestUpdateTime(storeIdx, new NetworkResponseListener<UpdateTime>() {
+            @Override
+            public void onReceived(@NonNull UpdateTime response) {
+                String serverUpdateTime = response.getUpdateTime();
 
-        if(isUpdated) {
-            networkResponseListener.onReceived(SQLiteStoreDetail);
-        } else {
-            checkStoreUpdated(storeIdx, new NetworkResponseListener<UpdateTime>() {
+                if (isSameLocalUpdateTime(serverUpdateTime)) {
+                    StoreDetail localStoreDetail = getStoreDetail();
+                    networkResponseListener.onReceived(localStoreDetail);
+                } else {
+                    requestStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
+                        @Override
+                        public void onReceived(@NonNull StoreDetail serverStoreDetail) {
+                            updateStoreDetail(serverStoreDetail);
+                            networkResponseListener.onReceived(serverStoreDetail);
+                        }
 
-                @Override
-                public void onReceived(@NonNull UpdateTime response) {
-                    String ServerUpdateTime = response.getUpdateTime();
-
-                    if (ServerUpdateTime.equals(SQLiteUpdateTime)) {
-                        networkResponseListener.onReceived(SQLiteStoreDetail);
-                    } else {
-                        requestStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
-                            @Override
-                            public void onReceived(@NonNull StoreDetail response) {
-                                updateStoreDetail(response);
-                                networkResponseListener.onReceived(response);
-                            }
-
-                            @Override
-                            public void onError(JMTErrorCode errorCode) {
-                                isUpdated = false;
-                                networkResponseListener.onError(errorCode);
-                            }
-                        });
-                    }
-
-                    isUpdated = true;
+                        @Override
+                        public void onError(JMTErrorCode errorCode) {
+                            networkResponseListener.onError(errorCode);
+                        }
+                    });
                 }
+            }
+            @Override
+            public void onError(JMTErrorCode errorCode) {
+                networkResponseListener.onError(errorCode);
+            }
+        });
+    }
 
-                @Override
-                public void onError(JMTErrorCode errorCode) {
-                    networkResponseListener.onError(errorCode);
-                }
-            });
-        }
-
+    private boolean isSameLocalUpdateTime(String serverUpdateTime) {
+        String localUpdateTime = getUpdateTime();
+        return serverUpdateTime.equals(localUpdateTime);
     }
 
     @Override
@@ -181,11 +174,16 @@ public class DataRepository implements Repository {
     }
 
     @Override
+    public String getUpdateTime() {
+        return SQLiteDatabaseHelper.getUpdateTime();
+    }
+
+    @Override
     public void requestSaveStoreDetail(@NonNull StoreDetail storeDetail, @NonNull NetworkResponseListener<EmptyObject> networkResponseListener) {
         String nowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
         storeDetail.setUpdateTime(nowTime);
-        isUpdated = false;
 
+        updateStoreDetail(storeDetail);
         apiHelper.requestSaveStoreDetail(storeDetail, networkResponseListener);
     }
 
