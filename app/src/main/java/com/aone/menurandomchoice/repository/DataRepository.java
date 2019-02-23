@@ -144,6 +144,7 @@ public class DataRepository implements Repository {
                     });
                 }
             }
+
             @Override
             public void onError(JMTErrorCode errorCode) {
                 networkResponseListener.onError(errorCode);

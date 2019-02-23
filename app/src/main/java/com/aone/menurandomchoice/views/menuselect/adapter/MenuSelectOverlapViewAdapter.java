@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.views.menuselect.adapter.viewholder.MenuSelectOverlapViewViewHolder;
-import com.aone.menurandomchoice.views.menuselect.overlapview.adapter.OverlapViewAdapter;
+import com.view.loop.overlap.why.yoon.ch.overlaploopviewlib.adapter.OverlapLoopViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class MenuSelectOverlapViewAdapter
-        extends OverlapViewAdapter<MenuSelectOverlapViewViewHolder>
+        extends OverlapLoopViewAdapter<MenuSelectOverlapViewViewHolder>
         implements MenuSelectOverlapViewAdapterContract.Model {
 
     private List<MenuDetail> itemList;
