@@ -14,11 +14,11 @@ import androidx.databinding.Bindable;
 
 public class MenuDetail extends BaseObservable implements Parcelable {
 
-    private String name;
+    private String name = "";
     private int price;
-    private String photoUrl;
-    private String description;
-    private String category;
+    private String photoUrl = "";
+    private String description = "";
+    private String category = "";
     private int sequence;
     private int storeIdx;
 
@@ -74,12 +74,6 @@ public class MenuDetail extends BaseObservable implements Parcelable {
 
     @Bindable
     public String getName() {
-        if(TextUtils.isEmpty(name)) {
-            name = GlobalApplication
-                    .getGlobalApplicationContext()
-                    .getString(R.string.layout_menu_detail_not_menu);
-        }
-
         return name;
     }
 

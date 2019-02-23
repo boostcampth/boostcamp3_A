@@ -120,7 +120,9 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
         Cursor cursor = db.rawQuery(STOREDETAIL_SELECT_QUERY, null);
         
         try {
-            while(cursor.moveToNext()) {
+            if (cursor != null && cursor.getCount() != 0) {
+                cursor.moveToFirst();
+
                 storeDetail.setName(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_NAME.getColumnName())));
                 storeDetail.setOpentime(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_OPENTIME.getColumnName())));
                 storeDetail.setClosetime(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_CLOSETIME.getColumnName())));
@@ -130,6 +132,8 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
                 storeDetail.setLongitude(cursor.getDouble(cursor.getColumnIndex(StoreTable.STORES_LONGITUDE.getColumnName())));
                 storeDetail.setUpdateTime(cursor.getString(cursor.getColumnIndex(StoreTable.STORES_UPDATETIME.getColumnName())));
                 storeDetail.setMenuList(getMenuDetailList());
+            } else {
+                storeDetail = null;
             }
         } catch (Exception e) {
             Log.d(TAG, "Error Get Store Detail");
@@ -152,15 +156,20 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
         Cursor cursor = db.rawQuery(MenuDetails_SELECT_QUERY, null);
 
         try {
-            while(cursor.moveToNext()) {
-                MenuDetail menuDetail = new MenuDetail();
-                menuDetail.setName(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_NAME.getColumnName())));
-                menuDetail.setPhotoUrl(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_PHOTO_URL.getColumnName())));
-                menuDetail.setPrice(cursor.getInt(cursor.getColumnIndex(MenuTable.MENU_PRICE.getColumnName())));
-                menuDetail.setCategory(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_CATEGORY.getColumnName())));
-                menuDetail.setDescription(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_DESCRIPTION.getColumnName())));
-                menuDetail.setSequence(cursor.getInt(cursor.getColumnIndex(MenuTable.MENU_SEQUENCE.getColumnName())));
-                menuDetails.add(menuDetail);
+            if (cursor != null && cursor.getCount() != 0) {
+                cursor.moveToFirst();
+                do {
+                    MenuDetail menuDetail = new MenuDetail();
+                    menuDetail.setName(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_NAME.getColumnName())));
+                    menuDetail.setPhotoUrl(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_PHOTO_URL.getColumnName())));
+                    menuDetail.setPrice(cursor.getInt(cursor.getColumnIndex(MenuTable.MENU_PRICE.getColumnName())));
+                    menuDetail.setCategory(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_CATEGORY.getColumnName())));
+                    menuDetail.setDescription(cursor.getString(cursor.getColumnIndex(MenuTable.MENU_DESCRIPTION.getColumnName())));
+                    menuDetail.setSequence(cursor.getInt(cursor.getColumnIndex(MenuTable.MENU_SEQUENCE.getColumnName())));
+                    menuDetails.add(menuDetail);
+                }  while (cursor.moveToNext());
+            } else {
+                menuDetails = null;
             }
         } catch (Exception e) {
             Log.d(TAG, "Error Get Menu Detail");
@@ -220,4 +229,30 @@ public class SQLiteDatabaseRepository extends SQLiteOpenHelper implements SQLite
         }
     }
 
+    @Override
+    public String getUpdateTimeFromSQLite() {
+
+        String STOREUPDATETIME_SELECT_QUERY = String.format("SELECT %s FROM %s",
+                StoreTable.STORES_UPDATETIME.getColumnName(), StoreTable.TABLE_NAME.getColumnName());
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(STOREUPDATETIME_SELECT_QUERY, null);
+
+        String updateTime = "";
+
+        try {
+            if (cursor != null && cursor.getCount() != 0) {
+                cursor.moveToFirst();
+
+                updateTime = cursor.getString(cursor.getColumnIndex(StoreTable.STORES_UPDATETIME.getColumnName()));
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error Get Store UpdateTime");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return updateTime;
+    }
 }

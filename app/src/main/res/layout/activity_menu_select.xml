@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView
+        <com.view.loop.overlap.why.yoon.ch.overlaploopviewlib.OverlapLoopView
             android:id="@+id/activity_menu_select_overlap_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -44,9 +44,7 @@
             app:layout_constraintBottom_toTopOf="@+id/activity_menu_select_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView>
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

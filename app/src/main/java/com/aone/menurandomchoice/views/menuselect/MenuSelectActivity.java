@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.aone.menurandomchoice.R;
@@ -12,7 +11,6 @@ import com.aone.menurandomchoice.databinding.ActivityMenuSelectBinding;
 import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseActivity;
-import com.aone.menurandomchoice.views.customermain.CustomerMainActivity;
 import com.aone.menurandomchoice.views.menuselect.adapter.MenuSelectOverlapViewAdapter;
 import com.aone.menurandomchoice.views.ownerstore.OwnerStoreActivity;
 
@@ -52,7 +50,7 @@ public class MenuSelectActivity
 
     private void setUpOverlapView() {
         MenuSelectOverlapViewAdapter menuSelectOverlapViewAdapter = new MenuSelectOverlapViewAdapter();
-        getDataBinding().activityMenuSelectOverlapView.setOverlapViewAdapter(menuSelectOverlapViewAdapter);
+        getDataBinding().activityMenuSelectOverlapView.setOverlapLoopViewAdapter(menuSelectOverlapViewAdapter);
         getPresenter().setAdapterModel(menuSelectOverlapViewAdapter);
     }
 

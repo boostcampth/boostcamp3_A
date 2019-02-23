@@ -52,19 +52,23 @@
     <string name="activity_owner_detail_name_label">가게이름</string>
     <string name="activity_owner_detail_time_label">운영시간</string>
     <string name="activity_owner_detail_logout_label">로그아웃</string>
+    <string name="activity_owner_detail_not_menu_page">메뉴가 존재하지 않습니다</string>
 
     <!-- activity_store_edit-->
     <string name="activity_store_edit_label">가게 편집</string>
     <string name="activity_store_edit_starttime_label">영업 시작시간</string>
     <string name="activity_store_edit_endtime_label">영업 종료시간</string>
-    <string name="activity_store_edit_default_starttime">00:00</string>
-    <string name="activity_store_edit_default_endtime">00:00</string>
+    <string name="activity_store_edit_default_starttime">시작시간을 입력하세요</string>
+    <string name="activity_store_edit_default_endtime">종료시간을 입력하세요</string>
+    <string name="activity_store_edit_store_name_hint">가게 이름을 입력해주세요</string>
     <string name="activity_store_edit_store_info_received_fail">앱에서 에러가 발생했습니다. 개발자에게 알려주세요</string>
     <string name="activity_store_edit_save_success">저장에 성공했습니다</string>
     <string name="activity_store_edit_extra_menu_detail_info">EXTRA_MENU_DETAIL_INFO</string>
     <string name="activity_store_edit_request_location_search">REQUEST_LOCATION_SEARCH</string>
     <string name="activity_store_edit_descriptor">STORE_EDIT</string>
     <string name="activity_store_edit_timepicker">timepicker</string>
+    <string name="activity_store_edit_search_guide">등록된 주소가 없습니다</string>
+    <string name="activity_store_edit_description_guide">가게에 대한 소개를 입력해주세요</string>
 
     <!--action bar menu -->
     <string name="item_action_bar_edit">편집</string>
@@ -133,6 +137,7 @@
     <string name="activity_customer_main_descriptor">CUSTOMER_MAIN</string>
     <string name="activity_customer_main_extra_menu_data">EXTRA_MENU_DATA</string>
     <string name="presenter_customer_main_fail_geo">주소를 찾을 수 없는 지역입니다</string>
+
     <!-- permission -->
     <string name="permission_request_guide">사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.</string>
     <string name="permission_denied_guide">[설정] > [권한] 에서 권한을 허용할 수 있습니다.</string>

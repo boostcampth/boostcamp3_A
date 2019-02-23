@@ -5,12 +5,12 @@ import android.view.View;
 import com.aone.menurandomchoice.databinding.ItemMenuSelectViewBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.utils.GlideUtil;
-import com.aone.menurandomchoice.views.menuselect.overlapview.OverlapView;
+import com.view.loop.overlap.why.yoon.ch.overlaploopviewlib.OverlapLoopView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
-public class MenuSelectOverlapViewViewHolder extends OverlapView.ViewHolder {
+public class MenuSelectOverlapViewViewHolder extends OverlapLoopView.ViewHolder {
 
     private ItemMenuSelectViewBinding itemMenuSelectViewBinding;
 
@@ -23,7 +23,8 @@ public class MenuSelectOverlapViewViewHolder extends OverlapView.ViewHolder {
     public void setItem(MenuDetail menuDetail) {
         itemMenuSelectViewBinding.setMenuDetail(menuDetail);
         GlideUtil.loadImageWithSkipCache(itemMenuSelectViewBinding.itemMenuSelectIv,
-                menuDetail.getPhotoUrl(), itemMenuSelectViewBinding.itemMenuSelectViewProgressBar);
+                menuDetail.getPhotoUrl(),
+                itemMenuSelectViewBinding.itemMenuSelectProgressBar);
     }
 
 }

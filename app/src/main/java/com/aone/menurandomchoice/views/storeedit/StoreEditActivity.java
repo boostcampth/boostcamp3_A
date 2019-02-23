@@ -40,7 +40,7 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
         setUpPresenterToDataBinding();
         setUpMapView();
         setUpEditTextChangeListener();
-        passedGetIntentToPresenter();
+        passedIntentToPresenter();
     }
 
     @Override
@@ -285,7 +285,7 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
         finish();
     }
 
-    private void passedGetIntentToPresenter() {
+    private void passedIntentToPresenter() {
         StoreDetail storeDetail = getIntent().getParcelableExtra(OwnerStoreActivity.EXTRA_STORE);
         getPresenter().handlingReceivedStoreDetail(storeDetail);
     }

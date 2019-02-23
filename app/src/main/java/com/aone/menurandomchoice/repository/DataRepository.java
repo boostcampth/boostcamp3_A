@@ -105,10 +105,9 @@ public class DataRepository implements Repository {
         apiHelper.requestStoreDetail(storeIdx, networkResponseListener);
     }
 
-    @Override
-    public void requestUpdateTime(int storeIdx,
+    public void requestUpdateTimeFromServer(int storeIdx,
                                   @NonNull NetworkResponseListener<UpdateTime> networkResponseListener) {
-        apiHelper.requestUpdateTime(storeIdx, networkResponseListener);
+        apiHelper.requestUpdateTimeFromServer(storeIdx, networkResponseListener);
     }
 
     @Override
@@ -123,7 +122,7 @@ public class DataRepository implements Repository {
     public void loadStoreDetail(final int storeIdx,
                                  @NonNull final NetworkResponseListener<StoreDetail> networkResponseListener) {
 
-        requestUpdateTime(storeIdx, new NetworkResponseListener<UpdateTime>() {
+        requestUpdateTimeFromServer(storeIdx, new NetworkResponseListener<UpdateTime>() {
             @Override
             public void onReceived(@NonNull UpdateTime response) {
                 String serverUpdateTime = response.getUpdateTime();
@@ -153,8 +152,9 @@ public class DataRepository implements Repository {
         });
     }
 
+
     private boolean isSameLocalUpdateTime(String serverUpdateTime) {
-        String localUpdateTime = getUpdateTime();
+        String localUpdateTime = getUpdateTimeFromSQLite();
         return serverUpdateTime.equals(localUpdateTime);
     }
 
@@ -174,8 +174,8 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public String getUpdateTime() {
-        return SQLiteDatabaseHelper.getUpdateTime();
+    public String getUpdateTimeFromSQLite() {
+        return SQLiteDatabaseHelper.getUpdateTimeFromSQLite();
     }
 
     @Override

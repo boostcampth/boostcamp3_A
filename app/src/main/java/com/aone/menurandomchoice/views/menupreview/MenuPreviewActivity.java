@@ -2,16 +2,14 @@ package com.aone.menurandomchoice.views.menupreview;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.databinding.ActivityMenuPreviewBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.utils.GlideUtil;
 
@@ -19,31 +17,23 @@ public class MenuPreviewActivity extends AppCompatActivity {
 
     public static final String EXTRA_MENU_DETAIL_ITEM = "EXTRA_MENU_DETAIL_ITEM";
 
-    /**
-     * 이 코드들은 단순 확인을 위한 샘플코드입니다.
-     */
+    private ActivityMenuPreviewBinding activityMenuPreviewBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_preview);
 
-        View view = findViewById(R.id.preview_item_layout);
-        ImageView iv = view.findViewById(R.id.item_menu_select_iv);
-        TextView title = view.findViewById(R.id.item_menu_select_name_tv);
-        TextView guide = view.findViewById(R.id.item_menu_select_description_tv);
-        TextView price = view.findViewById(R.id.item_menu_select_price_tv);
-        TextView category = view.findViewById(R.id.item_menu_select_category_tv);
-        ProgressBar progressBar = view.findViewById(R.id.item_menu_select_view_progress_bar);
-
-        Intent intent = getIntent();
-        MenuDetail menuDetail = intent.getParcelableExtra(EXTRA_MENU_DETAIL_ITEM);
-        GlideUtil.loadImageWithSkipCache(iv, menuDetail.getPhotoUrl(), progressBar);
-        title.setText(menuDetail.getName());
-        guide.setText(menuDetail.getDescription());
-        price.setText(menuDetail.getPrice()+"");
-        category.setText(menuDetail.getCategory()+"");
-
+        setUpDataBinding();
+        processPassedIntent();
         setUpBackArrow();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        setPreviewImage();
+
     }
 
     private void setUpBackArrow() {
@@ -51,6 +41,16 @@ public class MenuPreviewActivity extends AppCompatActivity {
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void setUpDataBinding() {
+        activityMenuPreviewBinding = DataBindingUtil.setContentView(this, R.layout.activity_menu_preview);
+    }
+
+    private void processPassedIntent() {
+        Intent intent = getIntent();
+        MenuDetail menuDetail = intent.getParcelableExtra(EXTRA_MENU_DETAIL_ITEM);
+        activityMenuPreviewBinding.setMenuDetail(menuDetail);
     }
 
     @Override
@@ -62,4 +62,11 @@ public class MenuPreviewActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void setPreviewImage() {
+        GlideUtil.loadImageWithSkipCache(activityMenuPreviewBinding.previewItemLayout.itemMenuSelectIv,
+                activityMenuPreviewBinding.getMenuDetail().getPhotoUrl(),
+                activityMenuPreviewBinding.previewItemLayout.itemMenuSelectProgressBar);
+    }
+    
 }

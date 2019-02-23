@@ -15,7 +15,6 @@ import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseActivity;
-import com.aone.menurandomchoice.views.main.MainActivity;
 import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
 
@@ -56,7 +55,8 @@ public class OwnerStoreActivity
         super.onStart();
 
         initMapView();
-        getPresenter().loadStoreDetail(storeIdx);
+        getDataBinding().activityOwnerStoreScroll.scrollTo(0, 0);
+        getPresenter().loadStoreDetail(storeIdx, isOwner);
     }
 
 
@@ -180,7 +180,6 @@ public class OwnerStoreActivity
 
         setMapView(storeDetail.getLatitude(), storeDetail.getLongitude(), storeDetail.getName());
     }
-
 
 
     @SuppressLint("ClickableViewAccessibility")

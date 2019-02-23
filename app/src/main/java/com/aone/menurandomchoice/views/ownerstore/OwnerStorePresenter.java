@@ -1,6 +1,7 @@
 package com.aone.menurandomchoice.views.ownerstore;
 
 import android.content.DialogInterface;
+import android.text.TextUtils;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
@@ -17,32 +18,30 @@ import androidx.appcompat.app.AlertDialog;
 public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> implements  OwnerStoreContract.Presenter {
 
     @Override
-    public void loadStoreDetail(int storeIdx) {
-        getRepository().loadStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
-            @Override
-            public void onReceived(@NonNull StoreDetail storeDetail) {
-                if (isAttachView()) {
-                    getView().showStoreDetail(storeDetail);
-                }
-            }
+    public void loadStoreDetail(int storeIdx, boolean isOwner) {
 
-            @Override
-            public void onError(JMTErrorCode errorCode) {
-                sendMessageToView(errorCode.getStringResourceId());
-            }
-        });
+        if(isOwner) {
+            loadStoreDetailToOwner(storeIdx);
+        } else {
+            loadStoreDetailToCustomer(storeIdx);
+        }
+
     }
 
     @Override
     public void onMenuDetailClick(MenuDetail menuDetail) {
-        if(menuDetail.getPhotoUrl() == null)
-            return;
-        getView().moveToMenuPreviewPage(menuDetail);
+        if(TextUtils.isEmpty(menuDetail.getPhotoUrl())) {
+            sendMessageToView(R.string.activity_owner_detail_not_menu_page);
+        } else {
+            getView().moveToMenuPreviewPage(menuDetail);
+        }
     }
 
     @Override
     public void onMapClick(double latitude, double longitude) {
-        getView().moveToMapDetailPage(latitude, longitude);
+        if(isAttachView()) {
+            getView().moveToMapDetailPage(latitude, longitude);
+        }
     }
 
     @Override
@@ -105,4 +104,35 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
         }
     }
 
+    public void loadStoreDetailToOwner(int storeIdx) {
+        getRepository().loadStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
+            @Override
+            public void onReceived(@NonNull StoreDetail storeDetail) {
+                if (isAttachView()) {
+                    getView().showStoreDetail(storeDetail);
+                }
+            }
+
+            @Override
+            public void onError(JMTErrorCode errorCode) {
+                sendMessageToView(errorCode.getStringResourceId());
+            }
+        });
+    }
+
+    public void loadStoreDetailToCustomer(int storeIdx) {
+        getRepository().requestStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
+            @Override
+            public void onReceived(@NonNull StoreDetail response) {
+                if(isAttachView()) {
+                    getView().showStoreDetail(response);
+                }
+            }
+
+            @Override
+            public void onError(JMTErrorCode errorCode) {
+                sendMessageToView(errorCode.getStringResourceId());
+            }
+        });
+    }
 }
