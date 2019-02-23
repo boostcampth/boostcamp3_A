@@ -2,6 +2,7 @@ package com.aone.menurandomchoice.utils;
 
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aone.menurandomchoice.R;
