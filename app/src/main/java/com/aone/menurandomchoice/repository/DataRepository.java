@@ -105,6 +105,7 @@ public class DataRepository implements Repository {
         apiHelper.requestStoreDetail(storeIdx, networkResponseListener);
     }
 
+    @Override
     public void requestUpdateTimeFromServer(int storeIdx,
                                   @NonNull NetworkResponseListener<UpdateTime> networkResponseListener) {
         apiHelper.requestUpdateTimeFromServer(storeIdx, networkResponseListener);
@@ -115,9 +116,7 @@ public class DataRepository implements Repository {
                                                  @NonNull NetworkResponseListener<List<MenuDetail>> networkResponseListener) {
         apiHelper.requestMenuList(menuSearchRequest, networkResponseListener);
     }
-
-
-    //loadStoredetail에 업주랑 사용자 정보 다 갖고와서 requeststoredetail에서 처리
+    
     @Override
     public void loadStoreDetail(final int storeIdx,
                                  @NonNull final NetworkResponseListener<StoreDetail> networkResponseListener) {
