@@ -1,13 +1,17 @@
 package com.aone.menurandomchoice.views.customermain;
 
 import android.Manifest;
+import android.content.Context;
+import android.location.LocationManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.mapper.MenuMapper;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
+import com.aone.menurandomchoice.utils.NetworkUtil;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
@@ -122,6 +126,18 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
 
     private void checkPermissionWithTedPermission() {
         if(isAttachView()) {
+
+            if(!NetworkUtil.isNetworkConnecting()) {
+                Toast.makeText(getView().getActivityContext(),"Check Network", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            LocationManager locationManager = (LocationManager) getView().getActivityContext().getSystemService(Context.LOCATION_SERVICE);
+            if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                Toast.makeText(getView().getActivityContext(),"turn on the gps", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             TedPermission.with(getView().getAppContext())
                     .setRationaleMessage(getView().getAppContext().getString(R.string.permission_GPS_request_guide))
                     .setDeniedMessage(getView().getAppContext().getString(R.string.permission_GPS_denied_guide))
@@ -135,6 +151,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
 
                         @Override
                         public void onPermissionDenied(List<String> deniedPermissions) {
+                            getView().showToastMessage("GPS permission needed");
                         }
                     })
                     .check();

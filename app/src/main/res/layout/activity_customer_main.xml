@@ -17,7 +17,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/white"
+            >
 
             <RelativeLayout
                 android:id="@+id/activity_customer_main_mv_daum"
@@ -97,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.6" />
+
 
             <TextView
                 android:id="@+id/activity_customer_main_tv_radius"
@@ -263,6 +265,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/activity_customer_main_bottom_guide_line" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

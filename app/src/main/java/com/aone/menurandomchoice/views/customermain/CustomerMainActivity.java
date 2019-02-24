@@ -1,5 +1,6 @@
 package com.aone.menurandomchoice.views.customermain;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityCustomerMainBinding;
@@ -24,6 +26,16 @@ import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.viewholder.OnMenuCategoryClickListener;
 import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapCircle;
@@ -43,27 +55,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBinding, CustomerMainContract.View, CustomerMainContract.Presenter>
         implements CustomerMainContract.View, MapView.MapViewEventListener {
 
-    private static final String LOG_TAG ="CustomerMainActivity";
     private final int LOCATION_DATA = 3000;
 
-    private LocationManager locationManager;
     private List<View> radiusButton = new ArrayList<>();
     private MenuCategoryAdapterContract.View menuCategoryAdapterView;
     private MapView mMapView;
     private MapPOIItem mCustomMarker;
     private MapCircle circle;
 
+    private FusedLocationProviderClient fusedLocationClient;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         setUpActivityToDataBinding();
         setUpPresenterToDataBinding();
         setUpSearchToolBar();
         setRadiusButtonList();
         setUpCategoryRecyclerView();
+
         getDataBinding().setMenuLocationCamera(new MenuLocationCamera(37.4980854357918
                                                                         ,127.028000275071
                                                                         ,2));
@@ -184,57 +195,58 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     }
 
     public void onGPSButtonClicked() {
-       if ( Build.VERSION.SDK_INT >= 23
-               && ContextCompat.checkSelfPermission( getApplicationContext()
-                                                    , android.Manifest.permission.ACCESS_FINE_LOCATION )
-               != PackageManager.PERMISSION_GRANTED ) {
-           ActivityCompat.requestPermissions( CustomerMainActivity.this
-                                            , new String[] { android.Manifest.permission.ACCESS_FINE_LOCATION  }
-                                            ,0 );
-       } else {
-           Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-           if (location != null) {
-               Log.d(LOG_TAG,"GPS location is not null");
-               mMapView.moveCamera(CameraUpdateFactory
-                                    .newMapPoint(MapPoint.mapPointWithGeoCoord(location.getLatitude()
-                                                                                , location.getLongitude())
-                                                                                , 2));
-               requestNewMenuList(MapPoint.mapPointWithGeoCoord(location.getLatitude()
-                                                                , location.getLongitude()));
-           } else {
-               Log.d(LOG_TAG,"GPS location is null");
-               locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER
-                                                        , 100
-                                                        , 0
-                                                        , gpsLocationListener);
-           }
-       }
-   }
 
-    private LocationListener gpsLocationListener = new LocationListener() {
-        public void onLocationChanged(Location location) {
-            Log.d(LOG_TAG,location.getProvider()+"location changed");
-            locationManager.removeUpdates(this);
-            mMapView.moveCamera(CameraUpdateFactory
-                                .newMapPoint(MapPoint.mapPointWithGeoCoord(location.getLatitude()
-                                                                            , location.getLongitude())
-                                                                            , 2));
-            requestNewMenuList(MapPoint.mapPointWithGeoCoord(location.getLatitude()
-                                                            , location.getLongitude()));
+        Log.d("showGPS","start");
+        if(fusedLocationClient == null) {
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            requestGPS(fusedLocationClient);
+        } else {
+            Log.d("showGPS","progressing");
         }
+    }
 
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            Log.d(LOG_TAG,"status changed");
-        }
+    private LocationCallback locationCallback = new LocationCallback() {
 
-        public void onProviderEnabled(String provider) {
-            Log.d(LOG_TAG,"provider enabled");
-        }
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            super.onLocationResult(locationResult);
 
-        public void onProviderDisabled(String provider) {
-            Log.d(LOG_TAG,"provider disabled");
+            fusedLocationClient.removeLocationUpdates(this);
+            fusedLocationClient = null;
+
+            if (locationResult == null) {
+                Log.d("requestGPS", "fail");
+            }
+            for (Location location : locationResult.getLocations()) {
+                Log.d("requestGPS", "success");
+                successGPS(location.getLatitude(), location.getLongitude());
+            }
         }
     };
+
+    private void requestGPS(final FusedLocationProviderClient fusedLocationClient) {
+
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+        SettingsClient client = LocationServices.getSettingsClient(this);
+        client.checkLocationSettings(builder.build());
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+    }
+
+    private void successGPS(double latitude, double longitude) {
+        mMapView.moveCamera(CameraUpdateFactory
+                .newMapPoint(MapPoint.mapPointWithGeoCoord(latitude
+                        , longitude)
+                        , 2));
+        requestNewMenuList(MapPoint.mapPointWithGeoCoord(latitude
+                , longitude));
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -249,7 +261,9 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     @Override
     public void onBackPressed() {
+        Log.d("BACK_PRESSED", "PRESSED before");
         super.onBackPressed();
+
         finish();
     }
 
@@ -321,6 +335,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         if(closerDistanceList != null) {
             len = closerDistanceList.size();
         }
+
         mCustomMarker.setItemName(len+"");
         mCustomMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lon));
         mMapView.addPOIItem(mCustomMarker);
