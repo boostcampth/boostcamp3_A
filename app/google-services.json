@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "500722554902",
+    "firebase_url": "https://randommenu-d5a6f.firebaseio.com",
+    "project_id": "randommenu-d5a6f",
+    "storage_bucket": "randommenu-d5a6f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500722554902:android:8ccb7476fef2f0f4",
+        "android_client_info": {
+          "package_name": "com.aone.menurandomchoice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500722554902-20kepk9j417a0fajfjcv8c3l8got7rjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZoRja6Zks3-iMO79cyApsU4Sw3Ko-L6E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
