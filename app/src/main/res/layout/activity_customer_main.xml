@@ -252,6 +252,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@color/reddish"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:text="@string/activity_customer_main_swipe_start"
                 android:textAlignment="center"
                 android:textColor="@color/white"

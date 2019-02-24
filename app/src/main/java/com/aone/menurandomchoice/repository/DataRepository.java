@@ -127,14 +127,14 @@ public class DataRepository implements Repository {
                 String serverUpdateTime = response.getUpdateTime();
 
                 if (isSameLocalUpdateTime(serverUpdateTime)) {
-                    StoreDetail SQLiteStoreDetail = getStoreDetail();
-                    networkResponseListener.onReceived(SQLiteStoreDetail);
+                    StoreDetail localStoreDetail = getStoreDetail();
+                    networkResponseListener.onReceived(localStoreDetail);
                 } else {
                     requestStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
                         @Override
-                        public void onReceived(@NonNull StoreDetail response) {
-                            updateStoreDetail(response);
-                            networkResponseListener.onReceived(response);
+                        public void onReceived(@NonNull StoreDetail serverStoreDetail) {
+                            updateStoreDetail(serverStoreDetail);
+                            networkResponseListener.onReceived(serverStoreDetail);
                         }
 
                         @Override
@@ -144,13 +144,13 @@ public class DataRepository implements Repository {
                     });
                 }
             }
-
             @Override
             public void onError(JMTErrorCode errorCode) {
                 networkResponseListener.onError(errorCode);
             }
         });
     }
+
 
     private boolean isSameLocalUpdateTime(String serverUpdateTime) {
         String localUpdateTime = getUpdateTimeFromSQLite();
