@@ -25,42 +25,42 @@
                 android:background="@color/gray">
 
             <LinearLayout
-                android:id="@+id/activity_owner_store_logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:orientation="horizontal"
-                android:background="@color/white"
-                android:paddingTop="@dimen/large_padding"
-                android:paddingRight="@dimen/large_padding"
-                android:onClick="@{(view) -> presenter.onLogoutClick(view)}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/activity_owner_store_ll_name_time"
-                app:layout_constraintVertical_chainStyle="spread_inside">
-
-                <ImageView
-                    android:layout_width="@dimen/activity_owner_store_exit_button"
-                    android:layout_height="@dimen/activity_owner_store_exit_button"
-                    android:src="@drawable/owner_exit_button" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/activity_owner_detail_logout_label"
-                    android:layout_marginLeft="@dimen/small_margin" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/activity_owner_store_ll_name_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:paddingTop="@dimen/large_padding"
+                android:paddingRight="@dimen/large_padding"
+                android:onClick="@{(view) -> presenter.onLogoutClick(view)}"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_owner_store_logout">
+                app:layout_constraintBottom_toTopOf="@+id/activity_owner_store_ll_menu">
+
+
+                <LinearLayout
+                    android:id="@+id/activity_owner_store_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingTop="@dimen/large_padding"
+                    android:paddingRight="@dimen/large_padding"
+                    android:onClick="@{() -> presenter.onLogoutClick()}">
+
+                    <ImageView
+                        android:layout_width="@dimen/activity_owner_store_exit_button"
+                        android:layout_height="@dimen/activity_owner_store_exit_button"
+                        android:src="@drawable/owner_exit_button" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_owner_detail_logout_label"
+                        android:layout_marginLeft="@dimen/small_margin" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"

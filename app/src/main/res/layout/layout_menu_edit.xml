@@ -21,6 +21,7 @@
         android:orientation="vertical"
         android:background="@drawable/layout_menu_detail_border"
         android:onClick="@{ (view) -> presenter.onMenuEditClick(view, menuDetail)}" >
+        android:foreground="?attr/selectableItemBackgroundBorderless"
 
         <FrameLayout
             android:layout_width="100dp"
