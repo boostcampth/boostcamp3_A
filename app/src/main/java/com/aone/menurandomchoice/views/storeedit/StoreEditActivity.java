@@ -46,25 +46,32 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    protected  void onResume() {
+        super.onResume();
 
         setUpMapView();
 
         Bundle locationData = getIntent().getBundleExtra(getView().getActivityContext().getString(R.string.activity_customer_main_xy));
+
         if(locationData != null) {
             getPresenter().handlingReceivedMapInfo(locationData.getString(getView().getActivityContext().getString(R.string.activity_customer_main_address))
-                                                    , locationData.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_latitude))
-                                                    , locationData.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_longitude)));
+                    , locationData.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_latitude))
+                    , locationData.getDouble(getView().getActivityContext().getString(R.string.activity_customer_main_longitude)));
             getDataBinding()
                     .activityStoreEditTvAddress
                     .setText(locationData.getString("address"));
         } else {
             getPresenter().handlingReceivedMapInfo(getDataBinding().getStoreDetail().getAddress()
-                                                    , getDataBinding().getStoreDetail().getLatitude()
-                                                    , getDataBinding().getStoreDetail().getLongitude());
+                    , getDataBinding().getStoreDetail().getLatitude()
+                    , getDataBinding().getStoreDetail().getLongitude());
             getDataBinding()
                     .activityStoreEditTvAddress
                     .setText(getDataBinding().getStoreDetail().getAddress());
         }
+
     }
 
     @Override
@@ -76,7 +83,6 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
     @Override
     protected void onPause() {
         super.onPause();
-
         detachMapView();
     }
 
