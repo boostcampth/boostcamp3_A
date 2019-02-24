@@ -13,13 +13,16 @@ public interface CustomerMainContract {
 
     interface View extends BaseContract.View{
 
+        void successGPS(double latitude, double longitude);
+
         void moveToLocationSearchPage();
 
         void moveToMenuSelectPage();
 
         void onRadiusButtonClicked(android.view.View view);
 
-        void onGPSButtonClicked();
+        void requestPermission();
+
 
         void setMarkerAtNewLocation(double lat, double lon, List<MenuLocation> closerDistanceList);
 

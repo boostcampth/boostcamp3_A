@@ -1,19 +1,14 @@
 package com.aone.menurandomchoice.views.customermain;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityCustomerMainBinding;
@@ -33,9 +28,6 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapCircle;
@@ -49,7 +41,6 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBinding, CustomerMainContract.View, CustomerMainContract.Presenter>
@@ -93,6 +84,8 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mMapView.setMapViewEventListener(this);
         mMapView.setMapType(MapView.MapType.Standard);
 
+        mMapView.setZOrderOnTop(false);
+        mMapView.setZOrderMediaOverlay(false);
         getDataBinding().activityCustomerMainMvDaum.addView(mMapView);
 
         createCustomMarker();
@@ -111,6 +104,8 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
                                                                         .longitude);
         getDataBinding().getMenuLocationCamera().setZoom(mMapView.getZoomLevel());
         getDataBinding().activityCustomerMainMvDaum.removeView(mMapView);
+
+        fusedLocationClient = null;
     }
 
     private void createCustomMarker() {
@@ -194,58 +189,31 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         });
     }
 
-    public void onGPSButtonClicked() {
+    public void requestPermission() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                0);
 
-        Log.d("showGPS","start");
-        if(fusedLocationClient == null) {
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-            requestGPS(fusedLocationClient);
-        } else {
-            Log.d("showGPS","progressing");
+    }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == 0) {
+            if(grantResults.length == 2
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+               getPresenter().handlingGPSButtonClicked();
+            } else {
+                Log.d("PERMISSION","DENIED..");
+            }
         }
     }
 
-    private LocationCallback locationCallback = new LocationCallback() {
-
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            super.onLocationResult(locationResult);
-
-            fusedLocationClient.removeLocationUpdates(this);
-            fusedLocationClient = null;
-
-            if (locationResult == null) {
-                Log.d("requestGPS", "fail");
-            }
-            for (Location location : locationResult.getLocations()) {
-                Log.d("requestGPS", "success");
-                successGPS(location.getLatitude(), location.getLongitude());
-            }
-        }
-    };
-
-    private void requestGPS(final FusedLocationProviderClient fusedLocationClient) {
-
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(locationRequest);
-        SettingsClient client = LocationServices.getSettingsClient(this);
-        client.checkLocationSettings(builder.build());
-
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
-    }
-
-    private void successGPS(double latitude, double longitude) {
+    public void successGPS(double latitude, double longitude) {
         mMapView.moveCamera(CameraUpdateFactory
-                .newMapPoint(MapPoint.mapPointWithGeoCoord(latitude
-                        , longitude)
-                        , 2));
-        requestNewMenuList(MapPoint.mapPointWithGeoCoord(latitude
-                , longitude));
+                .newMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude),
+                        2));
     }
 
     @Override
@@ -261,9 +229,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     @Override
     public void onBackPressed() {
-        Log.d("BACK_PRESSED", "PRESSED before");
         super.onBackPressed();
-
         finish();
     }
 
