@@ -7,10 +7,12 @@ import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLogoutListener;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.views.base.BasePresenter;
+import com.kakao.usermgmt.response.model.User;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -18,12 +20,12 @@ import androidx.appcompat.app.AlertDialog;
 public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> implements  OwnerStoreContract.Presenter {
 
     @Override
-    public void loadStoreDetail(int storeIdx, boolean isOwner) {
+    public void loadStoreDetail(UserAccessInfo userAccessInfo) {
 
-        if(isOwner) {
-            loadStoreDetailToOwner(storeIdx);
+        if(userAccessInfo.isOwner()) {
+            loadStoreDetailToOwner(userAccessInfo);
         } else {
-            loadStoreDetailToCustomer(storeIdx);
+            loadStoreDetailToCustomer(userAccessInfo);
         }
 
     }
@@ -104,8 +106,8 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
         }
     }
 
-    public void loadStoreDetailToOwner(int storeIdx) {
-        getRepository().loadStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
+    public void loadStoreDetailToOwner(UserAccessInfo userAccessInfo) {
+        getRepository().loadStoreDetail(userAccessInfo, new NetworkResponseListener<StoreDetail>() {
             @Override
             public void onReceived(@NonNull StoreDetail storeDetail) {
                 if (isAttachView()) {
@@ -120,8 +122,8 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
         });
     }
 
-    public void loadStoreDetailToCustomer(int storeIdx) {
-        getRepository().requestStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
+    public void loadStoreDetailToCustomer(UserAccessInfo userAccessInfo) {
+        getRepository().requestStoreDetail(userAccessInfo, new NetworkResponseListener<StoreDetail>() {
             @Override
             public void onReceived(@NonNull StoreDetail response) {
                 if(isAttachView()) {

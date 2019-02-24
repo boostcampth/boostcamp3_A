@@ -13,6 +13,7 @@ import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginRepository;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLoginListener;
@@ -100,9 +101,22 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void requestStoreDetail(int storeIdx,
-                                   @NonNull NetworkResponseListener<StoreDetail> networkResponseListener) {
-        apiHelper.requestStoreDetail(storeIdx, networkResponseListener);
+    public void requestStoreDetail(final UserAccessInfo userAccessInfo,
+                                   @NonNull final NetworkResponseListener<StoreDetail> networkResponseListener) {
+        apiHelper.requestStoreDetail(userAccessInfo, new NetworkResponseListener<StoreDetail>() {
+            @Override
+            public void onReceived(@NonNull StoreDetail serverStoreDetail) {
+                if(userAccessInfo.isOwner()) {
+                    updateStoreDetail(serverStoreDetail);
+                }
+                networkResponseListener.onReceived(serverStoreDetail);
+            }
+
+            @Override
+            public void onError(JMTErrorCode errorCode) {
+                networkResponseListener.onError(errorCode);
+            }
+        });
     }
 
     public void requestUpdateTimeFromServer(int storeIdx,
@@ -116,13 +130,11 @@ public class DataRepository implements Repository {
         apiHelper.requestMenuList(menuSearchRequest, networkResponseListener);
     }
 
-
-    //loadStoredetail에 업주랑 사용자 정보 다 갖고와서 requeststoredetail에서 처리
     @Override
-    public void loadStoreDetail(final int storeIdx,
-                                 @NonNull final NetworkResponseListener<StoreDetail> networkResponseListener) {
+    public void loadStoreDetail(final UserAccessInfo userAccessInfo,
+                                @NonNull final NetworkResponseListener<StoreDetail> networkResponseListener) {
 
-        requestUpdateTimeFromServer(storeIdx, new NetworkResponseListener<UpdateTime>() {
+        requestUpdateTimeFromServer(userAccessInfo.getAccessStoreIndex(), new NetworkResponseListener<UpdateTime>() {
             @Override
             public void onReceived(@NonNull UpdateTime response) {
                 String serverUpdateTime = response.getUpdateTime();
@@ -131,18 +143,7 @@ public class DataRepository implements Repository {
                     StoreDetail localStoreDetail = getStoreDetail();
                     networkResponseListener.onReceived(localStoreDetail);
                 } else {
-                    requestStoreDetail(storeIdx, new NetworkResponseListener<StoreDetail>() {
-                        @Override
-                        public void onReceived(@NonNull StoreDetail serverStoreDetail) {
-                            updateStoreDetail(serverStoreDetail);
-                            networkResponseListener.onReceived(serverStoreDetail);
-                        }
-
-                        @Override
-                        public void onError(JMTErrorCode errorCode) {
-                            networkResponseListener.onError(errorCode);
-                        }
-                    });
+                    requestStoreDetail(userAccessInfo, networkResponseListener);
                 }
             }
             @Override
@@ -151,6 +152,7 @@ public class DataRepository implements Repository {
             }
         });
     }
+
 
 
     private boolean isSameLocalUpdateTime(String serverUpdateTime) {

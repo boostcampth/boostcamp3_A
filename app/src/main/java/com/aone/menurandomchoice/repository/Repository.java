@@ -1,5 +1,6 @@
 package com.aone.menurandomchoice.repository;
 
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.repository.remote.APIHelper;
 import com.aone.menurandomchoice.repository.oauth.KakaoLoginHelper;
 import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseHelper;
@@ -12,6 +13,6 @@ public interface Repository extends KakaoLoginHelper, SQLiteDatabaseHelper, APIH
 
     void cancelAll();
 
-    void loadStoreDetail(int storeIdx, @NonNull NetworkResponseListener<StoreDetail> networkResponseListener);
+    void loadStoreDetail(UserAccessInfo userAccessInfo, @NonNull NetworkResponseListener<StoreDetail> networkResponseListener);
 
 }
