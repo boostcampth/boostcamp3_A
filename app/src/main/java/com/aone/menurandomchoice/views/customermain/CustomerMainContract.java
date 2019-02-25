@@ -15,11 +15,14 @@ public interface CustomerMainContract {
 
         void moveToLocationSearchPage(android.view.View view);
 
+        void successGPS(double latitude, double longitude);
+
         void moveToMenuSelectPage(android.view.View view);
 
         void onRadiusButtonClicked(android.view.View view);
 
-        void onGPSButtonClicked();
+        void requestPermission();
+
 
         void setMarkerAtNewLocation(double lat, double lon, List<MenuLocation> closerDistanceList);
 

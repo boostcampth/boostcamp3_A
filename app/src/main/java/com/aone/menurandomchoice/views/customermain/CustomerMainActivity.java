@@ -1,19 +1,13 @@
 package com.aone.menurandomchoice.views.customermain;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityCustomerMainBinding;
@@ -28,15 +22,6 @@ import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterC
 import com.aone.menurandomchoice.views.menuregister.adapter.viewholder.OnMenuCategoryClickListener;
 import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapCircle;
@@ -50,7 +35,6 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBinding, CustomerMainContract.View, CustomerMainContract.Presenter>
@@ -63,6 +47,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     private MapView mMapView;
     private MapPOIItem mCustomMarker;
     private MapCircle circle;
+    private double radius;
 
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -76,6 +61,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         setRadiusButtonList();
         setUpCategoryRecyclerView();
 
+        radius = 50;
         getDataBinding().setMenuLocationCamera(new MenuLocationCamera(37.4980854357918
                                                                         ,127.028000275071
                                                                         ,2));
@@ -94,10 +80,11 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mMapView.setMapViewEventListener(this);
         mMapView.setMapType(MapView.MapType.Standard);
 
+        mMapView.setZOrderOnTop(false);
+        mMapView.setZOrderMediaOverlay(false);
         getDataBinding().activityCustomerMainMvDaum.addView(mMapView);
 
         createCustomMarker();
-
     }
 
     @Override
@@ -112,6 +99,8 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
                                                                         .longitude);
         getDataBinding().getMenuLocationCamera().setZoom(mMapView.getZoomLevel());
         getDataBinding().activityCustomerMainMvDaum.removeView(mMapView);
+
+        fusedLocationClient = null;
     }
 
     private void createCustomMarker() {
@@ -132,13 +121,13 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         circle = new MapCircle(
                 MapPoint.mapPointWithGeoCoord(mapPoint.getMapPointGeoCoord().latitude
                                             , mapPoint.getMapPointGeoCoord().longitude), // center
-                50, // radius
+                (int)radius, // radius
                 Color.argb(0, 255, 120, 120), // strokeColor
                 Color.argb(128, 255, 120, 120) // fillColor
         );
 
         circle.setCenter(mapPoint);
-        circle.setRadius((int)getRadius());
+        circle.setRadius((int)radius);
         mMapView.addCircle(circle);
 
         mMapView.setMapCenterPointAndZoomLevel(mapPoint
@@ -195,58 +184,31 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         });
     }
 
-    public void onGPSButtonClicked() {
+    public void requestPermission() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                0);
 
-        Log.d("showGPS","start");
-        if(fusedLocationClient == null) {
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-            requestGPS(fusedLocationClient);
-        } else {
-            Log.d("showGPS","progressing");
+    }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == 0) {
+            if(grantResults.length == 2
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+               getPresenter().handlingGPSButtonClicked();
+            } else {
+                Log.d("PERMISSION","DENIED..");
+            }
         }
     }
 
-    private LocationCallback locationCallback = new LocationCallback() {
-
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            super.onLocationResult(locationResult);
-
-            fusedLocationClient.removeLocationUpdates(this);
-            fusedLocationClient = null;
-
-            if (locationResult == null) {
-                Log.d("requestGPS", "fail");
-            }
-            for (Location location : locationResult.getLocations()) {
-                Log.d("requestGPS", "success");
-                successGPS(location.getLatitude(), location.getLongitude());
-            }
-        }
-    };
-
-    private void requestGPS(final FusedLocationProviderClient fusedLocationClient) {
-
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(locationRequest);
-        SettingsClient client = LocationServices.getSettingsClient(this);
-        client.checkLocationSettings(builder.build());
-
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
-    }
-
-    private void successGPS(double latitude, double longitude) {
+    public void successGPS(double latitude, double longitude) {
         mMapView.moveCamera(CameraUpdateFactory
-                .newMapPoint(MapPoint.mapPointWithGeoCoord(latitude
-                        , longitude)
-                        , 2));
-        requestNewMenuList(MapPoint.mapPointWithGeoCoord(latitude
-                , longitude));
+                .newMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude),
+                        2));
     }
 
     @Override
@@ -262,9 +224,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     @Override
     public void onBackPressed() {
-        Log.d("BACK_PRESSED", "PRESSED before");
         super.onBackPressed();
-
         finish();
     }
 
@@ -285,27 +245,12 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mMapView.addCircle(circle);
         mMapView.removeAllPOIItems();
 
-        double radius = getRadius();
         getPresenter().requestMenuList(mapPoint.getMapPointGeoCoord().latitude
                                         , mapPoint.getMapPointGeoCoord().longitude
                                         , radius);
     }
 
-    private double getRadius() {
-        double radius = 50;
-        View radiusView;
-        for(int i =0; i < radiusButton.size(); i++) {
-            radiusView = radiusButton.get(i);
-            if(radiusView.isSelected()) {
-                radius = Double.valueOf((String)radiusView.getTag());
-                break;
-            }
-        }
-        return radius;
-    }
-
     public void updateMapByRadiusCategory() {
-        double radius = getRadius();
         mMapView.removeAllPOIItems();
         MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
         getPresenter().getMenuCountFiltered(mapPointGeo.latitude, mapPointGeo.longitude, radius);
@@ -313,7 +258,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     @Override
     public void onRadiusButtonClicked(View view) {
-        double radius = 50;
         View radiusView;
         for(int i =0; i < radiusButton.size(); i++) {
             radiusView = radiusButton.get(i);
@@ -404,14 +348,13 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
             mMapView.removeAllCircles();
             Intent menuSelectIntent = new Intent(CustomerMainActivity.this
                                                 , MenuSelectActivity.class);
-            int radius = (int) getRadius();
             String category = getPresenter().getSelectedCategory();
 
             MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
             menuSelectIntent.putExtra(getString(R.string.activity_customer_main_extra_menu_data)
                                     , new MenuSearchRequest(mapPointGeo.latitude
                                                             , mapPointGeo.longitude
-                                                            , radius
+                                                            , (int)radius
                                                             , category));
 
             startActivity(menuSelectIntent);
