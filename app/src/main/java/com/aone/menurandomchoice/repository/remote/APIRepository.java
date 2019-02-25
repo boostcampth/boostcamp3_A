@@ -4,6 +4,9 @@ import android.util.Log;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
+import com.aone.menurandomchoice.repository.DataRepository;
+import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseHelper;
+import com.aone.menurandomchoice.repository.local.db.SQLiteDatabaseRepository;
 import com.aone.menurandomchoice.repository.model.EmptyObject;
 import com.aone.menurandomchoice.repository.model.UpdateTime;
 import com.aone.menurandomchoice.repository.model.KakaoAddress;
@@ -15,6 +18,7 @@ import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.model.OwnerInfo;
 import com.aone.menurandomchoice.repository.model.SignUpData;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.repository.remote.mapper.MenuMapper;
 import com.aone.menurandomchoice.repository.remote.response.JMTCallback;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
@@ -22,6 +26,7 @@ import com.aone.menurandomchoice.repository.remote.response.JMTResponseBody;
 import com.aone.menurandomchoice.repository.remote.response.KakaoCallback;
 import com.aone.menurandomchoice.utils.NetworkUtil;
 import com.google.gson.Gson;
+import com.kakao.usermgmt.response.model.User;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -87,16 +92,15 @@ public class APIRepository implements APIHelper {
     }
 
     @Override
-    public void requestStoreDetail(int storeIdx,
+    public void requestStoreDetail(UserAccessInfo userAccessInfo,
                                    @NonNull NetworkResponseListener<StoreDetail> listener) {
         if(NetworkUtil.isNetworkConnecting()) {
             apiCreator.getApiInstance()
-                    .getStoreDetail(storeIdx)
+                    .getStoreDetail(userAccessInfo.getAccessStoreIndex())
                     .enqueue(new JMTCallback<>(listener));
         } else {
             listener.onError(JMTErrorCode.NETWORK_NOT_CONNECT_ERROR);
         }
-
     }
 
     @Override
