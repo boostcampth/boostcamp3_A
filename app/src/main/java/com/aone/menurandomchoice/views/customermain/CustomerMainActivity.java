@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -22,12 +21,6 @@ import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterC
 import com.aone.menurandomchoice.views.menuregister.adapter.viewholder.OnMenuCategoryClickListener;
 import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.SettingsClient;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapCircle;
@@ -53,6 +46,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     private MapView mMapView;
     private MapPOIItem mCustomMarker;
     private MapCircle circle;
+    private double radius;
 
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -66,6 +60,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         setRadiusButtonList();
         setUpCategoryRecyclerView();
 
+        radius = 50;
         getDataBinding().setMenuLocationCamera(new MenuLocationCamera(37.4980854357918
                                                                         ,127.028000275071
                                                                         ,2));
@@ -89,7 +84,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         getDataBinding().activityCustomerMainMvDaum.addView(mMapView);
 
         createCustomMarker();
-
     }
 
     @Override
@@ -126,13 +120,13 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         circle = new MapCircle(
                 MapPoint.mapPointWithGeoCoord(mapPoint.getMapPointGeoCoord().latitude
                                             , mapPoint.getMapPointGeoCoord().longitude), // center
-                50, // radius
+                (int)radius, // radius
                 Color.argb(0, 255, 120, 120), // strokeColor
                 Color.argb(128, 255, 120, 120) // fillColor
         );
 
         circle.setCenter(mapPoint);
-        circle.setRadius((int)getRadius());
+        circle.setRadius((int)radius);
         mMapView.addCircle(circle);
 
         mMapView.setMapCenterPointAndZoomLevel(mapPoint
@@ -250,27 +244,13 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mMapView.addCircle(circle);
         mMapView.removeAllPOIItems();
 
-        double radius = getRadius();
         getPresenter().requestMenuList(mapPoint.getMapPointGeoCoord().latitude
                                         , mapPoint.getMapPointGeoCoord().longitude
                                         , radius);
     }
 
-    private double getRadius() {
-        double radius = 50;
-        View radiusView;
-        for(int i =0; i < radiusButton.size(); i++) {
-            radiusView = radiusButton.get(i);
-            if(radiusView.isSelected()) {
-                radius = Double.valueOf((String)radiusView.getTag());
-                break;
-            }
-        }
-        return radius;
-    }
-
     public void updateMapByRadiusCategory() {
-        double radius = getRadius();
+        //double radius = getRadius();
         mMapView.removeAllPOIItems();
         MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
         getPresenter().getMenuCountFiltered(mapPointGeo.latitude, mapPointGeo.longitude, radius);
@@ -278,7 +258,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
     @Override
     public void onRadiusButtonClicked(View view) {
-        double radius = 50;
         View radiusView;
         for(int i =0; i < radiusButton.size(); i++) {
             radiusView = radiusButton.get(i);
@@ -366,14 +345,13 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
             mMapView.removeAllCircles();
             Intent menuSelectIntent = new Intent(CustomerMainActivity.this
                                                 , MenuSelectActivity.class);
-            int radius = (int) getRadius();
             String category = getPresenter().getSelectedCategory();
 
             MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
             menuSelectIntent.putExtra(getView().getActivityContext().getString(R.string.activity_customer_main_extra_menu_data)
                                     , new MenuSearchRequest(mapPointGeo.latitude
                                                             , mapPointGeo.longitude
-                                                            , radius
+                                                            , (int)radius
                                                             , category));
 
             startActivity(menuSelectIntent);
