@@ -8,6 +8,7 @@ import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.model.KakaoAddressResult;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public interface APIHelper {
     void requestMenuLocation(@NonNull Map<String, String> queryMap,
                              @NonNull NetworkResponseListener<List<MenuLocation>> networkResponseListener);
 
-    void requestStoreDetail(int storeIdx,
+    void requestStoreDetail(UserAccessInfo userAccessInfo,
                             @NonNull NetworkResponseListener<StoreDetail> networkResponseListener);
 
     void requestUpdateTimeFromServer(int storeIdx,

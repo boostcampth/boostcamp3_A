@@ -2,6 +2,7 @@ package com.aone.menurandomchoice.views.ownerstore;
 
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
+import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseContract;
 
 public interface OwnerStoreContract {
@@ -21,7 +22,7 @@ public interface OwnerStoreContract {
 
     interface Presenter extends BaseContract.Presenter<OwnerStoreContract.View> {
 
-        void loadStoreDetail(int storeIdx, boolean isOwner);
+        void loadStoreDetail(UserAccessInfo userAccessInfo);
 
         void onMenuDetailClick(MenuDetail menuDetail);
 
