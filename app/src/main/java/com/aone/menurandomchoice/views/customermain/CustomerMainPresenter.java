@@ -44,6 +44,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
 
     private MenuCategoryAdapterContract.Model<MenuCategoryItem> menuCategoryAdapterModel;
     private List<MenuLocation> menuList;
+    private FusedLocationProviderClient fusedLocationClient;
 
     public void requestMenuList(final double latitude, final double longitude, final double radius) {
         getRepository().requestMenuLocation(MenuMapper.createRequestLocationQueryMap(latitude,longitude),
@@ -178,8 +179,6 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
             Log.d("showGPS","progressing");
         }
     }
-
-    private FusedLocationProviderClient fusedLocationClient;
 
     private LocationCallback locationCallback = new LocationCallback() {
 

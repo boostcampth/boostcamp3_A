@@ -54,8 +54,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     private double radius;
     private AnimationDrawable frameAnimation;
 
-    private FusedLocationProviderClient fusedLocationClient;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,13 +218,15 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         getDataBinding().imgGPS.setBackgroundResource(R.drawable.gps_frame_animation_list);
         frameAnimation = (AnimationDrawable) getDataBinding().imgGPS.getBackground();
         frameAnimation.start();
-
     }
 
     public void stopGPSAnimation() {
-        frameAnimation.stop();
-        getDataBinding().imgGPS.setImageResource(R.drawable.ic_gpsborder);
-        getDataBinding().imgGPS.setBackgroundResource(0);
+        if(frameAnimation != null) {
+            frameAnimation.stop();
+            getDataBinding().imgGPS.setImageResource(R.drawable.ic_gpsborder);
+            getDataBinding().imgGPS.setBackgroundResource(0);
+            frameAnimation = null;
+        }
     }
 
     @Override
@@ -244,17 +244,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-    }
-
-    @Override
-    public void onMapViewInitialized(MapView mapView) { }
-
-    @Override
-    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapCenterPoint) { }
-
-    @Override
-    public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
-        requestNewMenuList(mapPoint);
     }
 
     private void requestNewMenuList(MapPoint mapPoint) {
@@ -319,6 +308,17 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         }
 
     }
+
+    @Override
+    public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
+        requestNewMenuList(mapPoint);
+    }
+
+    @Override
+    public void onMapViewInitialized(MapView mapView) { }
+
+    @Override
+    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapCenterPoint) { }
 
     @Override
     public void onMapViewZoomLevelChanged(MapView mapView, int i) { }
