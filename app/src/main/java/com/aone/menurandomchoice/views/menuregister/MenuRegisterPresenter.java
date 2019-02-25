@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.utils.ClickUtil;
 import com.aone.menurandomchoice.utils.DateUtil;
 import com.aone.menurandomchoice.utils.StringUtil;
 import com.aone.menurandomchoice.views.base.BasePresenter;

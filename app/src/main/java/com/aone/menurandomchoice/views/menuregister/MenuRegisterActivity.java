@@ -13,6 +13,7 @@ import android.view.View;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityMenuRegisterBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
+import com.aone.menurandomchoice.utils.ClickUtil;
 import com.aone.menurandomchoice.views.base.widget.RappingTextWatcher;
 import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.base.BaseActivity;
@@ -72,12 +73,15 @@ public class MenuRegisterActivity
                 onBackPressed();
                 return true;
             case R.id.item_menu_owner_delete:
+                ClickUtil.preventDuplicateClick(item);
                 getPresenter().handlingMenuDeleteButtonClick();
                 return true;
             case R.id.item_menu_owner_register_preview:
+                ClickUtil.preventDuplicateClick(item);
                 getPresenter().handlingPreviewButtonClick();
                 return true;
             case R.id.item_menu_owner_register_ok:
+                ClickUtil.preventDuplicateClick(item);
                 getPresenter().handlingRegisterOkButtonClick();
                 return true;
             default:
