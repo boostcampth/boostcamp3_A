@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
@@ -54,7 +55,7 @@ public class OwnerStoreActivity
         super.onStart();
 
         initMapView();
-        getDataBinding().activityOwnerStoreScroll.scrollTo(0, 0);
+        getDataBinding().activityOwnerStoreScroll.smoothScrollTo(0,0);
         getPresenter().loadStoreDetail(userAccessInfo);
     }
 
