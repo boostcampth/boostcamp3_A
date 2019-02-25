@@ -130,6 +130,10 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
     }
 
     public void stopNetwork() {
+        if(fusedLocationClient != null) {
+            fusedLocationClient.removeLocationUpdates(locationCallback);
+            fusedLocationClient = null;
+        }
         getRepository().cancelAll();
     }
 
@@ -194,7 +198,9 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
             }
             for (Location location : locationResult.getLocations()) {
                 Log.d("requestGPS", "success");
-                getView().successGPS(location.getLatitude(), location.getLongitude());
+                if(isAttachView()) {
+                    getView().successGPS(location.getLatitude(), location.getLongitude());
+                }
             }
         }
     };

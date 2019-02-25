@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityCustomerMainBinding;
@@ -24,6 +26,7 @@ import com.aone.menurandomchoice.views.menuregister.adapter.viewholder.OnMenuCat
 import com.aone.menurandomchoice.views.menuselect.MenuSelectActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
+import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
@@ -100,7 +103,8 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         getDataBinding().getMenuLocationCamera().setZoom(mMapView.getZoomLevel());
         getDataBinding().activityCustomerMainMvDaum.removeView(mMapView);
 
-        fusedLocationClient = null;
+        getPresenter().stopNetwork();
+        stopGPSAnimation();
     }
 
     private void createCustomMarker() {
