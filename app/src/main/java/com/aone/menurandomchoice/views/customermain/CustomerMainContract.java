@@ -17,6 +17,10 @@ public interface CustomerMainContract {
 
         void successGPS(double latitude, double longitude);
 
+        void startGPSAnimation();
+
+        void stopGPSAnimation();
+
         void moveToMenuSelectPage(android.view.View view);
 
         void onRadiusButtonClicked(android.view.View view);

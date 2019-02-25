@@ -167,6 +167,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
         Log.d("showGPS","start");
         if(fusedLocationClient == null) {
             Log.d("showGPS","init");
+            getView().startGPSAnimation();
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(getView().getActivityContext());
             requestGPS(fusedLocationClient);
         } else {
@@ -184,6 +185,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
 
             fusedLocationClient.removeLocationUpdates(this);
             fusedLocationClient = null;
+            getView().stopGPSAnimation();
 
             Log.d("requestGPS", "result");
             if (locationResult == null) {

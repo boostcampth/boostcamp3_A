@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -48,6 +49,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     private MapPOIItem mCustomMarker;
     private MapCircle circle;
     private double radius;
+    private AnimationDrawable frameAnimation;
 
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -80,8 +82,6 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mMapView.setMapViewEventListener(this);
         mMapView.setMapType(MapView.MapType.Standard);
 
-        mMapView.setZOrderOnTop(false);
-        mMapView.setZOrderMediaOverlay(false);
         getDataBinding().activityCustomerMainMvDaum.addView(mMapView);
 
         createCustomMarker();
@@ -209,6 +209,20 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
         mMapView.moveCamera(CameraUpdateFactory
                 .newMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude),
                         2));
+    }
+
+    public void startGPSAnimation() {
+        getDataBinding().imgGPS.setImageResource(0);
+        getDataBinding().imgGPS.setBackgroundResource(R.drawable.gps_frame_animation_list);
+        frameAnimation = (AnimationDrawable) getDataBinding().imgGPS.getBackground();
+        frameAnimation.start();
+
+    }
+
+    public void stopGPSAnimation() {
+        frameAnimation.stop();
+        getDataBinding().imgGPS.setImageResource(R.drawable.ic_gpsborder);
+        getDataBinding().imgGPS.setBackgroundResource(0);
     }
 
     @Override

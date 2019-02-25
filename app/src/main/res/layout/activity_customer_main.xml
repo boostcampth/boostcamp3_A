@@ -38,7 +38,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="@dimen/two_x_large_margin"
-                android:src="@drawable/custom_gps_fixed"
+                android:src="@drawable/ic_gpsborder"
                 android:contentDescription="@string/activity_customer_main_map_gps"
                 android:onClick="@{() -> presenter.handlingGPSButtonClicked()}"
                 app:layout_constraintBottom_toTopOf="@+id/activity_customer_main_mapview_guide_line"
