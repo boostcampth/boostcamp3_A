@@ -64,7 +64,7 @@ public class LocationSearchActivity
         Intent intent = this.getIntent();
 
 
-        String callerActivity = intent.getStringExtra(getView().getActivityContext().getString(R.string.activity_store_edit_request_location_search));
+        String callerActivity = intent.getStringExtra(getString(R.string.activity_store_edit_request_location_search));
             if(("STORE_EDIT").equals(callerActivity)) {
                 adapterView.setOnViewHolderClickListener(new OnViewHolderClickListener() {
                     @Override
@@ -85,14 +85,14 @@ public class LocationSearchActivity
 
    private void viewHolderClickedforOwneStoreEdit(int position) {
        Intent resultIntent = new Intent(LocationSearchActivity.this, StoreLocationActivity.class);
-       resultIntent.putExtra(getView().getActivityContext().getString(R.string.activity_customer_main_xy)
+       resultIntent.putExtra(getString(R.string.activity_customer_main_xy)
                             , getPresenter().getMenuData(position));
        startActivity(resultIntent);
    }
 
     private void viewHolderClickedForCustomerMain(int position) {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(getView().getActivityContext().getString(R.string.activity_customer_main_xy)
+        resultIntent.putExtra(getString(R.string.activity_customer_main_xy)
                             , getPresenter().getMenuData(position));
         setResult(RESULT_OK,resultIntent);
         finish();
@@ -154,7 +154,7 @@ public class LocationSearchActivity
         String inputAddress = getDataBinding().searchBox.etSearch.getText().toString();
 
         if(inputAddress.trim().length() == 0) {
-            showToastMessage(getView().getActivityContext().getString(R.string.activity_location_search_need_input));
+            showToastMessage(getString(R.string.activity_location_search_need_input));
         } else {
             showProgressDialog();
             getPresenter().requestLocationSearch(inputAddress);

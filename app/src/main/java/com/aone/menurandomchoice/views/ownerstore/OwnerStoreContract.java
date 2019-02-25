@@ -24,13 +24,14 @@ public interface OwnerStoreContract {
 
         void loadStoreDetail(UserAccessInfo userAccessInfo);
 
-        void onMenuDetailClick(MenuDetail menuDetail);
+        void onMenuDetailClick(android.view.View view, MenuDetail menuDetail);
 
         void onMapClick(double latitude, double longitude);
 
         void stopNetwork();
 
-        void onLogoutClick();
+        void onLogoutClick(android.view.View view);
 
     }
+
 }

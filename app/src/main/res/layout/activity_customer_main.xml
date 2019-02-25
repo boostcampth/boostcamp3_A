@@ -48,7 +48,7 @@
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/small_padding"
                         android:paddingTop="@dimen/small_padding"
-                        android:onClick="@{ () -> activity.moveToLocationSearchPage()}"
+                        android:onClick="@{ (view) -> activity.moveToLocationSearchPage(view)}"
                         >
 
                         <ImageView
@@ -257,7 +257,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:onClick="@{ () -> activity.moveToMenuSelectPage()}"
+                android:onClick="@{ (view) -> activity.moveToMenuSelectPage(view)}"
                 app:fontFamily="@font/youth"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

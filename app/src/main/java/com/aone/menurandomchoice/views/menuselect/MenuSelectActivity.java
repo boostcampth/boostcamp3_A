@@ -22,7 +22,7 @@ public class MenuSelectActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setUpPresenterToDataBinding();
+        setUpActivityToDataBinding();
         setUpOverlapView();
         passedGetIntentInfoToPresenter();
     }
@@ -44,7 +44,7 @@ public class MenuSelectActivity
         return this;
     }
 
-    private void setUpPresenterToDataBinding() {
+    private void setUpActivityToDataBinding() {
         getDataBinding().setPresenter(getPresenter());
     }
 
@@ -73,7 +73,7 @@ public class MenuSelectActivity
     }
 
     private void passedGetIntentInfoToPresenter() {
-        MenuSearchRequest menuSearchRequest = getIntent().getParcelableExtra(getView().getAppContext().getString(R.string.activity_customer_main_extra_menu_data));
+        MenuSearchRequest menuSearchRequest = getIntent().getParcelableExtra(getString(R.string.activity_customer_main_extra_menu_data));
         getPresenter().requestMenuList(menuSearchRequest);
     }
 

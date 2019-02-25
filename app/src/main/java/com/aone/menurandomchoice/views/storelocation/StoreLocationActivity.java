@@ -2,7 +2,6 @@ package com.aone.menurandomchoice.views.storelocation;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityStoreLocationBinding;
@@ -32,7 +31,7 @@ public class StoreLocationActivity
 
     @Override
     public void onReverseGeoCoderFailedToFindAddress(MapReverseGeoCoder mapReverseGeoCoder) {
-        onFinishReverseGeoCoding(getView().getAppContext().getString(R.string.presenter_customer_main_fail_geo));
+        onFinishReverseGeoCoding(getString(R.string.presenter_customer_main_fail_geo));
     }
 
     private void onFinishReverseGeoCoding(String result) {
@@ -54,14 +53,14 @@ public class StoreLocationActivity
     public void onConfirmButtonClicked() {
         Intent resultIntent = new Intent(this, StoreEditActivity.class);
         Bundle posXY = new Bundle();
-        posXY.putDouble(getView().getAppContext().getString(R.string.activity_customer_main_longitude)
-                                                            , mMapView.getMapCenterPoint().getMapPointGeoCoord().longitude);
-        posXY.putDouble(getView().getAppContext().getString(R.string.activity_customer_main_latitude)
-                                                            , mMapView.getMapCenterPoint().getMapPointGeoCoord().latitude);
-        posXY.putString(getView().getAppContext().getString(R.string.activity_customer_main_address)
-                                                            , address);
-        resultIntent.putExtra(getView().getAppContext().getString(R.string.activity_customer_main_xy)
-                                                                , posXY);
+        posXY.putDouble(getString(R.string.activity_customer_main_longitude),
+                mMapView.getMapCenterPoint().getMapPointGeoCoord().longitude);
+        posXY.putDouble(getString(R.string.activity_customer_main_latitude)
+                , mMapView.getMapCenterPoint().getMapPointGeoCoord().latitude);
+        posXY.putString(getString(R.string.activity_customer_main_address),
+                address);
+        resultIntent.putExtra(getString(R.string.activity_customer_main_xy),
+                posXY);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         startActivity(resultIntent);
@@ -87,11 +86,11 @@ public class StoreLocationActivity
         getDataBinding().mapView.addView(mMapView);
 
         Intent intent = getIntent();
-        Bundle posXY = intent.getBundleExtra(getView().getAppContext().getString(R.string.activity_customer_main_xy));
+        Bundle posXY = intent.getBundleExtra(getString(R.string.activity_customer_main_xy));
 
         if(posXY != null) {
-            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(posXY.getDouble(getView().getAppContext().getString(R.string.activity_customer_main_latitude))
-                    , posXY.getDouble(getView().getAppContext().getString(R.string.activity_customer_main_longitude)));
+            DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(posXY.getDouble(getString(R.string.activity_customer_main_latitude))
+                    , posXY.getDouble(getString(R.string.activity_customer_main_longitude)));
         } else {
             DEFAULT_MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.4980854357918, 127.028000275071);
         }

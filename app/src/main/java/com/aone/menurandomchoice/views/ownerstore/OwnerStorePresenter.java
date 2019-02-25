@@ -2,6 +2,7 @@ package com.aone.menurandomchoice.views.ownerstore;
 
 import android.content.DialogInterface;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
@@ -11,6 +12,8 @@ import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.repository.oauth.OnKakaoLogoutListener;
 import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
+import com.aone.menurandomchoice.utils.ClickUtil;
+import com.aone.menurandomchoice.utils.StringUtil;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.kakao.usermgmt.response.model.User;
 
@@ -21,17 +24,17 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
     @Override
     public void loadStoreDetail(UserAccessInfo userAccessInfo) {
-
         if(userAccessInfo.isOwner()) {
             loadStoreDetailToOwner(userAccessInfo);
         } else {
             loadStoreDetailToCustomer(userAccessInfo);
         }
-
     }
 
     @Override
-    public void onMenuDetailClick(MenuDetail menuDetail) {
+    public void onMenuDetailClick(View view, MenuDetail menuDetail) {
+        ClickUtil.preventDuplicateClick(view);
+
         if(TextUtils.isEmpty(menuDetail.getPhotoUrl())) {
             sendMessageToView(R.string.activity_owner_detail_not_menu_page);
         } else {
@@ -51,20 +54,17 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
         getRepository().cancelAll();
     }
 
-
     @Override
-    public void onLogoutClick() {
+    public void onLogoutClick(View view) {
+        ClickUtil.preventDuplicateClick(view);
         showLogoutCheckDialog();
     }
 
     private OnKakaoLogoutListener onKakaoLogoutListener = new OnKakaoLogoutListener() {
         @Override
         public void onKakaoLogoutSuccess() {
+            sendMessageToView(R.string.activity_owner_store_logout);
             if(isAttachView()) {
-                String logoutMessage = GlobalApplication
-                        .getGlobalApplicationContext()
-                        .getString(R.string.activity_owner_store_logout);
-                getView().showToastMessage(logoutMessage);
                 getView().finishOwnerStorePage();
             }
         }
@@ -73,9 +73,9 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
     private void showLogoutCheckDialog(){
         if(isAttachView()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getView().getActivityContext());
-            builder.setMessage(getView().getActivityContext().getString(R.string.activity_logout_guide));
+            builder.setMessage(StringUtil.getString(R.string.activity_logout_guide));
 
-            builder.setPositiveButton(getView().getActivityContext().getString(R.string.activity_logout_yes),
+            builder.setPositiveButton(StringUtil.getString(R.string.activity_logout_yes),
                     new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -83,7 +83,7 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
                 }
             });
 
-            builder.setNegativeButton(getView().getActivityContext().getString(R.string.activity_logout_no),
+            builder.setNegativeButton(StringUtil.getString(R.string.activity_logout_no),
                     new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -96,20 +96,12 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
         }
     }
 
-    private void sendMessageToView(int resourceId) {
-        if(isAttachView()) {
-            String errorMessage = GlobalApplication
-                    .getGlobalApplicationContext()
-                    .getString(resourceId);
-
-            getView().showToastMessage(errorMessage);
-        }
-    }
-
     public void loadStoreDetailToOwner(UserAccessInfo userAccessInfo) {
         getRepository().loadStoreDetail(userAccessInfo, new NetworkResponseListener<StoreDetail>() {
             @Override
             public void onReceived(@NonNull StoreDetail storeDetail) {
+                hideProgressBarOfView();
+
                 if (isAttachView()) {
                     getView().showStoreDetail(storeDetail);
                 }
@@ -117,6 +109,8 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
             @Override
             public void onError(JMTErrorCode errorCode) {
+                hideProgressBarOfView();
+
                 sendMessageToView(errorCode.getStringResourceId());
             }
         });
@@ -126,6 +120,8 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
         getRepository().requestStoreDetail(userAccessInfo, new NetworkResponseListener<StoreDetail>() {
             @Override
             public void onReceived(@NonNull StoreDetail response) {
+                hideProgressBarOfView();
+
                 if(isAttachView()) {
                     getView().showStoreDetail(response);
                 }
@@ -133,6 +129,8 @@ public class OwnerStorePresenter extends BasePresenter<OwnerStoreContract.View> 
 
             @Override
             public void onError(JMTErrorCode errorCode) {
+                hideProgressBarOfView();
+
                 sendMessageToView(errorCode.getStringResourceId());
             }
         });

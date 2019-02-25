@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.aone.menurandomchoice.GlobalApplication;
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.utils.DateUtil;
+import com.aone.menurandomchoice.utils.StringUtil;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
@@ -102,7 +102,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         if(resultCode == RESULT_OK) {
             handlingPickPhotoSuccess(data);
         } else {
-            sendPhotoFailMessageToView();
+            sendMessageToView(R.string.activity_menu_register_photo_fail);
         }
     }
 
@@ -111,7 +111,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         if(resultCode == RESULT_OK) {
             handlingUCropSuccess(data);
         } else {
-            sendPhotoFailMessageToView();
+            sendMessageToView(R.string.activity_menu_register_photo_fail);
         }
     }
 
@@ -180,8 +180,8 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
     private void checkPermissionWithTedPermission() {
         if(isAttachView()) {
             TedPermission.with(getView().getAppContext())
-                    .setRationaleMessage(getView().getAppContext().getString(R.string.permission_request_guide))
-                    .setDeniedMessage(getView().getAppContext().getString(R.string.permission_denied_guide))
+                    .setRationaleMessage(StringUtil.getString(R.string.permission_request_guide))
+                    .setDeniedMessage(StringUtil.getString(R.string.permission_denied_guide))
                     .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .setPermissionListener(new PermissionListener() {
                         @Override
@@ -201,9 +201,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         ArrayList<MenuCategoryItem> menuCategoryItems = new ArrayList<>();
         String[] categories = getView().getAppContext().getResources().getStringArray(R.array.category);
 
-        String removeWord = GlobalApplication
-                .getGlobalApplicationContext()
-                .getString(R.string.arrays_category_all_food);
+        String removeWord = StringUtil.getString(R.string.arrays_category_all_food);
 
         for(String category : categories) {
             if(!category.equals(removeWord)) {
@@ -225,33 +223,26 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
             UCrop uCrop = createUCop(data.getData());
             sendUCropLibraryToView(uCrop);
         } else {
-            sendPhotoFailMessageToView();
+            sendMessageToView(R.string.activity_menu_register_photo_fail);
         }
     }
 
     private void handlingUCropSuccess(Intent data) {
         if (hasUCropData(data)) {
             Uri uri = UCrop.getOutput(data);
-            if(uri != null) {
+            if (uri != null) {
                 String imagePath = uri.getPath();
                 if (imagePath != null) {
                     sendRegisteredImageUriToView(imagePath);
-                } else {
-                    sendPhotoFailMessageToView();
-                }
-            } else {
-                sendPhotoFailMessageToView();
-            }
-        } else {
-            sendPhotoFailMessageToView();
-        }
-    }
+                    handlingImageRegisterButton(imagePath);
 
-    private void sendPhotoFailMessageToView() {
-        if(isAttachView()) {
-            String message = getView().getAppContext().getString(R.string.activity_menu_register_photo_fail);
-            getView().showToastMessage(message);
+                    return;
+                }
+            }
         }
+
+        sendMessageToView(R.string.activity_menu_register_photo_fail);
+        handlingImageRegisterButton("");
     }
 
     private boolean hasData(Intent data) {
@@ -313,17 +304,6 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         return RegisterState.SUCCESS;
     }
 
-    private void sendMessageToView(int resourceId) {
-        if(isAttachView()) {
-            String message = GlobalApplication
-                    .getGlobalApplicationContext()
-                    .getResources()
-                    .getString(resourceId);
-
-            getView().showToastMessage(message);
-        }
-    }
-
     private void handlingMenuDetailInfo(MenuDetail menuDetail) {
         if(isAttachView()) {
             getView().setMenuDetailToDataBinding(menuDetail);
@@ -347,15 +327,11 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
         if(isAttachView()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getView().getActivityContext());
 
-            String guideMessage = getView()
-                    .getActivityContext()
-                    .getString(R.string.activity_menu_register_menu_delete_guide);
+            String guideMessage = StringUtil.getString(R.string.activity_menu_register_menu_delete_guide);
 
             builder.setMessage(guideMessage);
 
-            String yesMessage = getView()
-                    .getActivityContext()
-                    .getString(R.string.activity_menu_register_menu_delete_yes);
+            String yesMessage = StringUtil.getString(R.string.activity_menu_register_menu_delete_yes);
 
             builder.setPositiveButton(yesMessage,
                     new DialogInterface.OnClickListener() {
@@ -368,9 +344,7 @@ public class MenuRegisterPresenter extends BasePresenter<MenuRegisterContract.Vi
                         }
                     });
 
-            String noMessage = getView()
-                    .getActivityContext()
-                    .getString(R.string.activity_menu_register_menu_delete_no);
+            String noMessage = StringUtil.getString(R.string.activity_menu_register_menu_delete_no);
             builder.setNegativeButton(noMessage,
                     new DialogInterface.OnClickListener() {
                         @Override
