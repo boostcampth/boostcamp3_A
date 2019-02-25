@@ -39,8 +39,7 @@ public class OwnerStoreActivity
 
     private ViewGroup mapViewContainer;
     private MapView mapView;
-    private boolean isOwner;
-    private int storeIdx;
+    private UserAccessInfo userAccessInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class OwnerStoreActivity
 
         initMapView();
         getDataBinding().activityOwnerStoreScroll.scrollTo(0, 0);
-        getPresenter().loadStoreDetail(storeIdx, isOwner);
+        getPresenter().loadStoreDetail(userAccessInfo);
     }
 
 
@@ -80,7 +79,7 @@ public class OwnerStoreActivity
         getMenuInflater().inflate(R.menu.item_action_bar, menu);
 
         MenuItem edit = menu.findItem(R.id.item_action_bar_edit);
-        if(isOwner) {
+        if(userAccessInfo.isOwner()) {
              setLogoutVisible(true);
              edit.setVisible(true);
         } else {
@@ -176,7 +175,7 @@ public class OwnerStoreActivity
         storeDetail.setMenuList(list);
 
         getDataBinding().setStoreDetail(storeDetail);
-        getDataBinding().getStoreDetail().setStoreIdx(storeIdx);
+        getDataBinding().getStoreDetail().setStoreIdx(userAccessInfo.getAccessStoreIndex());
 
         setMapView(storeDetail.getLatitude(), storeDetail.getLongitude(), storeDetail.getName());
     }
@@ -235,10 +234,10 @@ public class OwnerStoreActivity
     }
 
     public void getParcelData() {
-        UserAccessInfo userAccessInfo = getIntent().getParcelableExtra(EXTRA_USER_ACCESS_INFO);
+        userAccessInfo = getIntent().getParcelableExtra(EXTRA_USER_ACCESS_INFO);
 
-        storeIdx = userAccessInfo.getAccessStoreIndex();
-        isOwner = userAccessInfo.isOwner();
+        int storeIdx = userAccessInfo.getAccessStoreIndex();
+        boolean isOwner = userAccessInfo.isOwner();
     }
 
     public void setLogoutVisible(boolean isOwner) {
