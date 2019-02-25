@@ -1,5 +1,7 @@
 package com.aone.menurandomchoice.views.menuselect;
 
+import android.view.View;
+
 import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
 import com.aone.menurandomchoice.repository.model.UserAccessInfo;
 import com.aone.menurandomchoice.views.base.BaseContract;
@@ -24,7 +26,7 @@ public interface MenuSelectContract {
 
         void setAdapterModel(@NonNull MenuSelectOverlapViewAdapterContract.Model adapterModel);
 
-        void handlingMenuSelectButtonClick();
+        void handlingMenuSelectButtonClick(android.view.View view);
 
     }
 

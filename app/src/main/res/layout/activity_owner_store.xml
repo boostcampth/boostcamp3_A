@@ -29,12 +29,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:onClick="@{(view) -> presenter.onLogoutClick(view)}"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/activity_owner_store_ll_menu">
-
 
                 <LinearLayout
                     android:id="@+id/activity_owner_store_logout"
@@ -45,7 +45,7 @@
                     android:foreground="?attr/selectableItemBackground"
                     android:paddingTop="@dimen/large_padding"
                     android:paddingRight="@dimen/large_padding"
-                    android:onClick="@{() -> presenter.onLogoutClick()}">
+                    android:onClick="@{(view) -> presenter.onLogoutClick(view)}">
 
                     <ImageView
                         android:layout_width="@dimen/activity_owner_store_exit_button"

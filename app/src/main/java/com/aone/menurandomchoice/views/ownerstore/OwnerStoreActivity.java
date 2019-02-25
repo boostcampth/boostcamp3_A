@@ -8,12 +8,14 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import com.aone.menurandomchoice.R;
 import com.aone.menurandomchoice.databinding.ActivityOwnerStoreBinding;
 import com.aone.menurandomchoice.repository.model.MenuDetail;
 import com.aone.menurandomchoice.repository.model.StoreDetail;
 import com.aone.menurandomchoice.repository.model.UserAccessInfo;
+import com.aone.menurandomchoice.utils.ClickUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.menupreview.MenuPreviewActivity;
 import com.aone.menurandomchoice.views.storeedit.StoreEditActivity;
@@ -39,8 +41,7 @@ public class OwnerStoreActivity
 
     private ViewGroup mapViewContainer;
     private MapView mapView;
-    private boolean isOwner;
-    private int storeIdx;
+    private UserAccessInfo userAccessInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +56,9 @@ public class OwnerStoreActivity
         super.onStart();
 
         initMapView();
-        getDataBinding().activityOwnerStoreScroll.scrollTo(0, 0);
-        getPresenter().loadStoreDetail(storeIdx, isOwner);
+        getDataBinding().activityOwnerStoreScroll.smoothScrollTo(0,0);
+        getPresenter().loadStoreDetail(userAccessInfo);
     }
-
 
     @Override
     protected void onPause() {
@@ -66,7 +66,6 @@ public class OwnerStoreActivity
 
         detachMapView();
     }
-
 
     @Override
     protected void onStop() {
@@ -80,12 +79,12 @@ public class OwnerStoreActivity
         getMenuInflater().inflate(R.menu.item_action_bar, menu);
 
         MenuItem edit = menu.findItem(R.id.item_action_bar_edit);
-        if(isOwner) {
-             setLogoutVisible(true);
-             edit.setVisible(true);
+        if(userAccessInfo.isOwner()) {
+            setLogoutVisible(true);
+            edit.setVisible(true);
         } else {
             setLogoutVisible(false);
-             edit.setVisible(false);
+            edit.setVisible(false);
         }
 
         return true;
@@ -98,6 +97,7 @@ public class OwnerStoreActivity
                 onBackPressed();
                 return true;
             case R.id.item_action_bar_edit:
+                ClickUtil.preventDuplicateClick(item);
                 moveToOwnerEditPage(getDataBinding().getStoreDetail());
                 return true;
             default:
@@ -176,7 +176,7 @@ public class OwnerStoreActivity
         storeDetail.setMenuList(list);
 
         getDataBinding().setStoreDetail(storeDetail);
-        getDataBinding().getStoreDetail().setStoreIdx(storeIdx);
+        getDataBinding().getStoreDetail().setStoreIdx(userAccessInfo.getAccessStoreIndex());
 
         setMapView(storeDetail.getLatitude(), storeDetail.getLongitude(), storeDetail.getName());
     }
@@ -235,10 +235,10 @@ public class OwnerStoreActivity
     }
 
     public void getParcelData() {
-        UserAccessInfo userAccessInfo = getIntent().getParcelableExtra(EXTRA_USER_ACCESS_INFO);
+        userAccessInfo = getIntent().getParcelableExtra(EXTRA_USER_ACCESS_INFO);
 
-        storeIdx = userAccessInfo.getAccessStoreIndex();
-        isOwner = userAccessInfo.isOwner();
+        int storeIdx = userAccessInfo.getAccessStoreIndex();
+        boolean isOwner = userAccessInfo.isOwner();
     }
 
     public void setLogoutVisible(boolean isOwner) {

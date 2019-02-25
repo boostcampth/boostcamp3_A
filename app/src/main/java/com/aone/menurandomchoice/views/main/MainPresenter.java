@@ -28,6 +28,7 @@ public class MainPresenter extends BasePresenter<MainContract.View>
         getRepository().checkLoggedinAccount(new OnKakaoLoginListener() {
             @Override
             public void onKakaoLoginSuccess(long userId) {
+                hideProgressBarOfView();
                 requestSignedUpCheck(userId);
             }
 
@@ -40,16 +41,17 @@ public class MainPresenter extends BasePresenter<MainContract.View>
     }
 
     private void requestSignedUpCheck(long userId) {
+        showProgressBarOfView();
         getRepository().requestSignedUpCheck(userId, new NetworkResponseListener<LoginData>() {
             @Override
             public void onReceived(@NonNull LoginData loginData) {
-                showProgressBarOfView();
+                hideProgressBarOfView();
                 moveToOwnerStoreActivity(loginData);
             }
 
             @Override
             public void onError(JMTErrorCode errorCode) {
-                showProgressBarOfView();
+                hideProgressBarOfView();
                 requestKakaoAccountLogout();
             }
         });

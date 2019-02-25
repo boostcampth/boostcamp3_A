@@ -20,6 +20,7 @@ import com.aone.menurandomchoice.databinding.ActivityCustomerMainBinding;
 import com.aone.menurandomchoice.repository.model.MenuLocation;
 import com.aone.menurandomchoice.repository.model.MenuLocationCamera;
 import com.aone.menurandomchoice.repository.model.MenuSearchRequest;
+import com.aone.menurandomchoice.utils.ClickUtil;
 import com.aone.menurandomchoice.views.base.BaseActivity;
 import com.aone.menurandomchoice.views.locationsearch.LocationSearchActivity;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapter;
@@ -120,7 +121,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
                 , menuLocationCamera.getLongitude());
 
         mCustomMarker = new MapPOIItem();
-        mCustomMarker.setItemName(getView().getActivityContext().getString(R.string.app_name));
+        mCustomMarker.setItemName(getString(R.string.app_name));
         mCustomMarker.setMapPoint(mapPoint);
 
         mCustomMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
@@ -385,17 +386,20 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
     @Override
     protected CustomerMainContract.View getView() { return this; }
 
-    public void moveToLocationSearchPage() {
+    public void moveToLocationSearchPage(View view) {
+        ClickUtil.preventDuplicateClick(view);
+
         mMapView.removeAllCircles();
 
         Intent locationSearchIntent = new Intent(CustomerMainActivity.this
                                                 , LocationSearchActivity.class);
-        locationSearchIntent.putExtra(getView().getActivityContext().getString(R.string.activity_store_edit_request_location_search)
-                                    , getView().getActivityContext().getString(R.string.activity_customer_main_descriptor));
+        locationSearchIntent.putExtra(getString(R.string.activity_store_edit_request_location_search)
+                                    , getString(R.string.activity_customer_main_descriptor));
         startActivityForResult(locationSearchIntent,LOCATION_DATA);
     }
 
-    public void moveToMenuSelectPage() {
+    public void moveToMenuSelectPage(View view) {
+        ClickUtil.preventDuplicateClick(view);
         if(mMapView.getPOIItems().length > 1) {
             mMapView.removeAllCircles();
             Intent menuSelectIntent = new Intent(CustomerMainActivity.this
@@ -404,7 +408,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
             String category = getPresenter().getSelectedCategory();
 
             MapPoint.GeoCoordinate mapPointGeo = mMapView.getMapCenterPoint().getMapPointGeoCoord();
-            menuSelectIntent.putExtra(getView().getActivityContext().getString(R.string.activity_customer_main_extra_menu_data)
+            menuSelectIntent.putExtra(getString(R.string.activity_customer_main_extra_menu_data)
                                     , new MenuSearchRequest(mapPointGeo.latitude
                                                             , mapPointGeo.longitude
                                                             , radius
@@ -412,7 +416,7 @@ public class CustomerMainActivity extends BaseActivity<ActivityCustomerMainBindi
 
             startActivity(menuSelectIntent);
         } else {
-            showToastMessage(getView().getActivityContext().getString(R.string.activity_customer_main_request_error));
+            showToastMessage(getString(R.string.activity_customer_main_request_error));
         }
     }
 

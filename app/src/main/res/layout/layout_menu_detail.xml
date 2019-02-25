@@ -20,8 +20,8 @@
         android:gravity="center"
         android:orientation="vertical"
         android:background="@drawable/layout_menu_detail_border"
+        android:onClick="@{ (view) -> presenter.onMenuDetailClick(view, menuDetail)}" >
         android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:onClick="@{ () -> presenter.onMenuDetailClick(menuDetail)}" >
 
         <ImageView
             android:layout_width="100dp"

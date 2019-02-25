@@ -20,8 +20,8 @@
         android:gravity="center"
         android:orientation="vertical"
         android:background="@drawable/layout_menu_detail_border"
+        android:onClick="@{ (view) -> presenter.onMenuEditClick(view, menuDetail)}" >
         android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:onClick="@{ () -> presenter.onMenuEditClick(menuDetail)}" >
 
         <FrameLayout
             android:layout_width="100dp"
@@ -39,7 +39,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="end|bottom"
-                android:onClick="@{ () -> presenter.onMenuEditClick(menuDetail)}"
+                android:clickable="false"
                 android:background="@drawable/menu_edit" />
         </FrameLayout>
 

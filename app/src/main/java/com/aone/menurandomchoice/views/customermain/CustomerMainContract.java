@@ -13,9 +13,9 @@ public interface CustomerMainContract {
 
     interface View extends BaseContract.View{
 
-        void moveToLocationSearchPage();
+        void moveToLocationSearchPage(android.view.View view);
 
-        void moveToMenuSelectPage();
+        void moveToMenuSelectPage(android.view.View view);
 
         void onRadiusButtonClicked(android.view.View view);
 

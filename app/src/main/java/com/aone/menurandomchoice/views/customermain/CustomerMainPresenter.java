@@ -12,6 +12,7 @@ import com.aone.menurandomchoice.repository.remote.NetworkResponseListener;
 import com.aone.menurandomchoice.repository.remote.mapper.MenuMapper;
 import com.aone.menurandomchoice.repository.remote.response.JMTErrorCode;
 import com.aone.menurandomchoice.utils.NetworkUtil;
+import com.aone.menurandomchoice.utils.StringUtil;
 import com.aone.menurandomchoice.views.base.BasePresenter;
 import com.aone.menurandomchoice.views.menuregister.adapter.MenuCategoryAdapterContract;
 import com.aone.menurandomchoice.views.menuregister.adapter.item.MenuCategoryItem;
@@ -32,7 +33,6 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
     private List<MenuLocation> menuList;
 
     public void requestMenuList(final double latitude, final double longitude, final double radius) {
-
         getRepository().requestMenuLocation(MenuMapper.createRequestLocationQueryMap(latitude,longitude),
                 new NetworkResponseListener<List<MenuLocation>>() {
                     @Override
@@ -43,7 +43,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
                                 getMenuCountFiltered(latitude, longitude, radius);
                             } else {
                                 getView().setMarkerAtNewLocation(latitude, longitude, null);
-                                getView().showToastMessage(getView().getAppContext().getString(R.string.activity_customer_main_empty_result));
+                                sendMessageToView(R.string.activity_customer_main_empty_result);
                             }
                         }
                     }
@@ -51,7 +51,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
                     @Override
                     public void onError(JMTErrorCode errorCode) {
                         getMenuCountFiltered(latitude, longitude, radius);
-                        Log.d(LOG_TAG, getView().getAppContext().getString(R.string.activity_customer_main_response_error));
+                        Log.d(LOG_TAG, StringUtil.getString(R.string.activity_customer_main_response_error));
                     }
         });
     }
@@ -75,7 +75,7 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
 
         for (int i = 0; i < len; i++) {
             menuLocation = menuList.get(i);
-            if(((getView().getAppContext().getString(R.string.activity_customer_main_all_category)).equals(category)
+            if(((StringUtil.getString(R.string.activity_customer_main_all_category)).equals(category)
                     && !((menuLocation.getCategory()).equals("")) )
                     || (menuLocation.getCategory()).equals(category)) {
                 distance = LocationDistance.distance(centerLat
@@ -139,8 +139,8 @@ public class CustomerMainPresenter extends BasePresenter<CustomerMainContract.Vi
             }
 
             TedPermission.with(getView().getAppContext())
-                    .setRationaleMessage(getView().getAppContext().getString(R.string.permission_GPS_request_guide))
-                    .setDeniedMessage(getView().getAppContext().getString(R.string.permission_GPS_denied_guide))
+                    .setRationaleMessage(StringUtil.getString(R.string.permission_GPS_request_guide))
+                    .setDeniedMessage(StringUtil.getString(R.string.permission_GPS_denied_guide))
                     .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
                     .setPermissions(Manifest.permission.ACCESS_COARSE_LOCATION)
                     .setPermissionListener(new PermissionListener() {

@@ -38,10 +38,14 @@ public class KakaoLoginRepository implements KakaoLoginHelper {
 
     @Override
     public void checkLoggedinAccount(@NonNull OnKakaoLoginListener onKakaoLoginListener) {
-        addCallbackToCurrentSession(onKakaoLoginListener);
-        if (!Session.getCurrentSession().checkAndImplicitOpen()) {
-            clearCallbackOfCurrentSession();
-            onKakaoLoginListener.onFail(KakaoLoginError.NO_SESSION_ERROR);
+        if(NetworkUtil.isNetworkConnecting()) {
+            addCallbackToCurrentSession(onKakaoLoginListener);
+            if (!Session.getCurrentSession().checkAndImplicitOpen()) {
+                clearCallbackOfCurrentSession();
+                onKakaoLoginListener.onFail(KakaoLoginError.NO_SESSION_ERROR);
+            }
+        } else {
+            onKakaoLoginListener.onFail(KakaoLoginError.NETWORK_NOT_CONNECT_ERROR);
         }
     }
 
