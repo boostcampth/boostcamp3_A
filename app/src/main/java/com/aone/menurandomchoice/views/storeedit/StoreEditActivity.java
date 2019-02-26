@@ -48,6 +48,11 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    protected  void onResume() {
+        super.onResume();
 
         setUpMapView();
 
@@ -61,12 +66,13 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
                     .setText(locationData.getString("address"));
         } else {
             getPresenter().handlingReceivedMapInfo(getDataBinding().getStoreDetail().getAddress()
-                                                    , getDataBinding().getStoreDetail().getLatitude()
-                                                    , getDataBinding().getStoreDetail().getLongitude());
+                    , getDataBinding().getStoreDetail().getLatitude()
+                    , getDataBinding().getStoreDetail().getLongitude());
             getDataBinding()
                     .activityStoreEditTvAddress
                     .setText(getDataBinding().getStoreDetail().getAddress());
         }
+
     }
 
     @Override
@@ -78,7 +84,6 @@ public class StoreEditActivity extends BaseActivity<ActivityStoreEditBinding, St
     @Override
     protected void onPause() {
         super.onPause();
-
         detachMapView();
     }
 
