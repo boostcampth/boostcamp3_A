@@ -18,8 +18,8 @@
 - 주위에 있는 메뉴들을 랜덤으로 받아보며 마음에 드는 메뉴가 나올때까지 스와이프 해보세요! 마음에 드는 음식을 선택하면 해당 음식점에 대한 정보를 얻을 수 있습니다.
 
 ## 프로젝트 설명
-- 시연영상
-[<img src="https://user-images.githubusercontent.com/20294749/54073650-48e1d780-42cd-11e9-8550-2dc06cc4c82f.png" width="400px">](https://www.youtube.com/watch?v=-YME1Dlb4iU&t=45s)
+- 시연영상    
+[<img src="https://user-images.githubusercontent.com/20294749/54073650-48e1d780-42cd-11e9-8550-2dc06cc4c82f.png" width="500px">](https://www.youtube.com/watch?v=-YME1Dlb4iU&t=45s)
 
 - 기획의도
 > 평소 친구들과 메뉴 고르기 전에 고민과 상의를 하는 경우가 많은데, 먹고 싶은     
