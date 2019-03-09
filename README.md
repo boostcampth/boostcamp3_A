@@ -46,7 +46,7 @@
 - 사용기술 : Kakao Map API, Kakao Search API, Retrofit2
 
 ### 스와이프 기능
-[![structure](https://user-images.githubusercontent.com/20294749/53284785-50b55e00-379c-11e9-9c0a-f030fd2f2caa.png)](https://user-images.githubusercontent.com/20294749/53284785-50b55e00-379c-11e9-9c0a-f030fd2f2caa.png)
+![ezgif-4-ff6f7eef9911](https://user-images.githubusercontent.com/20294749/53284412-80159c00-3797-11e9-8469-25a574f331d2.gif)
 - 사용자가 자신의 마음에 드는 메뉴가 나올 때까지 메뉴를 드래그하여 스와이프 
 - 사용기술 : Observer pattern, ViewHolder pattern, VelocityTracker, ViewPropertyAnimator
 - 해당 기능은 오픈소스로 등록 : [오픈소스 문서 보기](https://github.com/ch-Yoon/Overlap_Loop_View#hello-welcome-to-overlaploopview)
