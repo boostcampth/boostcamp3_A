@@ -65,7 +65,7 @@
 - 데이터베이스 테이블 설계 문서입니다.
 - [DB 설계서 보기](https://docs.google.com/spreadsheets/d/1gO3unq7qZ-FccYGy5GK9pq1_KbzYy0tBdkdrn0i3Fq4/edit#gid=240237984)
 #### 서버 API 문서
-- swagger를 활용하여 api 문서를 만들었습니다.
+- swagger를 활용하여 API 문서를 만들었습니다.
 - [서버 API 문서 보기](http://ec2-54-180-49-154.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui.html#/)
 #### 코딩 컨벤션
 - 팀 내에서 함께 정의하고 사용한 코딩 컨벤션입니다.
