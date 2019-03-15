@@ -19,7 +19,7 @@
 
 ## 프로젝트 설명
 - 시연영상    
-[<img src="https://user-images.githubusercontent.com/20294749/54073650-48e1d780-42cd-11e9-8550-2dc06cc4c82f.png" width="500px">](https://www.youtube.com/watch?v=-YME1Dlb4iU&t=45s)
+[<img src="https://user-images.githubusercontent.com/20294749/54073650-48e1d780-42cd-11e9-8550-2dc06cc4c82f.png" width="500px">](https://www.youtube.com/watch?v=9jkn1Kt4FOQ)
 
 - 기획의도
 > 평소 친구들과 메뉴 고르기 전에 고민과 상의를 하는 경우가 많은데, 먹고 싶은     
